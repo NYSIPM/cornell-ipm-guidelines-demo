@@ -1,13 +1,11 @@
 project:
     type: website
-    output-dir: _site
+    output-dir: docs
 
 website:
   title: "Cornell IPM Guidelines ALT Approach Demo"
   navbar:
     left:
-      - text: "Home"
-        href: index.qmd
       - text: "Guidelines sample"
         href: content/sample-guideline/chapter4.qmd
       - text: "Pesticide table sample"
