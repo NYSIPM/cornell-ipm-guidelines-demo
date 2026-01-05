@@ -7,8 +7,8 @@ website:
   navbar:
     left:
       - text: "Home"
-        href: content/sample-guideline/chapter1.qmd
-      - text: "Guideline sample"
+        href: index.qmd
+      - text: "Guidelines sample"
         href: content/sample-guideline/chapter4.qmd
       - text: "Pesticide table sample"
         href: content/sample-guideline/table.qmd
