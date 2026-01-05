@@ -1,17 +1,17 @@
-  backend:
-    name: github
-    repo: [username]/cornell-ipm-guidelines-demo
-    branch: main
+backend:
+  name: github
+  repo: nysipm/cornell-ipm-guidelines-demo  # Replace with your username/repo
+  branch: main
 
-  media_folder: "static/images"
-  public_folder: "/images"
+media_folder: "static/images"
+public_folder: "/images"
 
-  collections:
-    - name: "guideline"
-      label: "Sample Guideline"
-      folder: "content/sample-guideline"
-      create: false
-      slug: "{{slug}}"
-      fields:
-        - {label: "Title", name: "title", widget: "string"}
-        - {label: "Body", name: "body", widget: "markdown"}
+collections:
+  - name: "guideline"
+    label: "Guidelines"
+    folder: "content/sample-guideline"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
