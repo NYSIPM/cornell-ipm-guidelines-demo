@@ -23,5 +23,5 @@ format:
     geometry:
       - margin=0.75in
     fontsize: 11pt
-    mainfont: "Arial"  # Or "Helvetica" for sans-serif like web
+    mainfont: "Helvetica"  # Or "Helvetica" for sans-serif like web
     keep-tex: false
