@@ -1,0 +1,12 @@
+{
+  "name": "cornell-ipm-guidelines-demo",
+  "version": "1.0.0",
+  "description": "Cornell PSEP Guidelines",
+  "scripts": {
+    "build": "quarto render"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@quarto/netlify-plugin-quarto": "^0.0.5"
+  }
+}
