@@ -1,0 +1,6 @@
+[build]
+  command = "quarto render"
+  publish = "docs"
+
+[[plugins]]
+  package = "@quarto/netlify-plugin-quarto"
