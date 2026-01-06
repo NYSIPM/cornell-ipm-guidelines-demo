@@ -1,16 +1,26 @@
 #!/bin/bash
-set -e
 
-echo "Installing Quarto..."
+echo "=== Installing Quarto ==="
 QUARTO_VERSION="1.4.550"
-wget -q https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz
-tar -xzf quarto-${QUARTO_VERSION}-linux-amd64.tar.gz
+QUARTO_URL="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+
+echo "Downloading Quarto ${QUARTO_VERSION}..."
+wget -q "${QUARTO_URL}"
+
+echo "Extracting Quarto..."
+tar -xzf "quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+
+echo "Setting up Quarto path..."
 export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
 
-echo "Quarto version:"
+echo "Verifying Quarto installation..."
 quarto --version
 
-echo "Rendering site..."
+echo "=== Installing TinyTeX for PDF generation ==="
+quarto install tinytex --no-prompt
+
+echo "=== Rendering Quarto Site ==="
 quarto render
 
-echo "Build complete!"
+echo "=== Build Complete ==="
+ls -la docs/
