@@ -1,28 +1,25 @@
-# Decap CMS Configuration for PSEP Guidelines
+# Decap CMS Configuration with Auth0
 
 backend:
   name: github
-  repo: nysipm/cornell-ipm-guidelines-demo
+  repo: NYSIPM/cornell-ipm-guidelines-demo  # UPDATE with your actual repo
   branch: main
-
-# Local backend for testing (comment out in production)
-# local_backend: true
+  base_url: https://dancing-sundae-a531d3.netlify.app  # UPDATE with your site URL
+  auth_endpoint: /.netlify/functions/auth-begin
 
 media_folder: "static/images"
 public_folder: "/images"
 
-# Publishing mode
 publish_mode: editorial_workflow
 
-# Site configuration
-site_url: https://dancing-sundae-a531d3.netlify.app 
+site_url: https://dancing-sundae-a531d3.netlify.app  # UPDATE with your site URL
 display_url: https://dancing-sundae-a531d3.netlify.app
 logo_url: https://dancing-sundae-a531d3.netlify.app/images/logo.png
 
 collections:
   - name: "guidelines"
     label: "Guidelines"
-    folder: "content"
+    folder: "content/sample-guideline"
     create: false
     extension: "qmd"
     format: "frontmatter"
@@ -37,25 +34,14 @@ collections:
 
   - name: "chapters"
     label: "Chapters"
-    folder: "content"
-    filter: {field: "title", pattern: "^(?!index).*"}
+    folder: "content/sample-guideline"
     create: true
     extension: "qmd"
     format: "frontmatter"
-    slug: "chapter-{{slug}}"
+    slug: "{{slug}}"
     editor:
       preview: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
-      - {label: "Format", name: "format", widget: "object", fields: [
-          {label: "HTML", name: "html", widget: "object", fields: [
-            {label: "TOC", name: "toc", widget: "boolean", default: true},
-            {label: "TOC Depth", name: "toc-depth", widget: "number", default: 3}
-          ]},
-          {label: "PDF", name: "pdf", widget: "object", fields: [
-            {label: "TOC", name: "toc", widget: "boolean", default: true},
-            {label: "Document Class", name: "documentclass", widget: "string", default: "article"}
-          ]}
-        ]}
       - {label: "Body", name: "body", widget: "markdown"}
