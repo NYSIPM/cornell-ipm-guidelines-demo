@@ -4,60 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
-  <title>PSEP Guidelines - Content Manager</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <title>Cornell IPM Guidelines - Content Manager</title>
 </head>
 <body>
+  <!-- Netlify Identity Widget -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  
   <!-- Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  
-  <!-- Custom Auth0 Handler -->
-  <script>
-    // Handle Auth0 authentication redirect
-    (function() {
-      // Check if we're returning from Auth0 with tokens in hash
-      if (window.location.hash) {
-        const hash = window.location.hash.substring(1);
-        const params = new URLSearchParams(hash);
-        const accessToken = params.get('access_token');
-        
-        if (accessToken) {
-          // Store token for Decap CMS
-          localStorage.setItem('auth0_token', accessToken);
-          
-          // Clear hash and reload
-          window.location.hash = '';
-          window.location.reload();
-        }
-      }
-      
-      // Custom authentication backend for Auth0
-      const CustomAuth0Backend = {
-        name: 'auth0-github',
-        
-        async authenticate() {
-          // Redirect to our auth-begin function
-          window.location.href = '/.netlify/functions/auth-begin';
-        },
-        
-        async getToken() {
-          return localStorage.getItem('auth0_token');
-        },
-        
-        async logout() {
-          localStorage.removeItem('auth0_token');
-          const auth0Domain = 'newa-apps.auth0.com'; // UPDATE with your Auth0 domain
-          const clientId = 'YOUR_CLIENT_ID'; // UPDATE with your Auth0 Client ID
-          const returnTo = encodeURIComponent(window.location.origin);
-          window.location.href = `https://${auth0Domain}/v2/logout?client_id=${clientId}&returnTo=${returnTo}`;
-        }
-      };
-      
-      // Register the custom backend
-      if (window.CMS) {
-        CMS.registerBackend('auth0-github', CustomAuth0Backend);
-      }
-    })();
-  </script>
 </body>
 </html>

@@ -1,46 +1,24 @@
 # Decap CMS Configuration with Auth0
 
 backend:
-  name: github
-  repo: NYSIPM/cornell-ipm-guidelines-demo  # UPDATE with your actual repo
+  name: git-gateway
   branch: main
-  base_url: https://dancing-sundae-a531d3.netlify.app  # UPDATE with your site URL
-  auth_endpoint: /.netlify/functions/auth-begin
 
 media_folder: "static/images"
 public_folder: "/images"
 
 publish_mode: editorial_workflow
 
-site_url: https://dancing-sundae-a531d3.netlify.app  # UPDATE with your site URL
+site_url: https://dancing-sundae-a531d3.netlify.app
 display_url: https://dancing-sundae-a531d3.netlify.app
-logo_url: https://dancing-sundae-a531d3.netlify.app/images/logo.png
 
 collections:
   - name: "guidelines"
-    label: "Guidelines"
+    label: "Guidelines"  
     folder: "content/sample-guideline"
     create: false
     extension: "qmd"
     format: "frontmatter"
-    slug: "{{slug}}"
-    editor:
-      preview: true
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
-      - {label: "Date", name: "date", widget: "datetime", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
-
-  - name: "chapters"
-    label: "Chapters"
-    folder: "content/sample-guideline"
-    create: true
-    extension: "qmd"
-    format: "frontmatter"
-    slug: "{{slug}}"
-    editor:
-      preview: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
