@@ -1,11 +1,13 @@
+---
+title: 4. Vineyard Insect & Mite Management
+---
 # 4. Vineyard Insect & Mite Management
 
 ## 4.1 Pest Information – Insects
 
 ### 4.1.1 Banded Grape Bug (BGB)
 
-Banded grape bug (BGB) is a sporadic pest of grapes in the Finger Lakes and Lake Erie regions and does not require treatment in most years. Nymphs of this insect emerge in the spring and feed on flowers and young berries, using their sucking and piercing mouth parts. The nymphs range in size from 1/8- to 1/2-inch in length, depending on the stage. Injury by small nymphs, occurring between 3- to 5-inch shoot growth (around May 15) and early June, results in floret drop, reduced berry set, and fewer clusters. Subsequent feeding by larger nymphs and adults does not affect cluster development. Economic injury can occur when more than 1 nymph per 10 shoots are present. This injury only occurs in the prebloom stages. Subsequent feeding by nymphs does not reduce berry set. Adults appear to be predaceous and do not cause injury to berries. Look for nymphs on grape clusters and shoot tips prior to the bloom period. They can be recognized by their long, banded antennae.
-
+BLAH BLAH Banded grape bug (BGB) is a sporadic pest of grapes in the Finger Lakes and Lake Erie regions and does not require treatment in most years. Nymphs of this insect emerge in the spring and feed on flowers and young berries, using their sucking and piercing mouth parts. The nymphs range in size from 1/8- to 1/2-inch in length, depending on the stage. Injury by small nymphs, occurring between 3- to 5-inch shoot growth (around May 15) and early June, results in floret drop, reduced berry set, and fewer clusters. Subsequent feeding by larger nymphs and adults does not affect cluster development. Economic injury can occur when more than 1 nymph per 10 shoots are present. This injury only occurs in the prebloom stages. Subsequent feeding by nymphs does not reduce berry set. Adults appear to be predaceous and do not cause injury to berries. Look for nymphs on grape clusters and shoot tips prior to the bloom period. They can be recognized by their long, banded antennae.
 
 ### Brown Marmorated Stink Bug (BMSB)
 
@@ -69,7 +71,7 @@ Lygocoris inconspicuous is in the same insect family as the banded grape bug (Mi
 
 ### Mealybugs and Soft Scales
 
-Mealybugs and Soft Scales have received attention recently due to their ability to vector leafroll virus in grapes. There are several species of soft scales present in our area and one species of mealybug, the grape mealybug. In survey work in the Finger Lakes from 2006-2008 we have found low levels of both mealybugs and soft scale. Some of these individuals have tested positive for two strains of leafroll virus. Mealybugs and soft scale insects can contribute to the spread of the virus within infected vineyards, although spread is frequently not observed. Non-systemic insecticides applied during the season should be timed to coincide with movement of overwintered crawlers in spring just prior to budbreak or movement of first summer generation crawlers in mid-summer. Timing for use of the systemic insecticide spirotetramat [Movento] is not as critical, although it must be applied when foliage is present. Research has shown that a split application, near bloom and 30 days later, has been effective in dramatically reducing grape mealybug.
+Mealybugs and Soft Scales have received attention recently due to their ability to vector leafroll virus in grapes. There are several species of soft scales present in our area and one species of mealybug, the grape mealybug. In survey work in the Finger Lakes from 2006-2008 we have found low levels of both mealybugs and soft scale. Some of these individuals have tested positive for two strains of leafroll virus. Mealybugs and soft scale insects can contribute to the spread of the virus within infected vineyards, although spread is frequently not observed. Non-systemic insecticides applied during the season should be timed to coincide with movement of overwintered crawlers in spring just prior to budbreak or movement of first summer generation crawlers in mid-summer. Timing for use of the systemic insecticide spirotetramat \[Movento] is not as critical, although it must be applied when foliage is present. Research has shown that a split application, near bloom and 30 days later, has been effective in dramatically reducing grape mealybug.
 
 ### Multicolored Asian Lady Beetle (MALB)
 
@@ -124,4 +126,3 @@ Yellowjackets and some other types of social wasps can be problematic at or near
 Yellowjackets and other social wasps can also create significant nuisance issues. Management options are limited. No insecticides are labeled to control yellowjackets in vineyards, although some of the insecticides labeled for use against spotted wing drosophila, such as *Mustang Maxx and Delegate, may provide some short-term knock down of foraging yellowjackets. Finding nests earlier in the season and treating with labeled insecticides may also help reduce overall populations closer to harvest. 
 
 And there is some research showing that using traps with an attractive lure and killing agent can help reduce yellowjacket populations. Finally, during the 2023 and 2024 field seasons we tested the use of side netting with smaller mesh size (3 X 5 mm) and found a significant reduction in yellowjacket feeding damage compared to vines without netting. Overall, however, more research is needed geared toward developing management tactics.
-
