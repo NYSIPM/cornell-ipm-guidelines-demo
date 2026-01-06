@@ -5,26 +5,18 @@ project:
     - "admin/**"
 
 website:
-  title: "Cornell PSEP Guidelines"
+  title: "Cornell IPM Guidelines Demo"
   navbar:
     left:
       - text: "Home"
         href: index.qmd
-      - text: "Grapes"
-        menu:
-          - text: "Introduction"
-            href: publications/grapes/index.qmd
-          - text: "Insect Management"
-            href: publications/grapes/chapter3.qmd
-          - text: "Disease Management"
-            href: publications/grapes/chapter2.qmd
-      - text: "Apples"
-        menu:
-          - text: "Introduction"
-            href: publications/apples/index.qmd
-          - text: "Pest Management"
-            href: publications/apples/chapter1.qmd
-      # More publications...
+      - text: "Grape Guidelines"
+        href: grape-guidelines.qmd  # Listing page
+  
+  sidebar:
+    - title: "Grape Guidelines"
+      style: "docked"
+      contents: auto  # This auto-generates the sidebar from all .qmd files
 
 format:
   html:
