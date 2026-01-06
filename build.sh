@@ -16,11 +16,15 @@ export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
 echo "Verifying Quarto installation..."
 quarto --version
 
-echo "=== Installing TinyTeX for PDF generation ==="
-quarto install tinytex --no-prompt
-
 echo "=== Rendering Quarto Site ==="
 quarto render
 
 echo "=== Build Complete ==="
+echo "Contents of current directory:"
+ls -la
+
+echo "Contents of docs/ directory:"
 ls -la docs/
+
+echo "All HTML files in project:"
+find . -name "*.html" -type f
