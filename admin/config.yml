@@ -1,24 +1,22 @@
-# Decap CMS Configuration with Auth0
-
 backend:
-  name: git-gateway
+  name: github
+  repo: NYSIPM/cornell-ipm-guidelines-demo
   branch: main
 
 media_folder: "static/images"
 public_folder: "/images"
-
-publish_mode: editorial_workflow
 
 site_url: https://dancing-sundae-a531d3.netlify.app
 display_url: https://dancing-sundae-a531d3.netlify.app
 
 collections:
   - name: "guidelines"
-    label: "Guidelines"  
+    label: "Guidelines"
     folder: "content/sample-guideline"
     create: false
     extension: "qmd"
     format: "frontmatter"
+    slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
