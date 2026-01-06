@@ -12,16 +12,47 @@ site_url: https://dancing-sundae-a531d3.netlify.app
 display_url: https://dancing-sundae-a531d3.netlify.app
 
 collections:
-  - name: "pages"
-    label: "Pages"
-    folder: "."  # Changed from content/sample-guideline
-    filter: 
-      field: "title"
-    create: false
+  # Grape Guidelines
+  - name: "grapes"
+    label: "Grape Guidelines"
+    folder: "publications/grapes"
+    create: true
+    extension: "qmd"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Chapter Number", name: "chapter", widget: "number", required: false}
+      - {label: "Authors", name: "authors", widget: "list", required: false}
+      - {label: "Last Updated", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
+  
+  # Apple Guidelines
+  - name: "apples"
+    label: "Apple Guidelines"
+    folder: "publications/apples"
+    create: true
     extension: "qmd"
     format: "frontmatter"
     slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
+      - {label: "Chapter Number", name: "chapter", widget: "number", required: false}
+      - {label: "Authors", name: "authors", widget: "list", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
+  
+  # Tree Fruit Guidelines
+  - name: "tree-fruit"
+    label: "Tree Fruit Guidelines"
+    folder: "publications/tree-fruit"
+    create: true
+    extension: "qmd"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+  
+  # Add more collections for each publication...

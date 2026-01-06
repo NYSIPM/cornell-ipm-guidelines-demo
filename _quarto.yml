@@ -2,18 +2,29 @@ project:
   type: website
   output-dir: docs
   resources:
-    -"admin/**"
+    - "admin/**"
 
 website:
-  title: "Cornell IPM Guidelines Demo"
+  title: "Cornell PSEP Guidelines"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - href: chapter4.qmd
-        text: Insect Management
-      - href: table.qmd
-        text: Pesticide Tables
+      - text: "Home"
+        href: index.qmd
+      - text: "Grapes"
+        menu:
+          - text: "Introduction"
+            href: publications/grapes/index.qmd
+          - text: "Insect Management"
+            href: publications/grapes/chapter3.qmd
+          - text: "Disease Management"
+            href: publications/grapes/chapter2.qmd
+      - text: "Apples"
+        menu:
+          - text: "Introduction"
+            href: publications/apples/index.qmd
+          - text: "Pest Management"
+            href: publications/apples/chapter1.qmd
+      # More publications...
 
 format:
   html:
