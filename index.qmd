@@ -1,5 +1,19 @@
 ---
-title: "Test"
+title: "Cornell IPM Guidelines Demo"
 ---
 
-Hello world
+## Welcome
+
+This is a proof-of-concept demonstration of the modernized PSEP Guidelines publishing system.
+
+### Features
+
+- Single-source publishing
+- WYSIWYG content management
+- Automatic deployment
+- Interactive pesticide tables
+
+### Navigation
+
+- [Insect Management](content/sample-guideline/chapter4.html)
+- [Pesticide Tables](content/sample-guideline/table.html)

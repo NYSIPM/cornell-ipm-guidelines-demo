@@ -1,3 +1,19 @@
 project:
   type: website
   output-dir: docs
+
+website:
+  title: "Cornell IPM Guidelines Demo"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: content/sample-guideline/chapter4.qmd
+        text: Insect Management
+      - href: content/sample-guideline/table.qmd
+        text: Pesticide Tables
+
+format:
+  html:
+    theme: cosmo
+    toc: true
