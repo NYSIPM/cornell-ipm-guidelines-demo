@@ -1,6 +1,8 @@
 project:
     type: website
     output-dir: docs
+    resources:
+      - "static/**"
 
 website:
   title: "Cornell IPM Guidelines ALT Approach Demo"
