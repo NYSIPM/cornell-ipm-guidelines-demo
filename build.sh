@@ -16,21 +16,15 @@ export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
 echo "Verifying Quarto installation..."
 quarto --version
 
-echo "=== Checking _quarto.yml ==="
-cat _quarto.yml
-
-echo "=== Inspecting project with quarto inspect ==="
-quarto inspect
-
 echo "=== Rendering Quarto Site ==="
-quarto render --verbose
+quarto render
+
+echo "=== Copying admin folder to docs ==="
+cp -r admin docs/admin
 
 echo "=== Build Complete ==="
-echo "Contents of current directory:"
-ls -la
-
 echo "Contents of docs/ directory:"
 ls -la docs/
 
-echo "All HTML files in project:"
-find . -name "*.html" -type f | head -20
+echo "Checking admin folder was copied:"
+ls -la docs/admin/
