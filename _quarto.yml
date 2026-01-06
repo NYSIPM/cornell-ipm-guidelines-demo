@@ -8,9 +8,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: content/sample-guideline/chapter4.qmd
+      - href: chapter4.qmd
         text: Insect Management
-      - href: content/sample-guideline/table.qmd
+      - href: table.qmd
         text: Pesticide Tables
 
 format:
