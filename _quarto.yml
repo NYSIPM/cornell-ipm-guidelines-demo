@@ -1,27 +1,3 @@
 project:
-    type: website
-    output-dir: docs
-    resources:
-    - "admin/**"
-    - "static/images/**"
-website:
-  title: "Cornell IPM Guidelines ALT Approach Demo"
-  navbar:
-    left:
-      - text: "Guidelines sample"
-        href: content/sample-guideline/chapter4.qmd
-      - text: "Pesticide table sample"
-        href: content/sample-guideline/table.qmd
-
-format:
-  html:
-    theme: cosmo
-    toc: true
-  pdf:
-    toc: false
-    documentclass: scrartcl  # Modern KOMA-Script class
-    geometry:
-      - margin=0.75in
-    fontsize: 11pt
-    mainfont: "Arial"  # Or "Helvetica" for sans-serif like web
-    keep-tex: false
+  type: website
+  output-dir: docs
