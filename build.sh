@@ -2,29 +2,37 @@
 
 echo "=== Installing Quarto ==="
 QUARTO_VERSION="1.4.550"
-QUARTO_URL="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
-
-echo "Downloading Quarto ${QUARTO_VERSION}..."
-wget -q "${QUARTO_URL}"
-
-echo "Extracting Quarto..."
+wget -q "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
 tar -xzf "quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
-
-echo "Setting up Quarto path..."
 export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
 
-echo "Verifying Quarto installation..."
 quarto --version
 
-echo "=== Rendering Quarto Site ==="
+echo "=== Rendering Root Site ==="
 quarto render
 
-echo "=== Copying admin folder to docs ==="
-cp -r admin docs/admin
+echo "=== Rendering Grape Guidelines ==="
+cd publications/grapes
+quarto render
+cd ../..
+
+echo "=== Copying admin folder ==="
+mkdir -p docs/admin
+cp -r admin/* docs/admin/
+
+echo "=== Ensuring grapes output is in correct location ==="
+# The grapes _quarto.yml should output to ../../docs/grapes
+# but let's verify it's there
+if [ -d "docs/grapes" ]; then
+  echo "✓ Grapes guidelines rendered successfully"
+  ls -la docs/grapes/
+else
+  echo "✗ WARNING: docs/grapes not found!"
+fi
 
 echo "=== Build Complete ==="
-echo "Contents of docs/ directory:"
+echo "Root docs contents:"
 ls -la docs/
-
-echo "Checking admin folder was copied:"
-ls -la docs/admin/
+echo ""
+echo "Grapes contents:"
+ls -la docs/grapes/ 2>/dev/null || echo "grapes folder not found"

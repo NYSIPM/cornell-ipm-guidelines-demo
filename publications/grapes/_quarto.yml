@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: ../../docs/grapes
+
+website:
+  title: "Grape Guidelines"
+  sidebar:
+    style: "docked"
+    background: light
+    contents:
+      - text: "Overview"
+        href: index.qmd
+      - section: "Chapters"
+        contents:
+          - pesticide-information.qmd
+          - chapter4.qmd
+          - table.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true

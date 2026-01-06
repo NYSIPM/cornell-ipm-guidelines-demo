@@ -15,44 +15,44 @@ collections:
   # Grape Guidelines
   - name: "grapes"
     label: "Grape Guidelines"
+    label_singular: "Chapter"
     folder: "publications/grapes"
     create: true
+    slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
-    slug: "{{slug}}"
     editor:
       preview: false
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Chapter Number", name: "chapter", widget: "number", required: false}
-      - {label: "Authors", name: "authors", widget: "list", required: false}
-      - {label: "Last Updated", name: "date", widget: "datetime"}
+      - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
+      - {label: "Chapter Number", name: "chapter", widget: "number", required: false, hint: "Optional ordering"}
+      - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
+      - {label: "Last Updated", name: "date", widget: "datetime", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
   
-  # Apple Guidelines
+  # Apple Guidelines (placeholder for future)
   - name: "apples"
     label: "Apple Guidelines"
+    label_singular: "Chapter"
     folder: "publications/apples"
     create: true
+    slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
-    slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Chapter Number", name: "chapter", widget: "number", required: false}
-      - {label: "Authors", name: "authors", widget: "list", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
   
-  # Tree Fruit Guidelines
+  # Tree Fruit Guidelines (placeholder)
   - name: "tree-fruit"
     label: "Tree Fruit Guidelines"
+    label_singular: "Chapter"
     folder: "publications/tree-fruit"
     create: true
+    slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
-    slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Body", name: "body", widget: "markdown"}
-  
-  # Add more collections for each publication...
