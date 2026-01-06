@@ -3,12 +3,10 @@ title: "Insect Management"
 subtitle: "Insecticide Information and Effectiveness"
 format:
   html:
+    theme: cosmo
     toc: true
     toc-depth: 3
     code-fold: false
-  pdf:
-    toc: true
-    documentclass: article
 ---
 
 ## Overview
