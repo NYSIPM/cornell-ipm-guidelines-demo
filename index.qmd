@@ -1,14 +1,12 @@
 ---
 title: "2026 New York and Pennsylvania Pest Management Guidelines for Grapes"
 subtitle: "Demo Version - Proof of Concept"
-date: "2026"
+date: "January 1, 2026"
 format:
   html:
+    theme: cosmo
     toc: true
     toc-depth: 2
-  pdf:
-    toc: true
-    documentclass: article
 ---
 
 ::: {.callout-note}
