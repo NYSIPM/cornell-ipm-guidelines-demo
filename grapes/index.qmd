@@ -9,21 +9,39 @@ format:
 ---
 ## Authors
 
-Bryan Brown (Cornell IPM, Cornell AgriTech, Geneva, NY; weed management)
-Jessica Clippinger (Penn State University, North East, PA; disease management)
-Katie Gold (School of Integrative Plant Sciences, Plant Pathology and Plant-Microbe Biology Section, Geneva, NY; disease management)
-Bryan E. Hed (Penn State University, North East, PA; disease management)
-Michael Helms (Cornell IPM Pesticide Safety Education Program, Ithaca, NY; pesticide information)
-Greg Loeb (Department of Entomology, Geneva, NY; entomology)
-Megan Luke (Penn State Cooperative Extension Erie County, Erie, PA; pesticide information, pest management)
-Flor E. Acevedo (Department of Entomology, Penn State University, North East, PA; entomology)
-Lynn Sosnoskie (School of Integrative Plant Science, Horticulture Section, Geneva, NY; weed management)
+## Authors
 
-## Special Appreciation
+**Bryan Brown** (Cornell IPM, Cornell AgriTech, Geneva, NY; weed management)  
+**Jessica Clippinger** (Penn State University, North East, PA; disease management)  
+**Katie Gold** (Penn State University, Integrated Pest and Crop Management, Department of Plant Pathology and Plant-Microbe Biology Section, Geneva, NY; disease management)  
+**Bryan E. Hed** (Penn State University, North East, PA; disease management)  
+**Michael Helms** (Cornell IPM Pesticide Safety Education Program, Ithaca, NY; pesticide information)  
+**Greg Loeb** (Department of Entomology, Geneva, NY; entomology)  
+**Megan Luke** (Penn State Cooperative Extension Erie County, Erie, PA; pesticide information, pest management)  
+**Flor E. Acevedo** (Department of Entomology, Penn State University, North East, PA; entomology)  
+**Lynn Sosnoskie** (School of Integrative Plant Science, Horticulture Section, Geneva, NY; weed management)
+
+## Acknowledgments
 
 Special appreciation is extended to the following for their contributions to this publication:
-Terence R. Bates (Lake Erie Regional Grape Program, Portland, NY); David Combs (School of Integrative Plant Sciences, Plant Pathology and Plant-Microbe Biology Section, Geneva, NY); Amara Dunn (Biocontrol Specialist, Cornell IPM, Geneva, NY); Rick Dunst (retired - Lake Erie Regional Grape Program, Portland, NY); David M. Gadoury (School of Integrative Plant Sciences, Plant Pathology and Plant-Microbe Biology Section, Geneva, NY); Heather Leach (Department of Entomology, University Park, PA); Andrew J. Landers (retired – Department of Entomology, Geneva, NY); Timothy E. Martinson (retired – Cornell Cooperative Extension, Geneva NY); Andrew J. Muza (retired – Penn State Cooperative Extension – Erie County, Erie, PA); Bruce I. Reisch, (retired – School of Integrative Plant Sciences, Horticulture Section, Geneva, NY); Michael C. Saunders (retired – Department of Entomology, University Park, PA); Andrew F. Senesac (retired – Cornell Cooperative Extension – Suffolk County, Riverhead, NY); Jody Timer (retired – Penn State University, North East, PA); Hans C. Walter-Peterson (Finger Lakes Regional Grape Program, Penn Yan, NY); Timothy H. Weigle (retired – Cornell IPM, Portland, NY); Alice V. Wise (Cornell Cooperative Extension – Suffolk County, Riverhead, NY); Wayne F. Wilcox (retired – School of Integrative Plant Sciences, Plant Pathology and Plant-Microbe Biology Section, Geneva, NY).
 
+**Terence R. Bates** (Lake Erie Regional Grape Program, Portland, NY)  
+**David Combs** (School of Integrative Plant Sciences, Plant Pathology and Plant-Microbe Biology Section, Geneva, NY)  
+**Amara Dunn** (Biocontrol Specialist, Cornell IPM, Geneva, NY)  
+**Rick Dunst** (retired - Lake Erie Regional Grape Program, Portland, NY)  
+**David M. Gadoury** (School of Integrative Plant Sciences, Plant Pathology and Plant-Microbe Biology Section, Geneva, NY)  
+**Heather Leach** (Department of Entomology, University Park, PA)  
+**Andrew J. Landers** (retired – Department of Entomology, Geneva, NY)  
+**Timothy E. Martinson** (retired – Cornell Cooperative Extension, Geneva NY)  
+**Andrew J. Muza** (retired – Penn State Cooperative Extension – Erie County, Erie, PA)  
+**Bruce I. Reisch** (retired – School of Integrative Plant Sciences, Horticulture Section, Geneva, NY)  
+**Michael C. Saunders** (retired – Department of Entomology, University Park, PA)  
+**Andrew F. Senesac** (retired – Cornell Cooperative Extension – Suffolk County, Riverhead, NY)  
+**Jody Timer** (retired – Penn State University, North East, PA)  
+**Hans C. Walter-Peterson** (Finger Lakes Regional Grape Program, Penn Yan, NY)  
+**Timothy H. Weigle** (retired – Cornell IPM, Portland, NY)  
+**Alice V. Wise** (Cornell Cooperative Extension – Suffolk County, Riverhead, NY)  
+**Wayne F. Wilcox** (retired – School of Integrative Plant Sciences, Plant Pathology and Plant-Microbe Biology Section, Geneva, NY)
 
 ## Abbreviations and Symbols Used in This Publication
 
