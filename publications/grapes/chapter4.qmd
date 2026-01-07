@@ -1,14 +1,12 @@
-title: "4. Vineyard Insect & Mite Management"
-subtitle: "Integrated Pest Management Strategies"
-format:
-  html:
-    theme: cosmo
-    toc: true
-    toc-depth: 3
 ---
-
+title: 4. Vineyard Insect & Mite Management
+subtitle: Integrated Pest Management Strategies
+date: 2026-01-07T09:13:00.000-05:00
+---
 :::{.callout-tip appearance="simple"}
+
 ## 📥 Download PDF Version
+
 [Download this chapter as PDF](chapter4.pdf){.btn .btn-primary download}
 :::
 
