@@ -11,10 +11,7 @@ website:
       - text: "Overview"
         href: index.qmd
       - section: "Chapters"
-        contents:
-          - pesticide-information.qmd
-          - chapter4.qmd
-          - table.qmd
+        contents: auto
 
 format:
   html:

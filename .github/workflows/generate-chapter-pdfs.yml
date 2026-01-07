@@ -1,0 +1,72 @@
+name: Generate Chapter PDFs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'publications/grapes/*.qmd'  # Only trigger on grape chapter changes
+      - '!publications/grapes/index.qmd'  # Exclude index page
+
+jobs:
+  generate-pdfs:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need previous commit to detect changes
+      
+      - name: Install Quarto
+        run: |
+          wget -q https://github.com/quarto-dev/quarto-cli/releases/download/v1.4.550/quarto-1.4.550-linux-amd64.tar.gz
+          tar -xzf quarto-1.4.550-linux-amd64.tar.gz
+          echo "${PWD}/quarto-1.4.550/bin" >> $GITHUB_PATH
+      
+      - name: Install TinyTeX
+        run: |
+          quarto install tinytex --no-prompt
+      
+      - name: Detect changed chapter files
+        id: changed-files
+        run: |
+          # Get list of changed .qmd files in grapes folder (excluding index)
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep 'publications/grapes/.*\.qmd' | grep -v 'index.qmd' || true)
+          echo "Changed files: $CHANGED_FILES"
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
+      - name: Generate PDFs for changed chapters
+        if: steps.changed-files.outputs.files != ''
+        run: |
+          mkdir -p pdfs
+          echo "${{ steps.changed-files.outputs.files }}" | while IFS= read -r file; do
+            if [ -n "$file" ] && [ -f "$file" ]; then
+              echo "Generating PDF for $file"
+              quarto render "$file" --to pdf
+              
+              # Move PDF to collection folder
+              BASENAME=$(basename "$file" .qmd)
+              if [ -f "${file%.qmd}.pdf" ]; then
+                mv "${file%.qmd}.pdf" "pdfs/${BASENAME}.pdf"
+                echo "✓ Generated pdfs/${BASENAME}.pdf"
+              fi
+            fi
+          done
+      
+      - name: List generated PDFs
+        if: steps.changed-files.outputs.files != ''
+        run: |
+          echo "Generated PDFs:"
+          ls -lh pdfs/ || echo "No PDFs generated"
+      
+      - name: Upload PDFs as artifacts
+        if: steps.changed-files.outputs.files != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: chapter-pdfs-${{ github.run_number }}
+          path: pdfs/*.pdf
+          retention-days: 90
+          if-no-files-found: warn
