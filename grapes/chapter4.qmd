@@ -145,14 +145,26 @@ And there is some research showing that using traps with an attractive lure and 
 <script src="/js/auth.js"></script>
 <script>
 async function checkPageAccess() {
+    console.log('1. checkPageAccess started');
+    
     const authStatus = await checkAuth();
+    console.log('2. authStatus:', authStatus);
+    console.log('3. authenticated value:', authStatus.authenticated);
+    console.log('4. type of authenticated:', typeof authStatus.authenticated);
+    
     const gateDiv = document.getElementById('auth-gate');
     const contentDiv = document.getElementById('content');
     
+    console.log('5. gateDiv:', gateDiv);
+    console.log('6. contentDiv:', contentDiv);
+    
     if (authStatus.authenticated) {
-        gateDiv.style.display = 'none';  // Don't forget this!
+        console.log('7. User IS authenticated - showing content');
+        gateDiv.style.display = 'none';
         contentDiv.style.display = 'block';
+        console.log('8. Content display after setting:', contentDiv.style.display);
     } else {
+        console.log('7. User NOT authenticated - showing gate');
         gateDiv.innerHTML = `
             <div style="text-align: center; padding: 3rem; background: #f8f9fa; border-radius: 8px; margin: 2rem 0;">
                 <h2>🔒 Authentication Required</h2>
