@@ -75,6 +75,26 @@ Use the filters and search below to quickly find the right insecticide for your 
   </thead>
 </table>
 
+## Abbreviations and Symbols Used in This Publication
+
+| Abbreviation | Meaning                      | Abbreviation | Meaning                      | Abbreviation | Meaning                      |
+|--------------|------------------------------|--------------|------------------------------|--------------|------------------------------|
+| A            | acre                         | EC           | emulsifiable concentrate     | SP           | soluble powder               |
+| AI           | active ingredient            | F            | flowable                     | UDH          | up to day of harvest         |
+| AS           | aqueous suspension           | G            | granular                     | ULV          | ultra-low volume             |
+| D            | dust                         | L            | liquid                       | W            | wettable                     |
+| DF           | dry flowable                 | P            | pellets                      | WDG          | water-dispersible granule    |
+| DG           | dispersible granule          | PHI          | pre-harvest interval         | WP           | wettable powder              |
+| DTH          | days to harvest              | SC           | suspension concentrate       | WSP          | water soluble packet         |
+| E            | emulsion, emulsifiable       |              |                              |              |                              |
+
+| Symbol | Meaning                                                                           |
+|--------|-----------------------------------------------------------------------------------|
+| *      | Federal restricted use pesticide; may be purchased and used only by certified applicators |
+| *NY    | Restricted use pesticide in New York State                                        |
+| †      | Not for use in Nassau and Suffolk Counties                                        |
+| ^      | Not registered for use in New York State at press time                            |
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
