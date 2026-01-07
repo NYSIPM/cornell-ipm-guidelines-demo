@@ -11,12 +11,7 @@ website:
       - text: "Home"
         href: index.qmd
       - text: "Grape Guidelines"
-        href: grapes/grape-guidelines.qmd  # Listing page
-  
-  sidebar:
-    - title: "Grape Guidelines"
-      style: "docked"
-      contents: auto  # This auto-generates the sidebar from all .qmd files
+        href: grapes/index.html  # Listing page
 
 format:
   html:
