@@ -1,13 +1,17 @@
 ---
-title: 4. Vineyard Insect & Mite Management
-subtitle: ""
-date: 2026-01-07T09:13:00.000-05:00
+title: "4. Vineyard Insect & Mite Management"
+subtitle: 
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    page-layout: article
+    other-links:
+      - text: "📄 Download PDF"
+        href: chapter4.pdf
+        icon: file-pdf
 ---
-:::{.callout-tip appearance="simple"}
-## 📥 Download PDF Version
-
-[Download this chapter as PDF](chapter4.pdf)
-:::
 
 ## 4.1 Pest Information – Insects
 
