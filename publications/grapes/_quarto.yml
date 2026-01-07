@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: ../../docs/grapes
+  output-dir: ./
 
 website:
   title: "Grape Guidelines"
