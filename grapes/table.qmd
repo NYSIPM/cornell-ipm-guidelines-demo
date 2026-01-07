@@ -1,6 +1,5 @@
 ---
 title: 5. Insect Management
-subtitle: Insecticide Information and Effectiveness
 format:
   html:
     theme: cosmo

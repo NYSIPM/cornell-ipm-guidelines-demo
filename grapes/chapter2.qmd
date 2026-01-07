@@ -1,0 +1,13 @@
+---
+title: "2. Introduction"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    page-layout: article
+    other-links:
+      - text: "📄 Download PDF"
+        href: chapter2.pdf
+        icon: file-pdf
+---

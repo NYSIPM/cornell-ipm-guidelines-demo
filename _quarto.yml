@@ -11,7 +11,7 @@ website:
       - text: "Home"
         href: index.qmd
       - text: "Grape Guidelines"
-        href: grape-guidelines.qmd  # Listing page
+        href: grapes/grape-guidelines.qmd  # Listing page
   
   sidebar:
     - title: "Grape Guidelines"
@@ -22,6 +22,3 @@ format:
   html:
     theme: cosmo
     toc: true
-
-metadata-files:
-  - "!publications/**"

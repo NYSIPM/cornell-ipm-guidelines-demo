@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: ../../docs/grapes
   resources:
-  -"*.pdf"
+    - "*.pdf"        # ← Add this line
 
 website:
   title: "Grape Guidelines"
@@ -17,3 +17,4 @@ format:
   html:
     theme: cosmo
     toc: true
+  # NO pdf: section here!
