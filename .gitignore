@@ -1,7 +1,7 @@
 # Build output
 docs/
 .quarto/
-pdf-generator/
+_pdf-generator/
 # OS files
 .DS_Store
 Thumbs.db

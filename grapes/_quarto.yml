@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: ../../docs/grapes
   resources:
-    - "*.pdf"        # ← Add this line
+    chapter4.pdf        # ← Add this line
 
 website:
   title: "Grape Guidelines"

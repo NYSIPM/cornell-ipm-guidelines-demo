@@ -14,15 +14,22 @@ quarto render
 echo "=== Rendering Grape Guidelines ==="
 cd grapes
 quarto render
-cd ../..
+cd ..
 
 echo "=== Copying admin folder ==="
 mkdir -p docs/admin
 cp -r admin/* docs/admin/
 
+echo "=== Copying PDFs from source to output ==="
+mkdir -p docs/grapes
+if cp grapes/*.pdf docs/grapes/ 2>/dev/null; then
+  echo "✓ PDFs copied successfully"
+  ls -la docs/grapes/*.pdf
+else
+  echo "⚠ No PDFs found in grapes/"
+fi
+
 echo "=== Ensuring grapes output is in correct location ==="
-# The grapes _quarto.yml should output to ../../docs/grapes
-# but let's verify it's there
 if [ -d "docs/grapes" ]; then
   echo "✓ Grapes guidelines rendered successfully"
   ls -la docs/grapes/
