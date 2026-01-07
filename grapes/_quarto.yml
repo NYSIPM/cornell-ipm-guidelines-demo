@@ -5,10 +5,10 @@ project:
     - "*.pdf"
 
 website:
-  title: "Grape Guidelines"
+  title: "Cornell IPM | Grape Guidelines"
   navbar:
     left:
-      - text: "← Back to Home"
+      - text: "← Back to Guidelines Home"
         href: ../index.html
       - text: "Chapters"
         menu:
