@@ -3,8 +3,6 @@ title: "Cornell PSEP Guidelines"
 subtitle: "Pest Management Guidelines for New York and Pennsylvania"
 ---
 
-<div id="auth-status" style="margin-bottom: 2rem;"></div>
-
 <div id="auth-gate"></div>
 <div id="content" style="display: none;">
 
