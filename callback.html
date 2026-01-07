@@ -12,18 +12,18 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f5f5;
         }
-        .callback-container {
+        .container {
             background: white;
             padding: 2rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #B31B1B;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #B31B1B;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -37,44 +37,56 @@
     </style>
 </head>
 <body>
-    <div class="callback-container">
+    <div class="container">
         <div class="spinner"></div>
-        <p>Processing login...</p>
+        <p id="message">Processing login...</p>
     </div>
 
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
     <script>
-        const AUTH0_CONFIG = {
+        const CONFIG = {
             domain: 'newa-apps.auth0.com',
-            clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O', // Same as auth.js
+            clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
             authorizationParams: {
                 redirect_uri: window.location.origin + '/callback.html'
-            },
-            useRefreshTokens: true,
-            cacheLocation: 'localstorage'
+            }
         };
 
         async function handleCallback() {
+            const messageEl = document.getElementById('message');
+            
             try {
-                const auth0Client = await auth0.createAuth0Client(AUTH0_CONFIG);
+                // Create Auth0 client
+                const auth0 = await auth0.createAuth0Client(CONFIG);
                 
-                // Handle the redirect from Auth0
-                await auth0Client.handleRedirectCallback();
+                // Handle the callback
+                const result = await auth0.handleRedirectCallback();
                 
-                // Get the return URL from app state
-                const appState = await auth0Client.getAppState();
-                const returnTo = appState?.returnTo || '/';
+                messageEl.textContent = 'Login successful! Redirecting...';
                 
-                // Redirect to original page
-                window.location.replace(returnTo);
+                // Redirect to home or original page
+                const targetUrl = result.appState?.targetUrl || '/index.html';
+                window.location.href = targetUrl;
+                
             } catch (error) {
                 console.error('Callback error:', error);
-                document.querySelector('.callback-container').innerHTML = 
-                    '<p style="color: red;">Login failed. <a href="/">Return home</a></p>';
+                messageEl.textContent = 'Login failed: ' + error.message;
+                
+                setTimeout(() => {
+                    window.location.href = '/index.html';
+                }, 3000);
             }
         }
 
-        handleCallback();
+        // Run when page loads
+        if (window.location.search.includes('code=') || window.location.search.includes('error=')) {
+            handleCallback();
+        } else {
+            document.getElementById('message').textContent = 'No authentication data found. Redirecting...';
+            setTimeout(() => {
+                window.location.href = '/index.html';
+            }, 2000);
+        }
     </script>
 </body>
 </html>

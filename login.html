@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Cornell IPM Guidelines</title>
+    <title>Sign In - Cornell IPM Guidelines</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,15 +16,17 @@
         }
         .login-container {
             background: white;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             text-align: center;
             max-width: 400px;
+            width: 90%;
         }
         h1 {
             color: #333;
             margin-bottom: 0.5rem;
+            font-size: 1.5rem;
         }
         p {
             color: #666;
@@ -34,19 +36,20 @@
             background: #B31B1B;
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 28px;
             font-size: 16px;
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
+            font-weight: 600;
+            transition: background 0.3s;
         }
         button:hover {
             background: #8B1414;
         }
-        .loading {
-            display: none;
-            margin-top: 1rem;
-            color: #666;
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -54,11 +57,19 @@
     <div class="login-container">
         <h1>Cornell IPM Guidelines</h1>
         <p>Sign in to access pest management guidelines</p>
-        <button id="loginBtn" onclick="login()">Sign In with Cornell IPM</button>
-        <div class="loading" id="loading">Checking authentication...</div>
+        <button id="loginBtn" onclick="login()">Sign In</button>
     </div>
 
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
     <script src="/js/auth.js"></script>
+    <script>
+        // Auto-check if already logged in
+        window.addEventListener('load', async () => {
+            const status = await checkAuth();
+            if (status.authenticated) {
+                window.location.href = '/index.html';
+            }
+        });
+    </script>
 </body>
 </html>

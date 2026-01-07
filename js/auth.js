@@ -1,74 +1,71 @@
-// Auth0 configuration
+// Auth0 Configuration
 const AUTH0_CONFIG = {
     domain: 'newa-apps.auth0.com',
-    clientId: 'Y0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
+    clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
     authorizationParams: {
-        redirect_uri: window.location.origin + '/callback.html',
-        response_mode: 'query'  // Add this
-    },
-    useRefreshTokens: true,
-    cacheLocation: 'localstorage'
+        redirect_uri: window.location.origin + '/callback.html'
+    }
 };
 
-let auth0Client;
+let auth0Client = null;
 
 // Initialize Auth0 client
 async function initAuth0() {
-    auth0Client = await auth0.createAuth0Client(AUTH0_CONFIG);
+    if (!auth0Client) {
+        auth0Client = await auth0.createAuth0Client(AUTH0_CONFIG);
+    }
+    return auth0Client;
 }
 
 // Login function
 async function login() {
-    await initAuth0();
-    await auth0Client.loginWithRedirect({
-        appState: { returnTo: window.location.pathname }
-    });
+    try {
+        const client = await initAuth0();
+        await client.loginWithRedirect({
+            authorizationParams: {
+                redirect_uri: window.location.origin + '/callback.html'
+            }
+        });
+    } catch (error) {
+        console.error('Login error:', error);
+        alert('Login failed: ' + error.message);
+    }
 }
 
 // Logout function
 async function logout() {
-    await initAuth0();
-    await auth0Client.logout({
-        logoutParams: {
-            returnTo: window.location.origin
-        }
-    });
+    try {
+        const client = await initAuth0();
+        await client.logout({
+            logoutParams: {
+                returnTo: window.location.origin
+            }
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
 }
 
 // Check if user is authenticated
 async function checkAuth() {
-    await initAuth0();
-    
     try {
-        const isAuthenticated = await auth0Client.isAuthenticated();
+        const client = await initAuth0();
+        const isAuthenticated = await client.isAuthenticated();
         
         if (isAuthenticated) {
-            const user = await auth0Client.getUser();
+            const user = await client.getUser();
             return { authenticated: true, user };
         }
         
-        // Try silent authentication (SSO check)
-        try {
-            await auth0Client.getTokenSilently();
-            const user = await auth0Client.getUser();
-            return { authenticated: true, user };
-        } catch (error) {
-            return { authenticated: false };
-        }
+        return { authenticated: false };
     } catch (error) {
-        console.error('Auth check failed:', error);
+        console.error('Auth check error:', error);
         return { authenticated: false };
     }
 }
 
 // Get user info
 async function getUser() {
-    await initAuth0();
-    return await auth0Client.getUser();
-}
-
-// Get access token
-async function getToken() {
-    await initAuth0();
-    return await auth0Client.getTokenSilently();
+    const client = await initAuth0();
+    return await client.getUser();
 }

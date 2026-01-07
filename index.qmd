@@ -3,7 +3,7 @@ title: "Cornell PSEP Guidelines"
 subtitle: "Pest Management Guidelines for New York and Pennsylvania"
 ---
 
-<div id="auth-status"></div>
+<div id="auth-status" style="margin-bottom: 2rem;"></div>
 
 ## Available Publications
 
@@ -30,29 +30,31 @@ Comprehensive pest management recommendations for grape growers in New York and 
 <script src="/js/auth.js"></script>
 <script>
 async function initPage() {
-    const authStatus = await checkAuth();
+    const status = await checkAuth();
     const statusDiv = document.getElementById('auth-status');
     
-    if (authStatus.authenticated) {
+    if (status.authenticated) {
         statusDiv.innerHTML = `
-            <div style="background: #d4edda; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
-                <strong>Welcome, ${authStatus.user.name || authStatus.user.email}!</strong>
-                <button onclick="logout()" style="float: right; background: #B31B1B; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+            <div style="background: #d4edda; padding: 1rem; border-radius: 4px; border: 1px solid #c3e6cb;">
+                <span style="font-weight: bold;">✓ Signed in as ${status.user.email}</span>
+                <button onclick="logout()" style="float: right; background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
                     Sign Out
                 </button>
+                <div style="clear: both;"></div>
             </div>
         `;
     } else {
         statusDiv.innerHTML = `
-            <div style="background: #fff3cd; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
-                <strong>Access restricted content</strong>
+            <div style="background: #fff3cd; padding: 1rem; border-radius: 4px; border: 1px solid #ffeaa7;">
+                <span>🔒 Sign in to access full content</span>
                 <button onclick="login()" style="float: right; background: #B31B1B; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
                     Sign In
                 </button>
+                <div style="clear: both;"></div>
             </div>
         `;
     }
 }
 
-initPage();
+window.addEventListener('load', initPage);
 </script>
