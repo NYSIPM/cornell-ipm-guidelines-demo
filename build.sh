@@ -12,7 +12,7 @@ echo "=== Rendering Root Site ==="
 quarto render
 
 echo "=== Rendering Grape Guidelines ==="
-cd publications/grapes
+cd grapes
 quarto render
 cd ../..
 
