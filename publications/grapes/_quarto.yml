@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: ../../docs/grapes
+  resources:
+  -"*.pdf"
 
 website:
   title: "Grape Guidelines"
@@ -8,8 +10,6 @@ website:
     style: "docked"
     background: light
     contents:
-      - text: "Overview"
-        href: index.qmd
       - section: "Chapters"
         contents: auto
 
