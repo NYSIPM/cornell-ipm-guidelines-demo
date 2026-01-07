@@ -2,6 +2,10 @@
 title: 1. Pesticide Information
 date: 2026-01-06T15:43:00.000-05:00
 ---
+
+<div id="auth-gate"></div>
+<div id="content" style="display: none;">
+
 ## 1.1 Pesticide Classification and Certification
 
 Pesticides can be classified as general use or restricted use. **General use pesticides** may be purchased and used by anyone. **Restricted use pesticides** can only be purchased and used by a certified applicator or used by someone under a certified applicator’s supervision. In some cases, the pesticide label may limit use of a restricted use pesticide to only a certified applicator.
@@ -13,3 +17,31 @@ Pesticides can be classified as general use or restricted use. **General use pes
 In New York State, a **certified commercial applicator**, **certified commercial technician**, or **commercial apprentice** working under the supervision of a certified commercial applicator is allowed to apply any type of pesticide on property that is not a private application (described above) or is a residential application. (A residential application is the use of general use pesticides on property owned or rented by the applicator, excluding establishments selling or processing food and residential structures other than where the applicator lives.) Certified commercial applicators are allowed to purchase restricted use pesticides.
 
 Information on pesticide certification and classification is available from your Cornell Cooperative Extension office (cce.cornell.edu/localoffices), regional NYSDEC pesticide specialist (dec.ny.gov/about/contact-us/statewide-office-information), the Pesticide Applicator Training Manuals (www.cornellstore.com/books/cornell-cooperative-ext-pmep-manuals), or the Cornell Pesticide Safety Education Program (psep.cce.cornell.edu).
+
+</div>
+
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+async function checkPageAccess() {
+    const authStatus = await checkAuth();
+    const gateDiv = document.getElementById('auth-gate');
+    const contentDiv = document.getElementById('content');
+    
+    if (authStatus.authenticated) {
+        contentDiv.style.display = 'block';
+    } else {
+        gateDiv.innerHTML = `
+            <div style="text-align: center; padding: 3rem; background: #f8f9fa; border-radius: 8px; margin: 2rem 0;">
+                <h2>🔒 Authentication Required</h2>
+                <p>Please sign in to access Cornell IPM Guidelines.</p>
+                <button onclick="login()" style="background: #B31B1B; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 4px; cursor: pointer; margin-top: 1rem;">
+                    Sign In with Cornell IPM
+                </button>
+            </div>
+        `;
+    }
+}
+
+checkPageAccess();
+</script>

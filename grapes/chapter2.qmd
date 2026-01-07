@@ -11,3 +11,36 @@ format:
         href: chapter2.pdf
         icon: file-pdf
 ---
+
+<div id="auth-gate"></div>
+<div id="content" style="display: none;">
+
+Sample content
+
+</div>
+
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+async function checkPageAccess() {
+    const authStatus = await checkAuth();
+    const gateDiv = document.getElementById('auth-gate');
+    const contentDiv = document.getElementById('content');
+    
+    if (authStatus.authenticated) {
+        contentDiv.style.display = 'block';
+    } else {
+        gateDiv.innerHTML = `
+            <div style="text-align: center; padding: 3rem; background: #f8f9fa; border-radius: 8px; margin: 2rem 0;">
+                <h2>🔒 Authentication Required</h2>
+                <p>Please sign in to access Cornell IPM Guidelines.</p>
+                <button onclick="login()" style="background: #B31B1B; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 4px; cursor: pointer; margin-top: 1rem;">
+                    Sign In with Cornell IPM
+                </button>
+            </div>
+        `;
+    }
+}
+
+checkPageAccess();
+</script>

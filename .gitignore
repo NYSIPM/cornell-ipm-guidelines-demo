@@ -13,3 +13,6 @@ Thumbs.db
 *~
 /.quarto/
 **/*.quarto_ipynb
+
+# Local Netlify folder
+.netlify

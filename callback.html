@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Login...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .callback-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #B31B1B;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="callback-container">
+        <div class="spinner"></div>
+        <p>Processing login...</p>
+    </div>
+
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+    <script>
+        const AUTH0_CONFIG = {
+            domain: 'newa-apps.auth0.com',
+            clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O', // Same as auth.js
+            authorizationParams: {
+                redirect_uri: window.location.origin + '/callback.html'
+            },
+            useRefreshTokens: true,
+            cacheLocation: 'localstorage'
+        };
+
+        async function handleCallback() {
+            try {
+                const auth0Client = await auth0.createAuth0Client(AUTH0_CONFIG);
+                
+                // Handle the redirect from Auth0
+                await auth0Client.handleRedirectCallback();
+                
+                // Get the return URL from app state
+                const appState = await auth0Client.getAppState();
+                const returnTo = appState?.returnTo || '/';
+                
+                // Redirect to original page
+                window.location.replace(returnTo);
+            } catch (error) {
+                console.error('Callback error:', error);
+                document.querySelector('.callback-container').innerHTML = 
+                    '<p style="color: red;">Login failed. <a href="/">Return home</a></p>';
+            }
+        }
+
+        handleCallback();
+    </script>
+</body>
+</html>

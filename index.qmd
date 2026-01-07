@@ -3,6 +3,8 @@ title: "Cornell PSEP Guidelines"
 subtitle: "Pest Management Guidelines for New York and Pennsylvania"
 ---
 
+<div id="auth-status"></div>
+
 ## Available Publications
 
 ### [Grape Pest Management Guidelines](grapes/index.html)
@@ -23,3 +25,34 @@ Comprehensive pest management recommendations for grape growers in New York and 
 - **Vegetable Guidelines** - 2026 Edition
 
 ---
+
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+async function initPage() {
+    const authStatus = await checkAuth();
+    const statusDiv = document.getElementById('auth-status');
+    
+    if (authStatus.authenticated) {
+        statusDiv.innerHTML = `
+            <div style="background: #d4edda; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                <strong>Welcome, ${authStatus.user.name || authStatus.user.email}!</strong>
+                <button onclick="logout()" style="float: right; background: #B31B1B; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                    Sign Out
+                </button>
+            </div>
+        `;
+    } else {
+        statusDiv.innerHTML = `
+            <div style="background: #fff3cd; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                <strong>Access restricted content</strong>
+                <button onclick="login()" style="float: right; background: #B31B1B; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                    Sign In
+                </button>
+            </div>
+        `;
+    }
+}
+
+initPage();
+</script>

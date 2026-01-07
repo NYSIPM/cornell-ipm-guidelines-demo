@@ -12,6 +12,9 @@ format:
         icon: file-pdf
 ---
 
+<div id="auth-gate"></div>
+<div id="content" style="display: none;">
+
 ## 4.1 Pest Information – Insects
 
 ### 4.1.1 Banded Grape Bug (BGB)
@@ -135,3 +138,31 @@ Yellowjackets and some other types of social wasps can be problematic at or near
 Yellowjackets and other social wasps can also create significant nuisance issues. Management options are limited. No insecticides are labeled to control yellowjackets in vineyards, although some of the insecticides labeled for use against spotted wing drosophila, such as *Mustang Maxx and Delegate, may provide some short-term knock down of foraging yellowjackets. Finding nests earlier in the season and treating with labeled insecticides may also help reduce overall populations closer to harvest. 
 
 And there is some research showing that using traps with an attractive lure and killing agent can help reduce yellowjacket populations. Finally, during the 2023 and 2024 field seasons we tested the use of side netting with smaller mesh size (3 X 5 mm) and found a significant reduction in yellowjacket feeding damage compared to vines without netting. Overall, however, more research is needed geared toward developing management tactics.
+
+</div>
+
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+async function checkPageAccess() {
+    const authStatus = await checkAuth();
+    const gateDiv = document.getElementById('auth-gate');
+    const contentDiv = document.getElementById('content');
+    
+    if (authStatus.authenticated) {
+        contentDiv.style.display = 'block';
+    } else {
+        gateDiv.innerHTML = `
+            <div style="text-align: center; padding: 3rem; background: #f8f9fa; border-radius: 8px; margin: 2rem 0;">
+                <h2>🔒 Authentication Required</h2>
+                <p>Please sign in to access Cornell IPM Guidelines.</p>
+                <button onclick="login()" style="background: #B31B1B; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 4px; cursor: pointer; margin-top: 1rem;">
+                    Sign In with Cornell IPM
+                </button>
+            </div>
+        `;
+    }
+}
+
+checkPageAccess();
+</script>
