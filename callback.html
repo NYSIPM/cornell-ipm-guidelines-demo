@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processing Login...</title>
     <style>
         body {
@@ -15,10 +14,10 @@
             background: #f5f5f5;
         }
         .container {
+            text-align: center;
             background: white;
             padding: 2rem;
             border-radius: 8px;
-            text-align: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .spinner {
@@ -44,49 +43,38 @@
 
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
     <script>
-        const CONFIG = {
-            domain: 'newa-apps.auth0.com',
-            clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
-            authorizationParams: {
-                redirect_uri: window.location.origin + '/callback.html'
-            }
-        };
-
-        async function handleCallback() {
+        (async function() {
             const messageEl = document.getElementById('message');
             
             try {
-                // Create Auth0 client
-                const auth0 = await auth0.createAuth0Client(CONFIG);
+                // Create client with same config as main app
+                const auth0Client = await auth0.createAuth0Client({
+                    domain: 'newa-apps.auth0.com',
+                    clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
+                    authorizationParams: {
+                        redirect_uri: window.location.origin + '/callback.html'
+                    },
+                    cacheLocation: 'localstorage'
+                });
                 
-                // Handle the callback
-                const result = await auth0.handleRedirectCallback();
+                // Handle callback
+                await auth0Client.handleRedirectCallback();
                 
-                messageEl.textContent = 'Login successful! Redirecting...';
+                messageEl.textContent = 'Login successful!';
                 
-                // Redirect to home or original page
-                const targetUrl = result.appState?.targetUrl || '/index.html';
-                window.location.href = targetUrl;
+                // Redirect home
+                window.location.replace('/index.html');
                 
             } catch (error) {
                 console.error('Callback error:', error);
                 messageEl.textContent = 'Login failed: ' + error.message;
                 
+                // Still redirect after showing error
                 setTimeout(() => {
-                    window.location.href = '/index.html';
+                    window.location.replace('/index.html');
                 }, 3000);
             }
-        }
-
-        // Run when page loads
-        if (window.location.search.includes('code=') || window.location.search.includes('error=')) {
-            handleCallback();
-        } else {
-            document.getElementById('message').textContent = 'No authentication data found. Redirecting...';
-            setTimeout(() => {
-                window.location.href = '/index.html';
-            }, 2000);
-        }
+        })();
     </script>
 </body>
 </html>

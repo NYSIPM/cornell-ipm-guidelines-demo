@@ -4,7 +4,9 @@ const AUTH0_CONFIG = {
     clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
     authorizationParams: {
         redirect_uri: window.location.origin + '/callback.html'
-    }
+    },
+    cacheLocation: 'localstorage',  // Try 'memory' if this doesn't work
+    useRefreshTokens: false  // Disable for now to simplify
 };
 
 let auth0Client = null;
@@ -21,11 +23,7 @@ async function initAuth0() {
 async function login() {
     try {
         const client = await initAuth0();
-        await client.loginWithRedirect({
-            authorizationParams: {
-                redirect_uri: window.location.origin + '/callback.html'
-            }
-        });
+        await client.loginWithRedirect();  // Simplified - no extra params
     } catch (error) {
         console.error('Login error:', error);
         alert('Login failed: ' + error.message);
@@ -36,7 +34,7 @@ async function login() {
 async function logout() {
     try {
         const client = await initAuth0();
-        await client.logout({
+        client.logout({
             logoutParams: {
                 returnTo: window.location.origin
             }
@@ -62,10 +60,4 @@ async function checkAuth() {
         console.error('Auth check error:', error);
         return { authenticated: false };
     }
-}
-
-// Get user info
-async function getUser() {
-    const client = await initAuth0();
-    return await client.getUser();
 }
