@@ -1,8 +1,7 @@
 ---
 title: 4. Vineyard Insect & Mite Management
+subtitle: ""
 ---
-# 4. Vineyard Insect & Mite Management
-
 ## 4.1 Pest Information – Insects
 
 ### 4.1.1 Banded Grape Bug (BGB)
