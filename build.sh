@@ -8,10 +8,6 @@ export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
 
 quarto --version
 
-echo "=== Installing TinyTeX for PDF generation ==="
-quarto install tinytex --no-prompt
-echo "✓ TinyTeX installed successfully"
-
 echo "=== Rendering Root Site ==="
 quarto render
 
@@ -29,10 +25,6 @@ echo "=== Ensuring grapes output is in correct location ==="
 # but let's verify it's there
 if [ -d "docs/grapes" ]; then
   echo "✓ Grapes guidelines rendered successfully"
-  echo "Checking for PDFs:"
-  ls -la docs/grapes/*.pdf 2>/dev/null || echo "No PDFs found"
-  echo ""
-  echo "All grapes files:"
   ls -la docs/grapes/
 else
   echo "✗ WARNING: docs/grapes not found!"
