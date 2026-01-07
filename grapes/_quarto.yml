@@ -6,6 +6,18 @@ project:
 
 website:
   title: "Grape Guidelines"
+  navbar:
+    left:
+      - text: "Overview"
+        href: index.qmd
+      - text: "Pesticide Information"
+        href: chapter1.qmd
+      - text: "Introduction"
+        href: chapter2.qmd
+      - text: "Insect Management"
+        href: chapter4.qmd
+      - text: "Pesticide Tables"
+        href: table.qmd
   sidebar:
     style: "docked"
     background: light
