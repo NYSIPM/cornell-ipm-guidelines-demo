@@ -3,8 +3,8 @@ project:
   output-dir: docs
   resources:
     - "admin/**"
-    - "js/**"
     - "*.html"
+    - "js/**"
 
 
 website:
