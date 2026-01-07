@@ -2,32 +2,31 @@ project:
   type: website
   output-dir: ../docs/grapes
   resources:
-    - "*.pdf"        # ← Add this line
+    - "*.pdf"
 
 website:
   title: "Grape Guidelines"
   navbar:
     left:
-      - text: "Overview"
-        href: index.qmd
-      - text: "Pesticide Information"
-        href: chapter1.qmd
-      - text: "Introduction"
-        href: chapter2.qmd
-      - text: "Insect Management"
-        href: chapter4.qmd
-      - text: "Pesticide Tables"
-        href: table.qmd
-  sidebar:
-    style: "docked"
-    background: light
-    contents:
-      - section: "Chapters"
-        contents: auto
+      - text: "← Back to Home"
+        href: ../index.html
+      - text: "Chapters"
+        menu:
+          - text: "Overview"
+            href: index.qmd
+          - text: "---"
+          - text: "1. Pesticide Information"
+            href: chapter1.qmd
+          - text: "2. Introduction"
+            href: chapter2.qmd
+          - text: "4. Insect Management"
+            href: chapter4.qmd
+          - text: "5. Pesticide Tables"
+            href: table.qmd
 
 format:
   html:
     theme: cosmo
     toc: true
     toc-location: left
-  # NO pdf: section here!
+    toc-title: "On this page"
