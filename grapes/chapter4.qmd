@@ -150,6 +150,7 @@ async function checkPageAccess() {
     const contentDiv = document.getElementById('content');
     
     if (authStatus.authenticated) {
+        gateDiv.style.display = 'none';  // Don't forget this!
         contentDiv.style.display = 'block';
     } else {
         gateDiv.innerHTML = `
