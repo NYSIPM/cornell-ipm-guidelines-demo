@@ -14,8 +14,6 @@ website:
         href: index.qmd
       - text: "Grape Guidelines"
         href: grapes/index.html  # Listing page
-    right:
-      - text: '<div id="auth-status">Loading...</div>'
 
 format:
   html:
@@ -24,10 +22,22 @@ format:
     include-in-header:
       text: |
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
-        <script src="../js/auth.js"></script>
+        <script src="/js/auth.js"></script>
+    include-after-body:
+      text: |
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            updateNavAuthStatus();
+            // Inject auth status into navbar
+            const navbar = document.querySelector('.navbar-nav.ms-auto');
+            if (navbar) {
+                const authStatusLi = document.createElement('li');
+                authStatusLi.className = 'nav-item';
+                authStatusLi.innerHTML = '<div id="auth-status" style="display: flex; align-items: center; padding: 0 15px;"></div>';
+                navbar.appendChild(authStatusLi);
+                
+                // Now update the status
+                updateNavAuthStatus();
+            }
         });
         
         async function updateNavAuthStatus() {
@@ -39,9 +49,9 @@ format:
                 
                 if (authStatus.authenticated) {
                     const email = authStatus.user?.email || 'User';
-                    const displayName = email.split('@')[0]; // Show just the username part
+                    const displayName = email.split('@')[0];
                     authStatusDiv.innerHTML = `
-                        <span style="color: #28a745; margin-right: 10px;">
+                        <span style="color: #28a745; margin-right: 10px; font-size: 14px;">
                             ✓ ${displayName}
                         </span>
                         <button onclick="logout()" 
