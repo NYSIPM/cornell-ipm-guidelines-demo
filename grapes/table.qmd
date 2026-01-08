@@ -5,7 +5,7 @@ format:
     theme: cosmo
     toc: true
     toc-depth: 3
-    code-fold: false
+    page-layout: article
 ---
 
 <div id="auth-gate"></div>
