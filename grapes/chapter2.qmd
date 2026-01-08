@@ -28,14 +28,25 @@ async function checkPageAccess() {
     const contentDiv = document.getElementById('content');
     
     if (authStatus.authenticated) {
+        gateDiv.style.display = 'none';
         contentDiv.style.display = 'block';
     } else {
         gateDiv.innerHTML = `
-            <div style="text-align: center; padding: 3rem; background: #f8f9fa; border-radius: 8px; margin: 2rem 0;">
-                <h2>🔒 Authentication Required</h2>
-                <p>Please sign in to access Cornell IPM Guidelines.</p>
-                <button onclick="login()" style="background: #B31B1B; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 4px; cursor: pointer; margin-top: 1rem;">
-                    Sign In with Cornell IPM
+            <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; 
+                        padding: 20px 30px; margin: 2rem 0; display: flex; align-items: center; 
+                        justify-content: space-between; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 24px;">🔒</span>
+                    <span style="color: #856404; font-size: 16px;">Sign in to access full content</span>
+                </div>
+                <button onclick="login()" 
+                        style="background: #B31B1B; color: white; border: none; 
+                               padding: 10px 24px; font-size: 16px; border-radius: 6px; 
+                               cursor: pointer; font-weight: 500; white-space: nowrap;
+                               transition: background 0.2s;"
+                        onmouseover="this.style.background='#8B1515'" 
+                        onmouseout="this.style.background='#B31B1B'">
+                    Sign In
                 </button>
             </div>
         `;
