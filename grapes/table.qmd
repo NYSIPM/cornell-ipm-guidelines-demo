@@ -11,12 +11,12 @@ format:
 <div id="auth-gate"></div>
 <div id="content" style="display: none;">
 
-# Overview
+## 5.1  Overview
 
 This section provides comprehensive information on insecticides registered for use in New York and Pennsylvania grape production. Use the interactive table below to find products suitable for your pest management needs.
 
 ::: {.callout-tip}
-## How to Use the Interactive Table
+## 5.2 How to Use the Interactive Table
 
 - **Search**: Use the search box to find specific products or active ingredients
 - **Filter by Pest**: Click column headers to sort by effectiveness rating
@@ -24,7 +24,7 @@ This section provides comprehensive information on insecticides registered for u
 - **Export**: Download filtered results (feature coming soon)
 :::
 
-## Interactive Pesticide Lookup Table
+## 5.3 Interactive Pesticide Lookup Table
 
 Use the filters and search below to quickly find the right insecticide for your needs.
 
@@ -78,7 +78,7 @@ Use the filters and search below to quickly find the right insecticide for your 
   </thead>
 </table>
 
-## Abbreviations and Symbols Used in This Publication
+## 5.4 Abbreviations and Symbols Used in This Publication
 
 | Abbreviation | Meaning                      | Abbreviation | Meaning                      | Abbreviation | Meaning                      |
 |--------------|------------------------------|--------------|------------------------------|--------------|------------------------------|
@@ -517,9 +517,9 @@ $(document).ready(function() {
 - **+** = Slightly effective
 - **0** = Not effective or not labeled
 
-## Important Notes
+## 5.5 Important Notes
 
-### Resistance Management
+### 5.5.1 Resistance Management
 
 ::: {.callout-warning}
 ## Resistance Concerns
@@ -532,13 +532,13 @@ Problems controlling vinegar flies (Drosophila melanogaster) with pyrethroid ins
 - Monitor for control failures
 :::
 
-### Restricted Use Pesticides
+### 5.5.2 Restricted Use Pesticides
 
 - **\*** = Federal restricted use pesticide; may be purchased and used only by certified applicators
 - **\*NY** = Restricted use pesticide in New York State  
 - **†** = Not for use in Nassau and Suffolk Counties
 
-## Integrated Pest Management (IPM)
+## 5.6 Integrated Pest Management (IPM)
 
 Before reaching for chemical controls, consider:
 
@@ -548,13 +548,13 @@ Before reaching for chemical controls, consider:
 4. **Cultural Practices**: Sanitation, pruning, and canopy management can reduce pest pressure
 5. **Resistance Management**: Rotate insecticide classes (IRAC groups) to prevent resistance
 
-## Additional Resources
+## 5.7 Additional Resources
 
 - **Cornell IPM Grape Resources**: [nysipm.cornell.edu/agriculture/grapes](https://nysipm.cornell.edu/agriculture/grapes)
 - **Penn State Tree Fruit Production Guide**: [extension.psu.edu/tree-fruit-production-guide](https://extension.psu.edu/tree-fruit-production-guide)
 - **IRAC Mode of Action Classification**: [irac-online.org](https://irac-online.org)
 
-## Emergency Contact Numbers
+## 5.8 Emergency Contact Numbers
 
 If you experience a pesticide exposure, contact:
 
