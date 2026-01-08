@@ -1,6 +1,15 @@
 ---
 title: 1. Pesticide Information
-date: 2026-01-06T15:43:00.000-05:00
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    page-layout: article
+    other-links:
+      - text: "📄 Download PDF"
+        href: chapter1.pdf
+        icon: file-pdf
 ---
 
 <div id="auth-gate"></div>
