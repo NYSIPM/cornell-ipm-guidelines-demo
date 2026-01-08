@@ -13,7 +13,7 @@ website:
       - text: "Home"
         href: index.qmd
       - text: "Grape Guidelines"
-        href: grapes/index.html  # Listing page
+        href: grapes/index.html
 
 format:
   html:
@@ -27,25 +27,49 @@ format:
       text: |
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Inject auth status into navbar
-            const navbar = document.querySelector('.navbar-nav.ms-auto');
-            if (navbar) {
+            console.log('DOM loaded, looking for navbar...');
+            
+            // Debug: Let's see what navbar elements exist
+            const navbar = document.querySelector('.navbar');
+            console.log('Navbar found:', navbar);
+            
+            const navbarNav = document.querySelectorAll('.navbar-nav');
+            console.log('All navbar-nav elements:', navbarNav);
+            
+            // Try multiple selectors
+            let targetNav = document.querySelector('.navbar-nav.ms-auto') 
+                         || document.querySelector('.navbar-nav.navbar-right')
+                         || document.querySelector('.navbar-right')
+                         || document.querySelector('#navbarCollapse .navbar-nav:last-child')
+                         || document.querySelector('.navbar-nav');
+            
+            console.log('Target nav element:', targetNav);
+            
+            if (targetNav) {
                 const authStatusLi = document.createElement('li');
                 authStatusLi.className = 'nav-item';
-                authStatusLi.innerHTML = '<div id="auth-status" style="display: flex; align-items: center; padding: 0 15px;"></div>';
-                navbar.appendChild(authStatusLi);
+                authStatusLi.innerHTML = '<div id="auth-status" style="display: flex; align-items: center; padding: 0 15px;">Testing...</div>';
+                targetNav.appendChild(authStatusLi);
+                console.log('Auth status element added');
                 
-                // Now update the status
-                updateNavAuthStatus();
+                // Update status
+                setTimeout(updateNavAuthStatus, 100);
+            } else {
+                console.error('Could not find navbar target');
             }
         });
         
         async function updateNavAuthStatus() {
+            console.log('updateNavAuthStatus called');
             const authStatusDiv = document.getElementById('auth-status');
-            if (!authStatusDiv) return;
+            if (!authStatusDiv) {
+                console.error('auth-status div not found');
+                return;
+            }
             
             try {
                 const authStatus = await checkAuth();
+                console.log('Auth status:', authStatus);
                 
                 if (authStatus.authenticated) {
                     const email = authStatus.user?.email || 'User';
