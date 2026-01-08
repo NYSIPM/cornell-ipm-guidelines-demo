@@ -27,49 +27,32 @@ format:
       text: |
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, looking for navbar...');
+            // Find the navbar container
+            const navbarCollapse = document.querySelector('#navbarCollapse') || document.querySelector('.navbar-collapse');
             
-            // Debug: Let's see what navbar elements exist
-            const navbar = document.querySelector('.navbar');
-            console.log('Navbar found:', navbar);
-            
-            const navbarNav = document.querySelectorAll('.navbar-nav');
-            console.log('All navbar-nav elements:', navbarNav);
-            
-            // Try multiple selectors
-            let targetNav = document.querySelector('.navbar-nav.ms-auto') 
-                         || document.querySelector('.navbar-nav.navbar-right')
-                         || document.querySelector('.navbar-right')
-                         || document.querySelector('#navbarCollapse .navbar-nav:last-child')
-                         || document.querySelector('.navbar-nav');
-            
-            console.log('Target nav element:', targetNav);
-            
-            if (targetNav) {
+            if (navbarCollapse) {
+                // Create a new navbar-nav for the right side
+                const rightNav = document.createElement('ul');
+                rightNav.className = 'navbar-nav ms-auto';
+                
                 const authStatusLi = document.createElement('li');
                 authStatusLi.className = 'nav-item';
-                authStatusLi.innerHTML = '<div id="auth-status" style="display: flex; align-items: center; padding: 0 15px;">Testing...</div>';
-                targetNav.appendChild(authStatusLi);
-                console.log('Auth status element added');
+                authStatusLi.innerHTML = '<div id="auth-status" style="display: flex; align-items: center;"></div>';
+                
+                rightNav.appendChild(authStatusLi);
+                navbarCollapse.appendChild(rightNav);
                 
                 // Update status
                 setTimeout(updateNavAuthStatus, 100);
-            } else {
-                console.error('Could not find navbar target');
             }
         });
         
         async function updateNavAuthStatus() {
-            console.log('updateNavAuthStatus called');
             const authStatusDiv = document.getElementById('auth-status');
-            if (!authStatusDiv) {
-                console.error('auth-status div not found');
-                return;
-            }
+            if (!authStatusDiv) return;
             
             try {
                 const authStatus = await checkAuth();
-                console.log('Auth status:', authStatus);
                 
                 if (authStatus.authenticated) {
                     const email = authStatus.user?.email || 'User';
