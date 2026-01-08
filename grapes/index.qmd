@@ -11,7 +11,7 @@ format:
 <div id="auth-gate"></div>
 <div id="content" style="display: none;">
 
-## Authors
+# Authors
 
 **Bryan Brown**  
 Cornell IPM, Cornell AgriTech, Geneva, NY  
@@ -49,7 +49,7 @@ Department of Entomology, Penn State University, North East, PA
 School of Integrative Plant Science, Horticulture Section, Geneva, NY  
 *Weed management*
 
-## Acknowledgments
+# Acknowledgments
 
 Special appreciation is extended to the following for their contributions to this publication:
 
@@ -104,7 +104,7 @@ Cornell Cooperative Extension – Suffolk County, Riverhead, NY
 **Wayne F. Wilcox** *(retired)*  
 School of Integrative Plant Sciences, Plant Pathology and Plant-Microbe Biology Section, Geneva, NY
 
-## Abbreviations and Symbols Used in This Publication
+# Abbreviations and Symbols Used in This Publication
 
 | Abbreviation | Meaning                      | Abbreviation | Meaning                      | Abbreviation | Meaning                      |
 |--------------|------------------------------|--------------|------------------------------|--------------|------------------------------|
