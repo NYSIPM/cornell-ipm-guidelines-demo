@@ -7,3 +7,5 @@ date: 2026-01-09T11:29:00.000-05:00
 Here is some text.
 
 Here is some more Text
+
+![Front Cover](/images/grapes_cover2025.jpg "Front Cover")
