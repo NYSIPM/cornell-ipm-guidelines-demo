@@ -20,6 +20,7 @@ format:
 </div>
 
 
+
 <script>
 async function checkPageAccess() {
     const gateDiv = document.getElementById('auth-gate');
