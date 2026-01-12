@@ -12,17 +12,17 @@ echo "=== Rendering Root Site ==="
 quarto render
 
 echo "=== Rendering Grape Guidelines ==="
-cd grapes
+cd publications/grapes
 quarto render
-cd ..
+cd ../..
 
 echo "=== Copying admin folder ==="
 mkdir -p docs/admin
 cp -r admin/* docs/admin/
 
 echo "=== Copying PDFs from source to output ==="
-mkdir -p docs/grapes
-if cp grapes/*.pdf docs/grapes/ 2>/dev/null; then
+mkdir -p docs/publications/grapes
+if cp publications/grapes/*.pdf docs/publications/grapes/ 2>/dev/null; then
   echo "✓ PDFs copied successfully"
   ls -la docs/grapes/*.pdf
 else

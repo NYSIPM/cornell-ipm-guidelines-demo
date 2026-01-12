@@ -1,0 +1,67 @@
+---
+title: 1. Pesticide Information
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    page-layout: article
+    other-links:
+      - text: "📄 Download PDF"
+        href: chapter1.pdf
+        icon: file-pdf
+---
+
+<div id="auth-gate"></div>
+<div id="content" style="display: none;">
+
+## 1.1 Pesticide Classification and Certification
+
+Pesticides can be classified as general use or restricted use. **General use pesticides** may be purchased and used by anyone. **Restricted use pesticides** can only be purchased and used by a certified applicator or used by someone under a certified applicator’s supervision. In some cases, the pesticide label may limit use of a restricted use pesticide to only a certified applicator.
+
+### 1.1.1 Certification in New York State
+
+**Private applicators** use or supervise the use of pesticides to produce agricultural commodities or forest crops on land owned or rented by the private applicator or their employer. If a private applicator wants to use or supervise the use of restricted use pesticides, they need to be a **certified private applicator**. Certified private applicators are also allowed to purchase restricted use pesticides. Certification is not needed if a private applicator uses general use pesticides.
+
+In New York State, a **certified commercial applicator**, **certified commercial technician**, or **commercial apprentice** working under the supervision of a certified commercial applicator is allowed to apply any type of pesticide on property that is not a private application (described above) or is a residential application. (A residential application is the use of general use pesticides on property owned or rented by the applicator, excluding establishments selling or processing food and residential structures other than where the applicator lives.) Certified commercial applicators are allowed to purchase restricted use pesticides.
+
+Information on pesticide certification and classification is available from your Cornell Cooperative Extension office (cce.cornell.edu/localoffices), regional NYSDEC pesticide specialist (dec.ny.gov/about/contact-us/statewide-office-information), the Pesticide Applicator Training Manuals (www.cornellstore.com/books/cornell-cooperative-ext-pmep-manuals), or the Cornell Pesticide Safety Education Program (psep.cce.cornell.edu).
+
+</div>
+
+<script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+async function checkPageAccess() {
+    const authStatus = await checkAuth();
+    const gateDiv = document.getElementById('auth-gate');
+    const contentDiv = document.getElementById('content');
+    
+    if (authStatus.authenticated) {
+        gateDiv.style.display = 'none';
+        contentDiv.style.display = 'block';
+    } else {
+        gateDiv.innerHTML = `
+            <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; 
+                        padding: 20px 30px; margin: 2rem 0; display: flex; align-items: center; 
+                        justify-content: space-between; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 24px;">🔒</span>
+                    <span style="color: #856404; font-size: 16px;">Sign in to access full content</span>
+                </div>
+                <button onclick="login()" 
+                        style="background: #B31B1B; color: white; border: none; 
+                               padding: 10px 24px; font-size: 16px; border-radius: 6px; 
+                               cursor: pointer; font-weight: 500; white-space: nowrap;
+                               transition: background 0.2s;"
+                        onmouseover="this.style.background='#8B1515'" 
+                        onmouseout="this.style.background='#B31B1B'">
+                    Sign In
+                </button>
+            </div>
+        `;
+    }
+}
+
+checkPageAccess();
+</script>

@@ -1,28 +1,39 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: ../docs/grapes
   resources:
-    - "admin/**"
-    - "*.html"
-    - "js/**"
+    - "*.pdf"
 
 website:
-  title: "Cornell IPM Guidelines Demo"
+  title: "Cornell IPM | Grape Guidelines"
   navbar:
     left:
-      - text: "Home"
-        href: index.qmd
-      - text: "Grape Guidelines"
-        href: publications/grapes/index.html
+      - text: "← Back to Guidelines Home"
+        href: ../index.html
+      - text: "Chapters"
+        menu:
+          - text: "Overview"
+            href: index.qmd
+          - text: "---"
+          - text: "1. Pesticide Information"
+            href: chapter1.qmd
+          - text: "2. Introduction"
+            href: chapter2.qmd
+          - text: "4. Insect Management"
+            href: chapter4.qmd
+          - text: "5. Pesticide Tables"
+            href: table.qmd
 
 format:
   html:
     theme: cosmo
     toc: true
+    toc-location: left
+    toc-title: "On this page"
     include-in-header:
       text: |
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
-        <script src="/js/auth.js"></script>
+        <script src="../js/auth.js"></script>
     include-after-body:
       text: |
         <script>
