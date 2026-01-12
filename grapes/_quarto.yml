@@ -23,8 +23,6 @@ website:
             href: chapter4.qmd
           - text: "5. Pesticide Tables"
             href: table.qmd
-            text: "My Page"
-            href: My-Page.qmd
 
 format:
   html:
