@@ -9,7 +9,7 @@ website:
   navbar:
     left:
       - text: "← Back to Guidelines Home"
-        href: ../index.html
+        href: ../../index.html
       - text: "Chapters"
         menu:
           - text: "Overview"
@@ -23,6 +23,8 @@ website:
             href: chapter4.qmd
           - text: "5. Pesticide Tables"
             href: table.qmd
+            text: "6. My Page"
+            href: my-page.qmd
 
 format:
   html:
