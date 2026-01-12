@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   `;
 
   try {
-    const authStatus = await checkAuth();
+    const authStatus = await window.checkAuth();
 
     if (authStatus?.authenticated) {
       gateDiv.style.display = 'none';

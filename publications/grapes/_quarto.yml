@@ -36,7 +36,25 @@ format:
     include-in-header:
       text: |
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
-        <script src="/js/auth.js"></script>
+        <!-- Load your existing auth file (as-is) -->
+        <script src="/js/auth.js" defer></script>
+        <!-- Bridge: expose functions globally no matter how auth.js is authored -->
+        <script type="module">
+          // If auth.js is an ES module, import it and attach its exports to window.
+          try {
+            const mod = await import("/js/auth.js");
+            window.checkAuth ??= mod.checkAuth;
+            window.login ??= mod.login;
+            window.logout ??= mod.logout;
+          } catch (e) {
+            // Ignore: auth.js might not be a module (in that case it should define globals itself)
+          }
+
+          // If auth.js attaches under a namespace like window.auth, map it to globals.
+          if (!window.checkAuth && window.auth?.checkAuth) window.checkAuth = window.auth.checkAuth;
+          if (!window.login && window.auth?.login) window.login = window.auth.login;
+          if (!window.logout && window.auth?.logout) window.logout = window.auth.logout;
+        </script>
 
     include-after-body:
       text: |
