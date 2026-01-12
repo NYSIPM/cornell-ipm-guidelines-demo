@@ -1,0 +1,13 @@
+---
+title: "All Chapters"
+
+listing:
+  contents: .
+  sort: "title"
+  fields: [title, subtitle, date]
+  exclude:
+    - index.qmd
+    - chapters.qmd
+---
+
+This page automatically lists all available guideline chapters.

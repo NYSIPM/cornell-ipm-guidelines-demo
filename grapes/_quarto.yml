@@ -4,6 +4,7 @@ project:
   resources:
     - "*.pdf"
 
+
 website:
   title: "Cornell IPM | Grape Guidelines"
   navbar:
