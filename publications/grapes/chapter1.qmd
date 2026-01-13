@@ -29,4 +29,4 @@ Information on pesticide certification and classification is available from your
 
 </div>
 
-<script src="../../js/gate.js" defer></script>
+
