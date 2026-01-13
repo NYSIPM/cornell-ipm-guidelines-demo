@@ -9,7 +9,7 @@ website:
   navbar:
     left:
       - text: "← Back to Guidelines Home"
-        href: /index.html
+        href: ../../index.html
 
       - text: "Chapters"
         menu:
