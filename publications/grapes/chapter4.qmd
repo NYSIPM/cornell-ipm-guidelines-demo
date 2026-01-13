@@ -19,8 +19,6 @@ format:
 
 ### 4.1.1 Banded Grape Bug (BGB)
 
-1111111
-
 BLAH BLAH Banded grape bug (BGB) is a sporadic pest of grapes in the Finger Lakes and Lake Erie regions and does not require treatment in most years. Nymphs of this insect emerge in the spring and feed on flowers and young berries, using their sucking and piercing mouth parts. The nymphs range in size from 1/8- to 1/2-inch in length, depending on the stage. Injury by small nymphs, occurring between 3- to 5-inch shoot growth (around May 15) and early June, results in floret drop, reduced berry set, and fewer clusters. Subsequent feeding by larger nymphs and adults does not affect cluster development. Economic injury can occur when more than 1 nymph per 10 shoots are present. This injury only occurs in the prebloom stages. Subsequent feeding by nymphs does not reduce berry set. Adults appear to be predaceous and do not cause injury to berries. Look for nymphs on grape clusters and shoot tips prior to the bloom period. They can be recognized by their long, banded antennae.
 
 ### Brown Marmorated Stink Bug (BMSB)
