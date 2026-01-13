@@ -1,0 +1,15 @@
+---
+title: Chapter 3
+date: 2026-01-13T15:50:00.000-05:00
+---
+# 3.1 Pest Information – Diseases
+
+Several important insects and diseases that occur in New York and Pennsylvania vineyards are described below to help growers manage these pests with practices and pesticides appropriate for their production systems.
+
+[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[](<>)[ANGULAR LEAF SCORCH](<>) was first described in 1985. Symptoms of this fungal disease are similar to those of rotbrenner, a disease of grapevines found in the cool grape-growing regions of Europe, which is caused by a very closely related fungus. Angular leaf scorch occurs sporadically and is most likely to become a problem in years when high rainfall occurs between bud break and early summer, especially if this should happen in consecutive years. Riesling appears to be a particularly susceptible cultivar.
+
+Disease symptoms occur mainly on the leaves and first appear as faint chlorotic spots. As these lesions grow larger, they change from yellow to reddish-brown and the margin often becomes sharply defined (depending on the cultivar, the margin may be yellow, red, or absent). Lesions are confined by major veins, becoming "angular" or wedge-shaped. They eventually kill the infected tissue, sometimes crossing the major veins in the process and often causing diseased leaves to fall prematurely. 
+
+The fungus survives winter in infected leaves on the vineyard floor. Mature spores are ready for discharge in spring when grape buds begin to grow. During rainfall, spores are released into the air from fruiting structures, and susceptible tissue is infected. 
+
+Cultural practices that increase air circulation through the canopy can shorten periods of leaf wetness that favor disease development. Destruction of leaf litter by cultivation, before bud break, can also reduce disease pressure. Where needed, effective fungicides applied from the 3-inch stage and continuing through fruit set will provide significant control. Although there are no specific labels for the control of this disease, mancozeb products (e.g., Dithane, Penncozeb) applied according to label directions to control Phomopsis, black rot, and downy mildew also have provided good control of angular leaf scorch in commercial experience. In Europe, the strobilurin fungicides (Abound, Flint, Pristine, *NYSovran) have provided good control of the closely related disease, rotbrenner. However, experience with angular leaf scorch is lacking. The DMI fungicide, difenoconazole (Revus Top, Quadris Top; CAUTION: Quadris Top causes injury to Concord and some other cultivars) is labeled for control of rotbrenner and should provide significant post-infection control of this disease in addition to moderate protective activity (excellent protective activity for Quadris Top). See Table 3.1.1 for varietal susceptibility to this disease.
