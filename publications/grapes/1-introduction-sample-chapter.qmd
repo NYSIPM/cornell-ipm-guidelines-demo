@@ -2,6 +2,8 @@
 title: 1. Introduction sample chapter
 date: 2026-01-13T11:57:00.000-05:00
 ---
+<div id="content" style="display: none;">
+
 ## 1.1 Pesticide Classification and Certification
 
 Pesticides can be classified as general use or restricted use. General use pesticides may be purchased and used by anyone. Restricted use pesticides can only be purchased and used by a certified applicator or used by someone under a certified applicator’s supervision. In some cases, the pesticide label may limit use of a restricted use pesticide to only a certified applicator.
@@ -31,3 +33,52 @@ Businesses must meet the requirements for comprehensive general liability insura
 **Registered technicians** –  Registered technicians are those applicators who have received training as required under subsection 128.51 of the Pennsylvania Pesticide Rules and Regulations. These applicators have completed minimum training requirements under the direction of an applicator with at least one year’s certification in the category for which the technician is being trained. They must also be under the supervision of a certified applicator who can be on site within five hours if necessary. Registered technicians must be re-registered and receive updated training on an annual basis.
 
 **Noncertified Applicators** – Applications may be made by an individual who is neither certified nor a registered technician if and only if that individual is under the direct supervision of a certified applicator who is physically present and within sight of the application being made.
+
+</div>
+
+<script>
+async function checkPageAccess() {
+    const gateDiv = document.getElementById('auth-gate');
+    const contentDiv = document.getElementById('content');
+
+    try {
+        const authStatus = await checkAuth();
+
+        if (authStatus && authStatus.authenticated) {
+            gateDiv.style.display = 'none';
+            contentDiv.style.display = 'block';
+        } else {
+            gateDiv.innerHTML = `
+                <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; 
+                            padding: 20px 30px; margin: 2rem 0; display: flex; align-items: center; 
+                            justify-content: space-between; gap: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 24px;">🔒</span>
+                        <span style="color: #856404; font-size: 16px;">Sign in to access full content</span>
+                    </div>
+                    <button onclick="login()" 
+                            style="background: #B31B1B; color: white; border: none; 
+                                   padding: 10px 24px; font-size: 16px; border-radius: 6px; 
+                                   cursor: pointer; font-weight: 500; white-space: nowrap;
+                                   transition: background 0.2s;"
+                            onmouseover="this.style.background='#8B1515'" 
+                            onmouseout="this.style.background='#B31B1B'">
+                        Sign In
+                    </button>
+                </div>
+            `;
+        }
+    } catch (err) {
+        console.error("Auth gate failed:", err);
+        gateDiv.innerHTML = `
+            <div style="background:#f8d7da; border:1px solid #f5c2c7; border-radius:8px; padding:16px; margin:1rem 0;">
+                <strong>Auth error:</strong> ${String(err?.message || err)}
+            </div>
+        `;
+        // Optional while debugging:
+        // contentDiv.style.display = 'block';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", checkPageAccess);
+</script>
