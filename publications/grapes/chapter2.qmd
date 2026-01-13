@@ -17,12 +17,14 @@ format:
 
 ##  Sample content
 
-Here is some simple content
+Here is some simple content.
+
+Here is some more Text.
 
 </div>
 
 
-
+<script src="../../js/auth.js"></script>
 <script>
 async function checkPageAccess() {
     const gateDiv = document.getElementById('auth-gate');
