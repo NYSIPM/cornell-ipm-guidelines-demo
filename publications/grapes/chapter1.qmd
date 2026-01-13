@@ -12,7 +12,6 @@ format:
         icon: file-pdf
 ---
 
-<div id="auth-gate"></div>
 <div id="content" style="display: none;">
 
 ## 1.1 Pesticide Classification and Certification
@@ -29,4 +28,49 @@ Information on pesticide certification and classification is available from your
 
 </div>
 
+<script>
+async function checkPageAccess() {
+    const gateDiv = document.getElementById('auth-gate');
+    const contentDiv = document.getElementById('content');
 
+    try {
+        const authStatus = await checkAuth();
+
+        if (authStatus && authStatus.authenticated) {
+            gateDiv.style.display = 'none';
+            contentDiv.style.display = 'block';
+        } else {
+            gateDiv.innerHTML = `
+                <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; 
+                            padding: 20px 30px; margin: 2rem 0; display: flex; align-items: center; 
+                            justify-content: space-between; gap: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 24px;">🔒</span>
+                        <span style="color: #856404; font-size: 16px;">Sign in to access full content</span>
+                    </div>
+                    <button onclick="login()" 
+                            style="background: #B31B1B; color: white; border: none; 
+                                   padding: 10px 24px; font-size: 16px; border-radius: 6px; 
+                                   cursor: pointer; font-weight: 500; white-space: nowrap;
+                                   transition: background 0.2s;"
+                            onmouseover="this.style.background='#8B1515'" 
+                            onmouseout="this.style.background='#B31B1B'">
+                        Sign In
+                    </button>
+                </div>
+            `;
+        }
+    } catch (err) {
+        console.error("Auth gate failed:", err);
+        gateDiv.innerHTML = `
+            <div style="background:#f8d7da; border:1px solid #f5c2c7; border-radius:8px; padding:16px; margin:1rem 0;">
+                <strong>Auth error:</strong> ${String(err?.message || err)}
+            </div>
+        `;
+        // Optional while debugging:
+        // contentDiv.style.display = 'block';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", checkPageAccess);
+</script>
