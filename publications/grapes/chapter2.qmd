@@ -37,17 +37,9 @@ The following classification was established to aid users of pesticide chemicals
 
 **Low toxicity:** Acute oral LD50 greater than 500 mg/kg. From 1 ounce to 1 pint of technical pesticide may be lethal to a 150-pound person. Label must carry signal word CAUTION.
 
+### 2.2.2 Pesticide Compatibility
 
-
-
-
-
-
-
-
-
-
-
+Some pesticides are unstable or incompatible under alkaline conditions. Well or pond water used to fill sprayers can be alkaline, and pH should be tested and adjusted if over 7.0. Do not apply tank-mix combinations unless your previous experience indicates the mixture is effective and will not result in application problems or plant injury. If tank-mix compatibilities are unknown, the mixture should be combined in the proper proportions using a jar test. CAUTION: Fixed copper formulations and lime should not be used with Captan, Imidan, or Sevin.
 
 
 
