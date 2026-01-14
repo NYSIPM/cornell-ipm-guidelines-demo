@@ -5,9 +5,7 @@ format:
     include-after-body: 
       - includes/auth-gate.html
       - include/after-body.html
-    include-before-body:
-      - include/before-body.html
-
+    include-before-body: include/before-body.html
     theme: cosmo
     toc: true
     toc-depth: 3
@@ -17,8 +15,6 @@ format:
         href: chapter1.pdf
         icon: file-pdf
 ---
-<div id="auth-gate"></div>
-
 ## 1.1 Pesticide Classification and Certification
 
 Pesticides can be classified as general use or restricted use. **General use pesticides** may be purchased and used by anyone. **Restricted use pesticides** can only be purchased and used by a certified applicator or used by someone under a certified applicator’s supervision. In some cases, the pesticide label may limit use of a restricted use pesticide to only a certified applicator.
