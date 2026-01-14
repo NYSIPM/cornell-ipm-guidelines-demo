@@ -1,5 +1,5 @@
 ---
-title: Chapter 3
+title: 3 Vineyard Disease Management
 date: 2026-01-13T15:50:00.000-05:00
 format:
   html:
@@ -9,8 +9,6 @@ format:
 <div id="content" style="display: none;">
 
 # 3.1 Pest Information – Diseases
-
-Temp
 
 Several important insects and diseases that occur in New York and Pennsylvania vineyards are described below to help growers manage these pests with practices and pesticides appropriate for their production systems.
 

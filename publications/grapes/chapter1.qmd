@@ -1,7 +1,8 @@
 ---
-title: 1. Pesticide Information
+title: 1 Pesticide Information
 format:
   html:
+    include-after-body: includes/auth-gate.html
     theme: cosmo
     toc: true
     toc-depth: 3
