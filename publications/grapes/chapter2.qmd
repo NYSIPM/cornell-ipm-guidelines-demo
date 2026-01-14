@@ -1,5 +1,5 @@
 ---
-title: "2. Introduction"
+title: 2. Introduction
 format:
   html:
     theme: cosmo
@@ -7,11 +7,10 @@ format:
     toc-depth: 3
     page-layout: article
     other-links:
-      - text: "📄 Download PDF"
+      - text: 📄 Download PDF
         href: chapter2.pdf
         icon: file-pdf
 ---
-
 <div id="auth-gate"></div>
 <div id="content" style="display: none;">
 
@@ -21,9 +20,110 @@ How do you decide which pest management strategy is right for you? The variety o
 
 The one component that every successful pest management strategy shares is information. By gathering and compiling the right information, you will be able to make the best choices in putting together your vineyard pest management strategy. 
 
+## 2.2 Specific Fungicide, Insecticide, and Herbicide Information
+
+The following materials have been registered for the control of certain insects, diseases, and weeds affecting grapes. The trade name and (common) name are given, as well as selected uses for each material. The signal word associated with each pesticide indicates its relative level of toxicity. High toxicity indicates that small quantities of the chemical may cause serious illness or death.
+
+### 2.2.1 Pesticide Toxicity
+
+The toxicity of a chemical typically is measured with a Lethal Dose 50 (LD50) value. This value is the dosage necessary to kill 50 percent of a laboratory population of test animals
+(rats, mice, or rabbits). These toxicity values may be expressed in terms of a single dosage in milligrams per kilogram of body weight. LD50 values are useful in comparing different pesticides, as the degree of hazard to a person handling a pesticide is directly related to toxicity.
+
+The following classification was established to aid users of pesticide chemicals:
+
+**High toxicity:** Acute oral LD50 from a trace to 50 mg/kg. From 4 to 100 drops (1 teaspoon) of technical pesticide may be lethal to a 150-pound person. Label must carry signal word DANGER. A skull and crossbones on the label indicates poison.
+
+**Moderate toxicity:** Acute oral LD50 from 50 to 500 mg/kg. From 1 teaspoon to 1 ounce of technical pesticide may be lethal to a 150-pound person. Label must carry signal word WARNING.
+
+**Low toxicity:** Acute oral LD50 greater than 500 mg/kg. From 1 ounce to 1 pint of technical pesticide may be lethal to a 150-pound person. Label must carry signal word CAUTION.
+
+### 2.2.2 Pesticide Compatibility
+
+Some pesticides are unstable or incompatible under alkaline conditions. Well or pond water used to fill sprayers can be alkaline, and pH should be tested and adjusted if over 7.0. Do not apply tank-mix combinations unless your previous experience indicates the mixture is effective and will not result in application problems or plant injury. If tank-mix compatibilities are unknown, the mixture should be combined in the proper proportions using a jar test. CAUTION: Fixed copper formulations and lime should not be used with Captan, Imidan, or Sevin.
+
+### 2.2.3 Adjuvants with Fungicides and Insecticides
+
+The addition of adjuvants (spreader-stickers, penetrants, etc.) to spray mixtures of fungicides and insecticides is not recommended unless suggested on the pesticide label or supported by reliable data. Many fungicide and insecticide formulations already include an adjuvant; thus, addition of another adjuvant is often counterproductive or a waste of money.
+
+### 2.2.4 Pesticide Resistance Management
+
+The ability of various fungicides, insecticides, and herbicides to control specific grape pests has been reduced (and, in some cases, eliminated) because pests developed resistance to these materials. Resistance occurs when some individual pests survive treatment with the pesticide. They multiply and pass this resistance on to their young. Because individuals that are controlled by the chemical die, or reproduce poorly, over time the population becomes dominated by individuals that are resistant to it. This process is favored by a number of factors, the most common of which are:
+
+1. Multiple applications of a single product or class of compounds (strobilurin fungicides, organophosphate insecticides, etc.); 
+2. An exclusive reliance on a single product (or class) to manage the pest; 
+3. Repeated treatments of large pest populations with the products (e.g., "rescue" treatments); and, in some cases 
+4. Attempts to manage the pests with very low rates of the products (either intentionally or due to poor spray coverage).
+
+Although it’s not possible to guarantee that resistance will never develop to any specific pesticide, ALL growers should follow a few simple rules to minimize the probability of this occurring. These rules are particularly important with respect to classes of products that are known to be at moderate to high risk for resistance development:
+
+* Do not rely on any single product (or class of compounds) to control any particular target pest. Rotate unrelated pesticides during and between seasons. Tank mix unrelated products when appropriate and practical.
+* Treat before pest populations “get out of hand” (e.g., exceed economic thresholds). The larger the pest population, the greater the chance of selecting resistant individuals from it. Try to avoid emergency “rescue” treatments with pesticides considered at high risk for resistance development.
+* Integrate non-chemical control practices into your management strategy. The less pressure you put on pesticides to do the whole job, the longer they’ll last.
+* Maintain recommended use rates and assure adequate spray coverage. Pests respond only to the rates that they encounter on the vine, not to what’s in the tank.
+
+### 2.2.5 Fungicide Physical Mode of Action
+
+To use fungicides most effectively, it’s helpful to understand when these products exert their control during the process of disease development. Each fungicide controls its target pathogen(s) through one or more of the four physical modes of action defined as follows: 
+
+**Protectant:** The material controls disease if applied before the fungus begins infecting the plant (i.e., before the rain that initiates the infection period, for most diseases).
+
+**Postinfection:** Controls disease when applied after infection has occurred but before symptoms appear, typically one to several days after the start of an infection period. 
+
+**Antisporulant:** Significantly reduces spore production when applied to infected tissue. Even though disease symptoms develop or persist on the infected tissue, this reduces the likelihood or severity of additional disease spread. Some materials are effective only when applied before symptoms appear, others also are effective after symptom appearance. 
+
+**Eradicant:** Kills all or most of the fungal colony when applied after symptoms appear. Very few fungicides have this activity, which is most common against powdery mildew.
+
+### 2.2.6 Specific State Registration of Pesticides
+
+For an individual to be able to apply a pesticide legally, it must first be registered for that use by the federal Environmental Protection Agency (EPA) and then by the appropriate regulatory agency in the state where the application is made. Products registered by the EPA are not automatically registered for use in all states.
+
+The product label provides the conditions for use that have been approved (registered) by the federal EPA, but it does not indicate whether or not the product has been registered for use in any particular state. In general, a pesticide sold within a state must be registered in that state. **However, growers who buy pesticides across state lines run the risk of unknowingly purchasing and using a product that is not registered in their particular state.** This can be especially problematic for NY growers, because new pesticides in particular are sometimes registered and available for sale in neighboring states before they are registered in NY. Thus, growers who buy pesticides outside their own state should make certain that they are registered for in-state use before application. 
+
+The best source to determine if a product is currently registered in New York State is to go to the NYS Department of Environmental Conservation (NYSDEC) product registration web site at [extapps.dec.ny.gov/nyspad/products](https://extapps.dec.ny.gov/nyspad/products). You can find out what is currently registered and also find out what has been suspended when you access this link.
+
+**Pesticides registered for use in PA but not in NY (at press time) are identified with a “^” symbol in this publication.**
+
+## 2.3 How to Develop a Vineyard Pest Management Strategy
+
+1. Examine your vineyard operation closely. Break it down into specific vineyards, or “vineyard blocks.”
+2. Produce a map of each vineyard (or vineyard block) to record pest outbreaks, nutrient deficiencies, drainage problems, missing vines, and any other abnormalities you find.
+3. Develop a record keeping system for each vineyard or vineyard block.
+4. Develop a scouting plan for each vineyard block and record results.
+5. Monitor and record weather factors and understand basic weather patterns of the area.
+6. Keep accurate records of applications or tools used to manage pests.
+7. Develop a thorough knowledge of the vineyard pests you are likely to encounter during the year. This includes basic pest biology, symptoms or damage they cause, whether they are a primary or secondary pest, scouting thresholds, and the best time to apply management practices.
+8. Choose a pest management strategy for that vineyard (or vineyard block) that is based on all of the information you’ve gathered. Use the options that make the most sense for your operation.
+9. Continue your pest management education.
+
+With all the changes that are occurring these days, there is really no such thing as a traditional spray program anymore. That’s why it’s so important to keep learning about pest management. This is probably the most important factor in successfully managing vineyard pests. 
+
+This publication can provide you with a great deal of the research-based information necessary to develop a pest management strategy for your vineyard, or to deal with a sporadic pest that pops up during the year. See Section 2.5 for a list of Cornell publications on weeds, pests, and diseases of grapevines.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
-
-
 
 <script>
 async function checkPageAccess() {
@@ -71,4 +171,3 @@ async function checkPageAccess() {
 
 document.addEventListener("DOMContentLoaded", checkPageAccess);
 </script>
-
