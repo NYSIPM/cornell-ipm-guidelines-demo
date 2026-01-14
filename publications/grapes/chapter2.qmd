@@ -15,7 +15,8 @@ format:
 <div id="auth-gate"></div>
 <div id="content" style="display: none;">
 
-##2.1 Overview
+## 2.1 Overview
+
 How do you decide which pest management strategy is right for you? The variety of choices can be daunting: integrated pest management, sustainable, integrated crop management, organic, best management practices, biodynamics, or traditional, just to name a few. However, what it boils down to is that it doesn’t really matter what you call your pest management strategy. Consider which practices work best for you in a particular vineyard. Take the best tools from each of the different programs to provide you with the management strategy that fits your needs and pocketbook.
 
 The one component that every successful pest management strategy shares is information. By gathering and compiling the right information, you will be able to make the best choices in putting together your vineyard pest management strategy. 
