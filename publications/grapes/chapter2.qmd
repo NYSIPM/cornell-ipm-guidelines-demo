@@ -1,5 +1,5 @@
 ---
-title: "2. Introduction"
+title: 2. Introduction
 format:
   html:
     theme: cosmo
@@ -7,11 +7,10 @@ format:
     toc-depth: 3
     page-layout: article
     other-links:
-      - text: "📄 Download PDF"
+      - text: 📄 Download PDF
         href: chapter2.pdf
         icon: file-pdf
 ---
-
 <div id="auth-gate"></div>
 <div id="content" style="display: none;">
 
@@ -21,9 +20,44 @@ How do you decide which pest management strategy is right for you? The variety o
 
 The one component that every successful pest management strategy shares is information. By gathering and compiling the right information, you will be able to make the best choices in putting together your vineyard pest management strategy. 
 
+## 2.2 Specific Fungicide, Insecticide, and Herbicide Information
+
+The following materials have been registered for the control of certain insects, diseases, and weeds affecting grapes. The trade name and (common) name are given, as well as selected uses for each material. The signal word associated with each pesticide indicates its relative level of toxicity. High toxicity indicates that small quantities of the chemical may cause serious illness or death.
+
+### 2.2.1 Pesticide Toxicity
+
+The toxicity of a chemical typically is measured with a Lethal Dose 50 (LD50) value. This value is the dosage necessary to kill 50 percent of a laboratory population of test animals
+(rats, mice, or rabbits). These toxicity values may be expressed in terms of a single dosage in milligrams per kilogram of body weight. LD50 values are useful in comparing different pesticides, as the degree of hazard to a person handling a pesticide is directly related to toxicity.
+
+The following classification was established to aid users of pesticide chemicals:
+
+**High toxicity:** Acute oral LD50 from a trace to 50 mg/kg. From 4 to 100 drops (1 teaspoon) of technical pesticide may be lethal to a 150-pound person. Label must carry signal word DANGER. A skull and crossbones on the label indicates poison.
+
+**Moderate toxicity:** Acute oral LD50 from 50 to 500 mg/kg. From 1 teaspoon to 1 ounce of technical pesticide may be lethal to a 150-pound person. Label must carry signal word WARNING.
+
+**Low toxicity:** Acute oral LD50 greater than 500 mg/kg. From 1 ounce to 1 pint of technical pesticide may be lethal to a 150-pound person. Label must carry signal word CAUTION.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
-
-
 
 <script>
 async function checkPageAccess() {
@@ -71,4 +105,3 @@ async function checkPageAccess() {
 
 document.addEventListener("DOMContentLoaded", checkPageAccess);
 </script>
-
