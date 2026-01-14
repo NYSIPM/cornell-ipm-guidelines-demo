@@ -79,6 +79,54 @@ For an individual to be able to apply a pesticide legally, it must first be regi
 
 The product label provides the conditions for use that have been approved (registered) by the federal EPA, but it does not indicate whether or not the product has been registered for use in any particular state. In general, a pesticide sold within a state must be registered in that state. **However, growers who buy pesticides across state lines run the risk of unknowingly purchasing and using a product that is not registered in their particular state.** This can be especially problematic for NY growers, because new pesticides in particular are sometimes registered and available for sale in neighboring states before they are registered in NY. Thus, growers who buy pesticides outside their own state should make certain that they are registered for in-state use before application. 
 
+The best source to determine if a product is currently registered in New York State is to go to the NYS Department of Environmental Conservation (NYSDEC) product registration web site at [extapps.dec.ny.gov/nyspad/products](https://extapps.dec.ny.gov/nyspad/products). You can find out what is currently registered and also find out what has been suspended when you access this link.
+
+**Pesticides registered for use in PA but not in NY (at press time) are identified with a “^” symbol in this publication.**
+
+## 2.3 How to Develop a Vineyard Pest Management Strategy
+
+1.       Examine your vineyard operation closely. Break it down into specific vineyards, or “vineyard blocks.”
+
+2.       Produce a map of each vineyard (or vineyard block) to record pest outbreaks, nutrient deficiencies, drainage problems, missing vines, and any other abnormalities you find.
+
+3.       Develop a record keeping system for each vineyard or vineyard block.
+
+4.       Develop a scouting plan for each vineyard block and record results.
+
+5.       Monitor and record weather factors and understand basic weather patterns of the area.
+
+6.       Keep accurate records of applications or tools used to manage pests.
+
+7.       Develop a thorough knowledge of the vineyard pests you are likely to encounter during the year. This includes basic pest biology, symptoms or damage they cause, whether they are a primary or secondary pest, scouting thresholds, and the best time to apply management practices.
+
+8.       Choose a pest management strategy for that vineyard (or vineyard block) that is based on all of the information you’ve gathered. Use the options that make the most sense for your operation.
+
+9.       Continue your pest management education.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 <script>
