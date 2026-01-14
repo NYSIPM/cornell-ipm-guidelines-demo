@@ -3,7 +3,7 @@ title: Chapter 3
 date: 2026-01-13T15:50:00.000-05:00
 format:
   html:
-    include-after-body: auth-gate.html
+    include-after-body: /includes/auth-gate.html
 ---
 <div id="auth-gate"></div>
 <div id="content" style="display: none;">
