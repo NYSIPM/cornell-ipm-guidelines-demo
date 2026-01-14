@@ -73,33 +73,11 @@ To use fungicides most effectively, it’s helpful to understand when these prod
 
 **Eradicant:** Kills all or most of the fungal colony when applied after symptoms appear. Very few fungicides have this activity, which is most common against powdery mildew.
 
+### 2.2.6 Specific State Registration of Pesticides
 
+For an individual to be able to apply a pesticide legally, it must first be registered for that use by the federal Environmental Protection Agency (EPA) and then by the appropriate regulatory agency in the state where the application is made. Products registered by the EPA are not automatically registered for use in all states.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The product label provides the conditions for use that have been approved (registered) by the federal EPA, but it does not indicate whether or not the product has been registered for use in any particular state. In general, a pesticide sold within a state must be registered in that state. **However, growers who buy pesticides across state lines run the risk of unknowingly purchasing and using a product that is not registered in their particular state.** This can be especially problematic for NY growers, because new pesticides in particular are sometimes registered and available for sale in neighboring states before they are registered in NY. Thus, growers who buy pesticides outside their own state should make certain that they are registered for in-state use before application. 
 
 </div>
 
