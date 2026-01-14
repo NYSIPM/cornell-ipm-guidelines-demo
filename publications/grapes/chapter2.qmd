@@ -45,6 +45,54 @@ Some pesticides are unstable or incompatible under alkaline conditions. Well or 
 
 The addition of adjuvants (spreader-stickers, penetrants, etc.) to spray mixtures of fungicides and insecticides is not recommended unless suggested on the pesticide label or supported by reliable data. Many fungicide and insecticide formulations already include an adjuvant; thus, addition of another adjuvant is often counterproductive or a waste of money.
 
+### 2.2.4 Pesticide Resistance Management
+
+The ability of various fungicides, insecticides, and herbicides to control specific grape pests has been reduced (and, in some cases, eliminated) because pests developed resistance to these materials. Resistance occurs when some individual pests survive treatment with the pesticide. They multiply and pass this resistance on to their young. Because individuals that are controlled by the chemical die, or reproduce poorly, over time the population becomes dominated by individuals that are resistant to it. This process is favored by a number of factors, the most common of which are:
+
+1. Multiple applications of a single product or class of compounds (strobilurin fungicides, organophosphate insecticides, etc.); 
+2. An exclusive reliance on a single product (or class) to manage the pest; 
+3. Repeated treatments of large pest populations with the products (e.g., "rescue" treatments); and, in some cases 
+4. Attempts to manage the pests with very low rates of the products (either intentionally or due to poor spray coverage).
+
+Although it’s not possible to guarantee that resistance will never develop to any specific pesticide, ALL growers should follow a few simple rules to minimize the probability of this occurring. These rules are particularly important with respect to classes of products that are known to be at moderate to high risk for resistance development:
+
+* Do not rely on any single product (or class of compounds) to control any particular target pest. Rotate unrelated pesticides during and between seasons. Tank mix unrelated products when appropriate and practical.
+* Treat before pest populations “get out of hand” (e.g., exceed economic thresholds). The larger the pest population, the greater the chance of selecting resistant individuals from it. Try to avoid emergency “rescue” treatments with pesticides considered at high risk for resistance development.
+* Integrate non-chemical control practices into your management strategy. The less pressure you put on pesticides to do the whole job, the longer they’ll last.
+* Maintain recommended use rates and assure adequate spray coverage. Pests respond only to the rates that they encounter on the vine, not to what’s in the tank.
+
+### 2.2.5 Fungicide Physical Mode of Action
+
+To use fungicides most effectively, it’s helpful to understand when these products exert their control during the process of disease development. Each fungicide controls its target pathogen(s) through one or more of the four physical modes of action defined as follows: 
+
+**Protectant:** The material controls disease if applied before the fungus begins infecting the plant (i.e., before the rain that initiates the infection period, for most diseases).
+
+**Postinfection:** Controls disease when applied after infection has occurred but before symptoms appear, typically one to several days after the start of an infection period. 
+
+**Antisporulant:** Significantly reduces spore production when applied to infected tissue. Even though disease symptoms develop or persist on the infected tissue, this reduces the likelihood or severity of additional disease spread. Some materials are effective only when applied before symptoms appear, others also are effective after symptom appearance. 
+
+**Eradicant:** Kills all or most of the fungal colony when applied after symptoms appear. Very few fungicides have this activity, which is most common against powdery mildew.
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
