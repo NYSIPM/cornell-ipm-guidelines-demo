@@ -5,8 +5,8 @@ format:
   html:
     include-after-body:
       - includes/auth-gate.html
-      - include/after-body.html
-    include-before-body: include/before-body.html
+      - includes/after-body.html
+    include-before-body: includes/before-body.html
     theme: cosmo
     toc: true
     toc-depth: 3
