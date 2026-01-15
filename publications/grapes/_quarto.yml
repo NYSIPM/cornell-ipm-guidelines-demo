@@ -39,7 +39,7 @@ format:
       text: |
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <!-- Load your existing auth file (as-is) -->
-        <script src="../../js/auth.js" defer></script>
+        <script src="/docs/js/auth.js" defer></script>
 
         <!-- Bridge: expose functions globally no matter how auth.js is authored -->
         <script type="module">
