@@ -35,6 +35,10 @@ format:
     toc: true
     toc-location: left
     toc-title: "On this page"
+    include-before-body: includes/before-body.html
+    include-after-body:
+      - includes/auth-gate.html
+      - includes/after-body.html
     include-in-header:
       text: |
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
