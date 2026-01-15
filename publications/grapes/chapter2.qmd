@@ -1,5 +1,5 @@
 ---
-title: 2. Introduction
+title: 2 Introduction
 format:
   html:
     include-after-body: includes/auth-gate.html
