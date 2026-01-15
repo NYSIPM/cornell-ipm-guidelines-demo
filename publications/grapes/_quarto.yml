@@ -16,6 +16,8 @@ website:
           - text: "Overview"
             href: index.qmd
           - text: "---"
+          - text: "1. Pesticide Information"
+            href: chapter1/chapter1.qmd
           - text: "2. Introduction"
             href: chapter2.qmd
           - text: "3. Vineyard Disease Management"
