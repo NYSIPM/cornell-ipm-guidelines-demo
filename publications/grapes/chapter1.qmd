@@ -16,7 +16,7 @@ format:
         icon: file-pdf
 date: 2026-01-15T11:35:00.000-05:00
 ---
-1.1 Pesticide Classification and Certification
+[1.1 Pesticide Classification and Certification](1-1-pesticide-classification-and-certification)
 1.2 Use Pesticides
 1.3 Pollinator Protection
 1.4 State Pesticide Use Restrictions
