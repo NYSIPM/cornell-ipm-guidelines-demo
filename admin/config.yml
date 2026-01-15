@@ -22,7 +22,8 @@ collections:
     extension: "qmd"
     format: "frontmatter"
     nested:
-    depth: 2
+      depth: 2
+      summary: "{{title}}"
     editor:
       preview: false
     fields:
