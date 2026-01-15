@@ -1,8 +1,0 @@
----
-title: My Page
-subtitle: My Page
-authors:
-  - Bill
-date: 2026-01-09T15:53:00.000-05:00
----
-Here is some simple Text!
