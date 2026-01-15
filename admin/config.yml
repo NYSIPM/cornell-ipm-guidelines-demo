@@ -21,6 +21,8 @@ collections:
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
+    nested:
+    depth: 2
     editor:
       preview: false
     fields:
