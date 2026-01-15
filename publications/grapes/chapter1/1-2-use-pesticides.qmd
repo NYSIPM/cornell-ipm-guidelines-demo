@@ -1,6 +1,12 @@
 ---
 title: 1.2 Use Pesticides
 date: 2026-01-15T15:35:00.000-05:00
+format:
+  html:
+    include-after-body:
+      - ../includes/auth-gate.html
+      - ../includes/after-body.html
+    include-before-body: ../includes/before-body.html
 ---
 ## 1.2 Use Pesticides
 Using pesticides requires the user to protect their health, the health of others, and the environment. Keep in mind “pesticide use” is more than just the application. It includes mixing, loading, transporting, storing, or handling pesticides after the manufacturer’s seal is broken; cleaning pesticide application equipment; and preparing a container for disposal. These activities require thoughtful planning and preparation. They also require you to comply with state and federal laws and regulations intended to protect human health and the environment from the adverse effects pesticides may cause.
