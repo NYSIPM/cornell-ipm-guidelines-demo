@@ -1,6 +1,20 @@
 ---
 title: 1.1 Pesticide Classification and Certification
 chapter: 1
+format:
+  html:
+    include-after-body:
+      - includes/auth-gate.html
+      - include/after-body.html
+    include-before-body: include/before-body.html
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    page-layout: article
+    other-links:
+      - text: 📄 Download PDF
+        href: chapter1.pdf
+        icon: file-pdf
 date: 2026-01-15T11:24:00.000-05:00
 ---
 ## 1.1 Pesticide Classification and Certification

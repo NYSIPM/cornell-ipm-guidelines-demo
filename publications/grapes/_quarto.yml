@@ -17,7 +17,11 @@ website:
             href: index.qmd
           - text: "---"
           - text: "1. Pesticide Information"
-            href: chapter1.qmd
+            menu:
+              - text: "1. Pesticide Information"
+                href: chapter1.qmd
+              - text: "1.1 Pesticide Classification & Certification"
+                href: "1-1-pesticide-classification-and-certification.qmd"
           - text: "2. Introduction"
             href: chapter2.qmd
           - text: "3. Vineyard Disease Management"
