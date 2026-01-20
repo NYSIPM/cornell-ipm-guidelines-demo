@@ -3,6 +3,12 @@ project:
   output-dir: ../docs/grapes
   resources:
     - "*.pdf"
+  render:
+    - "*.qmd"
+    - "chapter1/**/*.qmd"
+  exclude:
+    - "**/.quarto/**"
+    - "**/node_modules/**"
 
 website:
   title: "Cornell IPM | Grape Guidelines"
