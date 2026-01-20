@@ -14,6 +14,8 @@ website:
         href: index.qmd
       - text: "Grape Guidelines"
         href: publications/grapes/index.html
+      - text: "Berry Guidelines"
+        href: publications/barries/index.html
 
 format:
   html:
