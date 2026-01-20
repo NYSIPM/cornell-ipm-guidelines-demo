@@ -12,6 +12,28 @@ site_url: https://dancing-sundae-a531d3.netlify.app
 display_url: https://dancing-sundae-a531d3.netlify.app
 
 collections:
+  # Berry Guidelines
+  - name: "berry"
+    label: "Berry Guidelines"
+    label_singular: "Chapter"
+    folder: "publications/berry"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    nested:
+      depth: 2
+      summary: "{{title}}"
+    editor:
+      preview: false
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
+      - {label: "Chapter Number", name: "chapter", widget: "number", required: false, hint: "Optional ordering"}
+      - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
+      - {label: "Last Updated", name: "date", widget: "datetime", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
   # Grape Guidelines
   - name: "grapes"
     label: "Grape Guidelines"
