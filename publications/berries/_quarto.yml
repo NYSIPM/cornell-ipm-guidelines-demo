@@ -5,7 +5,7 @@ project:
     - "*.pdf"
 
 website:
-  title: "Cornell IPM | Grape Guidelines"
+  title: "Cornell IPM | Berries Guidelines"
   navbar:
     left:
       - text: "← Back to Guidelines Home"
