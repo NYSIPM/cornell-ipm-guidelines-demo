@@ -15,6 +15,8 @@ website:
         menu:
           - text: "Overview"
             href: index.qmd
+            text: "1 Pesticide Information"
+            href: 1-pesticide-information.qmd
 
 format:
   html:
