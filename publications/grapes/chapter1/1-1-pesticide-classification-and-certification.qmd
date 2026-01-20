@@ -13,8 +13,6 @@ format:
         icon: file-pdf
 date: 2026-01-15T11:24:00.000-05:00
 ---
-## 1.1 Pesticide Classification and Certification
-
 Pesticides can be classified as general use or restricted use. General use pesticides may be purchased and used by anyone. Restricted use pesticides can only be purchased and used by a certified applicator or used by someone under a certified applicator’s supervision. In some cases, the pesticide label may limit use of a restricted use pesticide to only a certified applicator.
 
 ### 1.1.1 Certification in New York State
