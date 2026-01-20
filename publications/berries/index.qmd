@@ -1,5 +1,5 @@
 ---
-title: "2026 New York and Pennsylvania Pest Management Guidelines for Grapes"
+title: "2026 Cornell Pest Management Guidelines for Berry Crops"
 format:
   html:
     include-before-body: includes/before-body.html
@@ -12,6 +12,4 @@ format:
     page-layout: article
 ---
 
-<div id="auth-gate"></div>
-<div id="content" style="display: none;">
-
+## 2026 Cornell Pest Management Guidelines for Berry Crops
