@@ -7,7 +7,6 @@ format:
     toc-depth: 3
     page-layout: article
 ---
-
 <div id="auth-gate"></div>
 <div id="content" style="display: none;">
 
@@ -16,13 +15,14 @@ format:
 This section provides comprehensive information on insecticides registered for use in New York and Pennsylvania grape production. Use the interactive table below to find products suitable for your pest management needs.
 
 ::: {.callout-tip}
+
 ## How to Use the Interactive Table
 
-- **Search**: Use the search box to find specific products or active ingredients
-- **Filter by Pest**: Click column headers to sort by effectiveness rating
-- **View Details**: Click the product name to expand full information
-- **Export**: Download filtered results (feature coming soon)
-:::
+* **Search**: Use the search box to find specific products or active ingredients
+* **Filter by Pest**: Click column headers to sort by effectiveness rating
+* **View Details**: Click the product name to expand full information
+* **Export**: Download filtered results (feature coming soon)
+  :::
 
 ## 5.1.2 Interactive Pesticide Lookup Table
 
@@ -78,25 +78,27 @@ Use the filters and search below to quickly find the right insecticide for your 
   </thead>
 </table>
 
+
+
 ## 5.1.3 Abbreviations and Symbols Used in This Publication
 
-| Abbreviation | Meaning                      | Abbreviation | Meaning                      | Abbreviation | Meaning                      |
-|--------------|------------------------------|--------------|------------------------------|--------------|------------------------------|
-| A            | acre                         | EC           | emulsifiable concentrate     | SP           | soluble powder               |
-| AI           | active ingredient            | F            | flowable                     | UDH          | up to day of harvest         |
-| AS           | aqueous suspension           | G            | granular                     | ULV          | ultra-low volume             |
-| D            | dust                         | L            | liquid                       | W            | wettable                     |
-| DF           | dry flowable                 | P            | pellets                      | WDG          | water-dispersible granule    |
-| DG           | dispersible granule          | PHI          | pre-harvest interval         | WP           | wettable powder              |
-| DTH          | days to harvest              | SC           | suspension concentrate       | WSP          | water soluble packet         |
-| E            | emulsion, emulsifiable       |              |                              |              |                              |
+| Abbreviation | Meaning                | Abbreviation | Meaning                  | Abbreviation | Meaning                   |
+| ------------ | ---------------------- | ------------ | ------------------------ | ------------ | ------------------------- |
+| A            | acre                   | EC           | emulsifiable concentrate | SP           | soluble powder            |
+| AI           | active ingredient      | F            | flowable                 | UDH          | up to day of harvest      |
+| AS           | aqueous suspension     | G            | granular                 | ULV          | ultra-low volume          |
+| D            | dust                   | L            | liquid                   | W            | wettable                  |
+| DF           | dry flowable           | P            | pellets                  | WDG          | water-dispersible granule |
+| DG           | dispersible granule    | PHI          | pre-harvest interval     | WP           | wettable powder           |
+| DTH          | days to harvest        | SC           | suspension concentrate   | WSP          | water soluble packet      |
+| E            | emulsion, emulsifiable |              |                          |              |                           |
 
-| Symbol | Meaning                                                                           |
-|--------|-----------------------------------------------------------------------------------|
-| *      | Federal restricted use pesticide; may be purchased and used only by certified applicators |
-| *NY    | Restricted use pesticide in New York State                                        |
-| †      | Not for use in Nassau and Suffolk Counties                                        |
-| ^      | Not registered for use in New York State at press time                            |
+| Symbol | Meaning                                                                                   |
+| ------ | ----------------------------------------------------------------------------------------- |
+| \*     | Federal restricted use pesticide; may be purchased and used only by certified applicators |
+| \*NY   | Restricted use pesticide in New York State                                                |
+| †      | Not for use in Nassau and Suffolk Counties                                                |
+| ^      | Not registered for use in New York State at press time                                    |
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -505,38 +507,40 @@ $(document).ready(function() {
 
 ## Key to Pest Abbreviations
 
-- **GBM** = Grape Berry Moth
-- **LH** = Leafhoppers  
-- **JB** = Japanese Beetle
-- **Mites** = Two-spotted spider mite, European red mite
+* **GBM** = Grape Berry Moth
+* **LH** = Leafhoppers  
+* **JB** = Japanese Beetle
+* **Mites** = Two-spotted spider mite, European red mite
 
 ## Effectiveness Ratings
 
-- **+++** = Highly effective
-- **++** = Moderately effective
-- **+** = Slightly effective
-- **0** = Not effective or not labeled
+* **+++** = Highly effective
+* **++** = Moderately effective
+* **+** = Slightly effective
+* **0** = Not effective or not labeled
 
 ## 5.5 Important Notes
 
 ### 5.5.1 Resistance Management
 
 ::: {.callout-warning}
+
 ## Resistance Concerns
 
 Problems controlling vinegar flies (Drosophila melanogaster) with pyrethroid insecticides have been discovered in NY vineyards. Research from 2019 and 2021 indicates several populations are resistant to pyrethroids, organophosphates, and neonicotinoids. 
 
 **Recommendations:**
-- Rotate among different insecticide classes (IRAC codes)
-- Use insecticides only when necessary
-- Monitor for control failures
-:::
+
+* Rotate among different insecticide classes (IRAC codes)
+* Use insecticides only when necessary
+* Monitor for control failures
+  :::
 
 ### 5.5.2 Restricted Use Pesticides
 
-- **\*** = Federal restricted use pesticide; may be purchased and used only by certified applicators
-- **\*NY** = Restricted use pesticide in New York State  
-- **†** = Not for use in Nassau and Suffolk Counties
+* **\*** = Federal restricted use pesticide; may be purchased and used only by certified applicators
+* **\*NY** = Restricted use pesticide in New York State  
+* **†** = Not for use in Nassau and Suffolk Counties
 
 ## 5.6 Integrated Pest Management (IPM)
 
@@ -550,18 +554,18 @@ Before reaching for chemical controls, consider:
 
 ## 5.7 Additional Resources
 
-- **Cornell IPM Grape Resources**: [nysipm.cornell.edu/agriculture/grapes](https://nysipm.cornell.edu/agriculture/grapes)
-- **Penn State Tree Fruit Production Guide**: [extension.psu.edu/tree-fruit-production-guide](https://extension.psu.edu/tree-fruit-production-guide)
-- **IRAC Mode of Action Classification**: [irac-online.org](https://irac-online.org)
+* **Cornell IPM Grape Resources**: [nysipm.cornell.edu/agriculture/grapes](https://nysipm.cornell.edu/agriculture/grapes)
+* **Penn State Tree Fruit Production Guide**: [extension.psu.edu/tree-fruit-production-guide](https://extension.psu.edu/tree-fruit-production-guide)
+* **IRAC Mode of Action Classification**: [irac-online.org](https://irac-online.org)
 
 ## 5.8 Emergency Contact Numbers
 
 If you experience a pesticide exposure, contact:
 
-- **National Poison Control**: 1-800-222-1222
-- **Product-specific emergency numbers**: Listed on individual product labels
+* **National Poison Control**: 1-800-222-1222
+* **Product-specific emergency numbers**: Listed on individual product labels
 
----
+- - -
 
 *This interactive table demonstrates the proposed new system. In production, data would be maintained in a database and updated annually without requiring full document republishing.*
 
