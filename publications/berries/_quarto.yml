@@ -1,0 +1,110 @@
+project:
+  type: website
+  output-dir: ../../docs/publications/berries
+  resources:
+    - "*.pdf"
+
+website:
+  title: "Cornell IPM | Grape Guidelines"
+  navbar:
+    left:
+      - text: "← Back to Guidelines Home"
+        href: ../../index.html
+
+      - text: "Chapters"
+        menu:
+          - text: "Overview"
+            href: index.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-location: left
+    toc-title: "On this page"
+    include-in-header:
+      text: |
+        <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+        <!-- Load your existing auth file (as-is) -->
+        <script src="../../js/auth.js" defer></script>
+
+        <!-- Bridge: expose functions globally no matter how auth.js is authored -->
+        <script type="module">
+          // If auth.js is an ES module, import it and attach its exports to window.
+          try {
+            const mod = await import("/js/auth.js");
+            window.checkAuth ??= mod.checkAuth;
+            window.login ??= mod.login;
+            window.logout ??= mod.logout;
+          } catch (e) {
+            // Ignore: auth.js might not be a module (in that case it should define globals itself)
+          }
+
+          // If auth.js attaches under a namespace like window.auth, map it to globals.
+          if (!window.checkAuth && window.auth?.checkAuth) window.checkAuth = window.auth.checkAuth;
+          if (!window.login && window.auth?.login) window.login = window.auth.login;
+          if (!window.logout && window.auth?.logout) window.logout = window.auth.logout;
+        </script>
+
+    include-after-body:
+      text: |
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarCollapse = document.querySelector('#navbarCollapse') || document.querySelector('.navbar-collapse');
+            
+            if (navbarCollapse) {
+                const rightNav = document.createElement('ul');
+                rightNav.className = 'navbar-nav ms-auto';
+                
+                const authStatusLi = document.createElement('li');
+                authStatusLi.className = 'nav-item';
+                authStatusLi.innerHTML = '<div id="auth-status" style="display:flex;align-items:center;"></div>';
+                
+                rightNav.appendChild(authStatusLi);
+                navbarCollapse.appendChild(rightNav);
+                
+                setTimeout(updateNavAuthStatus, 100);
+            }
+        });
+        
+        async function updateNavAuthStatus() {
+            const authStatusDiv = document.getElementById('auth-status');
+            if (!authStatusDiv) return;
+            
+            try {
+                const authStatus = await checkAuth();
+                
+                if (authStatus.authenticated) {
+                    const email = authStatus.user?.email || 'User';
+                    const displayName = email.split('@')[0];
+                    authStatusDiv.innerHTML = `
+                        <span style="color:#28a745;margin-right:10px;font-size:14px;">
+                            ✓ ${displayName}
+                        </span>
+                        <button onclick="logout()"
+                                style="background:#dc3545;color:white;border:none;
+                                       padding:4px 12px;border-radius:4px;cursor:pointer;font-size:14px;">
+                            Log Out
+                        </button>
+                    `;
+                } else {
+                    authStatusDiv.innerHTML = `
+                        <button onclick="login()"
+                                style="background:#B31B1B;color:white;border:none;
+                                       padding:6px 16px;border-radius:4px;cursor:pointer;font-size:14px;">
+                            Log In
+                        </button>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error updating nav auth status:', error);
+                authStatusDiv.innerHTML = `
+                    <button onclick="login()"
+                            style="background:#B31B1B;color:white;border:none;
+                                   padding:6px 16px;border-radius:4px;cursor:pointer;font-size:14px;">
+                        Log In
+                    </button>
+                `;
+            }
+        }
+        </script>

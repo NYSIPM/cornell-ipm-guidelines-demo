@@ -13,10 +13,10 @@ display_url: https://dancing-sundae-a531d3.netlify.app
 
 collections:
   # Berry Guidelines
-  - name: "berry"
+  - name: "berries"
     label: "Berry Guidelines"
     label_singular: "Chapter"
-    folder: "publications/berry"
+    folder: "publications/berries"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
