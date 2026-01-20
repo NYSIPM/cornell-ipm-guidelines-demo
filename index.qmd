@@ -9,6 +9,7 @@ subtitle: "Pest Management Guidelines for New York and Pennsylvania"
 ## Available Publications
 
 ### [Grape Pest Management Guidelines](publications/grapes/index.html)
+### [Berry Crop Management Guidelines](publications/berries/index.html)
 
 Comprehensive pest management recommendations for grape growers in New York and Pennsylvania.
 
