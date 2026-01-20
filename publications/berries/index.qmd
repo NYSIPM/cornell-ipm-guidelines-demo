@@ -1,0 +1,17 @@
+---
+title: "2026 New York and Pennsylvania Pest Management Guidelines for Grapes"
+format:
+  html:
+    include-before-body: includes/before-body.html
+    include-after-body:
+      - includes/auth-gate.html
+      - includes/after-body.html
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    page-layout: article
+---
+
+<div id="auth-gate"></div>
+<div id="content" style="display: none;">
+
