@@ -40,3 +40,22 @@ Existing buildings or areas within existing buildings are often used to store pe
 * The site should be where flooding is unlikely.
 * It should be downwind and downhill from sensitive areas like houses, ponds, and play areas.
 * There should be no chance that runoff or drainage from the site could contaminate surface or groundwater.
+
+***Storage facility check list:***
+
+* Is the facility separated from:
+
+  * Offices, workshops, and livestock areas?
+  * Wells, streams, lakes, ponds, wildlife?
+  * Food and feed?
+* Is the facility made of fire-resistant building materials?
+* Does the facility have: 
+
+  * Impermeable flooring?
+  * Liquid spill containment (berms to hold 25% of liquid storage)?
+* Can the doors be locked?
+* Is the facility fenced in?
+* Are warning signs posted?
+* Is a spill kit readily available?
+* Are fire extinguishers readily available?
+* Is personal protective equipment readily available?
