@@ -5,17 +5,12 @@ title: 1.4 New York State Pesticide Use Restrictions
 
 Pesticides that are highly toxic or are persistent and accumulative are classified as restricted use in New York State by the NYSDEC. The NYSDEC uses several criteria to classify pesticides as restricted use including products:
 
-–        Having an active ingredient specifically listed in Part 326.2(a) of the state pesticide control regulations.
-
-–        Having an active ingredient listed in Part 326.2(b) of the state pesticide control regulations and used as noted in the regulations.
-
-–        That the NYSDEC commissioner feels may need to be restricted in their use to prevent damage to health, property, and/or wildlife.
-
-–        That are classified as restricted use by the EPA.
-
-–        Whose label limits use to commercial pesticide applicators.
-
-–        Labeled for direct application to or in surface waters.
+* Having an active ingredient specifically listed in Part 326.2(a) of the state pesticide control regulations.
+* Having an active ingredient listed in Part 326.2(b) of the state pesticide control regulations and used as noted in the regulations.
+* That the NYSDEC commissioner feels may need to be restricted in their use to prevent damage to health, property, and/or wildlife.
+* That are classified as restricted use by the EPA.
+* Whose label limits use to commercial pesticide applicators.
+* Labeled for direct application to or in surface waters.
 
 A pesticide classified as restricted use by the NYSDEC may be distributed, sold, purchased, possessed, and used only by a certified applicator or by someone holding a commercial permit or purchase permit. In many cases, restricted use pesticides may also be used by someone under the direct supervision of a certified applicator. **\*NOTE**: *NYS regulations require on-site direct supervision when a person under the instruction and control of a certified private applicator uses a* federally *restricted pesticide. Certified commercial pesticide* technicians* are not permitted to purchase restricted use pesticides.
 
