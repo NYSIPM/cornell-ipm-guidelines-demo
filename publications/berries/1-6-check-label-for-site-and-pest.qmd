@@ -3,3 +3,7 @@ title: 1.6 Check Label for Site and Pest
 date: 2026-01-21T15:11:00.000-05:00
 ---
 Before purchasing a pesticide, carefully and thoroughly read the label to be sure that the pest you wish to control is listed for the site (i.e., crop) where you will apply the pesticide. **In New York State, it’s a requirement that the pest must be listed on the label for the site you’re treating.** Other states may not have this requirement. You can find labels for registered products at [extapps.dec.ny.gov/nyspad/products](extapps.dec.ny.gov/nyspad/products).
+
+If a pest is not listed on the label for the site you’re treating, check the NYSDEC’s product registration database to see if a 2(ee) recommendation for unlabeled pest has been approved for the pesticide and the site. (See Section 1.10 for more on 2(ee)s.)
+
+Before purchasing new quantities of a pesticide you have used before, be sure to read the label for the new product. Labels can and do change! It’s not uncommon for sites and/or pests to be deleted from a newer version of a label. Checking this ahead of time will prevent you from making an illegal pesticide application or put you in the position of having an unusable pesticide.
