@@ -31,4 +31,12 @@ Properly maintained and carefully used equipment contribute to safe pesticide ap
 * Be sure to turn off machinery before making any adjustments. 
 * Do not allow children, pets, or unauthorized people near the pesticide equipment. 
 * Depressurize tanks or systems between jobs. 
-* Always return equipment to appropriate areas for cleaning and storage when the application is completed.
+* Always return equipment to appropriate areas for cleaning and storage when the application is completed. 
+
+## 1.2.6 Pesticide Storage
+
+Existing buildings or areas within existing buildings are often used to store pesticides. Whether you build a new storage area or use existing buildings, consider several points: 
+
+* The site should be where flooding is unlikely.
+* It should be downwind and downhill from sensitive areas like houses, ponds, and play areas.
+* There should be no chance that runoff or drainage from the site could contaminate surface or groundwater.
