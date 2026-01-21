@@ -33,6 +33,8 @@ In 2023, New York State enacted what’s referred to as the Birds and Bees Prote
 * When applied by, or under the supervision of, a certified applicator to treat invasive species affecting woody plants; and
 * When used under a written order from the NYSDEC to address a valid environmental emergency.
 
-Applicators treating invasive species affecting woody plants or making applications under a NYSDEC order are required to complete a
-NYSDEC-approved neonicotinoid training course annually. A record of the course
+Applicators treating invasive species affecting woody plants or making applications under a NYSDEC order are required to complete a NYSDEC-approved neonicotinoid training course annually. A record of the course
 completion must be maintained for 3 years.
+
+Neonicotinoid treated seeds. The ECL amendment also prohibits, as of January 1, 2029, the sale, distribution, and use of corn, soybean, and wheat seeds coated or treated with clothianidin, imidacloprid, thiamethoxam, or any other neonicotinoid as determined by the NYSDEC. The amendment allows farmers to request a waiver from the NYSDEC to plant these types of treated seeds. The waiver will be granted if the following minimum requirements
+are met:
