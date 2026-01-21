@@ -1,0 +1,16 @@
+---
+title: 1.7 Pesticide Recordkeeping/Reporting
+date: 2026-01-21T15:16:00.000-05:00
+---
+## 1.7.1 New York State Reporting Requirements
+
+**Manufacturers and importers.** The NYSDEC requires annual reports from pesticide manufacturers and importers documenting all restricted use product sales within the state. These records include the EPA Registration Number, container size, and number of containers sold to New York buyers. These records need to be maintained for at least three years.
+
+**Point of sale reporting.** The NYSDEC requires annual reports from those selling or offering for sale restricted use pesticides to private applicators. The reports include each sale of a restricted or general use pesticide to a private applicator that’s used in agricultural crop production. Reports include the EPA Registration Number; name and quantity of the pesticide purchased; purchase date; and location of intended application by address (including zip code) or, if an address is unavailable, by town or city (including zip code). An annual report is required even if no pesticides were sold during the calendar year.
+
+Commercial applicators. Commercial applicators and technicians are required to submit annual reports to the NYSDEC of their
+restricted and general use pesticide applications. These reports include the
+EPA Registration Number, product name and quantity used, date applied, and
+location of application by address (including zip code). All commercial
+applicators and technicians must file an annual report even if no pesticide
+applications were made during the calendar year.
