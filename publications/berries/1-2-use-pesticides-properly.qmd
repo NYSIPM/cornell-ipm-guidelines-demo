@@ -59,3 +59,5 @@ Existing buildings or areas within existing buildings are often used to store pe
 * Is a spill kit readily available?
 * Are fire extinguishers readily available?
 * Is personal protective equipment readily available?
+
+Additional guidance on pesticide storage is available online from the NYSDEC at [dec.ny.gov/regulatory/regulations/policy-dshm-pes-05-03-pesticide-storage-guidelines](https://dec.ny.gov/regulatory/regulations/policy-dshm-pes-05-03-pesticide-storage-guidelines).
