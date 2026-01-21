@@ -1,0 +1,47 @@
+---
+title: 1.4 New York State Pesticide Use Restrictions
+---
+## 1.4.1 Restricted Use Pesticides
+
+Pesticides that are highly toxic or are persistent and accumulative are classified as restricted use in New York State by the NYSDEC. The NYSDEC uses several criteria to classify pesticides as restricted use including products:
+
+* Having an active ingredient specifically listed in Part 326.2(a) of the state pesticide control regulations.
+* Having an active ingredient listed in Part 326.2(b) of the state pesticide control regulations and used as noted in the regulations.
+* That the NYSDEC commissioner feels may need to be restricted in their use to prevent damage to health, property, and/or wildlife.
+* That are classified as restricted use by the EPA.
+* Whose label limits use to commercial pesticide applicators.
+* Labeled for direct application to or in surface waters.
+
+A pesticide classified as restricted use by the NYSDEC may be distributed, sold, purchased, possessed, and used only by a certified applicator or by someone holding a commercial permit or purchase permit. In many cases, restricted use pesticides may also be used by someone under the direct supervision of a certified applicator. **\*NOTE**: *NYS regulations require on-site direct supervision when a person under the instruction and control of a certified private applicator uses a* federally *restricted pesticide. Certified commercial pesticide* technicians* are not permitted to purchase restricted use pesticides.
+
+[Federally restricted pesticides will state “RESTRICTED USE” on the label. Pesticides restricted by the NYSDEC often may not have label statements noting they’re restricted use in New York State. Use the ](<>)[NYSDEC's product registration database](https://extapps.dec.ny.gov/nyspad/products) ([extapps.dec.ny.gov/nyspad/ products](https://extapps.dec.ny.gov/nyspad/products)) to check the restricted use status of a pesticide.
+
+**Restricted use pesticides mentioned in this publication are preceded by an asterisk (*).**
+
+## 1.4.2 Additional Use Restrictions
+
+The NYSDEC may also determine that a pesticide cannot be used in a particular area of New York State due to unacceptable risks. For example, certain pesticides are prohibited from use on Long Island due to groundwater contamination or other concerns. These additional use restrictions will be noted on the pesticide label.
+
+**Pesticides mentioned in this publication that cannot be used in Nassau and Suffolk Counties are preceded by a dagger (†).**
+
+## 1.4.3 Neonicotinoid Pesticide Use in New York State
+
+In 2023, New York State enacted what’s referred to as the Birds and Bees Protection Act. The Act amended the state Environmental Conservation Law (ECL) to prohibit use of certain neonicotinoid pesticides on outdoor ornamentals and turf. It also prohibits the sale, use, or distribution of certain seeds treated with neonicotinoid pesticides. **Outdoor ornamentals and turf**. The ECL amendment prohibits treating outdoor ornamentals and turf with dinotefuran and clothianidin as of December 31, 2024, and imidacloprid, thiamethoxam, and acetamiprid as of December 31, 2026. The amendment includes a few exceptions including use of these ingredients:
+
+* When producing an agricultural commodity;
+* If used within one foot of a building foundation to manage structural pests as long as blooming plants aren’t treated. 
+* When applied by, or under the supervision of, a certified applicator to treat invasive species affecting woody plants; and
+* When used under a written order from the NYSDEC to address a valid environmental emergency.
+
+Applicators treating invasive species affecting woody plants or making applications under a NYSDEC order are required to complete a NYSDEC-approved neonicotinoid training course annually. A record of the course
+completion must be maintained for 3 years.
+
+**Neonicotinoid treated seeds**. The ECL amendment also prohibits, as of January 1, 2029, the sale, distribution, and use of corn, soybean, and wheat seeds coated or treated with clothianidin, imidacloprid, thiamethoxam, or any other neonicotinoid as determined by the NYSDEC. The amendment allows farmers to request a waiver from the NYSDEC to plant these types of treated seeds. The waiver will be granted if the following minimum requirements
+are met:
+
+* The farmer has completed an integrated pest management training;
+* Completion of a pest risk assessment and pest risk assessment report;
+* The seeds are planted only on property or properties identified in the pest risk assessment report; and
+* Records are kept of the risk assessment report and when treated seeds are planted.
+
+Waiver requests will be made to the NYSDEC. Issued waivers will be valid for up to 2 years.
