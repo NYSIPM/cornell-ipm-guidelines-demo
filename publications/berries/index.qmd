@@ -12,7 +12,7 @@ format:
     page-layout: article
 date: 2026-01-21T16:07:00.000-05:00
 ---
-1. Pesticide Information
+1. [Pesticide Information](1-pesticide-information.qmd)
 2. General Information
 3. Sprayer Technology
 4. Emerging Pests 
