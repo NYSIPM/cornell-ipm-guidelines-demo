@@ -8,3 +8,8 @@ EPA has expedited the registration of conventional pesticides having low toxicit
 ## 1.9.2 Minimum-risk Pesticides
 
 Minimum-risk pesticides are certain pesticides exempt from EPA registration under FIFRA. Since these products are not registered with the EPA, they do not have an EPA Registration Number. Minimum-risk pesticides contain only active and inert ingredients outlined in federal regulations (40 CFR 152.25(f)(1) and 40 CFR 152.25(f)(2), respectively). Minimum risk pesticides must also meet certain label requirements. Detailed information on minimum-risk pesticides is available at [www.epa.gov/minimum-risk-pesticides](www.epa.gov/minimum-risk-pesticides).
+
+New York State does not currently require registration of minimum-risk pesticides meeting EPA’s criteria. However, other states may require registration of these products.
+
+## 1.9.3 Biopesticides
+EPA defines biopesticides (or biological pesticides) as certain types of pesticides derived from natural materials such as animals, plants, bacteria, and certain minerals. This group includes microbial pesticides (which contain bacteria, fungi, viruses, etc., as the active ingredient); plant incorporated protectants (pesticidal substances plants produce from added genetic material like corn genetically modified to produce Bacillus thuringiensis toxins); and biochemical pesticides comprised of naturally occurring substances that control pests by nontoxic mechanisms (such as pheromones or some insect growth regulators). Biopesticides must be registered with EPA. See www.epa. gov/pesticides/biopesticides/ for more information.
