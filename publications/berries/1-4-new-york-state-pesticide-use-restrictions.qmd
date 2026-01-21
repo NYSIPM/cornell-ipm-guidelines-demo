@@ -1,0 +1,30 @@
+---
+title: 1.4 New York State Pesticide Use Restrictions
+---
+## 1.4.1 Restricted Use Pesticides
+
+Pesticides that are highly toxic or are persistent and accumulative are classified as restricted use in New York State by the NYSDEC. The NYSDEC uses several criteria to classify pesticides as restricted use including products:
+
+–        Having an active ingredient specifically listed in Part 326.2(a) of the state pesticide control regulations.
+
+–        Having an active ingredient listed in Part 326.2(b) of the state pesticide control regulations and used as noted in the regulations.
+
+–        That the NYSDEC commissioner feels may need to be restricted in their use to prevent damage to health, property, and/or wildlife.
+
+–        That are classified as restricted use by the EPA.
+
+–        Whose label limits use to commercial pesticide applicators.
+
+–        Labeled for direct application to or in surface waters.
+
+A pesticide classified as restricted use by the NYSDEC may be distributed, sold, purchased, possessed, and used only by a certified applicator or by someone holding a commercial permit or purchase permit. In many cases, restricted use pesticides may also be used by someone under the direct supervision of a certified applicator. **\*NOTE**: *NYS regulations require on-site direct supervision when a person under the instruction and control of a certified private applicator uses a* federally *restricted pesticide. Certified commercial pesticide* technicians* are not permitted to purchase restricted use pesticides.
+
+[Federally restricted pesticides will state “RESTRICTED USE” on the label. Pesticides restricted by the NYSDEC often may not have label statements noting they’re restricted use in New York State. Use the ](<>)[NYSDEC's product registration database](https://extapps.dec.ny.gov/nyspad/products) ([extapps.dec.ny.gov/nyspad/ products](https://extapps.dec.ny.gov/nyspad/products)) to check the restricted use status of a pesticide.
+
+**Restricted use pesticides mentioned in this publication are preceded by an asterisk (*).**
+
+## 1.4.2 Additional Use Restrictions
+
+The NYSDEC may also determine that a pesticide cannot be used in a particular area of New York State due to unacceptable risks. For example, certain pesticides are prohibited from use on Long Island due to groundwater contamination or other concerns. These additional use restrictions will be noted on the pesticide label.
+
+**Pesticides mentioned in this publication that cannot be used in Nassau and Suffolk Counties are preceded by a dagger (†).**
