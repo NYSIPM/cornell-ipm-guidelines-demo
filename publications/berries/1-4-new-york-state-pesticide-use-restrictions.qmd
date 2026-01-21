@@ -24,4 +24,15 @@ The NYSDEC may also determine that a pesticide cannot be used in a particular ar
 
 **Pesticides mentioned in this publication that cannot be used in Nassau and Suffolk Counties are preceded by a dagger (†).**
 
-Applicators treating invasive species affecting woody plants or making applications under a NYSDEC order are required to complete a NYSDEC-approved neonicotinoid training course annually. A record of the course completion must be maintained for 3 years.
+## 1.4.3 Neonicotinoid Pesticide Use in New York State
+
+In 2023, New York State enacted what’s referred to as the Birds and Bees Protection Act. The Act amended the state Environmental Conservation Law (ECL) to prohibit use of certain neonicotinoid pesticides on outdoor ornamentals and turf. It also prohibits the sale, use, or distribution of certain seeds treated with neonicotinoid pesticides. **Outdoor ornamentals and turf**. The ECL amendment prohibits treating outdoor ornamentals and turf with dinotefuran and clothianidin as of December 31, 2024, and imidacloprid, thiamethoxam, and acetamiprid as of December 31, 2026. The amendment includes a few exceptions including use of these ingredients:
+
+* When producing an agricultural commodity;
+* If used within one foot of a building foundation to manage structural pests as long as blooming plants aren’t treated. 
+* When applied by, or under the supervision of, a certified applicator to treat invasive species affecting woody plants; and
+* When used under a written order from the NYSDEC to address a valid environmental emergency.
+
+Applicators treating invasive species affecting woody plants or making applications under a NYSDEC order are required to complete a
+NYSDEC-approved neonicotinoid training course annually. A record of the course
+completion must be maintained for 3 years.
