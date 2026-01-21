@@ -36,3 +36,7 @@ Federal regulations require private applicators to keep records of the *federall
   * Maps, GPS coordinates, or written descriptions;
   * A USDA identification system, which involves maps and a numbering system to identify field locations; or
   * The legal property description.
+
+Under federal recordkeeping regulations, applications of a restricted use pesticide to less than 1/10 of an acre on the same day are defined as spot applications. Spot application records must include: month/day/year of application; brand or product name of pesticide applied; EPA registration number; total amount of pesticide applied; and location of the application designated as a “spot treatment” with a brief description. *NOTE:* Spot treatments do not apply to nurseries or greenhouses. Applications at these locations are recorded as if they are a non-spot application.
+
+Federally required information must be recorded within 14 days of the application and be maintained for 2 years after the application. Access to federal record information is limited to: USDA-authorized representatives presenting identification; state-authorized representatives presenting identification; and attending licensed health care professionals (or those acting under their direction) when treating individuals who may have been exposed to a restricted use pesticide.
