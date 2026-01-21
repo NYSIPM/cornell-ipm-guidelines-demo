@@ -1,0 +1,63 @@
+---
+title: 1.2 Use Pesticides Properly
+date: 2026-01-21T12:17:00.000-05:00
+---
+Using pesticides requires the user to protect their health, the health of others, and the environment. Keep in mind “pesticide use” is more than just the application. It includes mixing, loading, transporting, storing, or handling pesticides after the manufacturer’s seal is broken; cleaning pesticide application equipment; and preparing a container for disposal. These activities require thoughtful planning and preparation. They also require you to comply with state and federal laws and regulations intended to protect human health and the environment from the adverse effects pesticides may cause.
+
+## 1.2.1 Plan Ahead
+
+Many safety precautions should be taken before you begin using pesticides. Most pesticide accidents can be prevented with informed and careful practices. **Always read the label on the pesticide container before using the pesticide**. Make sure you understand and can follow all label directions and precautions. Be prepared to handle an emergency exposure or spill. Know the first aid procedures for the pesticides you use.
+
+## 1.2.2 Move Pesticides Safely
+
+Transporting pesticides carelessly can result in broken containers, spills, and contamination of people and the environment. Accidents can occur even when transporting pesticides a short distance. You are responsible for a pesticide accident so take every effort to transport pesticides safely. Be prepared for an emergency.
+
+## 1.2.3 Personal Protective Equipment and Engineering Controls
+
+**Personal protective equipment** (PPE) needs depend on the pesticide being handled. **Required PPE are listed on pesticide labels**. Any required PPE is based on the pesticide’s toxicity, route(s) of exposure, and formulation. Label-listed PPE are the minimum that must be worn when using a pesticide. You can always use more than what’s listed!
+
+The type of PPE used depends on the type and duration of the activity, where pesticides are being used, and the user’s exposure. For example, mixing/loading procedures often require more PPE than when applying a pesticide. Studies show you are at a greater risk of accidental poisoning when handling pesticide concentrates. Pouring pesticide concentrates is the most hazardous activity. 
+
+**Engineering controls** are devices that help reduce a pesticide user’s exposure. An example is a closed transfer system that reduces the exposure risk when dispensing pesticide concentrates. Consult the product label for more information on using engineering controls in place of PPE.
+
+## 1.2.4 Avoid Drift, Runoff, and Spills
+
+Pesticides that move out of the target area can injure people, damage non-target areas, and harm the environment. Choose weather conditions, pesticides, application equipment, pressure, droplet size, formulations, and adjuvants to minimize drift and runoff potential. Product labels may have specific application and/or equipment requirements to reduce issues with drift and runoff.
+
+## 1.2.5 Avoid Equipment Accidents
+
+Properly maintained and carefully used equipment contribute to safe pesticide application. The following guidelines will help you prevent accidents:  
+
+* Be sure to turn off machinery before making any adjustments. 
+* Do not allow children, pets, or unauthorized people near the pesticide equipment. 
+* Depressurize tanks or systems between jobs. 
+* Always return equipment to appropriate areas for cleaning and storage when the application is completed. 
+
+## 1.2.6 Pesticide Storage
+
+Existing buildings or areas within existing buildings are often used to store pesticides. Whether you build a new storage area or use existing buildings, consider several points: 
+
+* The site should be where flooding is unlikely.
+* It should be downwind and downhill from sensitive areas like houses, ponds, and play areas.
+* There should be no chance that runoff or drainage from the site could contaminate surface or groundwater.
+
+***Storage facility check list:***
+
+* Is the facility separated from:
+
+  * Offices, workshops, and livestock areas?
+  * Wells, streams, lakes, ponds, wildlife?
+  * Food and feed?
+* Is the facility made of fire-resistant building materials?
+* Does the facility have: 
+
+  * Impermeable flooring?
+  * Liquid spill containment (berms to hold 25% of liquid storage)?
+* Can the doors be locked?
+* Is the facility fenced in?
+* Are warning signs posted?
+* Is a spill kit readily available?
+* Are fire extinguishers readily available?
+* Is personal protective equipment readily available?
+
+Additional guidance on pesticide storage is available online from the NYSDEC at [dec.ny.gov/regulatory/regulations/policy-dshm-pes-05-03-pesticide-storage-guidelines](https://dec.ny.gov/regulatory/regulations/policy-dshm-pes-05-03-pesticide-storage-guidelines).
