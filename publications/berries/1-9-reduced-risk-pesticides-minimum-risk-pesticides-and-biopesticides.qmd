@@ -1,0 +1,6 @@
+---
+title: 1.9 Reduced-risk Pesticides, Minimum-risk Pesticides, and Biopesticides
+date: 2026-01-21T15:37:00.000-05:00
+---
+## 1.9.1 Reduced-risk Pesticides
+EPA has expedited the registration of conventional pesticides having low toxicity to humans and nontarget organisms (including fish and birds), low risk of groundwater contamination or runoff, low potential for pesticide resistance, demonstrated efficacy, and compatibility with IPM. EPA refers to materials meeting these criteria as “reduced-risk.” The “reduced-risk” designation applies only to certain uses of a particular pesticide and may not include all labeled uses of the product.
