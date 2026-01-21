@@ -1,0 +1,23 @@
+---
+title: 1.3 Pollinator Protection
+date: 2026-01-21T12:17:00.000-05:00
+---
+Honey bees, wild bees, and other insects are important for proper pollination of many crops. Many factors affect pollinator health including lack of seasonal forage, parasites, predators, pathogens, lack of genetic diversity, and pesticide exposure.
+
+* To avoid harming bees and other pollinators, remember these general points: 
+* Always check the pesticide label for specific pollinator protection requirements;
+* Do not spray or allow the pesticide to drift onto blooming crops or weeds; 
+* Mow blooming weeds before making an application;
+* Avoid applications during the time of day when bees are most numerous;
+* Make applications in the early morning or evening; and
+* Avoid making applications over or allowing drift onto hives or apiaries.
+
+Pesticide labels may carry warnings about bee and pollinator hazards. If highly toxic pesticides are are used according to label directions, little harm should be done to bees or other pollinators. Note that some pesticides with relatively low toxicity to bees can be made more toxic when mixed with other pesticides. Take special care with tank mixes where pollinator safety may not be known.
+
+The EPA has established bee labeling requirements for nitroguanidine neonicotinoid-containing pesticides (imidacloprid, dinotefuran, clothianidin, and thiamethoxam) with outdoor foliar uses on their label. These labels have a bee icon and an advisory box with information on routes of exposure and spray drift precautions. 
+
+The EPA has adopted a [risk-based pollinator protection policy](https://downloads.regulations.gov/EPA-HQ-OPP-2014-0818-0477/content.pdf). The policy describes EPA’s approach to assessing pesticide products and uses that may pose a risk to bees under contract pollination services. If the use poses a risk, language will be added to the product label on how to use the product for a given crop when contracted bees are present. More on this policy can be found at [www.epa.gov/pollinator-protection/policy-mitigating-acute-risk-bees-pesticide-products](https://www.epa.gov/pollinator-protection/policy-mitigating-acute-risk-bees-pesticide-products).
+
+New York State has developed its own pollinator protection plan. This plan discusses the status of pollinators in New York State and how they can be protected. The plan is available online at [www.dec.ny.gov/docs/administration_pdf/nyspollinatorplan.pdf](http://www.dec.ny.gov/docs/administration_pdf/nyspollinatorplan.pdf).
+
+Additional pollinator protection information can be found online at: [www.epa.gov/pollinator-protection and pesticidestewardship.org/pollinator-protection/](www.epa.gov/pollinator-protection and pesticidestewardship.org/pollinator-protection/).
