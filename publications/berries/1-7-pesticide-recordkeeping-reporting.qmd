@@ -17,3 +17,22 @@ date: 2026-01-21T15:16:00.000-05:00
 **Private applicators** are required to maintain records of the restricted use pesticides purchased and used. These records need to include, at a minimum: the restricted use pesticide(s) purchased; crop treated; application method, and date(s) of application(s). (A form meeting these requirements is available from the DEC online at [www.dec.ny.gov/docs/materials_minerals_pdf/privatercdfrm.pdf](http://www.dec.ny.gov/docs/materials_minerals_pdf/privatercdfrm.pdf). A copy of this form is at the back of this book.) Records need to be retained for at least three years and must be made available for inspection by the NYSDEC upon request.
 
 More information on New York State reporting and recordkeeping requirements can be obtained from the NYSDEC in Albany at [518-402-8748](tel:518-402-8748) or [PestMgt@dec.ny.gov](mailto:PestMgt@dec.ny.gov).
+
+## 1.7.3 Federal Private Applicator Recordkeeping Requirements
+
+Federal regulations require private applicators to keep records of the *federally restricted use* pesticides they apply. Federally required records must contain the following:
+
+* Applicator name;
+* Applicator certification number;
+* Month, day, and year of application;
+* EPA Registration Number for product applied;
+* Brand or product name of pesticide applied;
+* Crop, commodity, or site treated;
+* Size of area treated;
+* Total amount of pesticide product applied; and
+* Location of the application using any of the following:
+
+  * County, range, township, and section;
+  * Maps, GPS coordinates, or written descriptions;
+  * A USDA identification system, which involves maps and a numbering system to identify field locations; or
+  * The legal property description.
