@@ -8,9 +8,10 @@ date: 2026-01-21T15:16:00.000-05:00
 
 **Point of sale reporting.** The NYSDEC requires annual reports from those selling or offering for sale restricted use pesticides to private applicators. The reports include each sale of a restricted or general use pesticide to a private applicator that’s used in agricultural crop production. Reports include the EPA Registration Number; name and quantity of the pesticide purchased; purchase date; and location of intended application by address (including zip code) or, if an address is unavailable, by town or city (including zip code). An annual report is required even if no pesticides were sold during the calendar year.
 
-Commercial applicators. Commercial applicators and technicians are required to submit annual reports to the NYSDEC of their
-restricted and general use pesticide applications. These reports include the
-EPA Registration Number, product name and quantity used, date applied, and
-location of application by address (including zip code). All commercial
-applicators and technicians must file an annual report even if no pesticide
-applications were made during the calendar year.
+**Commercial applicators.** Commercial applicators and technicians are required to submit annual reports to the NYSDEC of their restricted and general use pesticide applications. These reports include the EPA Registration Number, product name and quantity used, date applied, and location of application by address (including zip code). All commercial applicators and technicians must file an annual report even if no pesticide applications were made during the calendar year.
+
+## 1.7.2 New York State Recordkeeping Requirements
+
+**Commercial applicators and technicians** must maintain corresponding application records of the dosage rates, methods of application, and target organisms. These records need to be maintained annually, retained for at least three years, and made available for inspection on request by the NYSDEC.
+
+**Private applicators** are required to maintain records of the restricted use pesticides purchased and used. These records need to include, at a minimum: the restricted use pesticide(s) purchased; crop treated; application method, and date(s) of application(s). (A form meeting these requirements is available from the DEC online at [www.dec.ny.gov/docs/materials_minerals_pdf/privatercdfrm.pdf](http://www.dec.ny.gov/docs/materials_minerals_pdf/privatercdfrm.pdf). A copy of this form is at the back of this book.) Records need to be retained for at least three years and must be made available for inspection by the NYSDEC upon request.
