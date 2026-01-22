@@ -5,6 +5,7 @@ project:
     - "admin/**"
     - "*.html"
     - "js/**"
+    - "static/**"
 
 website:
   title: "Cornell IPM Guidelines Demo"
