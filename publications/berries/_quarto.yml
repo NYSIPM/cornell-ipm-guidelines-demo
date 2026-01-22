@@ -18,6 +18,8 @@ website:
           - text: "---"
           - text: "1 Pesticide Information"
             href: 1-pesticide-information.qmd
+          - text: "1 Pesticide Information"
+            href: 1-2-use-pesticides-properly
 
 format:
   html:
