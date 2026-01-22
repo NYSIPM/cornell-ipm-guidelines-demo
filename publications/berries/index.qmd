@@ -25,4 +25,4 @@ date: 2026-01-21T16:07:00.000-05:00
 9. Elderberries
 10. Juneberries/Saskatoons
 
-![Strawberries being sold in a grocery store](../../images/image1.jpg "Front Cover of the Berry Crop Guide")
+![Strawberries being sold in a grocery store](../../static/images/image1.jpg "Front Cover of the Berry Crop Guide")
