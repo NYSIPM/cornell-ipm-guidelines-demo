@@ -16,6 +16,11 @@ cd publications/grapes
 quarto render
 cd ../..
 
+echo "=== Rendering Berries Guidelines ==="
+cd publications/berries
+quarto render
+cd ../..
+
 echo "=== Copying admin folder ==="
 mkdir -p docs/admin
 cp -r admin/* docs/admin/
