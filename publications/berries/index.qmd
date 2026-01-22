@@ -12,6 +12,8 @@ format:
     page-layout: article
 date: 2026-01-21T16:07:00.000-05:00
 ---
+## Chapters
+
 1. [Pesticide Information](1-pesticide-information.qmd)
 2. [General Information](2-general-information.qmd)
 3. Sprayer Technology
@@ -22,4 +24,5 @@ date: 2026-01-21T16:07:00.000-05:00
 8. Ribes (Currants and Gooseberries)
 9. Elderberries
 10. Juneberries/Saskatoons
-.
+
+![Strawberries being sold in a grocery store](/images/image1.jpg "Front Cover of the Berry Crop Guide")
