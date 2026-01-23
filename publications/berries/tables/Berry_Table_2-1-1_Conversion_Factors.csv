@@ -1,0 +1,29 @@
+﻿Table 2.1.1. Conversion factors to convert from one unit to another.,,
+To convert from,To,Multiply by
+lb/A,lb/100 sq ft,0.0023
+tn/A,lb/100 sq ft,4.6
+lb/A,kg/ha,1.12
+kg/ha,lb/A,0.893
+lb,oz,16
+qt of fruit,lb of fruit,1.5
+qt,pt,2
+pt,qt,0.5
+gal of liquid,lb of liquid,8.3
+Strawberries,,
+lb/A,lb/100 ft of row,0.008
+Yield in lb/100 ft of row,lb/A,125
+Yield in qt/100 ft of row,lb/A,188
+Raspberries and Blackberries,,
+lb/A,lb/100 ft of row,0.0184
+lb/A,oz/plant,0.009
+Yield in lb/100 ft of row,lb/A,55
+Yield in pt/100 ft of row,lb/A,73
+Blueberries,,
+lb/A,oz/plant,0.015
+Yield in lb/100 ft of row,lb/A,44
+Yield in pt/100 ft of row,lb/A,58
+Currants and Gooseberries,,
+lb/A,oz/plant,0.012
+lb/A,lb/100 ft of row,0.0184
+Yield in lb/100 ft of row,lb/A,55
+Yield in pt/100 ft of row,lb/A,73
