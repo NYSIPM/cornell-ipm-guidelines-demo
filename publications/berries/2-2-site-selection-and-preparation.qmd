@@ -62,18 +62,18 @@ Soil health is important to farmers and growers because they need to know if the
 
 The Cornell Soil Health Program Work Team has developed soil measurements to help monitor the state of soil health both in space and time. These indicators can measure soil improvement or degradation resulting from different management practices and also the long-term changes in soil health under given management practices. 
 
-A comprehensive soil health analysis package includes:
-Particle size distribution and texture
-Wet aggregate stability
-Available water capacity
-Surface hardness
-Subsurface hardness
-Organic matter
-Active carbon
-Soil respiration
-Soil protein
-Root pathogen pressure
-Standard fertility test and recommendations (pH, Modified Mehlich Buffer pH (lime requirement), organic matter and Modified Morgan extractable phosphorus, potassium, calcium, magnesium, aluminum, iron, zinc, and manganese.)
+* A comprehensive soil health analysis package includes:
+* Particle size distribution and texture
+* Wet aggregate stability
+* Available water capacity
+* Surface hardness
+* Subsurface hardness
+* Organic matter
+* Active carbon
+* Soil respiration
+* Soil protein
+* Root pathogen pressure
+* Standard fertility test and recommendations (pH, Modified Mehlich Buffer pH (lime requirement), organic matter and Modified Morgan extractable phosphorus, potassium, calcium, magnesium, aluminum, iron, zinc, and manganese.)
 
 *Note: Hot water boron testing should be selected as add-on in addition to the Cornell soil health test assessment package*.
 
