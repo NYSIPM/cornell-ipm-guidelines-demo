@@ -3,6 +3,8 @@ project:
   output-dir: ../../docs/publications/berries
   resources:
     - "*.pdf"
+    - "tables/**"
+
 
 website:
   title: "Cornell IPM | Berries Guidelines"
