@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 echo "=== Installing Quarto ==="
 QUARTO_VERSION="1.4.550"
