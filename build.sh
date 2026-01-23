@@ -8,19 +8,6 @@ export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
 
 quarto --version
 
-
-echo "=== Normalizing smart punctuation ==="
-find . -name "*.qmd" -type f -print0 | while IFS= read -r -d '' file; do
-  sed -i \
-    -e "s/’/'/g" \
-    -e 's/“/"/g' \
-    -e 's/”/"/g' \
-    -e 's/–/-/g' \
-    -e 's/—/-/g' \
-    "$file"
-done
-
-
 echo "=== Rendering Root Site ==="
 quarto render
 
