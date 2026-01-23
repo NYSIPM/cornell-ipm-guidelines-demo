@@ -7,6 +7,9 @@ project:
     - "js/**"
     - "static/**"
 
+execute:
+  enabled: false
+
 website:
   title: "Cornell IPM Guidelines Demo"
   navbar:
