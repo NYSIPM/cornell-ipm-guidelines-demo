@@ -42,10 +42,43 @@ Agro-One provides soil and nutrient testing services previously available throug
 | Yield in lb/100 ft of row    | lb/A             | 33          |
 | Yield in qt/100 ft of row    | lb/A             | 50          |
 
-
-
 Obtain basic soil test instructions and sample boxes by contacting: Dairy One, 730 Warren Road, Ithaca, NY 14850 or calling 1-800-344-2697, or visiting <https://dairyone.com/services/agronomy-services/soil-analysis/>.
 
 Be sure to indicate on the soil test submission form if the recommendations requested are for preplanting – recommendations will be different for an established planting. *Note: Boron is frequently low in fruit plantings throughout the Northeast.* *Boron testing is not included in most standard soil test packages and should be selected as an added test for berry soils*.
 
 Please note: Soil test results differ from lab to lab, depending on the extraction technique used. Therefore, recommendations are lab-specific. Do not use values from one lab to determine recommendations from another. Some labs take a conservative approach to recommendations, while others want to ensure that the crop has a more than adequate nutrient reserve. Some labs provide a general soil recommendation for all crops, whereas others like Agro-One provide specific recommendations for specific crops using Cornell’s recommendation engine.
+
+## 2.2.2 Cornell Soil Health Test
+
+Soil health describes the capacity of a soil to be used productively without adversely affecting its future productivity, the ecosystem or the environment. Soil health emphasizes the integration of biological with chemical and physical measures of soil quality that affect farmers' profits and the environment.
+
+Soil health deals with both inherent and dynamic soil quality. **Inherent soil quality** relates to the natural characteristics of the soil, such as its texture. These qualities are the result of soil-forming factors, are generally represented in soil surveys, and cannot be changed easily. 
+
+In contrast, **dynamic soil quality** components, such as compaction, biological functioning, root proliferation, etc. are readily affected by management practices. The dynamic component is of most interest to growers because good management allows the soil to come to its full potential. 
+
+The inherent and dynamic soil quality components do interact; however, as some soil types are much more susceptible to degradation and unforgiving of poor management than others.
+
+Soil health is important to farmers and growers because they need to know if their soil will continue to sustain profitable yields, and to help reduce long-term risks to environmental quality.
+
+The Cornell Soil Health Program Work Team has developed soil measurements to help monitor the state of soil health both in space and time. These indicators can measure soil improvement or degradation resulting from different management practices and also the long-term changes in soil health under given management practices. 
+
+* A comprehensive soil health analysis package includes:
+* Particle size distribution and texture
+* Wet aggregate stability
+* Available water capacity
+* Surface hardness
+* Subsurface hardness
+* Organic matter
+* Active carbon
+* Soil respiration
+* Soil protein
+* Root pathogen pressure
+* Standard fertility test and recommendations (pH, Modified Mehlich Buffer pH (lime requirement), organic matter and Modified Morgan extractable phosphorus, potassium, calcium, magnesium, aluminum, iron, zinc, and manganese.)
+
+*Note: Hot water boron testing should be selected as add-on in addition to the Cornell soil health test assessment package*.
+
+Due to seasonal variability in biological and physical indicators), all samples must be received between April 1 and June 15. 
+
+For more information on the Cornell soil health test contact Bob Schindelbeck, 1003 Bradfield Hall, Cornell University, Ithaca, NY 14853-1901, or call (607) 227-6055 or visit: <http://soilhealth.cals.cornell.edu/>.
+
+A series of webinars on soil and nutrient management in berry crops can be found here: <https://blogs.cornell.edu/berries/productions/berry-soil-and-nutrient-management-a-guide-for-educators-and-growers/>.
