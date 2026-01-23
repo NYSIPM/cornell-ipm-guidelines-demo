@@ -5,3 +5,12 @@ date: 2026-01-23T17:00:00.000-05:00
 Fumigation may be required if nematode and/or symphylans levels are high or if pathogenic fungi (e.g. Phytophthora, Pythium, Rhizoctonia, and Fusarium) or insect pests are present in the soil. Fumigation may also provide some weed control. The grower can apply some types of fumigants; others must be commercially applied. Soil should be friable and moist prior to fumigation, and the soil temperature should be 50° to 90°F. All plant material must be decomposed prior to fumigation. See Table 2.3.1.
 
 *Growers who fumigate their crops are requirements to have a detailed "Fumigant Management Plan" (FMP) in place before fumigating, and for at least two people at the fumigation site to have an appropriate respirator and be fit-tested and medically cleared to use one. Even growers who have their fumigation done by custom work will need an FMP specific to their farm.*
+
+## 2.3.1 Soil Fumigant Management Plans
+Soil fumigations are complex processes that require specialized equipment and practices to properly apply volatile and toxic pesticides. EPA's risk mitigation allows for site specific decisions to address the conditions where the fumigant is applied. To address this complexity and flexibility, EPA is requiring that fumigant users prepare a written, site-specific fumigant management plan (FMP) before fumigations begin. Written plans and procedures for safe and effective applications will help prevent accidents and misuse and will capture emergency response plans and steps to take in case an accident occurs.
+
+Once the application begins, the certified applicator must make a copy of the FMP available for viewing by handlers involved in the fumigation. The certified applicator or the owner/operator of the application block must provide a copy of the FMP to any local/state/federal/tribal enforcement personnel who request the FMP. In the case of an emergency, the FMP must be made available when requested by local/state/federal/tribal emergency response and enforcement personnel.
+
+
+
+
