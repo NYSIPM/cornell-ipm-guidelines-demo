@@ -106,6 +106,7 @@ Samples may be submitted for nematode testing to the Plant Disease Diagnostic Cl
 Follow the recommendations of the soil and nematode tests to ensure a good planting in future years. A nutritionally healthy planting in a well-drained soil with exposure to air movement is least susceptible to damage from pests. 
 
 ## 2.2.5 Garden Symphylans
+
 Garden symphylans (sometimes called garden centipedes) are very small, thin white animals with 8 to 12 pairs of legs and very distinctive bead-like antennae. They inhabit soil, spending all of their life cycle underground in the dark. Symphylans feed on germinating vegetable and weed seeds, roots and root hairs of plants. Sometimes feeder roots are completely cut off by symphylan feeding; leaving brown stubs were the roots should be. Feeding on roots interferes with plant growth and yield, and causes plant stunting.
 
 Damage may also lead to wilting on warm days and in some instances, plant death. Symphylans may chew holes in larger roots and strawberry fruit. Damage may also occur to above ground plant parts in contact with soil. Chewing injuries then become infection courts for soil-borne diseases.
@@ -113,6 +114,8 @@ Damage may also lead to wilting on warm days and in some instances, plant death.
 Direct observation is probably the best method for determining the presence of symphylans in soil. Sample the top 6 to 12” of warm, moist soil prior to tillage. Gently place a shovel full of soil on a piece of black plastic. Break apart soil clumps and count numbers of symphylans present. Sample 10 to 20 shovels of soil per acre. A rule of thumb action threshold for symphylans is 5 to 20 per shovelful of soil for moderate to highly susceptible crops.
 
 Cultural management practices for symphylans include:
-Deep, thorough cultivation between crops to destroy earthworm tunnels, symphylans and eggs present, and crop rotation. Reports indicate 2 to 3 tillings per week for 3 to 4 weeks prior to planting have been recorded as being successful in reducing symphylan numbers.
-Crop rotation. Populations have been demonstrated to decrease significantly following potato crops; allowing growth of a more susceptible crop afterwards. While no other cover crops reduce population numbers as much as potatoes, spring oats also showed reduced numbers. Conversely, numbers were higher following mustard and spinach crops.
 
+1. Deep, thorough cultivation between crops to destroy earthworm tunnels, symphylans and eggs present, and crop rotation. Reports indicate 2 to 3 tillings per week for 3 to 4 weeks prior to planting have been recorded as being successful in reducing symphylan numbers.
+2. Crop rotation. Populations have been demonstrated to decrease significantly following potato crops; allowing growth of a more susceptible crop afterwards. While no other cover crops reduce population numbers as much as potatoes, spring oats also showed reduced numbers. Conversely, numbers were higher following mustard and spinach crops.
+
+Preplant fumigation may further reduce symphylan numbers in soil.
