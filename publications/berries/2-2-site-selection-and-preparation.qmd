@@ -8,7 +8,6 @@ Preparations for a berry planting must begin one to two years in advance. Select
 
 Agro-One provides soil and nutrient testing services previously available through the Cornell Nutrient Analysis Laboratory along with additional analytical services. Key input regarding analytical methods and quality control is provided by Cornell, and Cornell nutrient management guidelines are provided by Cornell through DairyOne.
 
-```{csv}
-file: tables/Berry_Table_2-1-1_Conversion_Factors.csv
-caption: "Table 2.1.1. Conversion factors to convert from one unit to another."
-```
+{{< include tables/Berry_Table_2-1-1_Conversion_Factors.md >}}
+
+
