@@ -10,37 +10,42 @@ Agro-One provides soil and nutrient testing services previously available throug
 
 **Table 2.1.1. Conversion factors to convert from one unit to another.**
 
-| To convert from | To | Multiply by |
-| --- | --- | --- |
-| lb/A | lb/100 sq ft | 0.0023 |
-| tn/A | lb/100 sq ft | 4.6 |
-| lb/A | kg/ha | 1.12 |
-| kg/ha | lb/A | 0.893 |
-| lb | oz | 16 |
-| qt of fruit | lb of fruit | 1.5 |
-| qt | pt | 2 |
-| pt | qt | 0.5 |
-| gal of liquid | lb of liquid | 8.3 |
-| Strawberries |  |  |
-| lb/A | lb/100 ft of row | 0.008 |
-| Yield in lb/100 ft of row | lb/A | 125 |
-| Yield in qt/100 ft of row | lb/A | 188 |
-| Raspberries and Blackberries |  |  |
-| lb/A | lb/100 ft of row | 0.013 |
-| Yield in lb/100 ft of row | lb/A | 77 |
-| Yield in qt/100 ft of row | lb/A | 116 |
-| Blueberries |  |  |
-| lb/A | lb/100 ft of row | 0.018 |
-| Yield in lb/100 ft of row | lb/A | 56 |
-| Yield in qt/100 ft of row | lb/A | 84 |
-| Currants and Gooseberries |  |  |
-| lb/A | lb/100 ft of row | 0.005 |
-| Yield in lb/100 ft of row | lb/A | 217 |
-| Yield in qt/100 ft of row | lb/A | 325 |
-| Grapes |  |  |
-| lb/A | lb/100 ft of row | 0.03 |
-| Yield in lb/100 ft of row | lb/A | 33 |
-| Yield in qt/100 ft of row | lb/A | 50 |
+| To convert from              | To               | Multiply by |
+| ---------------------------- | ---------------- | ----------- |
+| lb/A                         | lb/100 sq ft     | 0.0023      |
+| tn/A                         | lb/100 sq ft     | 4.6         |
+| lb/A                         | kg/ha            | 1.12        |
+| kg/ha                        | lb/A             | 0.893       |
+| lb                           | oz               | 16          |
+| qt of fruit                  | lb of fruit      | 1.5         |
+| qt                           | pt               | 2           |
+| pt                           | qt               | 0.5         |
+| gal of liquid                | lb of liquid     | 8.3         |
+| Strawberries                 |                  |             |
+| lb/A                         | lb/100 ft of row | 0.008       |
+| Yield in lb/100 ft of row    | lb/A             | 125         |
+| Yield in qt/100 ft of row    | lb/A             | 188         |
+| Raspberries and Blackberries |                  |             |
+| lb/A                         | lb/100 ft of row | 0.013       |
+| Yield in lb/100 ft of row    | lb/A             | 77          |
+| Yield in qt/100 ft of row    | lb/A             | 116         |
+| Blueberries                  |                  |             |
+| lb/A                         | lb/100 ft of row | 0.018       |
+| Yield in lb/100 ft of row    | lb/A             | 56          |
+| Yield in qt/100 ft of row    | lb/A             | 84          |
+| Currants and Gooseberries    |                  |             |
+| lb/A                         | lb/100 ft of row | 0.005       |
+| Yield in lb/100 ft of row    | lb/A             | 217         |
+| Yield in qt/100 ft of row    | lb/A             | 325         |
+| Grapes                       |                  |             |
+| lb/A                         | lb/100 ft of row | 0.03        |
+| Yield in lb/100 ft of row    | lb/A             | 33          |
+| Yield in qt/100 ft of row    | lb/A             | 50          |
 
 
 
+Obtain basic soil test instructions and sample boxes by contacting: Dairy One, 730 Warren Road, Ithaca, NY 14850 or calling 1-800-344-2697, or visiting <https://dairyone.com/services/agronomy-services/soil-analysis/>.
+
+Be sure to indicate on the soil test submission form if the recommendations requested are for preplanting – recommendations will be different for an established planting. *Note: Boron is frequently low in fruit plantings throughout the Northeast.* *Boron testing is not included in most standard soil test packages and should be selected as an added test for berry soils*.
+
+Please note: Soil test results differ from lab to lab, depending on the extraction technique used. Therefore, recommendations are lab-specific. Do not use values from one lab to determine recommendations from another. Some labs take a conservative approach to recommendations, while others want to ensure that the crop has a more than adequate nutrient reserve. Some labs provide a general soil recommendation for all crops, whereas others like Agro-One provide specific recommendations for specific crops using Cornell’s recommendation engine.
