@@ -82,3 +82,40 @@ Due to seasonal variability in biological and physical indicators), all samples 
 For more information on the Cornell soil health test contact Bob Schindelbeck, 1003 Bradfield Hall, Cornell University, Ithaca, NY 14853-1901, or call (607) 227-6055 or visit: <http://soilhealth.cals.cornell.edu/>.
 
 A series of webinars on soil and nutrient management in berry crops can be found here: <https://blogs.cornell.edu/berries/productions/berry-soil-and-nutrient-management-a-guide-for-educators-and-growers/>.
+
+## 2.2.3 Nematodes
+
+Nematodes are microscopic eel-shaped worms that live in soil and water. Most are beneficial organisms helping to break down soil organic matter and release soil nutrients. Others may cause both direct and indirect damage to berry crops by feeding on plant roots. Direct damage results from feeding on below ground plant parts. Indirect damage results from feeding wounds that provide entry sites for soil-borne fungal pathogens. Nematodes also are known to transmit numerous plant viruses.
+
+The most common nematodes causing problems in berries are root lesion, northern root knot, and dagger nematodes.
+
+Cultural management practices for nematodes include: 
+
+1. Preventing introduction of nematodes to clean fields by thoroughly cleaning equipment between fields.
+2. Rotation to non-host crops for 2 to 5 years.
+3. Use of resistant varieties where available.
+4. Use of nematode-suppressive cover crops such as brassicas, some sorghum-sudan grasses, marigolds.
+5. Frequent tillage to expose root debris and subject nematodes to drying conditions.
+
+Preplant fumigation may further reduce nematode numbers in soil.
+
+## 2.2.4 Nematode Testing
+
+Samples may be submitted for nematode testing to the Plant Disease Diagnostic Clinic, College of Agriculture and Life Sciences, Ithaca, NY. The best time for collecting samples for nematode testing is during the active growing season. A minimum of 6 soil subsamples, approx. 1” in diameter and 4” in depth should be collected randomly from an area approx. ½ acre in size. Gently mix samples together, transfer about 1 pint of mixed soil to a plastic bag. For best results, ship as soon as possible to the diagnostic lab. Refrigerate sample if it cannot be shipped immediately. For more information and fee schedules visit their website at [www.plantclinic.cornell.edu](http://www.plantclinic.cornell.edu/).
+
+Follow the recommendations of the soil and nematode tests to ensure a good planting in future years. A nutritionally healthy planting in a well-drained soil with exposure to air movement is least susceptible to damage from pests. 
+
+## 2.2.5 Garden Symphylans
+
+Garden symphylans (sometimes called garden centipedes) are very small, thin white animals with 8 to 12 pairs of legs and very distinctive bead-like antennae. They inhabit soil, spending all of their life cycle underground in the dark. Symphylans feed on germinating vegetable and weed seeds, roots and root hairs of plants. Sometimes feeder roots are completely cut off by symphylan feeding; leaving brown stubs were the roots should be. Feeding on roots interferes with plant growth and yield, and causes plant stunting.
+
+Damage may also lead to wilting on warm days and in some instances, plant death. Symphylans may chew holes in larger roots and strawberry fruit. Damage may also occur to above ground plant parts in contact with soil. Chewing injuries then become infection courts for soil-borne diseases.
+
+Direct observation is probably the best method for determining the presence of symphylans in soil. Sample the top 6 to 12” of warm, moist soil prior to tillage. Gently place a shovel full of soil on a piece of black plastic. Break apart soil clumps and count numbers of symphylans present. Sample 10 to 20 shovels of soil per acre. A rule of thumb action threshold for symphylans is 5 to 20 per shovelful of soil for moderate to highly susceptible crops.
+
+Cultural management practices for symphylans include:
+
+1. Deep, thorough cultivation between crops to destroy earthworm tunnels, symphylans and eggs present, and crop rotation. Reports indicate 2 to 3 tillings per week for 3 to 4 weeks prior to planting have been recorded as being successful in reducing symphylan numbers.
+2. Crop rotation. Populations have been demonstrated to decrease significantly following potato crops; allowing growth of a more susceptible crop afterwards. While no other cover crops reduce population numbers as much as potatoes, spring oats also showed reduced numbers. Conversely, numbers were higher following mustard and spinach crops.
+
+Preplant fumigation may further reduce symphylan numbers in soil.
