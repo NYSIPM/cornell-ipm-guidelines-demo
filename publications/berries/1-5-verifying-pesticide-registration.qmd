@@ -3,3 +3,4 @@ title: 1.5 Verifying Pesticide Registration
 date: 2026-01-21T15:09:00.000-05:00
 ---
 Any pesticide sold or used in New York State must be registered with the EPA and the NYSDEC. To verify a pesticide's registration before purchase and/or use, visit the NYSDEC's online product registration database at [extapps.dec.ny.gov/nyspad/products](https://extapps.dec.ny.gov/nyspad/products).
+’’’
