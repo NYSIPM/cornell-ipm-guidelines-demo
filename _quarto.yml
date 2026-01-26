@@ -8,7 +8,7 @@ project:
     - "static/**"
 
 execute:
-  enabled: true
+  enabled: false
 
 website:
   title: "Cornell IPM Guidelines Demo"
