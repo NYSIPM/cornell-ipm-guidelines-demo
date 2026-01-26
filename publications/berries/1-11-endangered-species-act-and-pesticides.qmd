@@ -1,0 +1,14 @@
+---
+title: 1.11 Endangered Species Act and Pesticides
+date: 2026-01-21T15:49:00.000-05:00
+---
+The Endangered Species Act (ESA) was passed in 1973 to protect fish, wildlife, and plant species that are listed as threatened or endangered as well as critical habitats that support these species. The ESA requires federal agencies, like the USEPA, to make sure any action they take, authorize, fund, or carry out won’t affect a listed species or their critical habitat. This determination is done in consultation with the US Fish and Wildlife Service and the National Marine Fisheries Service. The results of these consultations are used to identify mitigation measures required to protect these protected species or their habitats. 
+
+In response to numerous lawsuits over failure to comply with the ESA, the USEPA is developing new pesticide use strategies to protect threated or endangered species and their critical habitats. These strategies include adding new use requirements to pesticide labels. Some of these requirements may include:
+
+* Obtaining Endangered Species Protection Bulletins to determine if the application will be made in a pesticide use
+  limitation area (PULA) and to identify any pesticide use restrictions that must be followed.
+* Controlling spray drift by following label-listed requirements.
+* Assuring that field conditions meet specific standards to reduce run-off and erosion that could carry pesticides off site.
+
+More information on the ESA and pesticides can be found at [www.epa.gov/endangered-species](https://www.epa.gov/endangered-species).
