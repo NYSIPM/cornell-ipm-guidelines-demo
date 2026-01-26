@@ -25,3 +25,4 @@ from IPython.display import HTML, display
 url = "https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example"
 html = requests.get(url, timeout=30).text
 display(HTML(html))
+```
