@@ -14,6 +14,7 @@ Once the application begins, the certified applicator must make a copy of the FM
 
 **Table 2.3.1. Selected fumigants registered for use on fruit crops in NY State**
 
+```razor
 <table>
   <thead>
     <tr>
@@ -31,11 +32,15 @@ Once the application begins, the certified applicator must make a copy of the FM
       <td>62719-12</td>
     </tr>
     <tr>
-      <td colspan="4"><em>
+      <td colspan="4">
+<em>
 Better, on cold, dry soils than most other
 fumigants. Control and/or suppression of diseases and nematodes, symphylans,
 and wireworms.
-</em></td>
+</em>
+      </td>
     </tr>
   </tbody>
 </table>
+
+```
