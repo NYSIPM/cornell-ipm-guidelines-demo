@@ -1,8 +1,6 @@
 ---
 title: 2.3 Fumigation
 date: 2026-01-23T17:00:00.000-05:00
-execute:
-  enabled: true
 ---
 Fumigation may be required if nematode and/or symphylans levels are high or if pathogenic fungi (e.g. Phytophthora, Pythium, Rhizoctonia, and Fusarium) or insect pests are present in the soil. Fumigation may also provide some weed control. The grower can apply some types of fumigants; others must be commercially applied. Soil should be friable and moist prior to fumigation, and the soil temperature should be 50° to 90°F. All plant material must be decomposed prior to fumigation. See Table 2.3.1.
 
