@@ -1,37 +1,74 @@
-// admin/editor-components.js
 (function () {
+  // Ensure Decap CMS exists
   if (!window.CMS) {
-    console.error("Decap CMS not loaded yet. Make sure this script is after decap-cms.js");
+    console.error(
+      "Decap CMS not loaded yet. Make sure editor-components.js is included AFTER decap-cms.js"
+    );
     return;
   }
 
+  // Helper: very light guard so the block is likely an HTML table
+  function normalizeTableHtml(html) {
+    const trimmed = (html || "").trim();
+    return trimmed;
+  }
+
   window.CMS.registerEditorComponent({
-    id: "callout",
-    label: "Callout",
+    id: "html-table",
+    label: "HTML Table",
+
     fields: [
-      { name: "type", label: "Type", widget: "select", options: ["note", "warning", "tip"] },
-      { name: "title", label: "Title", widget: "string" },
-      { name: "body", label: "Body", widget: "text" }
+      {
+        name: "html",
+        label: "Table HTML",
+        widget: "text",
+        hint:
+          "Paste a full <table>...</table> here. Rowspan/colspan are supported. The preview below shows how it will render."
+      }
     ],
 
-    // Detect an existing block so the component can be edited later
-    pattern: /^:::callout-(note|warning|tip)\n## (.*?)\n([\s\S]*?)\n:::/m,
+    // Match a Quarto fenced div block:
+    // :::html-table
+    // <table>...</table>
+    // :::
+    //
+    // Non-greedy capture between the opening and closing fence.
+    pattern: /^:::html-table\s*\n([\s\S]*?)\n:::\s*$/m,
 
     fromBlock: function (match) {
       return {
-        type: match[1],
-        title: match[2],
-        body: match[3].trim()
+        html: (match && match[1] ? match[1].trim() : "")
       };
     },
 
     toBlock: function (data) {
-      return `:::callout-${data.type}\n## ${data.title}\n${data.body}\n:::`;
+      const html = normalizeTableHtml(data.html);
+
+      // Keep the output consistent and easy to parse
+      return `:::html-table\n${html}\n:::`;
     },
 
-    // Optional: what shows in the editor as a “preview” of the block
+    // Show a nice preview "card" in the editor component UI
+    // NOTE: This will render raw HTML in the preview.
+    // In your workflow, that's desirable (table preview),
+    // but only allow trusted editors to use it.
     toPreview: function (data) {
-      return `Callout (${data.type}): ${data.title}`;
+      const html = normalizeTableHtml(data.html);
+
+      // Basic fallback if empty
+      if (!html) return "<em>No table HTML provided.</em>";
+
+      // Wrap preview so you can style it later if needed
+      return `
+        <div style="padding: .5rem; border: 1px solid #ddd; border-radius: 6px;">
+          <div style="font-size: 0.9rem; margin-bottom: .5rem; opacity: .8;">
+            Preview (renders your HTML)
+          </div>
+          <div class="decap-html-table-preview" style="overflow-x:auto;">
+            ${html}
+          </div>
+        </div>
+      `;
     }
   });
 })();
