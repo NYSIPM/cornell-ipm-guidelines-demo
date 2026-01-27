@@ -16,25 +16,34 @@ Once the application begins, the certified applicator must make a copy of the FM
 
 :::html-table
 <p>&nbsp;</p>
-<table style="border-collapse: collapse; width: 100%;" border="1"><colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
+<table style="border-collapse: collapse; width: 100%; height: 157.344px;" border="1"><colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
 <tbody>
-<tr>
+<tr style="height: 33.375px;">
 <td colspan="4"><strong>Table 2.3.1. Selected fumigants registered for use on fruit crops in NY State.</strong></td>
 </tr>
-<tr>
+<tr style="height: 34.4375px;">
 <td><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">Fumigant</span></strong></td>
 <td><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">Formulation</span></strong></td>
 <td><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">Rate/acre</span></strong></td>
 <td><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">EPA Reg. No.</span></strong></td>
 </tr>
-<tr>
+<tr style="height: 34.4375px;">
 <td><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">1,3 dichloropropene</span></strong></td>
 <td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">*&dagger;Telone II</span></td>
 <td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">27-35 gal</span></td>
 <td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">95290-1</span></td>
 </tr>
-<tr>
+<tr style="height: 55.0938px;">
 <td colspan="4"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">Better, on cold, dry soils than most other fumigants. Control and/or suppression of diseases and nematodes, symphylans, and wireworms.</span></td>
+</tr>
+<tr>
+<td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><strong style="mso-bidi-font-weight: normal;">1,3 dichloropropene + chloropicrin</strong><br></span></td>
+<td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">*&dagger;Telone-C17<br></span></td>
+<td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">32.4-42 gal<br></span></td>
+<td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">62719-12<br></span></td>
+</tr>
+<tr>
+<td colspan="4"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><strong style="mso-bidi-font-weight: normal;">Used as a preplant fumigant for strawberries. Control and/or suppression of soil-borne diseases and nematodes, symphylans, and wireworms.</strong></span><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><br></span></td>
 </tr>
 </tbody>
 </table>
