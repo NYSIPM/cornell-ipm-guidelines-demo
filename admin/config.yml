@@ -38,8 +38,7 @@ collections:
         editor_components:
         - image
         - code-block
-        - html-table-source
-        - html-table-visual
+        - html-table
 
   # Grape Guidelines
   - name: "grapes"
