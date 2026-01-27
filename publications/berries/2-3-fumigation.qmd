@@ -14,7 +14,7 @@ Once the application begins, the certified applicator must make a copy of the FM
 
 **Table 2.3.1. Selected fumigants registered for use on fruit crops in NY State**
 
-:::html-table
+:::html-table {.raw-html}
 <p>&nbsp;</p>
 <table style="border-collapse: collapse; width: 100%; height: 157.344px;" border="1"><colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
 <tbody>
