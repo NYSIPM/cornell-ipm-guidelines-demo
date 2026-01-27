@@ -1,20 +1,22 @@
+// admin/tinymce-table-widget.js
 (function () {
+  // Must be loaded after decap-cms.js and tinymce.min.js
   if (!window.CMS) {
-    console.error("Decap CMS not loaded yet.");
+    console.error("Decap CMS not loaded yet. Load this script AFTER decap-cms.js");
     return;
   }
   if (!window.tinymce) {
-    console.error("TinyMCE not loaded.");
+    console.error("TinyMCE not loaded. Load this script AFTER tinymce.min.js");
     return;
   }
 
-  // Use React bundled with Decap (fallback to window.React if present)
+  // Decap bundles React internally; it is NOT always on window.React
   const React =
     (window.CMS.netlifyCmsApp && window.CMS.netlifyCmsApp.React) ||
     window.React;
 
   if (!React) {
-    console.error("React not available to custom widget.");
+    console.error("React not available (Decap did not expose it).");
     return;
   }
 
@@ -36,7 +38,7 @@
         height: 420,
         menubar: false,
 
-        // IMPORTANT: table tools
+        // Table editing tools (merge/split, add/remove rows/cols)
         plugins: "table",
         toolbar:
           "table | " +
@@ -45,20 +47,20 @@
           "tableinsertcolbefore tableinsertcolafter tabledeletecol | " +
           "tablemergecells tablesplitcells",
 
-        // Make the content feel table-focused
+        // Keep output clean-ish and table-focused
         forced_root_block: false,
         content_style:
-          "body{font-family:system-ui,Segoe UI,Arial,sans-serif;font-size:14px} table{border-collapse:collapse} td,th{border:1px solid #ccc;padding:4px}",
+          "body{font-family:system-ui,Segoe UI,Arial,sans-serif;font-size:14px}" +
+          "table{border-collapse:collapse}" +
+          "td,th{border:1px solid #ccc;padding:4px}",
 
         setup: (editor) => {
           this._editor = editor;
 
           editor.on("init", () => {
-            // Load existing HTML (ideally a <table>…</table>)
             editor.setContent(initial || "");
           });
 
-          // Push changes back to Decap
           const pushChange = () => {
             if (this._settingContent) return;
             const html = editor.getContent({ format: "html" });
@@ -71,7 +73,7 @@
     }
 
     componentDidUpdate(prevProps) {
-      // If Decap updates the value (e.g., undo, switching entries), sync TinyMCE
+      // Keep TinyMCE in sync if Decap changes the value (undo, switching entries, etc.)
       if (this._editor && prevProps.value !== this.props.value) {
         const current = this._editor.getContent({ format: "html" });
         const next = this.props.value || "";
@@ -84,8 +86,8 @@
     }
 
     componentWillUnmount() {
+      // Clean up editor instance
       if (this._editor) {
-        const id = this._editor.id;
         try {
           window.tinymce.remove(this._editor);
         } catch (e) {
@@ -109,10 +111,13 @@
     }
   }
 
-  // Optional: preview in Decap preview pane (shows the table)
+  // Optional preview (if you ever enable Decap preview pane)
   const TinyMceTablePreview = (props) => {
     const html = props.value || "";
-    return h("div", { style: { overflowX: "auto" }, dangerouslySetInnerHTML: { __html: html } });
+    return h("div", {
+      style: { overflowX: "auto" },
+      dangerouslySetInnerHTML: { __html: html }
+    });
   };
 
   window.CMS.registerWidget("tinymce-table", TinyMceTableControl, TinyMceTablePreview);
