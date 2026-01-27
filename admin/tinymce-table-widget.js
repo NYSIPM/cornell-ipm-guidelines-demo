@@ -1,4 +1,5 @@
 // admin/tinymce-table-widget.js
+console.log("✅ tinymce-table-widget.js loaded");
 (function () {
   // Must be loaded after decap-cms.js and tinymce.min.js
   if (!window.CMS) {
