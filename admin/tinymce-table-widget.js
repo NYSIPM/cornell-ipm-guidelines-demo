@@ -4,13 +4,23 @@
     return;
   }
   if (!window.tinymce) {
-    console.error("TinyMCE not loaded. Check your script tag in admin/index.html");
+    console.error("TinyMCE not loaded.");
     return;
   }
 
-  const h = window.React.createElement;
+  // Use React bundled with Decap (fallback to window.React if present)
+  const React =
+    (window.CMS.netlifyCmsApp && window.CMS.netlifyCmsApp.React) ||
+    window.React;
 
-  class TinyMceTableControl extends window.React.Component {
+  if (!React) {
+    console.error("React not available to custom widget.");
+    return;
+  }
+
+  const h = React.createElement;
+
+  class TinyMceTableControl extends React.Component {
     constructor(props) {
       super(props);
       this.textareaId = `tinymce-table-${Math.random().toString(36).slice(2)}`;
