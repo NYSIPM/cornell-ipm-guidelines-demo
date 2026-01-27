@@ -43,7 +43,7 @@ Once the application begins, the certified applicator must make a copy of the FM
 <td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">62719-12<br></span></td>
 </tr>
 <tr>
-<td colspan="4"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><span>Used as a preplant fumigant for strawberries. Control and/or suppression of soil-borne diseases and nematodes, symphylans, and wireworms.</span></span><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><br></span></td>
+<td colspan="4"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">Used as a preplant fumigant for strawberries. Control and/or suppression of soil-borne diseases and nematodes, symphylans, and wireworms.</span><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><br></span></td>
 </tr>
 <tr>
 <td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">sodium methyl dithiocarbamate<br></span></td>
@@ -65,8 +65,6 @@ Once the application begins, the certified applicator must make a copy of the FM
 </table>
 <p><br><br></p>
 :::
-
-
 
 ```{python}
 #| echo: true
