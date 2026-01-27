@@ -32,7 +32,14 @@ collections:
       - {label: "Chapter Number", name: "chapter", widget: "number", required: false, hint: "Optional ordering"}
       - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
       - {label: "Last Updated", name: "date", widget: "datetime", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        editor_components:
+        - image
+        - code-block
+        - html-table-source
+        - html-table-visual
 
   # Grape Guidelines
   - name: "grapes"
