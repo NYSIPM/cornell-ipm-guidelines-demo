@@ -43,7 +43,16 @@ Once the application begins, the certified applicator must make a copy of the FM
 <td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">62719-12<br></span></td>
 </tr>
 <tr>
-<td colspan="4"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><strong style="mso-bidi-font-weight: normal;">Used as a preplant fumigant for strawberries. Control and/or suppression of soil-borne diseases and nematodes, symphylans, and wireworms.</strong></span><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><br></span></td>
+<td colspan="4"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><span>Used as a preplant fumigant for strawberries. Control and/or suppression of soil-borne diseases and nematodes, symphylans, and wireworms.</span></span><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;"><br></span></td>
+</tr>
+<tr>
+<td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">sodium methyl dithiocarbamate<br></span></td>
+<td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">*Vapam HL<br></span></td>
+<td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">37.5-75 gal<br></span></td>
+<td><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">5481-468<br></span></td>
+</tr>
+<tr>
+<td colspan="4"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">May be applied by water-run applications (e.g., chemigation), soil injection or soil bedding equipment. Control and/or suppression of weeds, as Bermudagrass, Chickweed, Dandelion, Ragweed, Henbit, Lambsquarter, Pigweed, Watercress, Amaranthus species, Watergrass, Johnsongrass, Nightshade, Nutsedge, Wild Morning-Glory and Purslane, soil-borne diseases such as Rhizoctonia, Pythium, Phytophthora, Verticillium, Sclerotinia, Oak Root Fungus and Club Root of crucifers, nematodes, and symphylids.<br></span></td>
 </tr>
 </tbody>
 </table>
