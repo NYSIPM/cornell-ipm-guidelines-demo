@@ -14,7 +14,7 @@ Once the application begins, the certified applicator must make a copy of the FM
 
 **Table 2.3.1. Selected fumigants registered for use on fruit crops in NY State**
 
-:::html-table-visual
+:::html-table
 ## Table Test
 <table class='dataTable'>
 <tr>
@@ -32,8 +32,6 @@ Once the application begins, the certified applicator must make a copy of the FM
 </tr> 
 </table>
 :::
-
-
 
 ```{python}
 #| echo: true
