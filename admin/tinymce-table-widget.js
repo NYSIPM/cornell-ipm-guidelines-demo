@@ -27,6 +27,7 @@ console.log("✅ tinymce-table-widget.js loaded");
 
       window.tinymce.init({
         selector: `#${textareaId}`,
+        license_key: "gpl",
         height: 420,
         menubar: false,
         plugins: "table",
