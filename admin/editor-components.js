@@ -20,8 +20,8 @@
     fields: [
       {
         name: "html",
-        label: "Table HTML",
-        widget: "text",
+        label: "Table",
+        widget: "tinymce-table",
         hint:
           "Paste a full <table>...</table> here. Rowspan/colspan are supported. The preview below shows how it will render."
       }
