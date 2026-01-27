@@ -11,6 +11,6 @@
     ],
     pattern,
     fromBlock: (m) => ({ html: m?.[1] || "" }),
-    toBlock: (d) => `:::html-table\n${(d.html || "").trim()}\n:::`
+    toBlock: (d) => `:::html-table {.raw-html}\n${(d.html || "").trim()}\n:::`
   });
 })();
