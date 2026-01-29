@@ -4,6 +4,22 @@ date: 2026-01-23T16:11:00.000-05:00
 ---
 Preparations for a berry planting must begin one to two years in advance. Select a site with good air and water drainage and have a preplant soil and a nematode analysis performed on representative soil samples. *Growers may wish to select a more broad-spectrum approach to preplant soil analysis at this time by opting for a comprehensive Cornell soil health assessment.* 
 
+::: {.html-table}
+<table style="border-collapse: collapse; width: 100%; height: 66.75px;" border="1"><colgroup><col style="width: 50%;"><col style="width: 50%;"></colgroup>
+<tbody>
+<tr style="height: 33.375px;">
+<td>1</td>
+<td>2</td>
+</tr>
+<tr style="height: 33.375px;">
+<td>3</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+:::
+
 ## 2.2.1 Basic Soil Test
 
 Agro-One provides soil and nutrient testing services previously available through the Cornell Nutrient Analysis Laboratory along with additional analytical services. Key input regarding analytical methods and quality control is provided by Cornell, and Cornell nutrient management guidelines are provided by Cornell through DairyOne.
