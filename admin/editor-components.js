@@ -1,7 +1,8 @@
 (function () {
   if (!window.CMS) return;
 
-  const pattern = /^:::html-table\s*\n([\s\S]*?)\n:::\s*$/m;
+  //const pattern = /^:::html-table\s*\n([\s\S]*?)\n:::\s*$/m;
+  const pattern = /^:::\s*\{\.html-table\}\s*\n([\s\S]*?)\n:::\s*$/m;
 
   CMS.registerEditorComponent({
     id: "html-table",
@@ -11,6 +12,7 @@
     ],
     pattern,
     fromBlock: (m) => ({ html: m?.[1] || "" }),
-    toBlock: (d) => `:::html-table {.raw-html}\n${(d.html || "").trim()}\n:::`
+    //toBlock: (d) => `:::html-table {.raw-html}\n${(d.html || "").trim()}\n:::`
+    toBlock: (d) => `::: {.html-table}\n${(d.html || "").trim()}\n:::`,
   });
 })();
