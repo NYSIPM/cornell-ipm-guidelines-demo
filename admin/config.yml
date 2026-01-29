@@ -4,6 +4,7 @@ backend:
   branch: main
 
 publish_mode: editorial_workflow
+show_preview_link: false
 
 media_folder: "static/images"
 public_folder: "/static/images"
