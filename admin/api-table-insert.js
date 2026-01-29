@@ -1,70 +1,56 @@
 (function () {
   if (!window.CMS) return;
 
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  // Matches our block and captures endpoint + cached content
+  const pattern =
+    /^:::\s*\{\.api-insert\s+endpoint="([^"]+)"\}\s*\n<!-- api-cache -->\n([\s\S]*?)\n<!-- \/api-cache -->\n:::\s*$/m;
+
+  function escapeForAttr(str) {
+    return String(str).replaceAll('"', "&quot;");
   }
 
   CMS.registerEditorComponent({
     id: "api-text",
-    label: "API Insert (Text)",
+    label: "API Insert",
     fields: [
       {
         name: "endpoint",
         label: "API Endpoint URL",
         widget: "string",
-        default: "https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example",
+        default:
+          "https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example",
       },
       {
-        name: "style",
-        label: "Insert style",
-        widget: "select",
-        options: ["callout", "paragraph", "raw-html"],
-        default: "callout",
+        name: "cached",
+        label: "Cached content (optional)",
+        widget: "text",
+        required: false,
+        hint:
+          "Paste the API result here if you want the content stored in the document. (See notes below.)",
       },
     ],
 
-    // keep it simple: insert only, no round-trip editing
-    pattern: /^$a/,
-    fromBlock: () => ({}),
+    pattern,
 
-    toBlock: async (data) => {
+    fromBlock: (match) => ({
+      endpoint: match?.[1] || "",
+      cached: (match?.[2] || "").trim(),
+    }),
+
+    // IMPORTANT: must be synchronous (NOT async)
+    toBlock: (data) => {
       const endpoint = (data.endpoint || "").trim();
-      const style = data.style || "callout";
+      const cached = (data.cached || "").trim();
 
-      if (!endpoint) {
-        return `::: {.callout-warning}\nNo endpoint provided.\n:::\n`;
-      }
+      const safeEndpoint = escapeForAttr(endpoint);
 
-      try {
-        const res = await fetch(endpoint, { method: "GET" });
-
-        if (!res.ok) {
-          return `::: {.callout-warning}\nAPI error: ${res.status} ${res.statusText}\n:::\n`;
-        }
-
-        const text = (await res.text()).trim();
-
-        if (style === "paragraph") {
-          // plain markdown paragraph
-          return `${text}\n`;
-        }
-
-        if (style === "raw-html") {
-          // raw HTML fenced div (safe-escaped)
-          return `::: {.raw-html}\n<div class="api-snippet">${escapeHtml(text)}</div>\n:::\n`;
-        }
-
-        // default: quarto callout (markdown-safe)
-        return `::: {.callout-note}\n${text}\n:::\n`;
-      } catch (err) {
-        return `::: {.callout-warning}\nFetch failed: ${String(err?.message || err)}\n:::\n`;
-      }
+      return (
+        `::: {.api-insert endpoint="${safeEndpoint}"}\n` +
+        `<!-- api-cache -->\n` +
+        `${cached}\n` +
+        `<!-- /api-cache -->\n` +
+        `:::\n`
+      );
     },
   });
 })();
