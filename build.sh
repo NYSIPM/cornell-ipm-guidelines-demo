@@ -19,6 +19,9 @@ find . -name "*.qmd" -type f -print0 | while IFS= read -r -d '' file; do
     "$file"
 done
 
+echo "=== Refreshing API inserts ==="
+node scripts/refresh-api-inserts.mjs
+
 echo "=== Rendering Root Site ==="
 quarto render
 
