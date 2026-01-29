@@ -66,6 +66,8 @@ Once the application begins, the certified applicator must make a copy of the FM
 <p><br><br></p>
 :::
 
+![](/static/images/grapes_cover2025.jpg)
+
 ```{python}
 #| echo: true
 #| warning: false
