@@ -6,7 +6,7 @@ Preparations for a berry planting must begin one to two years in advance. Select
 
 ::: {.api-insert endpoint="https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example"}
 <!-- api-cache -->
-
+placeholder
 <!-- /api-cache -->
 :::
 
