@@ -3,7 +3,7 @@
 
   // Matches our block and captures endpoint + cached content
   const pattern =
-    /^:::\s*\{\.api-insert\s+endpoint="([^"]+)"\}\s*\n<!-- api-cache -->\n([\s\S]*?)\n<!-- \/api-cache -->\n:::\s*$/m;
+  /^:::\s*\{\.api-insert\s+endpoint="([^"]+)"\}\s*\r?\n\s*<!-- api-cache -->\s*\r?\n([\s\S]*?)\r?\n\s*<!-- \/api-cache -->\s*\r?\n:::\s*$/m;
 
   function escapeForAttr(str) {
     return String(str).replaceAll('"', "&quot;");

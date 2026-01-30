@@ -6,7 +6,7 @@ const ROOTS = [
 ];
 
 const BLOCK_RE =
-  /:::\s*\{\.api-insert\s+endpoint="([^"]+)"\}\s*\n<!-- api-cache -->\n([\s\S]*?)\n<!-- \/api-cache -->\n:::\s*/g;
+  /:::\s*\{\.api-insert\s+endpoint="([^"]+)"\}\s*\r?\n\s*<!-- api-cache -->\s*\r?\n([\s\S]*?)\r?\n\s*<!-- \/api-cache -->\s*\r?\n:::\s*/g;
 
 async function* walk(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -27,6 +27,10 @@ async function processFile(file) {
   if (!file.endsWith(".qmd")) return { changed: false };
 
   const original = await fs.readFile(file, "utf8");
+  const count = [...original.matchAll(BLOCK_RE)].length;
+  if (count) {
+    console.log(`Matched ${count} api-insert block(s) in ${file}`);
+  }
   let changed = false;
 
   const updated = await replaceAsync(original, BLOCK_RE, async (match, endpoint, cached) => {
