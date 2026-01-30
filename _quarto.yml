@@ -7,6 +7,9 @@ project:
     - "js/**"
     - "static/**"
 
+filters:
+  - filters/api-insert.lua
+
 execute:
   enabled: false
 
