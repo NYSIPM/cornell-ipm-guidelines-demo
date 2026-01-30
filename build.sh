@@ -19,6 +19,11 @@ find . -name "*.qmd" -type f -print0 | while IFS= read -r -d '' file; do
     "$file"
 done
 
+echo "=== Node info ==="
+node -v || true
+node -e "console.log('fetch available:', typeof fetch)" || true
+node -e "fetch('https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example').then(r=>r.text()).then(t=>console.log('API sample:', t)).catch(e=>console.error('API fetch failed:', e))" || true
+
 echo "=== Refreshing API inserts ==="
 node scripts/refresh-api-inserts.mjs
 
