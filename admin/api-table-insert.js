@@ -137,7 +137,7 @@
       return (
         `::: {.api-insert endpoint="${safeEndpoint}"}\n` +
         `<!-- api-cache -->\n` +
-        `${cached || "placeholder"}\n` +
+        `${cached || CMS.registerEditorComponent }\n` +
         `<!-- /api-cache -->\n` +
         `:::\n`
       );
