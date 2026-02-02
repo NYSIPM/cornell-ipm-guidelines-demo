@@ -1,25 +1,158 @@
 (function () {
-  // Make sure Decap loaded
   if (!window.CMS) {
-    console.error("apiFetchTool: window.CMS not found (did decap-cms load?)");
+    console.error("apiFetchTool: window.CMS not found");
     return;
   }
 
-  // Decap ships with React internally; it is usually available as window.React.
-  // If this is undefined, your widget code must be bundled (but let's check first).
-  const React = window.React;
-  if (!React) {
-    console.error("apiFetchTool: window.React not found. Remove external React scripts (you did), then reload.");
+  // Decap exposes these globals for inline widgets
+  if (typeof window.createClass !== "function" || typeof window.h !== "function") {
+    console.error(
+      "apiFetchTool: createClass/h not found. Are you loading decap-cms.js before this file?"
+    );
     return;
   }
 
-  function ApiFetchToolControl() {
-    return React.createElement(
-      "div",
-      { style: { padding: "10px", border: "1px solid #ddd", borderRadius: "6px" } },
-      "✅ apiFetchTool widget loaded and registered"
+  const createClass = window.createClass;
+  const h = window.h;
+
+  const DEFAULT_ENDPOINT =
+    "https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example";
+
+  function buildApiBlock(endpoint, cached) {
+    return (
+      `::: {.api-insert endpoint="${endpoint}"}\n` +
+      `<!-- api-cache -->\n` +
+      `${cached}\n` +
+      `<!-- /api-cache -->\n` +
+      `:::\n`
     );
   }
+
+  function upsertApiBlock(body, endpoint, cached) {
+    const safeEndpoint = endpoint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    const re = new RegExp(
+      String.raw`:::\s*\{\.api-insert\s+endpoint="${safeEndpoint}"\}\s*\r?\n\s*<!-- api-cache -->\s*\r?\n[\s\S]*?\r?\n\s*<!-- \/api-cache -->\s*\r?\n:::\s*`,
+      "g"
+    );
+
+    const block = buildApiBlock(endpoint, cached);
+
+    if (re.test(body)) {
+      return body.replace(re, block);
+    }
+
+    const spacer = body.trim().length ? "\n\n" : "";
+    return body + spacer + block;
+  }
+
+  // IMPORTANT: this uses Decap's internal redux store.
+  // It works in practice, but it's not part of the public API.
+  function updateBodyField(newBody) {
+    const store = window.CMS.store;
+    if (!store) throw new Error("CMS.store not available");
+
+    store.dispatch({
+      type: "ENTRY_FIELD_UPDATE",
+      payload: {
+        field: "body",
+        value: newBody,
+      },
+    });
+  }
+
+  const ApiFetchToolControl = createClass({
+    getInitialState: function () {
+      const v = this.props.value || {};
+      return {
+        endpoint: v.endpoint || DEFAULT_ENDPOINT,
+        status: "",
+        preview: v.preview || "",
+      };
+    },
+
+    componentDidMount: function () {
+      console.log("apiFetchTool: control mounted");
+    },
+
+    setEndpoint: function (e) {
+      const endpoint = e.target.value;
+      this.setState({ endpoint });
+      this.props.onChange({ ...(this.props.value || {}), endpoint, preview: this.state.preview });
+    },
+
+    fetchAndInsert: async function () {
+      const endpoint = (this.state.endpoint || "").trim();
+      if (!endpoint) {
+        this.setState({ status: "Missing endpoint URL." });
+        return;
+      }
+
+      this.setState({ status: "Fetching…", preview: "" });
+
+      try {
+        const res = await fetch(endpoint, { credentials: "omit" });
+        if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+        const text = (await res.text()).trim();
+
+        // Save widget's own stored value (so it remembers endpoint/preview)
+        this.setState({ status: "Fetched ✅ Updating body…", preview: text });
+        this.props.onChange({ ...(this.props.value || {}), endpoint, preview: text });
+
+        // Get current body from the entry draft (immutable Map)
+        const state = window.CMS.store.getState();
+        const entry = state.entryDraft?.entry;
+        const currentBody = entry?.getIn?.(["data", "body"]) || "";
+
+        const newBody = upsertApiBlock(String(currentBody), endpoint, text);
+        updateBodyField(newBody);
+
+        this.setState({ status: "Body updated ✅" });
+      } catch (err) {
+        // If this fails in the browser, it’s often CORS.
+        this.setState({ status: "Fetch failed: " + String(err?.message || err) });
+        console.error("apiFetchTool fetch error:", err);
+      }
+    },
+
+    render: function () {
+      return h(
+        "div",
+        { style: { border: "1px solid #ddd", padding: "10px", borderRadius: "6px" } },
+        h("div", { style: { fontWeight: 600, marginBottom: "6px" } }, "API Endpoint"),
+        h("input", {
+          type: "text",
+          value: this.state.endpoint,
+          onChange: this.setEndpoint,
+          style: { width: "100%" },
+        }),
+        h(
+          "button",
+          { type: "button", onClick: this.fetchAndInsert, style: { marginTop: "10px" } },
+          "Fetch & Insert into Body"
+        ),
+        this.state.status
+          ? h("div", { style: { marginTop: "8px", fontSize: "0.9em" } }, this.state.status)
+          : null,
+        this.state.preview
+          ? h(
+              "pre",
+              {
+                style: {
+                  marginTop: "10px",
+                  maxHeight: "180px",
+                  overflow: "auto",
+                  background: "#f7f7f7",
+                  padding: "8px",
+                  borderRadius: "6px",
+                },
+              },
+              this.state.preview
+            )
+          : null
+      );
+    },
+  });
 
   window.CMS.registerWidget("apiFetchTool", ApiFetchToolControl);
   console.log("apiFetchTool: registered OK");
