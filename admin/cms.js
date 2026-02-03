@@ -43,18 +43,9 @@
       const g = (data.guidelineId || "").trim();
       const p = (data.pestId || "").trim();
       const s = (data.siteId || "").trim();
+      return fakeTableHtml(g, p, s);   // <-- render fake table immediately
 
-      return `
-        <div class="pesticide-table-preview"
-             data-guideline-id="${escapeHtml(g)}"
-             data-pest-id="${escapeHtml(p)}"
-             data-site-id="${escapeHtml(s)}"
-             data-loaded="0"
-             style="border:1px dashed #999; padding: 0.75rem; margin: 0.75rem 0;">
-          <div style="font-weight:600; margin-bottom:0.5rem;">Pesticide Table</div>
-          <div style="opacity:0.8;">Loading table for Guideline ${escapeHtml(g)}, Pest ${escapeHtml(p)}, Site ${escapeHtml(s)}…</div>
-        </div>
-      `;
+      
     }
   });
 
