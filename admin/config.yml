@@ -47,6 +47,7 @@ collections:
         - code-block
         - html-table
         - api-text
+        - pesticide-table
 
   # Grape Guidelines
   - name: "grapes"
