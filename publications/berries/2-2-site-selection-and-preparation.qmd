@@ -6,10 +6,6 @@ Preparations for a berry planting must begin one to two years in advance. Select
 
 {{< pesticide-table guidelineId="12" pestId="34" siteId="56" >}}
 
-::: {.pesticide-table guideline-id="12" pest-id="34" site-id="56"}
-:::
-
-
 Some Blank Text
 
 ```{=html}
