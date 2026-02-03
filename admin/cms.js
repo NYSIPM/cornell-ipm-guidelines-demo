@@ -1,8 +1,17 @@
 (function () {
   if (!window.CMS) return;
 
-  // Matches: {{< pesticide-table guidelineId="12" pestId="34" siteId="56" >}}
-  const pattern =
+  // ============================================================
+  // 1) CONFIG
+  // ============================================================
+  // Change later when you have a real endpoint.
+  const API_BASE_URL = "https://example.invalid";
+
+  // ============================================================
+  // 2) EDITOR COMPONENT (SHORTCODE FORMAT)
+  //    Stores: {{< pesticide-table guidelineId="12" pestId="34" siteId="56" >}}
+  // ============================================================
+  const pesticideShortcodePattern =
     /^\{\{<\s*pesticide-table\s+guidelineId="([^"]+)"\s+pestId="([^"]+)"\s+siteId="([^"]+)"\s*>\}\}\s*$/m;
 
   CMS.registerEditorComponent({
@@ -13,7 +22,7 @@
       { name: "pestId", label: "Pest ID", widget: "string" },
       { name: "siteId", label: "Site ID", widget: "string" }
     ],
-    pattern,
+    pattern: pesticideShortcodePattern,
 
     fromBlock: (match) => ({
       guidelineId: match?.[1] || "",
@@ -28,7 +37,7 @@
       return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" >}}\n`;
     },
 
-    // Preview placeholder (your hydration script can still target this)
+    // This renders in the preview pane first. Then the hydration loop swaps it.
     toPreview: (data) => {
       const g = (data.guidelineId || "").trim();
       const p = (data.pestId || "").trim();
@@ -48,36 +57,32 @@
     }
   });
 
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-})();
+  // ============================================================
+  // 3) PREVIEW HYDRATION LOOP
+  //    Finds placeholders and replaces them with API HTML (or fake HTML).
+  // ============================================================
+  startPreviewHydrationLoop();
 
-  // ============================================================
-  // 3) PREVIEW HYDRATION: runs in preview pane to fetch + replace
-  // ============================================================
-  // This approach is simple: on a timer, look for placeholders and hydrate them.
-  // It's robust even when Decap re-renders the preview often.
   function startPreviewHydrationLoop() {
-    // The preview is rendered inside an iframe. We need to access its document.
-    // Decap uses a preview iframe with class "PreviewPaneFrame" in many setups.
-    // We'll try to locate it defensively.
     const intervalMs = 800;
 
     setInterval(async () => {
-      const iframe = document.querySelector("iframe[class*='PreviewPaneFrame'], iframe");
-      if (!iframe) return;
-
-      const previewDoc = iframe.contentDocument;
+      const previewDoc = getPreviewDocument();
       if (!previewDoc) return;
 
       await hydrateAllPesticideTables(previewDoc);
     }, intervalMs);
+  }
+
+  function getPreviewDocument() {
+    // Decap renders preview in an iframe. Selector can vary by version/themes.
+    // This tries a few common patterns.
+    const iframe =
+      document.querySelector("iframe[class*='PreviewPaneFrame']") ||
+      document.querySelector("iframe[title*='Preview']") ||
+      document.querySelector("iframe");
+
+    return iframe?.contentDocument || null;
   }
 
   async function hydrateAllPesticideTables(previewDoc) {
@@ -92,8 +97,6 @@
       const s = node.getAttribute("data-site-id") || "";
 
       try {
-        // 1) Try the (future) API call
-        // Later you might do: `${API_BASE_URL}/api/pesticide-table?...`
         const url =
           `${API_BASE_URL}/pesticide-table?guidelineId=${encodeURIComponent(g)}&pestId=${encodeURIComponent(p)}&siteId=${encodeURIComponent(s)}`;
 
@@ -104,7 +107,7 @@
         node.innerHTML = html;
         node.setAttribute("data-loaded", "1");
       } catch (err) {
-        // 2) Proof-of-concept fallback: render a fake table so you can verify the wiring works now
+        // POC fallback (since endpoint isn't real yet)
         node.innerHTML = fakeTableHtml(g, p, s);
         node.setAttribute("data-loaded", "1");
       }
@@ -119,11 +122,12 @@
       <div style="font-weight:600; margin-bottom:0.5rem;">
         (POC) Rendered table for Guideline ${escapeHtml(g)}, Pest ${escapeHtml(p)}, Site ${escapeHtml(s)}
       </div>
+
       <table style="border-collapse: collapse; width: 100%;">
         <thead>
           <tr>
             <th style="border:1px solid #ccc; padding:6px;">Product</th>
-            <th style="border:1px solid #ccc; padding:6px;">AI</th>
+            <th style="border:1px solid #ccc; padding:6px;">Active Ingredient</th>
             <th style="border:1px solid #ccc; padding:6px;">Rate</th>
             <th style="border:1px solid #ccc; padding:6px;">REI</th>
             <th style="border:1px solid #ccc; padding:6px;">PHI</th>
@@ -146,6 +150,7 @@
           </tr>
         </tbody>
       </table>
+
       <div style="margin-top:0.5rem; font-size:0.9em; opacity:0.8;">
         API fetch failed (expected for now). Showing a local fake table as proof of concept.
       </div>
@@ -160,7 +165,4 @@
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
   }
-
-  // Start the hydration loop once CMS exists.
-  startPreviewHydrationLoop();
 })();
