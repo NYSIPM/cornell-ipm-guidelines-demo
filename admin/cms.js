@@ -15,69 +15,48 @@
 const pesticideShortcodePattern =
 /^\s*\{\{<\s*pesticide-table\b[\s\S]*?guidelineId="([^"]+)"[\s\S]*?pestId="([^"]+)"[\s\S]*?siteId="([^"]+)"[\s\S]*?>\}\}\s*$/;
 
+CMS.registerEditorComponent({
+  id: "pesticide-table",
+  label: "Pesticide Table (DB)",
+  fields: [
+    { name: "guidelineId", label: "Guideline ID", widget: "string" },
+    { name: "pestId", label: "Pest ID", widget: "string" },
+    { name: "siteId", label: "Site ID", widget: "string" }
+  ],
 
-  CMS.registerEditorComponent({
-    id: "pesticide-table",
-    label: "Pesticide Table (DB)",
-    fields: [
-      { name: "guidelineId", label: "Guideline ID", widget: "string" },
-      { name: "pestId", label: "Pest ID", widget: "string" },
-      { name: "siteId", label: "Site ID", widget: "string" }
-    ],
-    pattern: pesticideShortcodePattern,
+  pattern: /^\s*\{\{<\s*pesticide-table\b[\s\S]*?>\}\}\s*$/,
 
-    fromBlock: (match) => ({
-      guidelineId: match?.[1] || "",
-      pestId: match?.[2] || "",
-      siteId: match?.[3] || ""
-    }),
+  fromBlock: (match) => {
+    const block = match?.[0] || "";
 
-    toBlock: (data) => {
-      const g = (data.guidelineId || "").trim();
-      const p = (data.pestId || "").trim();
-      const s = (data.siteId || "").trim();
-      return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" >}}\n`;
-    },
+    const getAttr = (name) => {
+      const m = block.match(new RegExp(`${name}\\s*=\\s*"([^"]*)"`, "i"));
+      return m ? m[1] : "";
+    };
 
+    return {
+      guidelineId: getAttr("guidelineId"),
+      pestId: getAttr("pestId"),
+      siteId: getAttr("siteId")
+    };
+  },
 
-    /*
-    toPreview: () => {
-    // Give each preview block a unique placeholder so multiple tables can load
-    const id = "poc-" + Math.random().toString(36).slice(2);
+  toBlock: (data) => {
+    const g = (data.guidelineId || "").trim();
+    const p = (data.pestId || "").trim();
+    const s = (data.siteId || "").trim();
+    return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" >}}\n`;
+  },
 
-    // Kick off the fetch after Decap inserts this HTML into the preview
-    setTimeout(async () => {
-        const el = document.getElementById(id);
-        if (!el) return;
+  toPreview: (data) => {
+    const g = (data.guidelineId || "").trim();
+    const p = (data.pestId || "").trim();
+    const s = (data.siteId || "").trim();
+    return fakeTableHtml(g, p, s);
+  }
+});
 
-        try {
-        const res = await fetch(
-            "https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example",
-            { credentials: "omit" }
-        );
-        const text = await res.text();
-        el.innerHTML = `<pre style="white-space:pre-wrap; margin:0;">${escapeHtml(text)}</pre>`;
-        } catch (e) {
-        el.innerHTML = `<div style="border:1px solid #c00; padding:8px;">
-            Failed to fetch API example.
-        </div>`;
-        }
-    }, 0);
-
-    return `<div id="${id}" style="border:1px dashed #999; padding: 0.75rem; margin: 0.75rem 0;">
-        Loading API example…
-        </div>`;
-    },
-    */
-
-    // This renders in the preview pane first. Then the hydration loop swaps it.
-    /*toPreview: (data) => {
-      const g = (data.guidelineId || "").trim();
-      const p = (data.pestId || "").trim();
-      const s = (data.siteId || "").trim();
-      return fakeTableHtml(g, p, s);   // <-- render fake table immediately
-    }*/
-  });
+ 
 
   // ============================================================
   // 3) PREVIEW HYDRATION LOOP
