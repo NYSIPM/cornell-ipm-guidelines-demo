@@ -1,19 +1,9 @@
 (function () {
   if (!window.CMS) return;
 
-  // ============================================================
-  // 1) CONFIG
-  // ============================================================
-  // Proof-of-concept placeholder. Change this when your endpoint exists.
-  // Example later:
-  // const API_BASE_URL = "https://your-api-host.example.com";
-  const API_BASE_URL = "https://example.invalid";
-
-  // ============================================================
-  // 2) EDITOR COMPONENT: Inserts a pesticide-table block
-  // ============================================================
-  const pesticideBlockPattern =
-    /^:::\s*\{\.pesticide-table\s+guideline-id="([^"]+)"\s+pest-id="([^"]+)"\s+site-id="([^"]+)"\}\s*\n:::\s*$/m;
+  // Matches: {{< pesticide-table guidelineId="12" pestId="34" siteId="56" >}}
+  const pattern =
+    /^\{\{<\s*pesticide-table\s+guidelineId="([^"]+)"\s+pestId="([^"]+)"\s+siteId="([^"]+)"\s*>\}\}\s*$/m;
 
   CMS.registerEditorComponent({
     id: "pesticide-table",
@@ -23,27 +13,27 @@
       { name: "pestId", label: "Pest ID", widget: "string" },
       { name: "siteId", label: "Site ID", widget: "string" }
     ],
-    pattern: pesticideBlockPattern,
+    pattern,
+
     fromBlock: (match) => ({
       guidelineId: match?.[1] || "",
       pestId: match?.[2] || "",
       siteId: match?.[3] || ""
     }),
+
     toBlock: (data) => {
       const g = (data.guidelineId || "").trim();
       const p = (data.pestId || "").trim();
       const s = (data.siteId || "").trim();
-      return `::: {.pesticide-table guideline-id="${g}" pest-id="${p}" site-id="${s}"}\n:::\n`;
+      return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" >}}\n`;
     },
 
-    // This HTML appears in the Decap preview pane before hydration runs.
+    // Preview placeholder (your hydration script can still target this)
     toPreview: (data) => {
       const g = (data.guidelineId || "").trim();
       const p = (data.pestId || "").trim();
       const s = (data.siteId || "").trim();
 
-      // We output a placeholder div that our preview hook will "hydrate"
-      // by fetching from the API and swapping in HTML.
       return `
         <div class="pesticide-table-preview"
              data-guideline-id="${escapeHtml(g)}"
@@ -57,6 +47,16 @@
       `;
     }
   });
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+})();
 
   // ============================================================
   // 3) PREVIEW HYDRATION: runs in preview pane to fetch + replace
