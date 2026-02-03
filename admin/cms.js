@@ -63,9 +63,10 @@ const pesticideShortcodePattern =
     }, 0);
 
     return `<div id="${id}" style="border:1px dashed #999; padding: 0.75rem; margin: 0.75rem 0;">
-        Loading API example…
-    </div>`;
-    }
+  Loading API example…
+</div>`;
+},
+
 
     // This renders in the preview pane first. Then the hydration loop swaps it.
     /*toPreview: (data) => {
@@ -80,7 +81,7 @@ const pesticideShortcodePattern =
   // 3) PREVIEW HYDRATION LOOP
   //    Finds placeholders and replaces them with API HTML (or fake HTML).
   // ============================================================
-  startPreviewHydrationLoop();
+  //startPreviewHydrationLoop();
 
   function startPreviewHydrationLoop() {
     const intervalMs = 800;
