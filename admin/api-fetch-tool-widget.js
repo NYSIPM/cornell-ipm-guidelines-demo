@@ -46,20 +46,25 @@
     return body + spacer + block;
   }
 
-  // IMPORTANT: this uses Decap's internal redux store.
-  // It works in practice, but it's not part of the public API.
   function updateBodyField(newBody) {
-    const store = window.CMS.store;
-    if (!store) throw new Error("CMS.store not available");
+  const store = window.CMS.store;
+  if (!store) throw new Error("CMS.store not available");
 
-    store.dispatch({
-      type: "ENTRY_FIELD_UPDATE",
-      payload: {
-        field: "body",
-        value: newBody,
-      },
-    });
+  // 1) Try the action creator if present (most reliable across versions)
+  const actions = window.CMS.actions;
+  if (actions && typeof actions.changeDraftField === "function") {
+    store.dispatch(actions.changeDraftField("body", newBody));
+    return;
   }
+
+// 2) Fall back to raw action (older builds)
+store.dispatch({
+    type: "DRAFT_CHANGE",
+    payload: { field: "body", value: newBody },
+});
+}
+
+
 
   const ApiFetchToolControl = createClass({
     getInitialState: function () {
