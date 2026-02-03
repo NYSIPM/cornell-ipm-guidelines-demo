@@ -11,8 +11,9 @@
   // 2) EDITOR COMPONENT (SHORTCODE FORMAT)
   //    Stores: {{< pesticide-table guidelineId="12" pestId="34" siteId="56" >}}
   // ============================================================
+  // ✅ No /m flag
   const pesticideShortcodePattern =
-    /^\{\{<\s*pesticide-table\s+guidelineId="([^"]+)"\s+pestId="([^"]+)"\s+siteId="([^"]+)"\s*>\}\}\s*$/m;
+  /^\{\{<\s*pesticide-table\s+guidelineId="([^"]+)"\s+pestId="([^"]+)"\s+siteId="([^"]+)"\s*>\}\}\s*$/;
 
   CMS.registerEditorComponent({
     id: "pesticide-table",
