@@ -39,15 +39,41 @@ const pesticideShortcodePattern =
       return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" >}}\n`;
     },
 
+    toPreview: () => {
+    // Give each preview block a unique placeholder so multiple tables can load
+    const id = "poc-" + Math.random().toString(36).slice(2);
+
+    // Kick off the fetch after Decap inserts this HTML into the preview
+    setTimeout(async () => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        try {
+        const res = await fetch(
+            "https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example",
+            { credentials: "omit" }
+        );
+        const text = await res.text();
+        el.innerHTML = `<pre style="white-space:pre-wrap; margin:0;">${escapeHtml(text)}</pre>`;
+        } catch (e) {
+        el.innerHTML = `<div style="border:1px solid #c00; padding:8px;">
+            Failed to fetch API example.
+        </div>`;
+        }
+    }, 0);
+
+    return `<div id="${id}" style="border:1px dashed #999; padding: 0.75rem; margin: 0.75rem 0;">
+        Loading API example…
+    </div>`;
+    }
+
     // This renders in the preview pane first. Then the hydration loop swaps it.
-    toPreview: (data) => {
+    /*toPreview: (data) => {
       const g = (data.guidelineId || "").trim();
       const p = (data.pestId || "").trim();
       const s = (data.siteId || "").trim();
       return fakeTableHtml(g, p, s);   // <-- render fake table immediately
-
-      
-    }
+    }*/
   });
 
   // ============================================================
