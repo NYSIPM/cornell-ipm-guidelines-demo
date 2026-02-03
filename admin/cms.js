@@ -12,8 +12,9 @@
   //    Stores: {{< pesticide-table guidelineId="12" pestId="34" siteId="56" >}}
   // ============================================================
   // ✅ No /m flag
-  const pesticideShortcodePattern =
-  /^\{\{<\s*pesticide-table\s+guidelineId="([^"]+)"\s+pestId="([^"]+)"\s+siteId="([^"]+)"\s*>\}\}\s*$/;
+const pesticideShortcodePattern =
+/^\s*\{\{<\s*pesticide-table\b[\s\S]*?guidelineId="([^"]+)"[\s\S]*?pestId="([^"]+)"[\s\S]*?siteId="([^"]+)"[\s\S]*?>\}\}\s*$/;
+
 
   CMS.registerEditorComponent({
     id: "pesticide-table",
