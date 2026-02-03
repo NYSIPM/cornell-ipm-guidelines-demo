@@ -109,10 +109,14 @@
 
         this.setState({ status: "Body updated ✅" });
       } catch (err) {
-        // If this fails in the browser, it’s often CORS.
-        this.setState({ status: "Fetch failed: " + String(err?.message || err) });
+        const msg =
+            err?.name === "TypeError"
+            ? "Failed to fetch (usually CORS, blocked redirect, or network). Check Network tab."
+            : String(err?.message || err);
+
+        this.setState({ status: "Fetch failed: " + msg });
         console.error("apiFetchTool fetch error:", err);
-      }
+        }
     },
 
     render: function () {
