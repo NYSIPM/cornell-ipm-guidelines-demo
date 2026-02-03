@@ -4,6 +4,8 @@ date: 2026-01-23T16:11:00.000-05:00
 ---
 Preparations for a berry planting must begin one to two years in advance. Select a site with good air and water drainage and have a preplant soil and a nematode analysis performed on representative soil samples. *Growers may wish to select a more broad-spectrum approach to preplant soil analysis at this time by opting for a comprehensive Cornell soil health assessment.* 
 
+{{< pesticide-table guidelineId="12" pestId="34" siteId="56" >}}
+
 ::: {.pesticide-table guideline-id="12" pest-id="34" site-id="56"}
 :::
 
