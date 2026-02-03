@@ -26,7 +26,7 @@ collections:
       depth: 2
       summary: "{{title}}"
     editor:
-      preview: false
+      preview: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
