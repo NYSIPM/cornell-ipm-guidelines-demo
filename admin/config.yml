@@ -42,6 +42,7 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
+        modes: [rich_text, raw]
         editor_components:
         - image
         - code-block
