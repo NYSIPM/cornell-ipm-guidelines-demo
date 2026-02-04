@@ -4,7 +4,7 @@ date: 2026-01-23T11:03:00.000-05:00
 ---
 Cornell’s 2025 Pest Management Guidelines for Berry Crops is intended to provide growers with general nutrient guidelines and information to aid with insect, mite, disease, and weed management decisions. Cultural, biological, and chemical management tools are identified whenever available. 
 
-{{< pesticide-table guidelineId="111" pestId="111" siteId="111" >}}
+{{< pesticide-table guidelineId="11" pestId="11" siteId="11" >}}
 
 
 In-depth information on commercial berry crop production may be found in the resources listed in Table 2.15.
