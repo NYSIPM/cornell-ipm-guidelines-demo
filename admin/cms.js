@@ -115,7 +115,7 @@ CMS.registerEditorComponent({
 
       try {
         const url =
-          `${API_BASE_URL}/pesticide-table?guidelineId=${encodeURIComponent(g)}&pestId=${encodeURIComponent(p)}&siteId=${encodeURIComponent(s)}`;
+          `${API_BASE_URL}`; // /pesticide-table?guidelineId=${encodeURIComponent(g)}&pestId=${encodeURIComponent(p)}&siteId=${encodeURIComponent(s)}
 
         const res = await fetch(url, { credentials: "omit" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -127,6 +127,7 @@ CMS.registerEditorComponent({
         // POC fallback (since endpoint isn't real yet)
         node.innerHTML = fakeTableHtml(g, p, s);
         node.setAttribute("data-loaded", "1");
+        console.log("Fetching pesticide table:", url);
       }
     }
   }
