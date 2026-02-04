@@ -104,7 +104,7 @@ collections:
     folder: "publications/decap-test"
     create: true
     slug: "{{slug}}"
-    extension: "md"
+    extension: "qmd"
     format: "frontmatter"
     editor:
       preview: true
