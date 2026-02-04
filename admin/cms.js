@@ -48,13 +48,27 @@ CMS.registerEditorComponent({
     const s = (data.siteId || "").trim();
     return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" >}}`;
   },
+  toPreview: (data) => {
+  const g = (data.guidelineId || "").trim();
+  const p = (data.pestId || "").trim();
+  const s = (data.siteId || "").trim();
 
+  return `
+    <div class="pesticide-table-preview"
+         data-guideline-id="${escapeHtml(g)}"
+         data-pest-id="${escapeHtml(p)}"
+         data-site-id="${escapeHtml(s)}">
+      <div style="opacity:.7;">Loading table from API…</div>
+    </div>
+  `;
+}
+  /*
   toPreview: (data) => {
     const g = (data.guidelineId || "").trim();
     const p = (data.pestId || "").trim();
     const s = (data.siteId || "").trim();
     return fakeTableHtml(g, p, s);
-  }
+  }*/
 });
 
 
