@@ -34,15 +34,15 @@ collections:
       - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
       - {label: "Last Updated", name: "date", widget: "datetime", required: false}
         # NEW: left-panel tool widget (interactive)
-      - label: "API Table Tool"
-        name: "api_tool"
-        widget: "apiFetchTool"
-        required: false
-        # Existing Body field (keep this)
+      #- label: "API Table Tool"
+      #  name: "api_tool"
+      # widget: "apiFetchTool"
+      #  required: false
+      # Existing Body field (keep this)
       - label: "Body"
         name: "body"
         widget: "markdown"
-        # modes: [rich_text, raw]
+        modes: [rich_text, raw]
         editor_components:
         - image
         - code-block
