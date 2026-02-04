@@ -44,11 +44,11 @@ collections:
         widget: "markdown"
         modes: [rich_text, raw]
         editor_components:
-        - image
-        - code-block
-        - html-table
-        - api-text
-        - pesticide-table
+          - image
+          - code-block
+          - html-table
+          - api-text
+          - pesticide-table
 
   #I don't like this.
   - name: "decap-test"
