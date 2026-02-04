@@ -5,7 +5,7 @@
   // 1) CONFIG
   // ============================================================
   // Change later when you have a real endpoint.
-  const API_BASE_URL = "https://example.invalid";
+  const API_BASE_URL = "https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example";
 
   // ============================================================
   // 2) EDITOR COMPONENT (SHORTCODE FORMAT)
