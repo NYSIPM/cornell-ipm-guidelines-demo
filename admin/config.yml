@@ -16,15 +16,15 @@ collections:
   # Berry Guidelines
   - name: "berries"
     label: "Berry Guidelines"
-    label_singular: "Chapter"
+    # label_singular: "Chapter"
     folder: "publications/berries"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
-    nested:
-      depth: 2
-      summary: "{{title}}"
+    # nested:
+    #  depth: 2
+    #  summary: "{{title}}"
     editor:
       preview: true
     fields:
@@ -33,7 +33,7 @@ collections:
       - {label: "Chapter Number", name: "chapter", widget: "number", required: false, hint: "Optional ordering"}
       - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
       - {label: "Last Updated", name: "date", widget: "datetime", required: false}
-        # NEW: left-panel tool widget (interactive)
+      # NEW: left-panel tool widget (interactive)
       #- label: "API Table Tool"
       #  name: "api_tool"
       # widget: "apiFetchTool"
@@ -47,7 +47,7 @@ collections:
           - image
           - code-block
           - html-table
-          - api-text
+          # - api-text
           - pesticide-table
 
   #I don't like this.
