@@ -29,10 +29,10 @@ collections:
       preview: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
-      - {label: "Chapter Number", name: "chapter", widget: "number", required: false, hint: "Optional ordering"}
-      - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
-      - {label: "Last Updated", name: "date", widget: "datetime", required: false}
+      # - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
+      # - {label: "Chapter Number", name: "chapter", widget: "number", required: false, hint: "Optional ordering"}
+      # - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
+      # - {label: "Last Updated", name: "date", widget: "datetime", required: false}
       # NEW: left-panel tool widget (interactive)
       #- label: "API Table Tool"
       #  name: "api_tool"
