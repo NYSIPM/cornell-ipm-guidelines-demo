@@ -42,13 +42,32 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
-        modes: [rich_text, raw]
+        # modes: [rich_text, raw]
         editor_components:
         - image
         - code-block
         - html-table
         - api-text
         - pesticide-table
+
+  #I don't like this.
+  - name: "decap-test"
+    label: "Decap Test"
+    folder: "publications/decap-test"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        modes: [rich_text, raw]
+        editor_components:
+          - pesticide-table
 
   # Grape Guidelines
   - name: "grapes"
@@ -98,21 +117,3 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Body", name: "body", widget: "markdown"}
 
-#I don't like this.
-  - name: "decap-test"
-    label: "Decap Test"
-    folder: "publications/decap-test"
-    create: true
-    slug: "{{slug}}"
-    extension: "qmd"
-    format: "frontmatter"
-    editor:
-      preview: true
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - label: "Body"
-        name: "body"
-        widget: "markdown"
-        modes: [rich_text, raw]
-        editor_components:
-          - pesticide-table
