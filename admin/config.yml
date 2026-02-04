@@ -44,9 +44,9 @@ collections:
         widget: "markdown"
         modes: [rich_text, raw]
         editor_components:
-          - image
-          - code-block
-          - html-table
+          # - image
+          # - code-block
+          # - html-table
           # - api-text
           - pesticide-table
 
