@@ -1,10 +1,9 @@
 ---
 title: 2.4 Test
 ---
+{{< pesticide-table guidelineId="222" pestId="222" siteId="222" >}}
+
+
 Test
 
 {{< pesticide-table guidelineId="11" pestId="11" siteId="11" >}}
-
-Copy from 2.1
-
-{{< pesticide-table guidelineId="111" pestId="111" siteId="111" >}}
