@@ -6,7 +6,8 @@
   // ============================================================
   // Change later when you have a real endpoint.
   //https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example
-  const API_BASE_URL = "https://cropandpestguides.cce.cornell.edu/GuidelineTable/api/guideline-table/pesticides?guidelineId=3&pestId=208&siteId=29";
+  const API_BASE_URL = "https://cropandpestguides.cce.cornell.edu/GuidelineTable/api/guideline-table";
+  ///pesticides?guidelineId=3&pestId=208&siteId=29
 
   // ============================================================
   // 2) EDITOR COMPONENT (SHORTCODE FORMAT)
@@ -114,9 +115,16 @@ CMS.registerEditorComponent({
       const p = node.getAttribute("data-pest-id") || "";
       const s = node.getAttribute("data-site-id") || "";
 
+      // Build URL safely
+      const urlObj = new URL(API_BASE_URL.replace(/\/$/, "") + "/pesticides");
+      urlObj.searchParams.set("guidelineId", g);
+      urlObj.searchParams.set("pestId", p);
+      urlObj.searchParams.set("siteId", s);
+
+      const url = urlObj.toString();
+
       try {
-        const url =
-          `${API_BASE_URL}`; // /pesticide-table?guidelineId=${encodeURIComponent(g)}&pestId=${encodeURIComponent(p)}&siteId=${encodeURIComponent(s)}
+        console.log("Fetching pesticide table:", url);
 
         const res = await fetch(url, { credentials: "omit" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -125,11 +133,11 @@ CMS.registerEditorComponent({
         node.innerHTML = html;
         node.setAttribute("data-loaded", "1");
       } catch (err) {
-        // POC fallback (since endpoint isn't real yet)
+        console.error("API fetch failed:", err, "URL:", url);
         node.innerHTML = fakeTableHtml(g, p, s);
         node.setAttribute("data-loaded", "1");
-        console.log("Fetching pesticide table:", url);
       }
+
     }
   }
 
