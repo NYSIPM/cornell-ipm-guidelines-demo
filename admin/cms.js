@@ -16,7 +16,7 @@
   // ✅ No /m flag
 // One-line, repeatable matcher (supports multiple occurrences in a doc)
 const shortcodeLinePattern =
-  /^\s*\{\{<\s*pesticide-table\b[^}]*>\s*\}\}\s*$/m;
+  /^\s*\{\{[<%]\s*pesticide-table\b[^}]*[>%]\}\}\s*$/m;
 
 CMS.registerEditorComponent({
   id: "pesticide-table",
@@ -33,9 +33,9 @@ CMS.registerEditorComponent({
     const block = match?.[0] || "";
 
     const getAttr = (name) => {
-      const m = block.match(new RegExp(`${name}\\s*=\\s*"([^"]*)"`, "i"));
-      return m ? m[1] : "";
-    };
+    const m = block.match(new RegExp(`${name}\\s*=\\s*"([^"]*)"`, "i"));
+    return m ? m[1] : "";
+  };
 
     return {
       guidelineId: getAttr("guidelineId"),
@@ -48,8 +48,9 @@ CMS.registerEditorComponent({
     const g = (data.guidelineId || "").trim();
     const p = (data.pestId || "").trim();
     const s = (data.siteId || "").trim();
-    return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" >}}`;
+    return `{{% pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" %}}`;
   },
+
   toPreview: (data) => {
   const g = (data.guidelineId || "").trim();
   const p = (data.pestId || "").trim();
@@ -137,7 +138,6 @@ CMS.registerEditorComponent({
         node.innerHTML = fakeTableHtml(g, p, s);
         node.setAttribute("data-loaded", "1");
       }
-
     }
   }
 
