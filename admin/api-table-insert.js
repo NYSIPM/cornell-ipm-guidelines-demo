@@ -109,7 +109,7 @@
         label: "API Endpoint URL",
         widget: "string",
         default:
-          "https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example",
+          "https://cropandpestguides.cce.cornell.edu/GuidelineTable/api/guideline-table/pesticides?guidelineId=3&pestId=208&siteId=29",
       },
       {
         name: "cached",
@@ -137,7 +137,7 @@
       return (
         `::: {.api-insert endpoint="${safeEndpoint}"}\n` +
         `<!-- api-cache -->\n` +
-        `${cached || CMS.registerEditorComponent }\n` +
+        `${cached || "placeholder"}\n` +
         `<!-- /api-cache -->\n` +
         `:::\n`
       );
