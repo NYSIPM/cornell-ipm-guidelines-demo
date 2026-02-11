@@ -1,4 +1,5 @@
 (function () {
+  console.log("[PesticideTable] cms.js loaded. window.CMS exists?", !!window.CMS);
   if (!window.CMS) return;
 
   // ============================================================
@@ -88,9 +89,12 @@ CMS.registerEditorComponent({
 
     setInterval(async () => {
       const previewDoc = getPreviewDocument();
+      console.log("[PesticideTable] previewDoc?", !!previewDoc);
       if (!previewDoc) return;
 
       await hydrateAllPesticideTables(previewDoc);
+      const nodes = previewDoc.querySelectorAll(".pesticide-table-preview");
+      console.log("[PesticideTable] nodes found:", nodes.length);
     }, intervalMs);
   }
 
