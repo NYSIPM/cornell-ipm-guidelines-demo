@@ -95,6 +95,7 @@ CMS.registerEditorComponent({
       await hydrateAllPesticideTables(previewDoc);
       const nodes = previewDoc.querySelectorAll(".pesticide-table-preview");
       console.log("[PesticideTable] nodes found:", nodes.length);
+      if (!nodes.length) return;
     }, intervalMs);
   }
 
