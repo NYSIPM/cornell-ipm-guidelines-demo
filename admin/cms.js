@@ -114,7 +114,8 @@ CMS.registerEditorComponent({
     if (!nodes.length) return;
 
     for (const node of nodes) {
-      if (node.getAttribute("data-loaded") === "1") continue;
+      // DEBUG: always attempt fetch so we can see what happens
+      //if (node.getAttribute("data-loaded") === "1") continue;
 
       const g = node.getAttribute("data-guideline-id") || "";
       const p = node.getAttribute("data-pest-id") || "";
@@ -136,7 +137,7 @@ CMS.registerEditorComponent({
 
         const html = await res.text();
         node.innerHTML = html;
-        node.setAttribute("data-loaded", "1");
+        node.setAttribute("data-loaded", "0");// let it retry
       } catch (err) {
         console.error("API fetch failed:", err, "URL:", url);
         node.innerHTML = fakeTableHtml(g, p, s);
