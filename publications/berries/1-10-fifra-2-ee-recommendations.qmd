@@ -1,0 +1,14 @@
+---
+title: 1.10 FIFRA 2(ee) Recommendations
+date: 2026-01-21T15:42:00.000-05:00
+---
+FIFRA authorizes certain limited variations from the pesticide use directions on pesticide labels. Unless prohibited by the label, these “2(ee) recommendations” allow:
+
+1. Use at any dosage, concentration, or frequency less than specified on the labeling.
+2. Use against a target pest not listed on the labeling.
+3. Using any method of application.
+4. Mixtures with fertilizer.
+
+In New York State, 2(ee) recommendations must be approved in writing by the NYSDEC. However, pesticides applied for agricultural purposes at less than label rate (item 1 above) and mixtures with fertilizer (item 4 above) do not require approval. A 2(ee) recommendation request may be made only by recognized research institutions, certified crop advisers, manufacturers (registrants), or organizations representing individual users. An individual user cannot request a 2(ee) recommendation. No fee is required for these requests.
+
+***NOTE:*** Applicators must have the approved 2(ee) recommendation in their possession at the time of application in order for the use to be legal. All approved 2(ee) recommendations are available through the NYSDEC’s online product registration database at [extapps.dec.ny.gov/nyspad/products](https://extapps.dec.ny.gov/nyspad/products).
