@@ -1,5 +1,6 @@
 (function () {
   console.log("[PesticideTable] cms.js loaded. window.CMS exists?", !!window.CMS);
+  const DEBUG = false;
   if (!window.CMS) return;
 
   // ============================================================
@@ -89,12 +90,12 @@ CMS.registerEditorComponent({
 
     setInterval(async () => {
       const previewDoc = getPreviewDocument();
-      console.log("[PesticideTable] previewDoc?", !!previewDoc);
+      //console.log("[PesticideTable] previewDoc?", !!previewDoc);
       if (!previewDoc) return;
 
       await hydrateAllPesticideTables(previewDoc);
       const nodes = previewDoc.querySelectorAll(".pesticide-table-preview");
-      console.log("[PesticideTable] nodes found:", nodes.length);
+      //console.log("[PesticideTable] nodes found:", nodes.length);
       if (!nodes.length) return;
     }, intervalMs);
   }
@@ -116,7 +117,7 @@ CMS.registerEditorComponent({
 
     for (const node of nodes) {
       // DEBUG: always attempt fetch so we can see what happens
-      //if (node.getAttribute("data-loaded") === "1") continue;
+      if (node.getAttribute("data-loaded") === "1") continue;
 
       const g = node.getAttribute("data-guideline-id") || "";
       const p = node.getAttribute("data-pest-id") || "";
@@ -131,14 +132,14 @@ CMS.registerEditorComponent({
       const url = urlObj.toString();
 
       try {
-        console.log("Fetching pesticide table:", url);
+        //console.log("Fetching pesticide table:", url);
 
         const res = await fetch(url, { credentials: "omit" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const html = await res.text();
         node.innerHTML = html;
-        node.setAttribute("data-loaded", "0");// let it retry
+        node.setAttribute("data-loaded", "1");// let it retry
       } catch (err) {
         console.error("API fetch failed:", err, "URL:", url);
         node.innerHTML = fakeTableHtml(g, p, s);
