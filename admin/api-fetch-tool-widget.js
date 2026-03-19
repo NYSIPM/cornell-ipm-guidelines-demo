@@ -4,7 +4,6 @@
     return;
   }
 
-  // Decap exposes these globals for inline widgets
   if (typeof window.createClass !== "function" || typeof window.h !== "function") {
     console.error(
       "apiFetchTool: createClass/h not found. Are you loading decap-cms.js before this file?"
@@ -12,12 +11,17 @@
     return;
   }
 
+  if (!window.ApiTableFormatter || typeof window.ApiTableFormatter.formatApiJsonToMarkdownTable !== "function") {
+    console.error("apiFetchTool: ApiTableFormatter not found");
+    return;
+  }
+
   const createClass = window.createClass;
   const h = window.h;
 
-  //https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example
   const DEFAULT_ENDPOINT =
-    "https://cropandpestguides.cce.cornell.edu/GuidelineTable/api/guideline-table/pesticides?guidelineId=3&pestId=208&siteId=29";
+    "https://localhost:7144/api/Treatments/search?siteId=6&pestId=6";
+    //https://cropandpestguides.cce.cornell.edu/GuidelineTable/api/guideline-table/pesticides?guidelineId=3&pestId=208&siteId=29
 
   function buildApiBlock(endpoint, cached) {
     return (
@@ -48,24 +52,20 @@
   }
 
   function updateBodyField(newBody) {
-  const store = window.CMS.store;
-  if (!store) throw new Error("CMS.store not available");
+    const store = window.CMS.store;
+    if (!store) throw new Error("CMS.store not available");
 
-  // 1) Try the action creator if present (most reliable across versions)
-  const actions = window.CMS.actions;
-  if (actions && typeof actions.changeDraftField === "function") {
-    store.dispatch(actions.changeDraftField("body", newBody));
-    return;
+    const actions = window.CMS.actions;
+    if (actions && typeof actions.changeDraftField === "function") {
+      store.dispatch(actions.changeDraftField("body", newBody));
+      return;
+    }
+
+    store.dispatch({
+      type: "DRAFT_CHANGE",
+      payload: { field: "body", value: newBody },
+    });
   }
-
-// 2) Fall back to raw action (older builds)
-store.dispatch({
-    type: "DRAFT_CHANGE",
-    payload: { field: "body", value: newBody },
-});
-}
-
-
 
   const ApiFetchToolControl = createClass({
     getInitialState: function () {
@@ -84,7 +84,11 @@ store.dispatch({
     setEndpoint: function (e) {
       const endpoint = e.target.value;
       this.setState({ endpoint });
-      this.props.onChange({ ...(this.props.value || {}), endpoint, preview: this.state.preview });
+      this.props.onChange({
+        ...(this.props.value || {}),
+        endpoint,
+        preview: this.state.preview,
+      });
     },
 
     fetchAndInsert: async function () {
@@ -99,30 +103,38 @@ store.dispatch({
       try {
         const res = await fetch(endpoint, { credentials: "omit" });
         if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-        const text = (await res.text()).trim();
 
-        // Save widget's own stored value (so it remembers endpoint/preview)
-        this.setState({ status: "Fetched ✅ Updating body…", preview: text });
-        this.props.onChange({ ...(this.props.value || {}), endpoint, preview: text });
+        const json = await res.json();
+        const formatted = window.ApiTableFormatter.formatApiJsonToMarkdownTable(json);
 
-        // Get current body from the entry draft (immutable Map)
+        this.setState({
+          status: "Fetched ✅ Formatting and updating body…",
+          preview: formatted,
+        });
+
+        this.props.onChange({
+          ...(this.props.value || {}),
+          endpoint,
+          preview: formatted,
+        });
+
         const state = window.CMS.store.getState();
         const entry = state.entryDraft?.entry;
         const currentBody = entry?.getIn?.(["data", "body"]) || "";
 
-        const newBody = upsertApiBlock(String(currentBody), endpoint, text);
+        const newBody = upsertApiBlock(String(currentBody), endpoint, formatted);
         updateBodyField(newBody);
 
         this.setState({ status: "Body updated ✅" });
       } catch (err) {
         const msg =
-            err?.name === "TypeError"
+          err?.name === "TypeError"
             ? "Failed to fetch (usually CORS, blocked redirect, or network). Check Network tab."
             : String(err?.message || err);
 
         this.setState({ status: "Fetch failed: " + msg });
         console.error("apiFetchTool fetch error:", err);
-        }
+      }
     },
 
     render: function () {
@@ -150,11 +162,12 @@ store.dispatch({
               {
                 style: {
                   marginTop: "10px",
-                  maxHeight: "180px",
+                  maxHeight: "220px",
                   overflow: "auto",
                   background: "#f7f7f7",
                   padding: "8px",
                   borderRadius: "6px",
+                  whiteSpace: "pre-wrap",
                 },
               },
               this.state.preview
