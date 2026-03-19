@@ -1,108 +1,71 @@
 (function () {
-  console.log("[PesticideTable] cms.js loaded. window.CMS exists?", !!window.CMS);
-  const DEBUG = false;
   if (!window.CMS) return;
 
-  // ============================================================
-  // 1) CONFIG
-  // ============================================================
-  // Change later when you have a real endpoint.
-  //https://cropandpestguides.cce.cornell.edu/NewGuidelinesTableImportTest/api/example
-  const API_BASE_URL = "https://cropandpestguides.cce.cornell.edu/GuidelineTable/api/guideline-table";
-  ///pesticides?guidelineId=3&pestId=208&siteId=29
+  const API_BASE_URL = "https://localhost:7144/api/Treatments/search";
 
-  // ============================================================
-  // 2) EDITOR COMPONENT (SHORTCODE FORMAT)
-  //    Stores: {{< pesticide-table guidelineId="12" pestId="34" siteId="56" >}}
-  // ============================================================
-  // ✅ No /m flag
-// One-line, repeatable matcher (supports multiple occurrences in a doc)
-const shortcodeLinePattern =
-  /^\s*\{\{[<%]\s*pesticide-table\b[^}]*[>%]\}\}\s*$/m;
+  const shortcodeLinePattern =
+    /^\s*\{\{[<%]\s*pesticide-table\b[^}]*[>%]\}\}\s*$/m;
 
-CMS.registerEditorComponent({
-  id: "pesticide-table",
-  label: "Pesticide Table (DB)",
-  fields: [
-    { name: "guidelineId", label: "Guideline ID", widget: "string" },
-    { name: "pestId", label: "Pest ID", widget: "string" },
-    { name: "siteId", label: "Site ID", widget: "string" }
-  ],
+  CMS.registerEditorComponent({
+    id: "pesticide-table",
+    label: "Pesticide Table (DB)",
+    fields: [
+      { name: "guidelineId", label: "Guideline ID", widget: "string", required: false },
+      { name: "pestId", label: "Pest ID", widget: "string" },
+      { name: "siteId", label: "Site ID", widget: "string" }
+    ],
 
-  pattern: shortcodeLinePattern,
+    pattern: shortcodeLinePattern,
 
-  fromBlock: (match) => {
-    const block = match?.[0] || "";
+    fromBlock: (match) => {
+      const block = match?.[0] || "";
 
-    const getAttr = (name) => {
-    const m = block.match(new RegExp(`${name}\\s*=\\s*"([^"]*)"`, "i"));
-    return m ? m[1] : "";
-  };
+      const getAttr = (name) => {
+        const m = block.match(new RegExp(`${name}\\s*=\\s*"([^"]*)"`, "i"));
+        return m ? m[1] : "";
+      };
 
-    return {
-      guidelineId: getAttr("guidelineId"),
-      pestId: getAttr("pestId"),
-      siteId: getAttr("siteId")
-    };
-  },
+      return {
+        guidelineId: getAttr("guidelineId"),
+        pestId: getAttr("pestId"),
+        siteId: getAttr("siteId")
+      };
+    },
 
-  toBlock: (data) => {
-    const g = (data.guidelineId || "").trim();
-    const p = (data.pestId || "").trim();
-    const s = (data.siteId || "").trim();
-    return `{{% pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" %}}`;
-  },
+    toBlock: (data) => {
+      const g = (data.guidelineId || "").trim();
+      const p = (data.pestId || "").trim();
+      const s = (data.siteId || "").trim();
+      return `{{% pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" %}}`;
+    },
 
-  toPreview: (data) => {
-  const g = (data.guidelineId || "").trim();
-  const p = (data.pestId || "").trim();
-  const s = (data.siteId || "").trim();
+    toPreview: (data) => {
+      const g = (data.guidelineId || "").trim();
+      const p = (data.pestId || "").trim();
+      const s = (data.siteId || "").trim();
 
-  return `
-    <div class="pesticide-table-preview"
-         data-guideline-id="${escapeHtml(g)}"
-         data-pest-id="${escapeHtml(p)}"
-         data-site-id="${escapeHtml(s)}">
-      <div style="opacity:.7;">Loading table from API…</div>
-    </div>
-  `;
-}
-  /*
-  toPreview: (data) => {
-    const g = (data.guidelineId || "").trim();
-    const p = (data.pestId || "").trim();
-    const s = (data.siteId || "").trim();
-    return fakeTableHtml(g, p, s);
-  }*/
-});
+      return `
+        <div class="pesticide-table-preview"
+             data-guideline-id="${escapeHtml(g)}"
+             data-pest-id="${escapeHtml(p)}"
+             data-site-id="${escapeHtml(s)}">
+          Loading pesticide table...
+        </div>
+      `;
+    }
+  });
 
-
- 
-
-  // ============================================================
-  // 3) PREVIEW HYDRATION LOOP
-  //    Finds placeholders and replaces them with API HTML (or fake HTML).
-  // ============================================================
   startPreviewHydrationLoop();
 
   function startPreviewHydrationLoop() {
-    const intervalMs = 800;
-
     setInterval(async () => {
       const previewDoc = getPreviewDocument();
-      //console.log("[PesticideTable] previewDoc?", !!previewDoc);
       if (!previewDoc) return;
-
       await hydrateAllPesticideTables(previewDoc);
-      const nodes = previewDoc.querySelectorAll(".pesticide-table-preview");
-      //console.log("[PesticideTable] nodes found:", nodes.length);
-      if (!nodes.length) return;
-    }, intervalMs);
+    }, 800);
   }
 
   function getPreviewDocument() {
-    // Decap renders preview in an iframe. Selector can vary by version/themes.
-    // This tries a few common patterns.
     const iframe =
       document.querySelector("iframe[class*='PreviewPaneFrame']") ||
       document.querySelector("iframe[title*='Preview']") ||
@@ -116,83 +79,47 @@ CMS.registerEditorComponent({
     if (!nodes.length) return;
 
     for (const node of nodes) {
-      // DEBUG: always attempt fetch so we can see what happens
       if (node.getAttribute("data-loaded") === "1") continue;
 
-      const g = node.getAttribute("data-guideline-id") || "";
-      const p = node.getAttribute("data-pest-id") || "";
-      const s = node.getAttribute("data-site-id") || "";
-
-      // Build URL safely
-      const urlObj = new URL(API_BASE_URL.replace(/\/$/, "") + "/pesticides");
-      urlObj.searchParams.set("guidelineId", g);
-      urlObj.searchParams.set("pestId", p);
-      urlObj.searchParams.set("siteId", s);
-
-      const url = urlObj.toString();
+      const guidelineId = node.getAttribute("data-guideline-id") || "";
+      const pestId = node.getAttribute("data-pest-id") || "";
+      const siteId = node.getAttribute("data-site-id") || "";
 
       try {
-        //console.log("Fetching pesticide table:", url);
+        const url = new URL(API_BASE_URL);
+        url.searchParams.set("pestId", pestId);
+        url.searchParams.set("siteId", siteId);
 
-        const res = await fetch(url, { credentials: "omit" });
+        console.log("Fetching pesticide JSON:", url.toString());
+
+        const res = await fetch(url.toString(), { credentials: "omit" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        const html = await res.text();
+        const json = await res.json();
+        console.log("Pesticide JSON:", json);
+
+        const html = window.PesticideTableBuilder.renderTable(json);
         node.innerHTML = html;
-        node.setAttribute("data-loaded", "1");// let it retry
+        node.setAttribute("data-loaded", "1");
       } catch (err) {
-        console.error("API fetch failed:", err, "URL:", url);
-        node.innerHTML = fakeTableHtml(g, p, s);
+        console.error("Pesticide preview failed:", err);
+
+        node.innerHTML = `
+          <div><strong>Preview failed.</strong></div>
+          <div>GuidelineId: ${escapeHtml(guidelineId)}</div>
+          <div>PestId: ${escapeHtml(pestId)}</div>
+          <div>SiteId: ${escapeHtml(siteId)}</div>
+          <div style="margin-top:0.5rem; color:#b00020;">
+            ${escapeHtml(err?.message || String(err))}
+          </div>
+        `;
         node.setAttribute("data-loaded", "1");
       }
     }
   }
 
-  // ============================================================
-  // 4) HELPERS
-  // ============================================================
-  function fakeTableHtml(g, p, s) {
-    return `
-      <div style="font-weight:600; margin-bottom:0.5rem;">
-        (POC) Rendered table for Guideline ${escapeHtml(g)}, Pest ${escapeHtml(p)}, Site ${escapeHtml(s)}
-      </div>
-
-      <table style="border-collapse: collapse; width: 100%;">
-        <thead>
-          <tr>
-            <th style="border:1px solid #ccc; padding:6px;">Product</th>
-            <th style="border:1px solid #ccc; padding:6px;">Active Ingredient</th>
-            <th style="border:1px solid #ccc; padding:6px;">Rate</th>
-            <th style="border:1px solid #ccc; padding:6px;">REI</th>
-            <th style="border:1px solid #ccc; padding:6px;">PHI</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="border:1px solid #ccc; padding:6px;">Example Product A</td>
-            <td style="border:1px solid #ccc; padding:6px;">Example AI</td>
-            <td style="border:1px solid #ccc; padding:6px;">1.0–2.0 qt/ac</td>
-            <td style="border:1px solid #ccc; padding:6px;">12 hr</td>
-            <td style="border:1px solid #ccc; padding:6px;">7 d</td>
-          </tr>
-          <tr>
-            <td style="border:1px solid #ccc; padding:6px;">Example Product B</td>
-            <td style="border:1px solid #ccc; padding:6px;">Example AI</td>
-            <td style="border:1px solid #ccc; padding:6px;">0.5 lb/ac</td>
-            <td style="border:1px solid #ccc; padding:6px;">24 hr</td>
-            <td style="border:1px solid #ccc; padding:6px;">14 d</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div style="margin-top:0.5rem; font-size:0.9em; opacity:0.8;">
-        API fetch failed (expected for now). Showing a local fake table as proof of concept.
-      </div>
-    `;
-  }
-
   function escapeHtml(str) {
-    return String(str)
+    return String(str ?? "")
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
