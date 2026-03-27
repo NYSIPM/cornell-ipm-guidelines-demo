@@ -110,6 +110,8 @@
   // 2. ROW STATE
   // =========================================================
 
+  let currentRows = [];
+
   function getRowKey(row) {
     return [
       row.treatmentId ?? "",
@@ -130,10 +132,9 @@
     ].join("|");
   }
 
-  function findRowByElement(tr, container) {
+  function findRowByElement(tr) {
     const key = getRowKeyFromElement(tr);
-    const rows = container?.__pesticideRows || [];
-    return rows.find(r => getRowKey(r) === key) || null;
+    return currentRows.find(r => getRowKey(r) === key) || null;
   }
 
   // =========================================================
@@ -198,7 +199,8 @@
   }
 
   function renderTable(data) {
-    const rows = buildRows(data);
+    currentRows = buildRows(data);
+    const rows = currentRows;
 
     if (!rows.length) {
       return `<div>No pesticide rows found.</div>`;
@@ -349,9 +351,9 @@
     `).join("");
   }
 
-  function enterEditMode(tr, container) {
+  function enterEditMode(tr) {
     console.log("enterEditMode called");
-    const row = findRowByElement(tr, container);
+    const row = findRowByElement(tr);
     console.log("row found:", row);
     if (!row) return;
     if (tr.classList.contains("is-editing")) return;
@@ -361,10 +363,7 @@
     const cells = tr.querySelectorAll("td");
     if (cells.length < 8) return;
 
-    cells[0].innerHTML = `
-      <button type="button" disabled>Edit</button>
-      <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
-    `;
+    cells[0].innerHTML = `<button type="button" disabled>Edit</button>`;
     cells[1].innerHTML = renderIdBlock(row, true);
     cells[2].innerHTML = escapeHtml(row.product);
     cells[3].innerHTML = renderRateEditor(row);
@@ -375,49 +374,22 @@
   }
 
   function wireTableEvents(container) {
+    console.log("Edit clicked");
     if (!container || container.__pesticideTableEventsBound) return;
     container.__pesticideTableEventsBound = true;
 
     container.addEventListener("click", function (e) {
       const editBtn = e.target.closest(".edit-row-btn");
-      const cancelBtn = e.target.closest(".cancel-row-btn");
 
       if (editBtn) {
-        console.log("Edit clicked");
         const tr = editBtn.closest("tr.data-row");
         if (!tr) return;
-        enterEditMode(tr, container);
-        return;
-      }
-
-      if (cancelBtn) {
-        console.log("Cancel clicked");
-
-        // rebuild data from stored rows
-        const rows = container.__pesticideRows || [];
-
-        // IMPORTANT: we need original API shape, not rows
-        // easiest fix: store original JSON too (see next step)
-
-        if (container.__pesticideJson) {
-          container.innerHTML = renderTable(container.__pesticideJson);
-          wireTableEvents(container);
-        }
-
-        return;
+        enterEditMode(tr);
       }
     });
   }
 
-  function renderCancelButtons() {
-    return `
-      <button type="button" class="edit-row-btn">Edit</button>
-      <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
-    `;
-  }
-
   window.PesticideTableBuilder = {
-    buildRows,
     renderTable,
     wireTableEvents
   };

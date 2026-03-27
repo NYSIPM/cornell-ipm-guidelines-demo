@@ -2,7 +2,6 @@
   // =========================================================
   // 1. DISPLAY / FORMAT HELPERS
   // =========================================================
-
   function escapeHtml(str) {
     return String(str ?? "")
       .replace(/&/g, "&amp;")
@@ -18,6 +17,11 @@
 
   function clean(value) {
     return String(value ?? "").replace(/\s+/g, " ").trim();
+  }
+
+  function toInt(value) {
+    const n = parseInt(value, 10);
+    return Number.isFinite(n) ? n : 0;
   }
 
   function formatProductName(pesticide) {
@@ -41,10 +45,21 @@
 
     let text = "";
 
-    if (concentration) text += concentration;
-    if (unit) text += (text ? " " : "") + unit;
-    if (unitArea) text += "/ " + unitArea;
-    if (amountNote) text += (text ? " " : "") + `(${amountNote})`;
+    if (concentration) {
+      text += concentration;
+    }
+
+    if (unit) {
+      text += (text ? " " : "") + unit;
+    }
+
+    if (unitArea) {
+      text += "/ " + unitArea;
+    }
+
+    if (amountNote) {
+      text += (text ? " " : "") + `(${amountNote})`;
+    }
 
     return clean(text);
   }
@@ -71,6 +86,7 @@
     const phiTime = clean(sp.phiTime);
 
     if (!phi) return "";
+
     return phiTime ? `${phi} ${phiTime}` : phi;
   }
 
@@ -106,10 +122,6 @@
     return unique(comments).join("<br>");
   }
 
-  // =========================================================
-  // 2. ROW STATE
-  // =========================================================
-
   function getRowKey(row) {
     return [
       row.treatmentId ?? "",
@@ -130,16 +142,15 @@
     ].join("|");
   }
 
-  function findRowByElement(tr, container) {
+  function findRowByElement(tr) {
     const key = getRowKeyFromElement(tr);
-    const rows = container?.__pesticideRows || [];
-    return rows.find(r => getRowKey(r) === key) || null;
+    return currentRows.find(r => getRowKey(r) === key) || null;
   }
 
-  // =========================================================
-  // 3. ROW BUILDING / NORMAL TABLE RENDER
-  // =========================================================
 
+  // =========================================================
+  // 2. ROW BUILDING / NORMAL TABLE RENDER
+  // =========================================================
   function buildRows(data) {
     const treatments = Array.isArray(data) ? data : [data];
     const rows = [];
@@ -161,9 +172,11 @@
           pesticideId: pesticideId ?? "",
           pestId: treatment?.pestId ?? "",
           siteId: treatment?.siteId ?? "",
+
           treatment: treatment,
           pesticide: pesticide,
           matchingRates: matchingRates,
+
           product: formatProductName(pesticide),
           rate: rateText,
           rei: formatRei(pesticide?.sitePesticide || []),
@@ -178,27 +191,9 @@
     return rows;
   }
 
-  function renderEditButtons() {
-    return `<button type="button" class="edit-row-btn">Edit</button>`;
-  }
-
-  function renderIdBlock(row, showTreatmentRateIds) {
-    const rateIds = showTreatmentRateIds
-      ? (row.matchingRates || [])
-          .map(r => `<div><strong>TR:</strong> ${escapeHtml(r.treatmentRateId ?? 0)}</div>`)
-          .join("")
-      : "";
-
-    return `
-      <div><strong>T:</strong> ${escapeHtml(row.treatmentId)}</div>
-      <div><strong>CT:</strong> ${escapeHtml(row.controlTechniqueId)}</div>
-      <div><strong>P:</strong> ${escapeHtml(row.pesticideId)}</div>
-      ${rateIds}
-    `;
-  }
-
   function renderTable(data) {
-    const rows = buildRows(data);
+    currentRows = buildRows(data);
+    const rows = currentRows;
 
     if (!rows.length) {
       return `<div>No pesticide rows found.</div>`;
@@ -259,8 +254,36 @@
   }
 
   // =========================================================
-  // 4. EDIT VIEW ONLY
+  // 3. EDIT MODE / SAVE SUPPORT
   // =========================================================
+
+  let currentRows = [];
+  
+  function renderEditButtons() {
+    return `<button type="button" class="edit-row-btn">Edit</button>`;
+  }
+
+  function renderSaveButtons() {
+    return `
+      <button type="button" class="save-row-btn">Save</button>
+      <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
+    `;
+  }
+
+  function renderIdBlock(row, showTreatmentRateIds) {
+    const rateIds = showTreatmentRateIds
+      ? (row.matchingRates || [])
+          .map(r => `<div><strong>TR:</strong> ${escapeHtml(r.treatmentRateId ?? 0)}</div>`)
+          .join("")
+      : "";
+
+    return `
+      <div><strong>T:</strong> ${escapeHtml(row.treatmentId)}</div>
+      <div><strong>CT:</strong> ${escapeHtml(row.controlTechniqueId)}</div>
+      <div><strong>P:</strong> ${escapeHtml(row.pesticideId)}</div>
+      ${rateIds}
+    `;
+  }
 
   function renderRateEditor(row) {
     const rates = row.matchingRates || [];
@@ -268,6 +291,8 @@
     if (!rates.length) {
       return `
         <div class="rate-editor-block"
+             data-rate-index="0"
+             data-treatment-rate-id="0"
              style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
 
           <div style="font-size:12px; color:#666; margin-bottom:6px;">
@@ -276,27 +301,27 @@
 
           <div style="margin-bottom:6px;">
             <label style="display:block; font-size:12px;">RateKind</label>
-            <input type="text" value="Primary" style="width:100%;">
+            <input type="text" class="edit-ratekind" value="Primary" style="width:100%;">
           </div>
 
           <div style="margin-bottom:6px;">
             <label style="display:block; font-size:12px;">Concentration</label>
-            <input type="text" value="" style="width:100%;">
+            <input type="text" class="edit-concentration" value="" style="width:100%;">
           </div>
 
           <div style="margin-bottom:6px;">
             <label style="display:block; font-size:12px;">Amount Note</label>
-            <input type="text" value="" style="width:100%;">
+            <input type="text" class="edit-amount-note" value="" style="width:100%;">
           </div>
 
           <div style="margin-bottom:6px;">
             <label style="display:block; font-size:12px;">UnitId</label>
-            <input type="number" value="0" style="width:100%;">
+            <input type="number" class="edit-unit-id" value="0" style="width:100%;">
           </div>
 
           <div>
             <label style="display:block; font-size:12px;">UnitAreaId</label>
-            <input type="number" value="0" style="width:100%;">
+            <input type="number" class="edit-unit-area-id" value="0" style="width:100%;">
           </div>
         </div>
       `;
@@ -305,6 +330,7 @@
     return rates.map((rate, index) => `
       <div class="rate-editor-block"
            data-rate-index="${index}"
+           data-treatment-rate-id="${escapeHtml(rate.treatmentRateId ?? 0)}"
            style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
 
         <div style="font-size:12px; color:#666; margin-bottom:6px;">
@@ -314,6 +340,7 @@
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">RateKind</label>
           <input type="text"
+                 class="edit-ratekind"
                  value="${escapeHtml(rate.rateKind || "")}"
                  style="width:100%;">
         </div>
@@ -321,6 +348,7 @@
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">Concentration</label>
           <input type="text"
+                 class="edit-concentration"
                  value="${escapeHtml(rate.concentration || "")}"
                  style="width:100%;">
         </div>
@@ -328,6 +356,7 @@
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">Amount Note</label>
           <input type="text"
+                 class="edit-amount-note"
                  value="${escapeHtml(rate.amountNote || "")}"
                  style="width:100%;">
         </div>
@@ -335,6 +364,7 @@
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">UnitId</label>
           <input type="number"
+                 class="edit-unit-id"
                  value="${escapeHtml(rate.unitId ?? 0)}"
                  style="width:100%;">
         </div>
@@ -342,6 +372,7 @@
         <div>
           <label style="display:block; font-size:12px;">UnitAreaId</label>
           <input type="number"
+                 class="edit-unit-area-id"
                  value="${escapeHtml(rate.unitAreaId ?? 0)}"
                  style="width:100%;">
         </div>
@@ -349,10 +380,8 @@
     `).join("");
   }
 
-  function enterEditMode(tr, container) {
-    console.log("enterEditMode called");
-    const row = findRowByElement(tr, container);
-    console.log("row found:", row);
+  function enterEditMode(tr) {
+    const row = findRowByElement(tr);
     if (!row) return;
     if (tr.classList.contains("is-editing")) return;
 
@@ -361,10 +390,7 @@
     const cells = tr.querySelectorAll("td");
     if (cells.length < 8) return;
 
-    cells[0].innerHTML = `
-      <button type="button" disabled>Edit</button>
-      <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
-    `;
+    cells[0].innerHTML = renderSaveButtons();
     cells[1].innerHTML = renderIdBlock(row, true);
     cells[2].innerHTML = escapeHtml(row.product);
     cells[3].innerHTML = renderRateEditor(row);
@@ -374,34 +400,144 @@
     cells[7].innerHTML = escapeHtml(row.efficacy);
   }
 
-  function wireTableEvents(container) {
+  function collectEditedRatesFromRow(tr, row) {
+    const rateBlocks = tr.querySelectorAll(".rate-editor-block");
+
+    if (!rateBlocks.length) {
+      return [];
+    }
+
+    return Array.from(rateBlocks).map(block => {
+      return {
+        treatmentRateId: toInt(block.dataset.treatmentRateId || "0"),
+        rateKind: clean(block.querySelector(".edit-ratekind")?.value || ""),
+        pesticideId: Number(row.pesticideId || 0),
+        concentration: clean(block.querySelector(".edit-concentration")?.value || ""),
+        amountNote: clean(block.querySelector(".edit-amount-note")?.value || ""),
+        unitId: toInt(block.querySelector(".edit-unit-id")?.value || "0"),
+        unitAreaId: toInt(block.querySelector(".edit-unit-area-id")?.value || "0")
+      };
+    });
+  }
+
+  function buildSaveRequestFromRow(tr) {
+    const row = findRowByElement(tr);
+    if (!row) return null;
+
+    const originalTreatment = row.treatment || {};
+    const originalAllRates = Array.isArray(originalTreatment.treatmentRates)
+      ? originalTreatment.treatmentRates
+      : [];
+
+    const currentPesticideId = Number(row.pesticideId || 0);
+    const editedRatesForCurrentPesticide = collectEditedRatesFromRow(tr, row);
+
+    const preservedRatesForOtherPesticides = originalAllRates
+      .filter(r => Number(r?.pesticideId || 0) !== currentPesticideId)
+      .map(r => ({
+        treatmentRateId: Number(r?.treatmentRateId || 0),
+        rateKind: clean(r?.rateKind || ""),
+        pesticideId: Number(r?.pesticideId || 0),
+        concentration: clean(r?.concentration || ""),
+        amountNote: clean(r?.amountNote || ""),
+        unitId: Number(r?.unitId || 0),
+        unitAreaId: Number(r?.unitAreaId || 0)
+      }));
+
+    return {
+      treatmentId: Number(row.treatmentId || 0),
+      controlTechniqueId: Number(row.controlTechniqueId || 0),
+      pestId: Number(row.pestId || 0),
+      siteId: Number(row.siteId || 0),
+      applicationMethodId: Number(originalTreatment.applicationMethodId || 0),
+      efficacyId: Number(originalTreatment.efficacyId || 0),
+      deleted: Boolean(originalTreatment.deleted),
+      guidelineId: Number(originalTreatment.guidelineId || 0),
+      treatmentRates: [
+        ...preservedRatesForOtherPesticides,
+        ...editedRatesForCurrentPesticide
+      ],
+      efficacyComment: originalTreatment.efficacyComment || "",
+      siteHarvestPeriodIds: Array.isArray(originalTreatment.siteHarvestPeriodIds)
+        ? originalTreatment.siteHarvestPeriodIds
+        : [],
+      pestLifeCycleIds: Array.isArray(originalTreatment.pestLifeCycleIds)
+        ? originalTreatment.pestLifeCycleIds
+        : []
+    };
+  }
+
+  async function postSaveRow(saveUrl, payload) {
+    const response = await fetch(saveUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Save failed: ${response.status} ${text}`);
+    }
+
+    const text = await response.text();
+    return text ? JSON.parse(text) : null;
+  }
+
+  async function fetchSearchResults(searchUrl) {
+    const response = await fetch(searchUrl);
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Refresh failed: ${response.status} ${text}`);
+    }
+
+    return await response.json();
+  }
+
+  function wireTableEvents(container, options) {
     if (!container || container.__pesticideTableEventsBound) return;
     container.__pesticideTableEventsBound = true;
 
-    container.addEventListener("click", function (e) {
+    container.addEventListener("click", async function (e) {
       const editBtn = e.target.closest(".edit-row-btn");
+      const saveBtn = e.target.closest(".save-row-btn");
       const cancelBtn = e.target.closest(".cancel-row-btn");
 
       if (editBtn) {
-        console.log("Edit clicked");
         const tr = editBtn.closest("tr.data-row");
         if (!tr) return;
-        enterEditMode(tr, container);
+        enterEditMode(tr);
         return;
       }
 
       if (cancelBtn) {
-        console.log("Cancel clicked");
+        try {
+          const refreshedData = await fetchSearchResults(options.searchUrl);
+          container.innerHTML = renderTable(refreshedData);
+        } catch (err) {
+          console.error(err);
+          alert(err.message);
+        }
+        return;
+      }
 
-        // rebuild data from stored rows
-        const rows = container.__pesticideRows || [];
+      if (saveBtn) {
+        const tr = saveBtn.closest("tr.data-row");
+        if (!tr) return;
 
-        // IMPORTANT: we need original API shape, not rows
-        // easiest fix: store original JSON too (see next step)
+        try {
+          const payload = buildSaveRequestFromRow(tr);
+          console.log("SaveTreatmentRowRequest", payload);
 
-        if (container.__pesticideJson) {
-          container.innerHTML = renderTable(container.__pesticideJson);
-          wireTableEvents(container);
+          await postSaveRow(options.saveUrl, payload);
+
+          const refreshedData = await fetchSearchResults(options.searchUrl);
+          container.innerHTML = renderTable(refreshedData);
+        } catch (err) {
+          console.error(err);
+          alert(err.message);
         }
 
         return;
@@ -409,16 +545,9 @@
     });
   }
 
-  function renderCancelButtons() {
-    return `
-      <button type="button" class="edit-row-btn">Edit</button>
-      <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
-    `;
-  }
-
   window.PesticideTableBuilder = {
-    buildRows,
     renderTable,
-    wireTableEvents
+    wireTableEvents,
+    buildSaveRequestFromRow
   };
 })();

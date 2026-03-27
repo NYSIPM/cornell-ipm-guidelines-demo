@@ -1,0 +1,41 @@
+const API_BASE = "https://localhost:7144/api/Treatments/search";
+
+async function hydrateOne(el) {
+  const guidelineId = el.dataset.guidelineId;
+  const pestId = el.dataset.pestId;
+  const siteId = el.dataset.siteId;
+
+  if (!pestId || !siteId) {
+    el.innerHTML = `<div class="pesticide-table-error">Missing required data attributes.</div>`;
+    return;
+  }
+
+  el.innerHTML = `<div class="pesticide-table-loading">Loading table...</div>`;
+
+  const url = `${API_BASE}?pestId=${encodeURIComponent(pestId)}&siteId=${encodeURIComponent(siteId)}`;
+
+  try {
+    const response = await fetch(url, { mode: "cors" });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    el.innerHTML = window.PesticideTableBuilder.renderTable(data);
+  } catch (error) {
+    console.error("Pesticide table hydration failed:", error);
+    el.innerHTML = `<div class="pesticide-table-error">Unable to load pesticide table: ${error.message}</div>`;
+  }
+}
+
+function hydrateAll() {
+  const elements = document.querySelectorAll(".pesticide-table-public");
+  elements.forEach(hydrateOne);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", hydrateAll);
+} else {
+  hydrateAll();
+}

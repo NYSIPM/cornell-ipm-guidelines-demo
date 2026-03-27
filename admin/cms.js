@@ -3,8 +3,9 @@
 
   const API_BASE_URL = "https://localhost:7144/api/Treatments/search";
 
+  //const shortcodeLinePattern = /^\s*\{\{[<%]\s*pesticide-table\b[^}]*[>%]\}\}\s*$/m;
   const shortcodeLinePattern =
-    /^\s*\{\{[<%]\s*pesticide-table\b[^}]*[>%]\}\}\s*$/m;
+  /^\s*\{\{(?:<|%)\s*pesticide-table\b[\s\S]*?(?:>|%)\}\}\s*$/m;
 
   CMS.registerEditorComponent({
     id: "pesticide-table",
@@ -36,7 +37,7 @@
       const g = (data.guidelineId || "").trim();
       const p = (data.pestId || "").trim();
       const s = (data.siteId || "").trim();
-      return `{{% pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" %}}`;
+      return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" >}}`;
     },
 
     toPreview: (data) => {
@@ -98,8 +99,16 @@
         const json = await res.json();
         console.log("Pesticide JSON:", json);
 
+        node.__pesticideRows = window.PesticideTableBuilder.buildRows(json);
+        node.__pesticideJson = json;
+
         const html = window.PesticideTableBuilder.renderTable(json);
         node.innerHTML = html;
+
+        window.PesticideTableBuilder.wireTableEvents(node);
+
+        console.log("Pesticide table events wired");
+
         node.setAttribute("data-loaded", "1");
       } catch (err) {
         console.error("Pesticide preview failed:", err);
