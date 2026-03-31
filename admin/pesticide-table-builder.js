@@ -263,104 +263,103 @@
   // =========================================================
 
   function renderRateEditor(row, metadata) {
-    const rates = row.matchingRates || [];
-    const units = metadata?.units || [];
-    const unitAreas = metadata?.unitAreas || [];
+  const rates = row.matchingRates || [];
+  const units = metadata?.units || [];
+  const unitAreas = metadata?.unitAreas || [];
 
-    if (!rates.length) {
-      return `
-        <div class="rate-editor-block"
-            data-treatment-rate-id="0"
-            style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
-
-          <div style="font-size:12px; color:#666; margin-bottom:6px;">
-            <strong>TreatmentRateId:</strong> 0
-          </div>
-
-          <div style="margin-bottom:6px;">
-            <label style="display:block; font-size:12px;">RateKind</label>
-            <input type="text" data-field="rateKind" value="Primary" style="width:100%;">
-          </div>
-
-          <div style="margin-bottom:6px;">
-            <label style="display:block; font-size:12px;">Concentration</label>
-            <input type="text" data-field="concentration" value="" style="width:100%;">
-          </div>
-
-          <div style="margin-bottom:6px;">
-            <label style="display:block; font-size:12px;">Amount Note</label>
-            <input type="text" data-field="amountNote" value="" style="width:100%;">
-          </div>
-
-          <div style="margin-bottom:6px;">
-            <label style="display:block; font-size:12px;">UnitId</label>
-            <select data-field="unitId" style="width:100%;">
-              ${renderSelectOptions(units, rate?.unitId ?? null, "-- Select Unit --")}
-            </select>
-          </div>
-
-          <div>
-            <label style="display:block; font-size:12px;">UnitAreaId</label>
-            <select data-field="unitAreaId" style="width:100%;">
-              ${renderSelectOptions(unitAreas, rate?.unitAreaId ?? null, "-- Select Unit Area --")}
-            </select>
-          </div>
-        </div>
-      `;
-    }
-
-    return rates.map((rate, index) => `
+  //If Not Treatment Rates Exist.
+  if (!rates.length) {
+    return `
       <div class="rate-editor-block"
-          data-rate-index="${index}"
-          data-treatment-rate-id="${escapeHtml(rate.treatmentRateId ?? 0)}"
+          data-treatment-rate-id="0"
           style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
 
         <div style="font-size:12px; color:#666; margin-bottom:6px;">
-          <strong>TreatmentRateId:</strong> ${escapeHtml(rate.treatmentRateId ?? 0)}
+          <strong>TreatmentRateId:</strong> 0
         </div>
 
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">RateKind</label>
-          <input type="text"
-                data-field="rateKind"
-                value="${escapeHtml(rate.rateKind || "")}"
-                style="width:100%;">
+          <input type="text" data-field="rateKind" value="Primary" style="width:100%;">
         </div>
 
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">Concentration</label>
-          <input type="text"
-                data-field="concentration"
-                value="${escapeHtml(rate.concentration || "")}"
-                style="width:100%;">
+          <input type="text" data-field="concentration" value="" style="width:100%;">
         </div>
 
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">Amount Note</label>
-          <input type="text"
-                data-field="amountNote"
-                value="${escapeHtml(rate.amountNote || "")}"
-                style="width:100%;">
+          <input type="text" data-field="amountNote" value="" style="width:100%;">
         </div>
 
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">UnitId</label>
-          <input type="number"
-                data-field="unitId"
-                value="${escapeHtml(rate.unitId ?? 0)}"
-                style="width:100%;">
+          <select data-field="unitId" style="width:100%;">
+            ${renderSelectOptions(units, null, "-- Select Unit --")}
+          </select>
         </div>
 
         <div>
           <label style="display:block; font-size:12px;">UnitAreaId</label>
-          <input type="number"
-                data-field="unitAreaId"
-                value="${escapeHtml(rate.unitAreaId ?? 0)}"
-                style="width:100%;">
+          <select data-field="unitAreaId" style="width:100%;">
+            ${renderSelectOptions(unitAreas, null, "-- Select Unit Area --")}
+          </select>
         </div>
       </div>
-    `).join("");
+    `;
   }
+
+  return rates.map((rate, index) => `
+    <div class="rate-editor-block"
+        data-rate-index="${index}"
+        data-treatment-rate-id="${escapeHtml(rate.treatmentRateId ?? 0)}"
+        style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
+
+      <div style="font-size:12px; color:#666; margin-bottom:6px;">
+        <strong>TreatmentRateId:</strong> ${escapeHtml(rate.treatmentRateId ?? 0)}
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">RateKind</label>
+        <input type="text"
+              data-field="rateKind"
+              value="${escapeHtml(rate.rateKind || "")}"
+              style="width:100%;">
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">Concentration</label>
+        <input type="text"
+              data-field="concentration"
+              value="${escapeHtml(rate.concentration || "")}"
+              style="width:100%;">
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">Amount Note</label>
+        <input type="text"
+              data-field="amountNote"
+              value="${escapeHtml(rate.amountNote || "")}"
+              style="width:100%;">
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">UnitId</label>
+        <select data-field="unitId" style="width:100%;">
+          ${renderSelectOptions(units, rate.unit?.unitId ?? null, "-")}
+        </select>
+      </div>
+
+      <div>
+        <label style="display:block; font-size:12px;">UnitAreaId</label>
+        <select data-field="unitAreaId" style="width:100%;">
+          ${renderSelectOptions(unitAreas, rate.unitArea?.unitAreaId ?? null, "-")}
+        </select>
+      </div>
+    </div>
+  `).join("");
+}
 
   function enterEditMode(tr, container) {
     console.log("enterEditMode called");
