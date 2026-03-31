@@ -262,13 +262,16 @@
   // 4. EDIT VIEW ONLY
   // =========================================================
 
-  function renderRateEditor(row) {
+  function renderRateEditor(row, metadata) {
     const rates = row.matchingRates || [];
+    const units = metadata?.units || [];
+    const unitAreas = metadata?.unitAreas || [];
 
     if (!rates.length) {
       return `
         <div class="rate-editor-block"
-             style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
+            data-treatment-rate-id="0"
+            style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
 
           <div style="font-size:12px; color:#666; margin-bottom:6px;">
             <strong>TreatmentRateId:</strong> 0
@@ -276,27 +279,31 @@
 
           <div style="margin-bottom:6px;">
             <label style="display:block; font-size:12px;">RateKind</label>
-            <input type="text" value="Primary" style="width:100%;">
+            <input type="text" data-field="rateKind" value="Primary" style="width:100%;">
           </div>
 
           <div style="margin-bottom:6px;">
             <label style="display:block; font-size:12px;">Concentration</label>
-            <input type="text" value="" style="width:100%;">
+            <input type="text" data-field="concentration" value="" style="width:100%;">
           </div>
 
           <div style="margin-bottom:6px;">
             <label style="display:block; font-size:12px;">Amount Note</label>
-            <input type="text" value="" style="width:100%;">
+            <input type="text" data-field="amountNote" value="" style="width:100%;">
           </div>
 
           <div style="margin-bottom:6px;">
             <label style="display:block; font-size:12px;">UnitId</label>
-            <input type="number" value="0" style="width:100%;">
+            <select data-field="unitId" style="width:100%;">
+              ${renderSelectOptions(units, rate?.unitId ?? null, "-- Select Unit --")}
+            </select>
           </div>
 
           <div>
             <label style="display:block; font-size:12px;">UnitAreaId</label>
-            <input type="number" value="0" style="width:100%;">
+            <select data-field="unitAreaId" style="width:100%;">
+              ${renderSelectOptions(unitAreas, rate?.unitAreaId ?? null, "-- Select Unit Area --")}
+            </select>
           </div>
         </div>
       `;
@@ -304,8 +311,9 @@
 
     return rates.map((rate, index) => `
       <div class="rate-editor-block"
-           data-rate-index="${index}"
-           style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
+          data-rate-index="${index}"
+          data-treatment-rate-id="${escapeHtml(rate.treatmentRateId ?? 0)}"
+          style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
 
         <div style="font-size:12px; color:#666; margin-bottom:6px;">
           <strong>TreatmentRateId:</strong> ${escapeHtml(rate.treatmentRateId ?? 0)}
@@ -314,36 +322,41 @@
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">RateKind</label>
           <input type="text"
-                 value="${escapeHtml(rate.rateKind || "")}"
-                 style="width:100%;">
+                data-field="rateKind"
+                value="${escapeHtml(rate.rateKind || "")}"
+                style="width:100%;">
         </div>
 
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">Concentration</label>
           <input type="text"
-                 value="${escapeHtml(rate.concentration || "")}"
-                 style="width:100%;">
+                data-field="concentration"
+                value="${escapeHtml(rate.concentration || "")}"
+                style="width:100%;">
         </div>
 
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">Amount Note</label>
           <input type="text"
-                 value="${escapeHtml(rate.amountNote || "")}"
-                 style="width:100%;">
+                data-field="amountNote"
+                value="${escapeHtml(rate.amountNote || "")}"
+                style="width:100%;">
         </div>
 
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">UnitId</label>
           <input type="number"
-                 value="${escapeHtml(rate.unitId ?? 0)}"
-                 style="width:100%;">
+                data-field="unitId"
+                value="${escapeHtml(rate.unitId ?? 0)}"
+                style="width:100%;">
         </div>
 
         <div>
           <label style="display:block; font-size:12px;">UnitAreaId</label>
           <input type="number"
-                 value="${escapeHtml(rate.unitAreaId ?? 0)}"
-                 style="width:100%;">
+                data-field="unitAreaId"
+                value="${escapeHtml(rate.unitAreaId ?? 0)}"
+                style="width:100%;">
         </div>
       </div>
     `).join("");
@@ -362,12 +375,12 @@
     if (cells.length < 8) return;
 
     cells[0].innerHTML = `
-      <button type="button" disabled>Edit</button>
+      <button type="button" class="save-row-btn">Save</button>
       <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
     `;
     cells[1].innerHTML = renderIdBlock(row, true);
     cells[2].innerHTML = escapeHtml(row.product);
-    cells[3].innerHTML = renderRateEditor(row);
+    cells[3].innerHTML = renderRateEditor(row, container.__editMetadata);
     cells[4].innerHTML = escapeHtml(row.rei);
     cells[5].innerHTML = escapeHtml(row.phi);
     cells[6].innerHTML = escapeHtml(row.resistance);
@@ -378,15 +391,37 @@
     if (!container || container.__pesticideTableEventsBound) return;
     container.__pesticideTableEventsBound = true;
 
-    container.addEventListener("click", function (e) {
+    container.addEventListener("click", async function (e) {
       const editBtn = e.target.closest(".edit-row-btn");
       const cancelBtn = e.target.closest(".cancel-row-btn");
+      const saveBtn = e.target.closest(".save-row-btn"); //Added 3/30/2026
 
       if (editBtn) {
         console.log("Edit clicked");
+
         const tr = editBtn.closest("tr.data-row");
         if (!tr) return;
+
+        try {
+          await ensureEditMetadata(container);
+        } catch (err) {
+          console.error("Failed to load metadata:", err);
+          alert("Failed to load edit options.");
+          return;
+        }
+
         enterEditMode(tr, container);
+        return;
+      }
+
+      if (saveBtn) {
+        console.log("Save clicked");
+
+        const tr = saveBtn.closest("tr.data-row");
+        if (!tr) return;
+
+        handleSaveRow(tr, container);
+
         return;
       }
 
@@ -409,11 +444,161 @@
     });
   }
 
-  function renderCancelButtons() {
+  //Fetches the Meta Data JSON File
+  async function ensureEditMetadata(container) {
+    if (container.__editMetadata) {
+      return container.__editMetadata;
+    }
+
+    const guidelineId = container.dataset.guidelineId;
+
+    const url = `https://localhost:7144/api/Treatments/edit-metadata?guidelineId=${guidelineId || ""}`;
+    console.log("Fetching edit metadata:", url);
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Metadata fetch failed: ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    container.__editMetadata = json;
+
+    console.log("Metadata loaded:", json);
+
+    return json;
+  }
+
+  function renderSelectOptions(options, selectedValue, placeholder = "-- Select --") {
+    const selected = String(selectedValue ?? "");
+
+    const optionHtml = (options || []).map(opt => {
+      const value = String(opt.id ?? "");
+      const isSelected = value === selected ? " selected" : "";
+      return `<option value="${escapeHtml(value)}"${isSelected}>${escapeHtml(opt.name)}</option>`;
+    }).join("");
+
     return `
-      <button type="button" class="edit-row-btn">Edit</button>
-      <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
+      <option value="">${escapeHtml(placeholder)}</option>
+      ${optionHtml}
     `;
+  }
+
+  // =========================================================
+  // 5. SAVE - added 3/30/2026
+  // =========================================================
+  async function handleSaveRow(tr, container) {
+    const row = findRowByElement(tr, container);
+    if (!row) return;
+
+    console.log("Saving row:", row);
+
+    const treatment = row.treatment || {};
+    const rateBlocks = tr.querySelectorAll(".rate-editor-block");
+
+    const updatedRates = [];
+
+    //I don't understand what this does?
+    const parseNullableInt = (value) => {
+      const n = parseInt(value, 10);
+      return Number.isNaN(n) || n <= 0 ? null : n;
+    };
+
+    rateBlocks.forEach(block => {
+      const get = (field) =>
+        block.querySelector(`[data-field="${field}"]`)?.value ?? "";
+
+      updatedRates.push({
+        treatmentRateId: parseInt(block.dataset.treatmentRateId, 10) || 0,
+        rateKind: "Test", //get("rateKind").trim()
+        pesticideId: parseInt(row.pesticideId, 10) || 0,
+        concentration: get("concentration").trim(),
+        amountNote: get("amountNote").trim(),
+        unitId: parseNullableInt(get("unitId")),
+        unitAreaId: parseNullableInt(get("unitAreaId")),
+      });
+    });
+
+    const payload = {
+      treatmentId: parseInt(row.treatmentId, 10) || 0,
+      controlTechniqueId: parseInt(row.controlTechniqueId, 10) || 0,
+      pestId: parseInt(row.pestId, 10) || 0,
+      siteId: parseInt(row.siteId, 10) || 0,
+
+      applicationMethodId: treatment.applicationMethodId ?? null,
+      efficacyId: treatment.efficacyId ?? treatment.efficacy?.efficacyId ?? null,
+      deleted: treatment.deleted ?? false,
+      guidelineId: treatment.guidelineId ?? null,
+
+      treatmentRates: updatedRates,
+
+      efficacyComment: treatment.efficacyComment ?? "",
+
+      siteHarvestPeriodIds: (treatment.siteHarvestPeriods || [])
+        .map(x => x.siteHarvestPeriodId)
+        .filter(x => x != null),
+
+      pestLifeCycleIds: (treatment.pestLifeCycles || [])
+        .map(x => x.pestLifeCycleId)
+        .filter(x => x != null)
+    };
+
+    console.log("Payload JSON:\n", JSON.stringify(payload, null, 2));
+    //console.log("Payload to save:", payload);
+
+    //STUFF
+    try {
+      const response = await fetch("https://localhost:7144/api/Treatments/save-row", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const responseText = await response.text();
+
+      console.log("Save status:", response.status);
+      console.log("Save response:", responseText);
+
+      if (!response.ok) {
+        alert("Save failed. Check console for details.");
+        return;
+      }
+      await reloadTableData(container);
+
+      alert("Save succeeded.");
+    } catch (err) {
+      console.error("Save request failed:", err);
+      alert("Save request failed. Check console.");
+    }
+  }
+
+  async function reloadTableData(container) {
+    const pestId = container.dataset.pestId;
+    const siteId = container.dataset.siteId;
+    const guidelineId = container.dataset.guidelineId;
+
+    const params = new URLSearchParams();
+    if (guidelineId) params.append("guidelineId", guidelineId);
+    if (pestId) params.append("pestId", pestId);
+    if (siteId) params.append("siteId", siteId);
+
+    const url = `https://localhost:7144/api/Treatments/search?${params.toString()}`;
+    console.log("Reloading pesticide JSON:", url);
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Reload failed with status ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    container.__pesticideJson = json;
+    container.__pesticideRows = buildRows(json);
+    container.innerHTML = renderTable(json);
+    container.__pesticideTableEventsBound = false;
+    wireTableEvents(container);
   }
 
   window.PesticideTableBuilder = {
