@@ -53,25 +53,46 @@
     const sp = (sitePesticideList || [])[0];
     if (!sp) return "";
 
-    if (sp.reiUntilDry) return "Until dry";
-    if (sp.reiReferToLabel) return "See label";
-    if (sp.rei) return `${clean(sp.rei)} hr`;
+    const parts = [];
 
-    return "";
+    const rei = clean(sp.rei);
+    if (rei) {
+      parts.push(`${rei} hr`);
+    }
+
+    if (sp.reiReferToLabel) {
+      parts.push("Refer To Label");
+    }
+
+    if (sp.reiUntilDry) {
+      parts.push("Until Dry");
+    }
+
+    return parts.join(" / ");
   }
 
   function formatPhi(sitePesticideList) {
     const sp = (sitePesticideList || [])[0];
     if (!sp) return "";
 
-    if (sp.phiUntilDry) return "Until dry";
-    if (sp.phiReferToLabel) return "Refer To Label";
+    const parts = [];
 
     const phi = clean(sp.phi);
     const phiTime = clean(sp.phiTime);
 
-    if (!phi) return "";
-    return phiTime ? `${phi} ${phiTime}` : phi;
+    if (phi) {
+      parts.push(phiTime ? `${phi} ${phiTime}` : phi);
+    }
+
+    if (sp.phiReferToLabel) {
+      parts.push("Refer To Label");
+    }
+
+    if (sp.phiUntilDry) {
+      parts.push("Until Dry");
+    }
+
+    return parts.join(" / ");
   }
 
   function formatResistance(pesticide) {
@@ -104,6 +125,129 @@
     });
 
     return unique(comments).join("<br>");
+  }
+
+  //EfficacyId? 3/31/2026
+  function getEfficacyId(row) {
+    return row?.treatment?.efficacyId ?? row?.treatment?.efficacy?.efficacyId ?? null;
+  }
+
+  //Application Method 3/31/2026
+  function renderApplicationMethodEditor(row, metadata) {
+    const applicationMethods = metadata?.applicationMethods || [];
+    const selectedValue = row?.treatment?.applicationMethodId ?? row?.applicationMethodId ?? null;
+
+    return `
+      <div style="font-size:12px; color:#666; margin-bottom:6px;">
+        <strong>ApplicationMethodId:</strong> ${escapeHtml(selectedValue ?? 0)}
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">Application Method</label>
+        <select data-field="applicationMethodId" style="width:100%;">
+          ${renderSelectOptions(applicationMethods, selectedValue, "-")}
+        </select>
+      </div>
+    `;
+  }
+
+  //REI PHI Helpers - 4/2/2026
+  function getPrimarySitePesticide(row) {
+      return row?.pesticide?.sitePesticide?.[0] || null;
+  }
+  function renderReiEditor(row) {
+    const sp = getPrimarySitePesticide(row);
+
+    return `
+      <div style="font-size:12px; color:#666; margin-bottom:6px;">
+        <strong>Shared SitePesticide</strong>
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">REI</label>
+        <input type="text" data-field="rei" value="${escapeHtml(sp?.rei || "")}" style="width:100%;">
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">REI Time</label>
+        <select data-field="reiTime" style="width:100%;">
+          ${renderTimeOptions(sp?.reiTime)}
+        </select>
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">
+          <input type="checkbox" data-field="reiReferToLabel" ${sp?.reiReferToLabel ? "checked" : ""}>
+          REI Refer To Label
+        </label>
+      </div>
+
+      <div>
+        <label style="display:block; font-size:12px;">
+          <input type="checkbox" data-field="reiUntilDry" ${sp?.reiUntilDry ? "checked" : ""}>
+          REI Until Dry
+        </label>
+      </div>
+    `;
+  }
+  function renderPhiEditor(row) {
+    const sp = getPrimarySitePesticide(row);
+
+    return `
+      <div style="font-size:12px; color:#666; margin-bottom:6px;">
+        <strong>Shared SitePesticide</strong>
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">PHI</label>
+        <input type="text" data-field="phi" value="${escapeHtml(sp?.phi || "")}" style="width:100%;">
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">PHI Time</label>
+        <select data-field="phiTime" style="width:100%;">
+          ${renderTimeOptions(sp?.phiTime)}
+        </select>
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <label style="display:block; font-size:12px;">
+          <input type="checkbox" data-field="phiReferToLabel" ${sp?.phiReferToLabel ? "checked" : ""}>
+          PHI Refer To Label
+        </label>
+      </div>
+
+      <div>
+        <label style="display:block; font-size:12px;">
+          <input type="checkbox" data-field="phiUntilDry" ${sp?.phiUntilDry ? "checked" : ""}>
+          PHI Until Dry
+        </label>
+      </div>
+    `;
+  }
+
+  function renderTimeOptions(selectedValue) {
+    const options = [
+      { value: "", label: "-" },
+      { value: "Hours", label: "Hours" },
+      { value: "Days", label: "Days" }
+    ];
+
+    const selected = String(selectedValue ?? "");
+
+    return options.map(opt => {
+      const isSelected = opt.value === selected ? " selected" : "";
+      return `<option value="${escapeHtml(opt.value)}"${isSelected}>${escapeHtml(opt.label)}</option>`;
+    }).join("");
+  }
+
+  //SiteTiming - Added 4/3/2026
+  function formatSiteTimings(treatment) {
+    const values = (treatment?.siteTimings || [])
+      .map(st => clean(st?.name))
+      .filter(Boolean);
+
+    return unique(values).join("<br>");
   }
 
   // =========================================================
@@ -144,6 +288,8 @@
     const treatments = Array.isArray(data) ? data : [data];
     const rows = [];
 
+    console.log("buildRows input:", treatments);
+
     treatments.forEach(treatment => {
       const efficacy = clean(treatment?.efficacy?.name);
       const comments = formatComments(treatment);
@@ -154,7 +300,10 @@
         const pesticideId = pesticide?.pesticideId;
         const matchingRates = rates.filter(r => r?.pesticideId === pesticideId);
         const rateText = unique(matchingRates.map(formatRate).filter(Boolean)).join("<br>");
+        const applicationMethodText = clean(treatment?.applicationMethod?.name);
+        const siteTimingText = formatSiteTimings(treatment);
 
+        
         rows.push({
           treatmentId: treatment?.treatmentId ?? "",
           controlTechniqueId: treatment?.controlTechniqueId ?? treatment?.controlTechnique?.controlTechniqueId ?? "",
@@ -165,7 +314,8 @@
           pesticide: pesticide,
           matchingRates: matchingRates,
           product: formatProductName(pesticide),
-          rate: rateText,
+          siteTimings: siteTimingText,
+          rate: [applicationMethodText, rateText].filter(Boolean).join("<br>"),
           rei: formatRei(pesticide?.sitePesticide || []),
           phi: formatPhi(pesticide?.sitePesticide || []),
           resistance: formatResistance(pesticide),
@@ -174,7 +324,7 @@
         });
       });
     });
-
+    console.log("built rows:", rows);
     return rows;
   }
 
@@ -219,6 +369,7 @@
               ${renderIdBlock(row, true)}
           </td>
           <td>${escapeHtml(row.product)}</td>
+          <td>${row.siteTimings || ""}</td>
           <td>${row.rate || ""}</td>
           <td>${escapeHtml(row.rei)}</td>
           <td>${escapeHtml(row.phi)}</td>
@@ -243,6 +394,7 @@
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Edit</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Id</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Product</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Site Timing</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Rate</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">REI</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">PHI</th>
@@ -371,7 +523,7 @@
     tr.classList.add("is-editing");
 
     const cells = tr.querySelectorAll("td");
-    if (cells.length < 8) return;
+    if (cells.length < 9) return;
 
     cells[0].innerHTML = `
       <button type="button" class="save-row-btn">Save</button>
@@ -379,11 +531,12 @@
     `;
     cells[1].innerHTML = renderIdBlock(row, true);
     cells[2].innerHTML = escapeHtml(row.product);
-    cells[3].innerHTML = renderRateEditor(row, container.__editMetadata);
-    cells[4].innerHTML = escapeHtml(row.rei);
-    cells[5].innerHTML = escapeHtml(row.phi);
-    cells[6].innerHTML = escapeHtml(row.resistance);
-    cells[7].innerHTML = escapeHtml(row.efficacy);
+    cells[3].innerHTML = row.siteTimings || "";
+    cells[4].innerHTML = renderApplicationMethodEditor(row, container.__editMetadata) + renderRateEditor(row, container.__editMetadata);
+    cells[5].innerHTML = renderReiEditor(row);
+    cells[6].innerHTML = renderPhiEditor(row);
+    cells[7].innerHTML = escapeHtml(row.resistance);
+    cells[8].innerHTML = renderEfficacyEditor(row, container.__editMetadata);
   }
 
   function wireTableEvents(container) {
@@ -482,6 +635,22 @@
       ${optionHtml}
     `;
   }
+  
+  //Efficacy 3/31/2026
+  function renderEfficacyEditor(row, metadata) {
+    const efficacies = metadata?.efficacies || [];
+    const selectedEfficacyId = getEfficacyId(row);
+
+    return `
+      <div style="font-size:12px; color:#666; margin-bottom:6px;">
+        <strong>EfficacyId:</strong> ${escapeHtml(selectedEfficacyId ?? 0)}
+      </div>
+
+      <select data-field="efficacyId" style="width:100%;">
+        ${renderSelectOptions(efficacies, selectedEfficacyId, "-")}
+      </select>
+    `;
+  }
 
   // =========================================================
   // 5. SAVE - added 3/30/2026
@@ -493,6 +662,8 @@
     console.log("Saving row:", row);
 
     const treatment = row.treatment || {};
+    const getRowField = (field) => tr.querySelector(`[data-field="${field}"]`)?.value ?? "";
+    const getRowChecked = (field) => !!tr.querySelector(`[data-field="${field}"]`)?.checked;
     const rateBlocks = tr.querySelectorAll(".rate-editor-block");
 
     const updatedRates = [];
@@ -524,8 +695,8 @@
       pestId: parseInt(row.pestId, 10) || 0,
       siteId: parseInt(row.siteId, 10) || 0,
 
-      applicationMethodId: treatment.applicationMethodId ?? null,
-      efficacyId: treatment.efficacyId ?? treatment.efficacy?.efficacyId ?? null,
+      applicationMethodId: parseNullableInt(getRowField("applicationMethodId")),
+      efficacyId: parseNullableInt(getRowField("efficacyId")),
       deleted: treatment.deleted ?? false,
       guidelineId: treatment.guidelineId ?? null,
 
@@ -539,7 +710,23 @@
 
       pestLifeCycleIds: (treatment.pestLifeCycles || [])
         .map(x => x.pestLifeCycleId)
-        .filter(x => x != null)
+        .filter(x => x != null),
+
+      pesticide: {
+        pesticideId: parseInt(row.pesticideId, 10) || 0,
+        sitePesticide: {
+          siteId: parseInt(row.siteId, 10) || 0,
+          pesticideId: parseInt(row.pesticideId, 10) || 0,
+          rei: getRowField("rei").trim(),
+          reiTime: getRowField("reiTime").trim(),
+          reiReferToLabel: getRowChecked("reiReferToLabel"),
+          reiUntilDry: getRowChecked("reiUntilDry"),
+          phi: getRowField("phi").trim(),
+          phiTime: getRowField("phiTime").trim(),
+          phiReferToLabel: getRowChecked("phiReferToLabel"),
+          phiUntilDry: getRowChecked("phiUntilDry")
+        }
+      }
     };
 
     console.log("Payload JSON:\n", JSON.stringify(payload, null, 2));

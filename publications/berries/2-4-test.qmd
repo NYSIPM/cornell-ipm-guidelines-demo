@@ -5,8 +5,8 @@ title: 2.4 Test
 
 This is some Text.
 
-{{< pesticide-table guidelineId="1" pestId="6" siteId="6" >}}
+{{< pesticide-table guidelineId="1" pestId="6" siteId="7" >}}
 
 ## Apple aphid, Spirea aphid
 
-{{< pesticide-table guidelineId="1" pestId="222" siteId="222" >}}
+{{< pesticide-table guidelineId="1" pestId="6" siteId="7" >}}
