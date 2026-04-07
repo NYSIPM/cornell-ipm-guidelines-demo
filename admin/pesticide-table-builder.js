@@ -250,6 +250,21 @@
     return unique(values).join("<br>");
   }
 
+  //SiteTiming Added 4/6/2026
+  function getAvailableSiteTimings(row, metadata) {
+    const siteId = parseInt(row?.siteId ?? row?.treatment?.siteId ?? 0, 10);
+    if (!siteId) return [];
+
+    const siteEntry = (metadata?.siteTimings || []).find(s => Number(s.siteId) === siteId);
+    if (!siteEntry || !Array.isArray(siteEntry.siteTimings)) return [];
+
+    return [...siteEntry.siteTimings].sort((a, b) => {
+      const aOrder = Number(a?.timingOrder ?? 9999);
+      const bOrder = Number(b?.timingOrder ?? 9999);
+      return aOrder - bOrder;
+    });
+  }
+
   // =========================================================
   // 2. ROW STATE
   // =========================================================
@@ -530,8 +545,14 @@
       <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
     `;
     cells[1].innerHTML = renderIdBlock(row, true);
-    cells[2].innerHTML = escapeHtml(row.product);
-    cells[3].innerHTML = row.siteTimings || "";
+    //cells[2].innerHTML = escapeHtml(row.product);
+    cells[2].innerHTML = `
+      <div>${escapeHtml(row.product)}</div>
+      <button type="button" class="edit-product-btn" style="margin-top:6px;">
+        Edit Product
+      </button>
+    `;
+    cells[3].innerHTML = renderSiteTimingEditor(row, container.__editMetadata);
     cells[4].innerHTML = renderApplicationMethodEditor(row, container.__editMetadata) + renderRateEditor(row, container.__editMetadata);
     cells[5].innerHTML = renderReiEditor(row);
     cells[6].innerHTML = renderPhiEditor(row);
@@ -547,6 +568,7 @@
       const editBtn = e.target.closest(".edit-row-btn");
       const cancelBtn = e.target.closest(".cancel-row-btn");
       const saveBtn = e.target.closest(".save-row-btn"); //Added 3/30/2026
+      const editProductBtn = e.target.closest(".edit-product-btn"); //Added 4/7/2026 For the Modal
 
       if (editBtn) {
         console.log("Edit clicked");
@@ -572,7 +594,7 @@
         const tr = saveBtn.closest("tr.data-row");
         if (!tr) return;
 
-        handleSaveRow(tr, container);
+        await handleSaveRow(tr, container);
 
         return;
       }
@@ -652,10 +674,61 @@
     `;
   }
 
+  //SiteTiming Added 4/6/2026
+  function renderSiteTimingEditor(row, metadata) {
+    const available = getAvailableSiteTimings(row, metadata);
+    const selectedIds = new Set(
+      (row?.treatment?.siteTimings || [])
+        .map(st => Number(st.siteTimingId))
+        .filter(Number.isFinite)
+    );
+
+    if (!available.length) {
+      return `
+        <div style="font-size:12px; color:#666;">
+          No Site Timing options found for SiteId ${escapeHtml(row?.siteId ?? "")}
+        </div>
+      `;
+    }
+
+    const optionsHtml = available.map(st => {
+      const id = Number(st.siteTimingId);
+      const checked = selectedIds.has(id) ? "checked" : "";
+      const label = clean(st?.name);
+      const order = st?.timingOrder ?? "";
+
+      return `
+        <label style="display:block; margin-bottom:4px; font-size:12px;">
+          <input type="checkbox"
+                data-field="siteTimingIds"
+                value="${escapeHtml(id)}"
+                ${checked}>
+          ${escapeHtml(label)}
+          ${order !== "" ? `<span style="color:#666;">(#${escapeHtml(order)})</span>` : ""}
+        </label>
+      `;
+    }).join("");
+
+    return `
+      <div style="font-size:12px; color:#666; margin-bottom:6px;">
+        <strong>Site Timing</strong>
+      </div>
+      <div style="max-height:220px; overflow:auto; border:1px solid #ddd; padding:8px; background:#fafafa;">
+        ${optionsHtml}
+      </div>
+    `;
+  }
+
   // =========================================================
   // 5. SAVE - added 3/30/2026
   // =========================================================
   async function handleSaveRow(tr, container) {
+    if (tr.dataset.isSaving === "true") {
+      console.log("Save already in progress for this row.");
+      return;
+    }
+    tr.dataset.isSaving = "true";
+
     const row = findRowByElement(tr, container);
     if (!row) return;
 
@@ -667,6 +740,13 @@
     const rateBlocks = tr.querySelectorAll(".rate-editor-block");
 
     const updatedRates = [];
+
+    const getCheckedValues = (field) =>
+      Array.from(tr.querySelectorAll(`[data-field="${field}"]:checked`))
+        .map(el => parseInt(el.value, 10))
+        .filter(Number.isFinite);
+
+    const selectedSiteTimingIds = getCheckedValues("siteTimingIds");
 
     //I don't understand what this does?
     const parseNullableInt = (value) => {
@@ -703,6 +783,8 @@
       treatmentRates: updatedRates,
 
       efficacyComment: treatment.efficacyComment ?? "",
+
+      siteTimingIds: selectedSiteTimingIds,
 
       siteHarvestPeriodIds: (treatment.siteHarvestPeriods || [])
         .map(x => x.siteHarvestPeriodId)
@@ -757,6 +839,8 @@
     } catch (err) {
       console.error("Save request failed:", err);
       alert("Save request failed. Check console.");
+    } finally {
+      tr.dataset.isSaving = "false";
     }
   }
 
