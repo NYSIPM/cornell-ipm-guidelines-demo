@@ -364,9 +364,14 @@
 
   function renderTable(data) {
     const rows = buildRows(data);
+    const AddTreatmentButton = `<div style="margin-top:12px;">
+        <button type="button" class="insert-treatment-btn">
+          Add Treatment
+        </button>
+      </div>`
 
     if (!rows.length) {
-      return `<div>No pesticide rows found.</div>`;
+      return AddTreatmentButton + `<div>No pesticide rows found.</div>`;
     }
 
     const bodyRows = rows.map(row => `
@@ -403,6 +408,11 @@
 
     return `
       <div class="pesticide-table-wrapper">
+        <div style="margin-top:12px;">
+          <button type="button" class="insert-treatment-btn">
+            Add Treatment
+          </button>
+        </div>
         <table style="border-collapse:collapse; width:100%;">
           <thead>
             <tr>
@@ -430,12 +440,12 @@
   // =========================================================
 
   function renderRateEditor(row, metadata) {
-  const rates = row.matchingRates || [];
-  const units = metadata?.units || [];
-  const unitAreas = metadata?.unitAreas || [];
+    const rates = row.matchingRates || [];
+    const units = metadata?.units || [];
+    const unitAreas = metadata?.unitAreas || [];
 
-  //If Not Treatment Rates Exist.
-  if (!rates.length) {
+    //If Not Treatment Rates Exist.
+    if (!rates.length) {
     return `
       <div class="rate-editor-block"
           data-treatment-rate-id="0"
@@ -558,6 +568,14 @@
     cells[6].innerHTML = renderPhiEditor(row);
     cells[7].innerHTML = escapeHtml(row.resistance);
     cells[8].innerHTML = renderEfficacyEditor(row, container.__editMetadata);
+
+    const commentTr = tr.nextElementSibling;
+    if (commentTr && commentTr.classList.contains("comment-row")) {
+      const commentCell = commentTr.querySelector("td");
+      if (commentCell) {
+        commentCell.innerHTML = renderCommentEditor(row);
+      }
+    }
   }
 
   function wireTableEvents(container) {
@@ -569,6 +587,12 @@
       const cancelBtn = e.target.closest(".cancel-row-btn");
       const saveBtn = e.target.closest(".save-row-btn"); //Added 3/30/2026
       const editProductBtn = e.target.closest(".edit-product-btn"); //Added 4/7/2026 For the Modal
+      const insertTreatmentBtn = e.target.closest(".insert-treatment-btn"); //For Insert Button Added 4/7/2026
+      //For Comments
+      const addCommentBlockBtn = e.target.closest(".add-comment-block-btn");
+      const removeCommentBlockBtn = e.target.closest(".remove-comment-block-btn");
+      const showLinkCommentPlaceholderBtn = e.target.closest(".show-link-comment-placeholder-btn");
+      const linkExistingCommentBtn = e.target.closest(".link-existing-comment-btn");
 
       if (editBtn) {
         console.log("Edit clicked");
@@ -587,6 +611,58 @@
         enterEditMode(tr, container);
         return;
       }
+
+      if (editProductBtn) {
+        const tr = editProductBtn.closest("tr.data-row");
+        if (!tr) return;
+
+        const row = findRowByElement(tr, container);
+        if (!row) return;
+
+        await openProductModal(row, container);
+        return;
+      }
+
+      if (insertTreatmentBtn) {
+        await openControlTechniqueModal(container);
+        return;
+      }
+
+      //Comments
+      if (addCommentBlockBtn) {
+        const tr = addCommentBlockBtn.closest("tr.comment-row")?.previousElementSibling;
+        const row = tr ? findRowByElement(tr, container) : null;
+        const editorArea = addCommentBlockBtn.closest(".comment-editor-area");
+        const list = editorArea?.querySelector(".comment-editor-list");
+
+        if (list && row) {
+          list.insertAdjacentHTML("beforeend", renderBlankCommentEditorBlock(row));
+        }
+        return;
+      }
+
+      if (removeCommentBlockBtn) {
+        const block = removeCommentBlockBtn.closest(".comment-editor-block");
+        if (block) {
+          block.remove();
+        }
+        return;
+      }
+
+      if (showLinkCommentPlaceholderBtn) {
+        const editorArea = showLinkCommentPlaceholderBtn.closest(".comment-editor-area");
+        const placeholder = editorArea?.querySelector(".comment-link-placeholder");
+        if (placeholder) {
+          placeholder.style.display = placeholder.style.display === "none" ? "block" : "none";
+        }
+        return;
+      }
+
+      if (linkExistingCommentBtn) {
+        alert("Existing comment linking UI can be added here later.");
+        return;
+      }
+
 
       if (saveBtn) {
         console.log("Save clicked");
@@ -613,10 +689,114 @@
           wireTableEvents(container);
         }
 
+
+
         return;
       }
     });
   }
+
+  async function openProductModal(row, container) {
+    const modal = ensureProductModal();
+    modal.style.display = "flex";
+
+    modal.__rowKey = getRowKey(row);
+
+    const current = modal.querySelector("#product-modal-current");
+    current.innerHTML = `
+      <div style="margin-bottom:8px;">
+        <strong>Current Product:</strong> ${escapeHtml(row.product || "-")}
+      </div>
+      <div style="margin-bottom:8px;">
+        <strong>PesticideId:</strong> ${escapeHtml(row.pesticideId || "")}
+      </div>
+      <div style="margin-bottom:8px;">
+        <strong>Trade Name:</strong> ${escapeHtml(row.pesticide?.tradeName || "")}
+      </div>
+      <div style="margin-bottom:8px;">
+        <strong>Common Name:</strong> ${escapeHtml(row.pesticide?.commonName || "")}
+      </div>
+      <div style="margin-bottom:8px;">
+        <strong>EPA Registration Number:</strong> ${escapeHtml(row.pesticide?.epaRegistrationNumber || "")}
+      </div>
+      <div style="margin-bottom:8px;">
+        <strong>Formulation:</strong> ${escapeHtml(row.pesticide?.formulation || "")}
+      </div>
+    `;
+  }
+
+  
+  function ensureProductModal() {
+    let modal = document.getElementById("product-edit-modal");
+    if (modal) return modal;
+
+    modal = document.createElement("div");
+    modal.id = "product-edit-modal";
+    modal.style.cssText = `
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.45);
+      z-index:9999;
+      align-items:center;
+      justify-content:center;
+    `;
+
+    modal.innerHTML = `
+      <div style="
+        background:#fff;
+        width:min(900px, 92vw);
+        max-height:85vh;
+        overflow:auto;
+        border-radius:8px;
+        padding:16px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.2);
+      ">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="margin:0;">Edit Product</h3>
+          <button type="button" class="close-product-modal-btn">Close</button>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <input type="text" id="product-search-box" placeholder="Search pesticides..." style="width:100%; padding:8px;">
+        </div>
+
+        <div id="product-modal-current" style="margin-bottom:12px;"></div>
+        <div id="product-modal-results"></div>
+
+        <div style="margin-top:16px; display:flex; gap:8px;">
+          <button type="button" class="save-product-selection-btn">Use Selected Product</button>
+          <button type="button" class="close-product-modal-btn">Cancel</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function(e) {
+      //if (e.target === modal || e.target.closest(".close-product-modal-btn")) {
+      //Prevents White Space Clicks from Closing the Window. Above Allows it.
+      if (e.target.closest(".close-product-modal-btn")) {
+        closeProductModal();
+      }
+    });
+
+    return modal;
+  }
+
+  function closeProductModal() {
+    const modal = document.getElementById("product-edit-modal");
+    if (!modal) return;
+    modal.style.display = "none";
+    modal.__selectedProduct = null;
+    modal.__rowKey = null;
+  }
+
+
+
+
+
+  
 
   //Fetches the Meta Data JSON File
   async function ensureEditMetadata(container) {
@@ -718,6 +898,125 @@
       </div>
     `;
   }
+
+  //Added 4/14/2026
+  function renderCommentEditor(row) {
+    const comments = row?.treatment?.comments || [];
+    const siteId = row?.siteId ?? row?.treatment?.siteId ?? "";
+    const guidelineId = row?.treatment?.guidelineId ?? "";
+    const pestId = row?.pestId ?? row?.treatment?.pestId ?? "";
+
+    const existingBlocks = comments.length
+      ? comments.map((comment, index) => `
+          <div class="comment-editor-block"
+              data-comment-index="${index}"
+              data-comment-id="${escapeHtml(comment.commentId ?? 0)}"
+              style="border:1px solid #ddd; padding:10px; margin-bottom:8px; background:#fafafa;">
+
+            <div style="font-size:12px; color:#666; margin-bottom:8px;">
+              <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
+            </div>
+
+            <div style="font-size:12px; color:#666; margin-bottom:8px;">
+              <strong>SiteId:</strong> ${escapeHtml(siteId)}
+              &nbsp; | &nbsp;
+              <strong>GuidelineId:</strong> ${escapeHtml(guidelineId)}
+              &nbsp; | &nbsp;
+              <strong>PestId:</strong> ${escapeHtml(pestId)}
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">Index Number</label>
+              <input type="text"
+                    data-field="comment-indexNumber"
+                    value="${escapeHtml(comment.indexNumber || "")}"
+                    style="width:100%;">
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">Comment Text</label>
+              <textarea data-field="comment-commentText" rows="3" style="width:100%;">${escapeHtml(comment.commentText || "")}</textarea>
+            </div>
+
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="link-existing-comment-btn">Link Existing</button>
+              <button type="button" class="remove-comment-block-btn">Remove</button>
+            </div>
+          </div>
+        `).join("")
+      : `
+        <div style="font-size:12px; color:#666; margin-bottom:8px;">
+          No comments yet for this treatment.
+        </div>
+      `;
+
+    return `
+      <div class="comment-editor-area">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <strong>Comments</strong>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="add-comment-block-btn">Add New Comment</button>
+            <button type="button" class="show-link-comment-placeholder-btn">Link Existing Comment</button>
+          </div>
+        </div>
+
+        <div class="comment-editor-list">
+          ${existingBlocks}
+        </div>
+
+        <div class="comment-link-placeholder"
+            style="display:none; margin-top:8px; border:1px dashed #bbb; padding:10px; background:#fcfcfc;">
+          <div style="font-size:12px; color:#666;">
+            Existing comment lookup can go here later.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderBlankCommentEditorBlock(row) {
+    const siteId = row?.siteId ?? row?.treatment?.siteId ?? "";
+    const guidelineId = row?.treatment?.guidelineId ?? "";
+    const pestId = row?.pestId ?? row?.treatment?.pestId ?? "";
+
+    return `
+      <div class="comment-editor-block"
+          data-comment-index="new"
+          data-comment-id="0"
+          style="border:1px solid #ddd; padding:10px; margin-bottom:8px; background:#fafafa;">
+
+        <div style="font-size:12px; color:#666; margin-bottom:8px;">
+          <strong>CommentId:</strong> 0
+        </div>
+
+        <div style="font-size:12px; color:#666; margin-bottom:8px;">
+          <strong>SiteId:</strong> ${escapeHtml(siteId)}
+          &nbsp; | &nbsp;
+          <strong>GuidelineId:</strong> ${escapeHtml(guidelineId)}
+          &nbsp; | &nbsp;
+          <strong>PestId:</strong> ${escapeHtml(pestId)}
+        </div>
+
+        <div style="margin-bottom:8px;">
+          <label style="display:block; font-size:12px;">Index Number</label>
+          <input type="text" data-field="comment-indexNumber" value="" style="width:100%;">
+        </div>
+
+        <div style="margin-bottom:8px;">
+          <label style="display:block; font-size:12px;">Comment Text</label>
+          <textarea data-field="comment-commentText" rows="3" style="width:100%;"></textarea>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="link-existing-comment-btn">Link Existing</button>
+          <button type="button" class="remove-comment-block-btn">Remove</button>
+        </div>
+      </div>
+    `;
+  }
+
+
+
 
   // =========================================================
   // 5. SAVE - added 3/30/2026
@@ -871,6 +1170,510 @@
     wireTableEvents(container);
   }
 
+  // =========================================================
+  // 6. Insert Modal - added 4/7/2026
+  // =========================================================
+  function ensureControlTechniqueModal() {
+    let modal = document.getElementById("control-technique-modal");
+    if (modal) return modal;
+
+    modal = document.createElement("div");
+    modal.id = "control-technique-modal";
+    modal.style.cssText = `
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.45);
+      z-index:9999;
+      align-items:center;
+      justify-content:center;
+    `;
+
+    modal.innerHTML = `
+        <div style="
+          background:#fff;
+          width:min(950px, 94vw);
+          max-height:85vh;
+          overflow:auto;
+          border-radius:8px;
+          padding:16px;
+          box-shadow:0 10px 30px rgba(0,0,0,0.2);
+        ">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="margin:0;">Select Control Technique</h3>
+            <button type="button" class="close-ct-modal-btn">Close</button>
+          </div>
+
+          <div style="margin-bottom:12px;">
+            <input type="text"
+                  id="ct-search-box"
+                  placeholder="Search pesticide or display name..."
+                  style="width:100%; padding:8px;">
+          </div>
+
+          <div id="ct-modal-results">Type to search control techniques...</div>
+
+          <div id="ct-create-cta" style="display:none; margin-top:12px;">
+            <button type="button" class="show-create-ct-form-btn">Add Control Technique</button>
+          </div>
+
+          <div id="ct-create-form" style="display:none; margin-top:16px; border:1px solid #ddd; padding:12px; background:#fafafa;">
+            <h4 style="margin-top:0;">Create New Pesticide Control Technique</h4>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">Trade Name</label>
+              <input type="text" data-create-field="tradeName" style="width:100%; padding:6px;">
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">Common Name</label>
+              <input type="text" data-create-field="commonName" style="width:100%; padding:6px;">
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">
+                <input type="checkbox" data-create-field="commonNameUserDefined">
+                Common Name User Defined
+              </label>
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">Formulation</label>
+              <input type="text" data-create-field="formulation" style="width:100%; padding:6px;">
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">EPA Registration Number</label>
+              <input type="text" data-create-field="epaRegistrationNumber" style="width:100%; padding:6px;">
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">
+                <input type="checkbox" data-create-field="deleted">
+                Deleted
+              </label>
+            </div>
+
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="save-created-ct-btn">Save New Control Technique</button>
+              <button type="button" class="cancel-create-ct-form-btn">Cancel</button>
+            </div>
+          </div>
+
+          <div style="margin-top:16px; display:flex; gap:8px;">
+            <button type="button" class="use-selected-ct-btn">Use Selected Control Technique</button>
+            <button type="button" class="close-ct-modal-btn">Cancel</button>
+          </div>
+        </div>
+      `;
+
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (e) {
+      //if (e.target === modal || e.target.closest(".close-ct-modal-btn")) {
+      //Prevents Window Closing in White Space
+      if (e.target.closest(".close-ct-modal-btn")) {
+        closeControlTechniqueModal();
+      }
+    });
+
+    return modal;
+  }
+
+  function closeControlTechniqueModal() {
+    const modal = document.getElementById("control-technique-modal");
+    if (!modal) return;
+    modal.style.display = "none";
+    modal.__selectedControlTechnique = null;
+    modal.__targetContainer = null;
+  }
+
+  async function fetchControlTechniqueOptions(searchDisplayName) {
+    const params = new URLSearchParams();
+    if (searchDisplayName) {
+      params.append("searchDisplayName", searchDisplayName);
+    }
+
+    const url = `https://localhost:7144/api/Treatments/control-technique-options?${params.toString()}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch control techniques: ${response.status}`);
+    }
+
+    return await response.json();
+  }
+  
+  function wireControlTechniqueModal(modal) {
+    if (modal.__ctModalBound) return;
+    modal.__ctModalBound = true;
+
+    const searchBox = modal.querySelector("#ct-search-box");
+    const results = modal.querySelector("#ct-modal-results");
+    const useBtn = modal.querySelector(".use-selected-ct-btn");
+    const createCta = modal.querySelector("#ct-create-cta");
+    const createForm = modal.querySelector("#ct-create-form");
+    const showCreateBtn = modal.querySelector(".show-create-ct-form-btn");
+    const cancelCreateBtn = modal.querySelector(".cancel-create-ct-form-btn");
+    const saveCreatedBtn = modal.querySelector(".save-created-ct-btn");
+
+    let timer = null;
+
+    searchBox.addEventListener("input", function () {
+      clearTimeout(timer);
+
+      timer = setTimeout(async () => {
+        const term = searchBox.value.trim();
+        modal.__selectedControlTechnique = null;
+        createForm.style.display = "none";
+
+        if (!term) {
+          results.innerHTML = "Type to search control techniques...";
+          createCta.style.display = "none";
+          modal.__ctResults = [];
+          return;
+        }
+
+        try {
+          const items = await fetchControlTechniqueOptions(term);
+          modal.__ctResults = items || [];
+
+          if (!items.length) {
+            results.innerHTML = `<div>No control techniques found.</div>`;
+            createCta.style.display = "block";
+            resetCreateControlTechniqueForm(modal, term);
+            return;
+          }
+
+          createCta.style.display = "none";
+
+          results.innerHTML = items.map(item => `
+            <div class="ct-option"
+                data-control-technique-id="${escapeHtml(item.controlTechniqueId)}"
+                style="border:1px solid #ddd; padding:8px; margin-bottom:6px; cursor:pointer;">
+              <div><strong>${escapeHtml(item.displayName || `Control Technique ${item.controlTechniqueId}`)}</strong></div>
+              <div style="font-size:12px; color:#666;">
+                ${escapeHtml(item.typeLabel || "")} | CT: ${escapeHtml(item.controlTechniqueId)}
+              </div>
+            </div>
+          `).join("");
+        } catch (err) {
+          console.error(err);
+          modal.__ctResults = [];
+          results.innerHTML = `<div>Failed to load control techniques.</div>`;
+          createCta.style.display = "none";
+        }
+      }, 250);
+    });
+
+    results.addEventListener("click", function (e) {
+      const option = e.target.closest(".ct-option");
+      if (!option) return;
+
+      const ctId = parseInt(option.dataset.controlTechniqueId, 10);
+      const item = (modal.__ctResults || []).find(x => x.controlTechniqueId === ctId);
+      if (!item) return;
+
+      modal.__selectedControlTechnique = item;
+
+      results.querySelectorAll(".ct-option").forEach(el => {
+        el.style.background = "";
+        el.style.borderColor = "#ddd";
+      });
+
+      option.style.background = "#eef6ff";
+      option.style.borderColor = "#66a3ff";
+    });
+
+    showCreateBtn.addEventListener("click", function () {
+      createForm.style.display = "block";
+    });
+
+    cancelCreateBtn.addEventListener("click", function () {
+      createForm.style.display = "none";
+    });
+
+    saveCreatedBtn.addEventListener("click", async function () {
+      const container = modal.__targetContainer;
+      if (!container) return;
+
+      const getCreateValue = (field) =>
+        createForm.querySelector(`[data-create-field="${field}"]`)?.value?.trim() ?? "";
+
+      const getCreateChecked = (field) =>
+        !!createForm.querySelector(`[data-create-field="${field}"]`)?.checked;
+
+      const payload = {
+        controlTechniqueId: null,
+        isMixture: false,
+        pesticides: [
+          {
+            pesticideId: null,
+            tradeName: getCreateValue("tradeName"),
+            commonName: getCreateValue("commonName"),
+            commonNameUserDefined: getCreateChecked("commonNameUserDefined"),
+            formulation: getCreateValue("formulation"),
+            epaRegistrationNumber: getCreateValue("epaRegistrationNumber"),
+            deleted: getCreateChecked("deleted")
+          }
+        ],
+        biologicalControls: [],
+        culturalPractices: []
+      };
+
+      if (!payload.pesticides[0].tradeName && !payload.pesticides[0].commonName) {
+        alert("Please enter at least a Trade Name or Common Name.");
+        return;
+      }
+
+      try {
+        saveCreatedBtn.disabled = true;
+        const saved = await saveNewControlTechnique(payload);
+
+        closeControlTechniqueModal();
+        await reloadTableData(container);
+
+        // Optional:
+        // if your API returns the new CT id and you want to target it later,
+        // we can add that next.
+      } catch (err) {
+        console.error(err);
+        alert("Failed to create control technique. Check console for details.");
+      } finally {
+        saveCreatedBtn.disabled = false;
+      }
+    });
+
+    useBtn.addEventListener("click", function () {
+      const selected = modal.__selectedControlTechnique;
+      const container = modal.__targetContainer;
+
+      if (!selected || !container) {
+        alert("Please select a control technique first.");
+        return;
+      }
+
+      insertNewTreatmentRow(selected, container);
+      closeControlTechniqueModal();
+    });
+  }
+
+  function renderRowsTable(rows) {
+    if (!rows.length) {
+      return `<div>No pesticide rows found.</div>`;
+    }
+
+    const bodyRows = rows.map(row => `
+      <tr
+          class="data-row"
+          data-treatment-id="${escapeHtml(row.treatmentId)}"
+          data-control-technique-id="${escapeHtml(row.controlTechniqueId)}"
+          data-pesticide-id="${escapeHtml(row.pesticideId)}"
+          data-pest-id="${escapeHtml(row.pestId)}"
+          data-site-id="${escapeHtml(row.siteId)}">
+          <td style="border:1px solid #ccc; border-bottom:none; padding:6px;">
+              ${renderEditButtons()}
+          </td>
+          <td style="border:1px solid #ccc; border-bottom:none; padding:6px; font-size:12px; line-height:1.3;">
+              ${renderIdBlock(row, true)}
+          </td>
+          <td>${escapeHtml(row.product)}</td>
+          <td>${row.siteTimings || ""}</td>
+          <td>${row.rate || ""}</td>
+          <td>${escapeHtml(row.rei)}</td>
+          <td>${escapeHtml(row.phi)}</td>
+          <td>${escapeHtml(row.resistance)}</td>
+          <td style="border-right:1px solid #ccc; padding:6px; text-align:left;">${escapeHtml(row.efficacy)}</td>
+      </tr>
+
+      <tr class="comment-row">
+          <td colspan="10"
+              style="border:1px solid #ccc; border-top:none; border-bottom:3px solid #999; padding:8px 10px; background:#f9f9f9;">
+              <strong>Comments:</strong><br>
+              ${row.comments || "<em>No comments</em>"}
+          </td>
+      </tr>
+    `).join("");
+
+    return `
+      <div class="pesticide-table-wrapper">
+        <div style="margin-top:12px;">
+          <button type="button" class="insert-treatment-btn">
+            Add Treatment
+          </button>
+        </div>
+        <table style="border-collapse:collapse; width:100%;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Edit</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Id</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Product</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Site Timing</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Rate</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">REI</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">PHI</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Resistance Mgmt.</th>
+              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Efficacy</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${bodyRows}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  //Add 4-10-2026
+  function renderRowsFromStoredState(container) {
+      const rows = container.__pesticideRows || [];
+      container.innerHTML = renderRowsTable(rows);
+      container.__pesticideTableEventsBound = false;
+      wireTableEvents(container);
+    }
+
+    function resetCreateControlTechniqueForm(modal, searchTerm = "") {
+    const form = modal.querySelector("#ct-create-form");
+    if (!form) return;
+
+    form.style.display = "none";
+
+    const setValue = (field, value) => {
+      const el = form.querySelector(`[data-create-field="${field}"]`);
+      if (!el) return;
+      if (el.type === "checkbox") {
+        el.checked = !!value;
+      } else {
+        el.value = value ?? "";
+      }
+    };
+
+    setValue("tradeName", searchTerm || "");
+    setValue("commonName", "");
+    setValue("commonNameUserDefined", false);
+    setValue("formulation", "");
+    setValue("epaRegistrationNumber", "");
+    setValue("deleted", false);
+  }
+
+  async function saveNewControlTechnique(payload) {
+    const response = await fetch("https://localhost:7144/api/Treatments/save-control-technique", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const text = await response.text();
+
+    if (!response.ok) {
+      throw new Error(`Create control technique failed: ${response.status} ${text}`);
+    }
+
+    try {
+      return JSON.parse(text);
+    } catch {
+      return {};
+    }
+  }
+
+  async function openControlTechniqueModal(container) {
+    const modal = ensureControlTechniqueModal();
+    modal.style.display = "flex";
+    modal.__targetContainer = container;
+    modal.__selectedControlTechnique = null;
+    modal.__ctResults = [];
+
+    const searchBox = modal.querySelector("#ct-search-box");
+    const results = modal.querySelector("#ct-modal-results");
+    const createCta = modal.querySelector("#ct-create-cta");
+
+    searchBox.value = "";
+    searchBox.focus();
+    results.innerHTML = "Type to search control techniques...";
+    createCta.style.display = "none";
+
+    resetCreateControlTechniqueForm(modal);
+
+    wireControlTechniqueModal(modal);
+  }
+
+  function insertNewTreatmentRow(selectedCt, container) {
+    const pestId = parseInt(container.dataset.pestId, 10) || 0;
+    const siteId = parseInt(container.dataset.siteId, 10) || 0;
+    const guidelineId = parseInt(container.dataset.guidelineId, 10) || 0;
+
+    const firstPesticide = (selectedCt.pesticides || [])[0] || null;
+
+    const newRow = {
+      treatmentId: 0,
+      controlTechniqueId: selectedCt.controlTechniqueId ?? 0,
+      pesticideId: firstPesticide?.pesticideId ?? 0,
+      pestId,
+      siteId,
+
+      treatment: {
+        treatmentId: 0,
+        controlTechniqueId: selectedCt.controlTechniqueId ?? 0,
+        pestId,
+        siteId,
+        guidelineId,
+        deleted: false,
+        siteTimings: [],
+        treatmentRates: [],
+        siteHarvestPeriods: [],
+        pestLifeCycles: [],
+        efficacyComment: null,
+        applicationMethodId: null,
+        efficacyId: null
+      },
+
+      pesticide: {
+        pesticideId: firstPesticide?.pesticideId ?? 0,
+        tradeName: firstPesticide?.tradeName ?? "",
+        commonName: firstPesticide?.commonName ?? "",
+        epaRegistrationNumber: firstPesticide?.epaRegistrationNumber ?? "",
+        formulation: firstPesticide?.formulation ?? "",
+        sitePesticide: []
+      },
+
+      matchingRates: [],
+      product: selectedCt.displayName || formatProductName(firstPesticide) || "New Control Technique",
+      siteTimings: "",
+      rate: "",
+      rei: "",
+      phi: "",
+      resistance: formatResistance(firstPesticide),
+      efficacy: "",
+      comments: ""
+    };
+
+    if (!container.__pesticideRows) {
+      container.__pesticideRows = [];
+    }
+
+    container.__pesticideRows.unshift(newRow);
+
+    renderRowsFromStoredState(container);
+
+    const firstRow = container.querySelector("tr.data-row");
+    if (firstRow) {
+      ensureEditMetadata(container)
+        .then(() => enterEditMode(firstRow, container))
+        .catch(err => {
+          console.error("Failed to load metadata for new row:", err);
+        });
+    }
+  }
+
+
+
+
+
+  // =========================================================
+  // Interface?
+  // =========================================================
   window.PesticideTableBuilder = {
     buildRows,
     renderTable,
