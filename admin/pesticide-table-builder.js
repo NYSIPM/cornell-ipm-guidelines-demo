@@ -1702,45 +1702,76 @@
     modal.innerHTML = `
       <div style="
         background:#fff;
-        width:min(1000px, 95vw);
-        max-height:85vh;
+        width:min(1100px, 96vw);
+        max-height:88vh;
         overflow:auto;
         border-radius:8px;
         padding:16px;
         box-shadow:0 10px 30px rgba(0,0,0,0.2);
       ">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <h3 style="margin:0;">Find Existing Comment</h3>
+          <h3 style="margin:0;">Comments</h3>
           <button type="button" class="close-comment-search-modal-btn">Close</button>
         </div>
 
-        <div style="font-size:12px; color:#666; margin-bottom:10px;" id="comment-search-context"></div>
+        <div id="comment-search-context" style="font-size:12px; color:#666; margin-bottom:12px;"></div>
 
-        <div style="display:grid; grid-template-columns:2fr 1fr; gap:8px; margin-bottom:12px;">
+        <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:16px;">
           <div>
-            <label style="display:block; font-size:12px;">Search Comment Text</label>
-            <input type="text"
-                  id="comment-search-text"
-                  placeholder="Search within comment text..."
-                  style="width:100%; padding:8px;">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px;">Search CommentId</label>
-            <input type="text"
-                  id="comment-search-id"
-                  placeholder="e.g. 123"
-                  style="width:100%; padding:8px;">
-          </div>
-        </div>
+            <div style="display:grid; grid-template-columns:2fr 1fr; gap:8px; margin-bottom:12px;">
+              <div>
+                <label style="display:block; font-size:12px;">Search Comment Text</label>
+                <input type="text"
+                      id="comment-search-text"
+                      placeholder="Search within comment text..."
+                      style="width:100%; padding:8px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px;">Search CommentId</label>
+                <input type="text"
+                      id="comment-search-id"
+                      placeholder="e.g. 123"
+                      style="width:100%; padding:8px;">
+              </div>
+            </div>
 
-        <div id="comment-search-results" style="margin-bottom:12px;">
-          Loading comments...
-        </div>
+            <div style="display:flex; gap:8px; margin-bottom:12px;">
+              <button type="button" class="start-new-comment-btn">New Comment</button>
+              <button type="button" class="use-selected-comment-btn">Use Selected Comment</button>
+            </div>
 
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="create-new-comment-from-modal-btn">Create New Comment</button>
-          <button type="button" class="use-selected-comment-btn">Use Selected Comment</button>
-          <button type="button" class="close-comment-search-modal-btn">Cancel</button>
+            <div id="comment-search-results">
+              Loading comments...
+            </div>
+          </div>
+
+          <div style="border-left:1px solid #ddd; padding-left:16px;">
+            <div style="font-weight:600; margin-bottom:8px;">Comment Editor</div>
+
+            <div style="font-size:12px; color:#666; margin-bottom:8px;" id="comment-form-status">
+              Select a comment or create a new one.
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">CommentId</label>
+              <input type="text" id="comment-form-id" disabled style="width:100%; padding:8px; background:#f5f5f5;">
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">Index Number</label>
+              <input type="text" id="comment-form-indexNumber" style="width:100%; padding:8px;">
+            </div>
+
+            <div style="margin-bottom:8px;">
+              <label style="display:block; font-size:12px;">Comment Text</label>
+              <textarea id="comment-form-text" rows="8" style="width:100%; padding:8px;"></textarea>
+            </div>
+
+            <div style="display:flex; gap:8px; margin-bottom:8px;">
+              <button type="button" class="save-comment-modal-btn">Save Comment</button>
+              <button type="button" class="reset-comment-form-btn">Reset</button>
+            </div>
+          </div>
         </div>
       </div>
     `;
@@ -1833,6 +1864,7 @@
     modal.style.display = "flex";
 
     modal.__selectedComment = null;
+    modal.__editingComment = null;
     modal.__targetRowKey = getRowKey(row);
     modal.__targetContainer = container;
     modal.__targetCommentList = targetListEl;
@@ -1857,9 +1889,12 @@
     idInput.value = "";
     resultsEl.innerHTML = "Loading comments...";
 
+    resetCommentForm(modal, row);
+
     try {
       const items = await fetchCommentOptions(guidelineId);
       modal.__commentOptions = items || [];
+      modal.__filteredCommentOptions = items || [];
       resultsEl.innerHTML = renderCommentSearchResults(modal.__commentOptions);
     } catch (err) {
       console.error(err);
@@ -1877,7 +1912,9 @@
     const idInput = modal.querySelector("#comment-search-id");
     const resultsEl = modal.querySelector("#comment-search-results");
     const useBtn = modal.querySelector(".use-selected-comment-btn");
-    const createNewBtn = modal.querySelector(".create-new-comment-from-modal-btn");
+    const newBtn = modal.querySelector(".start-new-comment-btn");
+    const saveBtn = modal.querySelector(".save-comment-modal-btn");
+    const resetBtn = modal.querySelector(".reset-comment-form-btn");
 
     function refreshResults() {
       const filtered = filterCommentOptions(
@@ -1893,24 +1930,18 @@
     textInput.addEventListener("input", refreshResults);
     idInput.addEventListener("input", refreshResults);
 
-    createNewBtn.addEventListener("click", function () {
-      const targetList = modal.__targetCommentList;
+    newBtn.addEventListener("click", function () {
       const container = modal.__targetContainer;
       const rowKey = modal.__targetRowKey;
+      const row = (container?.__pesticideRows || []).find(r => getRowKey(r) === rowKey) || null;
+      resetCommentForm(modal, row);
+    });
 
-      if (!targetList || !container || !rowKey) {
-        alert("Unable to determine which row to add the comment to.");
-        return;
-      }
-
-      const row = (container.__pesticideRows || []).find(r => getRowKey(r) === rowKey);
-      if (!row) {
-        alert("Unable to find row for new comment.");
-        return;
-      }
-
-      targetList.insertAdjacentHTML("beforeend", renderBlankCommentEditorBlock(row));
-      closeCommentSearchModal();
+    resetBtn.addEventListener("click", function () {
+      const container = modal.__targetContainer;
+      const rowKey = modal.__targetRowKey;
+      const row = (container?.__pesticideRows || []).find(r => getRowKey(r) === rowKey) || null;
+      resetCommentForm(modal, row);
     });
 
     resultsEl.addEventListener("click", function (e) {
@@ -1924,6 +1955,7 @@
       if (!item) return;
 
       modal.__selectedComment = item;
+      loadCommentIntoForm(modal, item);
 
       resultsEl.querySelectorAll(".comment-search-option").forEach(el => {
         el.style.background = "";
@@ -1934,16 +1966,87 @@
       option.style.borderColor = "#66a3ff";
     });
 
+    saveBtn.addEventListener("click", async function () {
+      const defaults = modal.__commentFormDefaults || {};
+      const editing = modal.__editingComment || null;
+
+      const payload = {
+        commentId: editing?.commentId ?? null,
+        siteId: editing?.siteId ?? defaults.siteId ?? null,
+        guidelineId: editing?.guidelineId ?? defaults.guidelineId ?? null,
+        indexNumber: clean(modal.querySelector("#comment-form-indexNumber").value),
+        commentText: clean(modal.querySelector("#comment-form-text").value),
+        pestComment: Array.isArray(editing?.pests) && editing.pests.length
+          ? editing.pests.map(p => p.pestId)
+          : (defaults.pestIds || [])
+      };
+
+      if (!payload.commentText) {
+        alert("Comment text is required.");
+        return;
+      }
+
+      try {
+        saveBtn.disabled = true;
+
+        const saved = await saveComment(payload);
+        const savedCommentId = saved?.commentId;
+
+        if (!savedCommentId) {
+          alert("Comment saved, but no CommentId was returned.");
+          return;
+        }
+
+        const refreshed = {
+          commentId: savedCommentId,
+          siteId: payload.siteId,
+          guidelineId: payload.guidelineId,
+          indexNumber: payload.indexNumber,
+          commentText: payload.commentText,
+          pests: (payload.pestComment || []).map(id => ({ pestId: id, name: null }))
+        };
+
+        // update modal selection
+        modal.__selectedComment = refreshed;
+        modal.__editingComment = refreshed;
+
+        // merge/update local option list
+        const existing = (modal.__commentOptions || []).find(x => Number(x.commentId) === Number(savedCommentId));
+        if (existing) {
+          Object.assign(existing, refreshed);
+        } else {
+          modal.__commentOptions = [refreshed, ...(modal.__commentOptions || [])];
+        }
+
+        refreshResults();
+        loadCommentIntoForm(modal, refreshed);
+
+        alert("Comment saved.");
+      } catch (err) {
+        console.error(err);
+        alert("Failed to save comment. Check console for details.");
+      } finally {
+        saveBtn.disabled = false;
+      }
+    });
+
     useBtn.addEventListener("click", function () {
       const selected = modal.__selectedComment;
       const targetList = modal.__targetCommentList;
 
       if (!selected || !targetList) {
-        alert("Please select a comment first.");
+        alert("Please select or save a comment first.");
         return;
       }
 
-      targetList.insertAdjacentHTML("beforeend", renderExistingCommentEditorBlock(selected));
+      // prevent duplicate insert in the same row editor
+      const alreadyThere = Array.from(targetList.querySelectorAll(".comment-editor-block"))
+        .some(el => Number(el.dataset.commentId) === Number(selected.commentId));
+
+      if (!alreadyThere) {
+        targetList.insertAdjacentHTML("beforeend", renderExistingCommentEditorBlock(selected));
+      }
+
       closeCommentSearchModal();
     });
   }
@@ -1980,17 +2083,8 @@
           <strong>Pests:</strong> ${escapeHtml(pests || "None")}
         </div>
 
-        <div style="margin-bottom:8px;">
-          <label style="display:block; font-size:12px;">Index Number</label>
-          <input type="text"
-                data-field="comment-indexNumber"
-                value="${escapeHtml(comment.indexNumber || "")}"
-                style="width:100%;">
-        </div>
-
-        <div style="margin-bottom:8px;">
-          <label style="display:block; font-size:12px;">Comment Text</label>
-          <textarea data-field="comment-commentText" rows="3" style="width:100%;">${escapeHtml(comment.commentText || "")}</textarea>
+        <div style="white-space:pre-wrap; margin-bottom:8px;">
+          ${escapeHtml(comment.commentText || "")}
         </div>
 
         <div style="display:flex; gap:8px;">
@@ -1998,6 +2092,58 @@
         </div>
       </div>
     `;
+  }
+
+  //Added 4/20/2026
+  function resetCommentForm(modal, row) {
+    modal.__editingComment = null;
+
+    const guidelineId = row?.treatment?.guidelineId ?? row?.guidelineId ?? null;
+    const siteId = row?.siteId ?? row?.treatment?.siteId ?? null;
+    const pestId = row?.pestId ?? row?.treatment?.pestId ?? null;
+
+    modal.querySelector("#comment-form-id").value = "";
+    modal.querySelector("#comment-form-indexNumber").value = "";
+    modal.querySelector("#comment-form-text").value = "";
+    modal.querySelector("#comment-form-status").textContent = "Creating a new comment.";
+
+    modal.__commentFormDefaults = {
+      guidelineId,
+      siteId,
+      pestIds: pestId ? [Number(pestId)] : []
+    };
+  }
+
+  function loadCommentIntoForm(modal, comment) {
+    modal.__editingComment = comment || null;
+
+    modal.querySelector("#comment-form-id").value = comment?.commentId ?? "";
+    modal.querySelector("#comment-form-indexNumber").value = comment?.indexNumber ?? "";
+    modal.querySelector("#comment-form-text").value = comment?.commentText ?? "";
+    modal.querySelector("#comment-form-status").textContent =
+      comment?.commentId ? `Editing Comment ${comment.commentId}` : "Creating a new comment.";
+  }
+
+  async function saveComment(payload) {
+    const response = await fetch("https://localhost:7144/api/Treatments/save-comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const text = await response.text();
+
+    if (!response.ok) {
+      throw new Error(`Save comment failed: ${response.status} ${text}`);
+    }
+
+    try {
+      return JSON.parse(text);
+    } catch {
+      return {};
+    }
   }
 
 
