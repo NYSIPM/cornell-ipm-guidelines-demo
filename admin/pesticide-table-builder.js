@@ -589,10 +589,12 @@
       const editProductBtn = e.target.closest(".edit-product-btn"); //Added 4/7/2026 For the Modal
       const insertTreatmentBtn = e.target.closest(".insert-treatment-btn"); //For Insert Button Added 4/7/2026
       //For Comments
-      const addCommentBlockBtn = e.target.closest(".add-comment-block-btn");
+      //const addCommentBlockBtn = e.target.closest(".add-comment-block-btn");
       const removeCommentBlockBtn = e.target.closest(".remove-comment-block-btn");
-      const showLinkCommentPlaceholderBtn = e.target.closest(".show-link-comment-placeholder-btn");
+      //const showLinkCommentPlaceholderBtn = e.target.closest(".show-link-comment-placeholder-btn"); //No Longer Neded
       const linkExistingCommentBtn = e.target.closest(".link-existing-comment-btn");
+      //Comment Modol
+      const openCommentSearchBtn = e.target.closest(".open-comment-search-btn");
 
       if (editBtn) {
         console.log("Edit clicked");
@@ -627,19 +629,7 @@
         await openControlTechniqueModal(container);
         return;
       }
-
-      //Comments
-      if (addCommentBlockBtn) {
-        const tr = addCommentBlockBtn.closest("tr.comment-row")?.previousElementSibling;
-        const row = tr ? findRowByElement(tr, container) : null;
-        const editorArea = addCommentBlockBtn.closest(".comment-editor-area");
-        const list = editorArea?.querySelector(".comment-editor-list");
-
-        if (list && row) {
-          list.insertAdjacentHTML("beforeend", renderBlankCommentEditorBlock(row));
-        }
-        return;
-      }
+      
 
       if (removeCommentBlockBtn) {
         const block = removeCommentBlockBtn.closest(".comment-editor-block");
@@ -649,6 +639,7 @@
         return;
       }
 
+      /*
       if (showLinkCommentPlaceholderBtn) {
         const editorArea = showLinkCommentPlaceholderBtn.closest(".comment-editor-area");
         const placeholder = editorArea?.querySelector(".comment-link-placeholder");
@@ -660,6 +651,33 @@
 
       if (linkExistingCommentBtn) {
         alert("Existing comment linking UI can be added here later.");
+        return;
+      }
+      */
+
+      if (openCommentSearchBtn) {
+        const commentRow = openCommentSearchBtn.closest("tr.comment-row");
+        const dataRow = commentRow?.previousElementSibling;
+        const row = dataRow ? findRowByElement(dataRow, container) : null;
+        const editorArea = openCommentSearchBtn.closest(".comment-editor-area");
+        const list = editorArea?.querySelector(".comment-editor-list");
+
+        if (row && list) {
+          await openCommentSearchModal(row, container, list);
+        }
+        return;
+      }
+
+      if (linkExistingCommentBtn) {
+        const commentRow = linkExistingCommentBtn.closest("tr.comment-row");
+        const dataRow = commentRow?.previousElementSibling;
+        const row = dataRow ? findRowByElement(dataRow, container) : null;
+        const editorArea = linkExistingCommentBtn.closest(".comment-editor-area");
+        const list = editorArea?.querySelector(".comment-editor-list");
+
+        if (row && list) {
+          await openCommentSearchModal(row, container, list);
+        }
         return;
       }
 
@@ -915,6 +933,7 @@
 
             <div style="font-size:12px; color:#666; margin-bottom:8px;">
               <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
+              ${comment.indexNumber ? ` | <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
             </div>
 
             <div style="font-size:12px; color:#666; margin-bottom:8px;">
@@ -925,21 +944,11 @@
               <strong>PestId:</strong> ${escapeHtml(pestId)}
             </div>
 
-            <div style="margin-bottom:8px;">
-              <label style="display:block; font-size:12px;">Index Number</label>
-              <input type="text"
-                    data-field="comment-indexNumber"
-                    value="${escapeHtml(comment.indexNumber || "")}"
-                    style="width:100%;">
-            </div>
-
-            <div style="margin-bottom:8px;">
-              <label style="display:block; font-size:12px;">Comment Text</label>
-              <textarea data-field="comment-commentText" rows="3" style="width:100%;">${escapeHtml(comment.commentText || "")}</textarea>
+            <div style="margin-bottom:8px; white-space:pre-wrap;">
+              ${escapeHtml(comment.commentText || "") || "<em>No comment text</em>"}
             </div>
 
             <div style="display:flex; gap:8px;">
-              <button type="button" class="link-existing-comment-btn">Link Existing</button>
               <button type="button" class="remove-comment-block-btn">Remove</button>
             </div>
           </div>
@@ -955,20 +964,12 @@
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <strong>Comments</strong>
           <div style="display:flex; gap:8px;">
-            <button type="button" class="add-comment-block-btn">Add New Comment</button>
-            <button type="button" class="show-link-comment-placeholder-btn">Link Existing Comment</button>
+            <button type="button" class="open-comment-search-btn">Add Comment</button>
           </div>
         </div>
 
         <div class="comment-editor-list">
           ${existingBlocks}
-        </div>
-
-        <div class="comment-link-placeholder"
-            style="display:none; margin-top:8px; border:1px dashed #bbb; padding:10px; background:#fcfcfc;">
-          <div style="font-size:12px; color:#666;">
-            Existing comment lookup can go here later.
-          </div>
         </div>
       </div>
     `;
@@ -1038,6 +1039,15 @@
     const getRowChecked = (field) => !!tr.querySelector(`[data-field="${field}"]`)?.checked;
     const rateBlocks = tr.querySelectorAll(".rate-editor-block");
 
+    const commentRow = tr.nextElementSibling;
+    const commentBlocks = commentRow?.querySelectorAll(".comment-editor-block") || [];
+    const linkedComments = Array.from(commentBlocks)
+      .map(block => {
+        const commentId = parseInt(block.dataset.commentId, 10) || 0;
+        return commentId > 0 ? { commentId } : null;
+      })
+      .filter(Boolean);
+
     const updatedRates = [];
 
     const getCheckedValues = (field) =>
@@ -1092,6 +1102,8 @@
       pestLifeCycleIds: (treatment.pestLifeCycles || [])
         .map(x => x.pestLifeCycleId)
         .filter(x => x != null),
+
+      comments: linkedComments,
 
       pesticide: {
         pesticideId: parseInt(row.pesticideId, 10) || 0,
@@ -1667,7 +1679,326 @@
     }
   }
 
+  // =========================================================
+  // Comment Modal
+  // =========================================================
 
+  function ensureCommentSearchModal() {
+    let modal = document.getElementById("comment-search-modal");
+    if (modal) return modal;
+
+    modal = document.createElement("div");
+    modal.id = "comment-search-modal";
+    modal.style.cssText = `
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.45);
+      z-index:9999;
+      align-items:center;
+      justify-content:center;
+    `;
+
+    modal.innerHTML = `
+      <div style="
+        background:#fff;
+        width:min(1000px, 95vw);
+        max-height:85vh;
+        overflow:auto;
+        border-radius:8px;
+        padding:16px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.2);
+      ">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="margin:0;">Find Existing Comment</h3>
+          <button type="button" class="close-comment-search-modal-btn">Close</button>
+        </div>
+
+        <div style="font-size:12px; color:#666; margin-bottom:10px;" id="comment-search-context"></div>
+
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:8px; margin-bottom:12px;">
+          <div>
+            <label style="display:block; font-size:12px;">Search Comment Text</label>
+            <input type="text"
+                  id="comment-search-text"
+                  placeholder="Search within comment text..."
+                  style="width:100%; padding:8px;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px;">Search CommentId</label>
+            <input type="text"
+                  id="comment-search-id"
+                  placeholder="e.g. 123"
+                  style="width:100%; padding:8px;">
+          </div>
+        </div>
+
+        <div id="comment-search-results" style="margin-bottom:12px;">
+          Loading comments...
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="create-new-comment-from-modal-btn">Create New Comment</button>
+          <button type="button" class="use-selected-comment-btn">Use Selected Comment</button>
+          <button type="button" class="close-comment-search-modal-btn">Cancel</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (e) {
+      if (e.target.closest(".close-comment-search-modal-btn")) {
+        closeCommentSearchModal();
+      }
+    });
+
+    return modal;
+  }
+
+  function closeCommentSearchModal() {
+    const modal = document.getElementById("comment-search-modal");
+    if (!modal) return;
+
+    modal.style.display = "none";
+    modal.__selectedComment = null;
+    modal.__targetRowKey = null;
+    modal.__targetContainer = null;
+    modal.__targetCommentList = null;
+  }
+
+  async function fetchCommentOptions(guidelineId) {
+    const url = `https://localhost:7144/api/Treatments/comment-options?guidelineId=${encodeURIComponent(guidelineId)}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch comments: ${response.status}`);
+    }
+
+    return await response.json();
+  }
+
+  function filterCommentOptions(items, textTerm, idTerm) {
+    const textSearch = clean(textTerm).toLowerCase();
+    const idSearch = clean(idTerm);
+
+    return (items || []).filter(item => {
+      const commentText = clean(item.commentText).toLowerCase();
+      const indexNumber = clean(item.indexNumber).toLowerCase();
+      const commentIdText = String(item.commentId ?? "");
+
+      const matchesText = !textSearch ||
+        commentText.includes(textSearch) ||
+        indexNumber.includes(textSearch);
+
+      const matchesId = !idSearch ||
+        commentIdText.includes(idSearch);
+
+      return matchesText && matchesId;
+    });
+  }
+
+  function renderCommentSearchResults(items) {
+    if (!items.length) {
+      return `<div style="color:#666;">No comments found.</div>`;
+    }
+
+    return items.map(item => {
+      const pests = (item.pests || [])
+        .map(p => p.name ? `${p.name} (${p.pestId})` : `Pest ${p.pestId}`)
+        .join(", ");
+
+      return `
+        <div class="comment-search-option"
+            data-comment-id="${escapeHtml(item.commentId)}"
+            style="border:1px solid #ddd; padding:10px; margin-bottom:8px; cursor:pointer;">
+          <div style="font-size:12px; color:#666; margin-bottom:4px;">
+            <strong>CommentId:</strong> ${escapeHtml(item.commentId)}
+            ${item.indexNumber ? ` | <strong>Index:</strong> ${escapeHtml(item.indexNumber)}` : ""}
+            ${item.siteId ? ` | <strong>SiteId:</strong> ${escapeHtml(item.siteId)}` : ""}
+          </div>
+          <div style="margin-bottom:6px;">
+            ${escapeHtml(item.commentText || "")}
+          </div>
+          <div style="font-size:12px; color:#666;">
+            <strong>Pests:</strong> ${escapeHtml(pests || "None")}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  async function openCommentSearchModal(row, container, targetListEl) {
+    const modal = ensureCommentSearchModal();
+    modal.style.display = "flex";
+
+    modal.__selectedComment = null;
+    modal.__targetRowKey = getRowKey(row);
+    modal.__targetContainer = container;
+    modal.__targetCommentList = targetListEl;
+
+    const guidelineId = row?.treatment?.guidelineId ?? container?.dataset?.guidelineId ?? "";
+    const siteId = row?.siteId ?? row?.treatment?.siteId ?? "";
+    const pestId = row?.pestId ?? row?.treatment?.pestId ?? "";
+
+    modal.querySelector("#comment-search-context").innerHTML = `
+      <strong>GuidelineId:</strong> ${escapeHtml(guidelineId)}
+      &nbsp; | &nbsp;
+      <strong>SiteId:</strong> ${escapeHtml(siteId)}
+      &nbsp; | &nbsp;
+      <strong>PestId:</strong> ${escapeHtml(pestId)}
+    `;
+
+    const resultsEl = modal.querySelector("#comment-search-results");
+    const textInput = modal.querySelector("#comment-search-text");
+    const idInput = modal.querySelector("#comment-search-id");
+
+    textInput.value = "";
+    idInput.value = "";
+    resultsEl.innerHTML = "Loading comments...";
+
+    try {
+      const items = await fetchCommentOptions(guidelineId);
+      modal.__commentOptions = items || [];
+      resultsEl.innerHTML = renderCommentSearchResults(modal.__commentOptions);
+    } catch (err) {
+      console.error(err);
+      resultsEl.innerHTML = `<div style="color:#900;">Failed to load comments.</div>`;
+    }
+
+    wireCommentSearchModal(modal);
+  }
+
+  function wireCommentSearchModal(modal) {
+    if (modal.__commentSearchBound) return;
+    modal.__commentSearchBound = true;
+
+    const textInput = modal.querySelector("#comment-search-text");
+    const idInput = modal.querySelector("#comment-search-id");
+    const resultsEl = modal.querySelector("#comment-search-results");
+    const useBtn = modal.querySelector(".use-selected-comment-btn");
+    const createNewBtn = modal.querySelector(".create-new-comment-from-modal-btn");
+
+    function refreshResults() {
+      const filtered = filterCommentOptions(
+        modal.__commentOptions || [],
+        textInput.value,
+        idInput.value
+      );
+
+      modal.__filteredCommentOptions = filtered;
+      resultsEl.innerHTML = renderCommentSearchResults(filtered);
+    }
+
+    textInput.addEventListener("input", refreshResults);
+    idInput.addEventListener("input", refreshResults);
+
+    createNewBtn.addEventListener("click", function () {
+      const targetList = modal.__targetCommentList;
+      const container = modal.__targetContainer;
+      const rowKey = modal.__targetRowKey;
+
+      if (!targetList || !container || !rowKey) {
+        alert("Unable to determine which row to add the comment to.");
+        return;
+      }
+
+      const row = (container.__pesticideRows || []).find(r => getRowKey(r) === rowKey);
+      if (!row) {
+        alert("Unable to find row for new comment.");
+        return;
+      }
+
+      targetList.insertAdjacentHTML("beforeend", renderBlankCommentEditorBlock(row));
+      closeCommentSearchModal();
+    });
+
+    resultsEl.addEventListener("click", function (e) {
+      const option = e.target.closest(".comment-search-option");
+      if (!option) return;
+
+      const commentId = parseInt(option.dataset.commentId, 10);
+      const item = (modal.__filteredCommentOptions || modal.__commentOptions || [])
+        .find(x => Number(x.commentId) === commentId);
+
+      if (!item) return;
+
+      modal.__selectedComment = item;
+
+      resultsEl.querySelectorAll(".comment-search-option").forEach(el => {
+        el.style.background = "";
+        el.style.borderColor = "#ddd";
+      });
+
+      option.style.background = "#eef6ff";
+      option.style.borderColor = "#66a3ff";
+    });
+
+    useBtn.addEventListener("click", function () {
+      const selected = modal.__selectedComment;
+      const targetList = modal.__targetCommentList;
+
+      if (!selected || !targetList) {
+        alert("Please select a comment first.");
+        return;
+      }
+
+      targetList.insertAdjacentHTML("beforeend", renderExistingCommentEditorBlock(selected));
+      closeCommentSearchModal();
+    });
+  }
+
+  
+
+
+
+
+
+  function renderExistingCommentEditorBlock(comment) {
+    const pests = (comment.pests || [])
+      .map(p => p.name ? `${p.name} (${p.pestId})` : `Pest ${p.pestId}`)
+      .join(", ");
+
+    return `
+      <div class="comment-editor-block existing-linked-comment"
+          data-comment-index="linked"
+          data-comment-id="${escapeHtml(comment.commentId ?? 0)}"
+          style="border:1px solid #66a3ff; padding:10px; margin-bottom:8px; background:#f5faff;">
+
+        <div style="font-size:12px; color:#666; margin-bottom:8px;">
+          <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
+          ${comment.indexNumber ? ` | <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
+        </div>
+
+        <div style="font-size:12px; color:#666; margin-bottom:8px;">
+          <strong>SiteId:</strong> ${escapeHtml(comment.siteId ?? "")}
+          &nbsp; | &nbsp;
+          <strong>GuidelineId:</strong> ${escapeHtml(comment.guidelineId ?? "")}
+        </div>
+
+        <div style="font-size:12px; color:#666; margin-bottom:8px;">
+          <strong>Pests:</strong> ${escapeHtml(pests || "None")}
+        </div>
+
+        <div style="margin-bottom:8px;">
+          <label style="display:block; font-size:12px;">Index Number</label>
+          <input type="text"
+                data-field="comment-indexNumber"
+                value="${escapeHtml(comment.indexNumber || "")}"
+                style="width:100%;">
+        </div>
+
+        <div style="margin-bottom:8px;">
+          <label style="display:block; font-size:12px;">Comment Text</label>
+          <textarea data-field="comment-commentText" rows="3" style="width:100%;">${escapeHtml(comment.commentText || "")}</textarea>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="remove-comment-block-btn">Remove</button>
+        </div>
+      </div>
+    `;
+  }
 
 
 
