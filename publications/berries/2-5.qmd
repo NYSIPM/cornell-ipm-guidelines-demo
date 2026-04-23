@@ -1,6 +1,10 @@
 ---
 title: 2.5 Test Site
 ---
+**A grape field in New York.**
+
+![An Image of a Field](/static/images/grapes_cover2025.jpg "A grape field in New York.")
+
 Cornell University and Cornell Cooperative Extension actively promote the use of Integrated Crop and Pest Management (IPM) by New York growers in order to address agricultural concerns. In many areas of New York State, there are horticultural, economic, social, and political pressures to reduce the environmental impact and use of pesticides in crop production. Public concerns with nutrient and sediment movement into ground and surface water and pressure against pesticide applications is growing. In other regions, agricultural producers are being asked to submit nutrient and soil management plans to address the offsite impacts of their practices. In addition, the development of pesticide resistance in key pests; registration of fewer and more expensive new chemicals for pest control; loss of existing products; and increased competition from other regions continue to push New York agriculture to look for nonchemical alternatives.
 
 ## 2.5.1 Spotted Lanternfly
@@ -22,3 +26,41 @@ Apple scab fungicides can control disease through four different types of activi
 {{< pesticide-table guidelineId="1" pestId="15" siteId="84" >}}
 
 Using GuidelineId: **Tree Fruit** (1), PestId: **Apple Scab** (15), SiteId: **Test Crop** (84)
+
+## Here is some other Static Content Examples
+
+```{=html}
+<table style="border-collapse: collapse; width: 100%; height: 134.562px; border-width: 1px;" border="1"><colgroup><col style="width: 33.3333%;"><col style="width: 33.3333%;"><col style="width: 33.3333%;"></colgroup>
+<tbody>
+<tr style="height: 34.4375px;">
+<td><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">Stage of development </span></strong></td>
+<td><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">Scout for: </span></strong></td>
+<td><strong style="mso-bidi-font-weight: normal;"><span style="font-size: 10.0pt; font-family: 'Times New Roman',serif; mso-fareast-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;">See section:</span></strong></td>
+</tr>
+<tr style="height: 33.375px;">
+<td><strong style="mso-bidi-font-weight: normal;">Dormant</strong></td>
+<td>
+<p class="MsoNormal" style="margin-top: 3.0pt;">Insect stem gall,</p>
+<p class="MsoNormal" style="margin-top: 3.0pt;">Botrytis blossom and twig blight</p>
+<p class="MsoNormal">Cankers (Fusicoccum and Phomopsis)</p>
+<p class="MsoNormal">Scale insects</p>
+</td>
+<td>5.2.1.1<br>5.2.1.2<br>5.2.1.3 and 5.2.1.4<br>5.2.1.5</td>
+</tr>
+<tr style="height: 33.375px;">
+<td><strong style="mso-bidi-font-weight: normal;">Green tip</strong></td>
+<td>
+<p class="MsoNormal" style="margin-top: 3.0pt;">Mummyberry</p>
+<p class="MsoNormal">Botrytis blossom and twig blight</p>
+<p class="MsoNormal">Phomopsis canker</p>
+</td>
+<td>
+<p class="MsoNormal">5.2.2.1</p>
+<p class="MsoNormal">5.2.2.2</p>
+<p class="MsoNormal">5.2.2.3</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+```

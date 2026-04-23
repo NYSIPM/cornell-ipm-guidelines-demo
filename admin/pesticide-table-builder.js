@@ -398,8 +398,11 @@
       </tr>
 
       <tr class="comment-row">
-          <td colspan="10"
-              style="border:1px solid #ccc; border-top:none; border-bottom:3px solid #999; padding:8px 10px; background:#f9f9f9;">
+          <td style="border-left:1px solid #ccc; border-right:1px solid #ccc; border-top:none; border-bottom:3px solid #999; background:#fff;"></td>
+          <td style="border-right:1px solid #ccc; border-top:none; border-bottom:3px solid #999; background:#fff;"></td>
+          <td colspan="7"
+              class="comment-content-cell"
+              style="border-right:1px solid #ccc; border-top:none; border-bottom:3px solid #999; padding:8px 10px; background:#f9f9f9;">
               <strong>Comments:</strong><br>
               ${row.comments || "<em>No comments</em>"}
           </td>
@@ -571,7 +574,7 @@
 
     const commentTr = tr.nextElementSibling;
     if (commentTr && commentTr.classList.contains("comment-row")) {
-      const commentCell = commentTr.querySelector("td");
+      const commentCell = commentTr.querySelector(".comment-content-cell");
       if (commentCell) {
         commentCell.innerHTML = renderCommentEditor(row);
       }
@@ -595,6 +598,8 @@
       const linkExistingCommentBtn = e.target.closest(".link-existing-comment-btn");
       //Comment Modol
       const openCommentSearchBtn = e.target.closest(".open-comment-search-btn");
+      //Add 4-22-2026
+      const editLinkedCommentBtn = e.target.closest(".edit-linked-comment-btn");
 
       if (editBtn) {
         console.log("Edit clicked");
@@ -630,6 +635,35 @@
         return;
       }
       
+      //Added 4-22-2026
+      if (editLinkedCommentBtn) {
+        const block = editLinkedCommentBtn.closest(".comment-editor-block");
+        const commentRow = editLinkedCommentBtn.closest("tr.comment-row");
+        const dataRow = commentRow?.previousElementSibling;
+        const row = dataRow ? findRowByElement(dataRow, container) : null;
+        const editorArea = editLinkedCommentBtn.closest(".comment-editor-area");
+        const list = editorArea?.querySelector(".comment-editor-list");
+
+        if (!block || !row || !list) return;
+
+        const existingComment = {
+          commentId: parseInt(block.dataset.commentId, 10) || 0,
+          indexNumber: block.dataset.indexNumber || "",
+          commentText: block.dataset.commentText || "",
+          siteId: row?.siteId ?? row?.treatment?.siteId ?? null,
+          guidelineId: row?.treatment?.guidelineId ?? null,
+          pests: [
+            {
+              pestId: parseInt(row?.pestId ?? row?.treatment?.pestId ?? 0, 10) || 0,
+              name: null
+            }
+          ].filter(p => p.pestId > 0)
+        };
+
+        await openCommentSearchModal(row, container, list, existingComment);
+        return;
+      }
+
 
       if (removeCommentBlockBtn) {
         const block = removeCommentBlockBtn.closest(".comment-editor-block");
@@ -927,9 +961,11 @@
     const existingBlocks = comments.length
       ? comments.map((comment, index) => `
           <div class="comment-editor-block"
-              data-comment-index="${index}"
-              data-comment-id="${escapeHtml(comment.commentId ?? 0)}"
-              style="border:1px solid #ddd; padding:10px; margin-bottom:8px; background:#fafafa;">
+            data-comment-index="${index}"
+            data-comment-id="${escapeHtml(comment.commentId ?? 0)}"
+            data-index-number="${escapeHtml(comment.indexNumber ?? "")}"
+            data-comment-text="${escapeHtml(comment.commentText || comment.comment || "")}"
+            style="border:1px solid #ddd; padding:10px; margin-bottom:8px; background:#fafafa;">
 
             <div style="font-size:12px; color:#666; margin-bottom:8px;">
               <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
@@ -949,6 +985,7 @@
             </div>
 
             <div style="display:flex; gap:8px;">
+              <button type="button" class="edit-linked-comment-btn">Edit</button>
               <button type="button" class="remove-comment-block-btn">Remove</button>
             </div>
           </div>
@@ -975,6 +1012,7 @@
     `;
   }
 
+  
   function renderBlankCommentEditorBlock(row) {
     const siteId = row?.siteId ?? row?.treatment?.siteId ?? "";
     const guidelineId = row?.treatment?.guidelineId ?? "";
@@ -984,6 +1022,8 @@
       <div class="comment-editor-block"
           data-comment-index="new"
           data-comment-id="0"
+          data-index-number=""
+          data-comment-text=""
           style="border:1px solid #ddd; padding:10px; margin-bottom:8px; background:#fafafa;">
 
         <div style="font-size:12px; color:#666; margin-bottom:8px;">
@@ -1697,55 +1737,115 @@
       z-index:9999;
       align-items:center;
       justify-content:center;
+      padding:24px;
+      box-sizing:border-box;
     `;
 
     modal.innerHTML = `
       <div style="
         background:#fff;
         width:min(1100px, 96vw);
-        max-height:88vh;
-        overflow:auto;
+        height:min(88vh, 900px);
         border-radius:8px;
-        padding:16px;
         box-shadow:0 10px 30px rgba(0,0,0,0.2);
+        display:flex;
+        flex-direction:column;
+        overflow:hidden;
+        min-height:0;
       ">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          padding:16px 16px 12px 16px;
+          border-bottom:1px solid #ddd;
+          flex:0 0 auto;
+        ">
           <h3 style="margin:0;">Comments</h3>
           <button type="button" class="close-comment-search-modal-btn">Close</button>
         </div>
 
-        <div id="comment-search-context" style="font-size:12px; color:#666; margin-bottom:12px;"></div>
+        <div style="
+          padding:12px 16px 0 16px;
+          flex:1 1 auto;
+          min-height:0;
+          display:grid;
+          grid-template-columns:minmax(0, 1.2fr) minmax(320px, 1fr);
+          gap:16px;
+          overflow:hidden;
+        ">
+          <!-- LEFT SIDE -->
+          <div style="
+            display:flex;
+            flex-direction:column;
+            min-height:0;
+            overflow:hidden;
+          ">
+            <div id="comment-search-context" style="
+              font-size:12px;
+              color:#666;
+              margin-bottom:12px;
+              padding:8px 10px;
+              background:#f8f8f8;
+              border:1px solid #e3e3e3;
+              border-radius:4px;
+              flex:0 0 auto;
+            "></div>
 
-        <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:16px;">
-          <div>
-            <div style="display:grid; grid-template-columns:2fr 1fr; gap:8px; margin-bottom:12px;">
+            <div style="
+              display:grid;
+              grid-template-columns:2fr 1fr;
+              gap:8px;
+              margin-bottom:12px;
+              flex:0 0 auto;
+            ">
               <div>
                 <label style="display:block; font-size:12px;">Search Comment Text</label>
                 <input type="text"
                       id="comment-search-text"
                       placeholder="Search within comment text..."
-                      style="width:100%; padding:8px;">
+                      style="width:100%; padding:8px; box-sizing:border-box;">
               </div>
               <div>
                 <label style="display:block; font-size:12px;">Search CommentId</label>
                 <input type="text"
                       id="comment-search-id"
                       placeholder="e.g. 123"
-                      style="width:100%; padding:8px;">
+                      style="width:100%; padding:8px; box-sizing:border-box;">
               </div>
             </div>
 
-            <div style="display:flex; gap:8px; margin-bottom:12px;">
+            <div style="
+              display:flex;
+              gap:8px;
+              margin-bottom:12px;
+              flex:0 0 auto;
+            ">
               <button type="button" class="start-new-comment-btn">New Comment</button>
               <button type="button" class="use-selected-comment-btn">Use Selected Comment</button>
             </div>
 
-            <div id="comment-search-results">
+            <div id="comment-search-results" style="
+              flex:1 1 auto;
+              min-height:0;
+              overflow-y:auto;
+              overflow-x:hidden;
+              border:1px solid #ddd;
+              padding:8px;
+              background:#fafafa;
+              border-radius:4px;
+            ">
               Loading comments...
             </div>
           </div>
 
-          <div style="border-left:1px solid #ddd; padding-left:16px;">
+          <!-- RIGHT SIDE -->
+          <div style="
+            border-left:1px solid #ddd;
+            padding-left:16px;
+            min-height:0;
+            overflow-y:auto;
+          ">
             <div style="font-weight:600; margin-bottom:8px;">Comment Editor</div>
 
             <div style="font-size:12px; color:#666; margin-bottom:8px;" id="comment-form-status">
@@ -1754,22 +1854,21 @@
 
             <div style="margin-bottom:8px;">
               <label style="display:block; font-size:12px;">CommentId</label>
-              <input type="text" id="comment-form-id" disabled style="width:100%; padding:8px; background:#f5f5f5;">
+              <input type="text" id="comment-form-id" disabled style="width:100%; padding:8px; box-sizing:border-box; background:#f5f5f5;">
             </div>
 
             <div style="margin-bottom:8px;">
-              <label style="display:block; font-size:12px;">Index Number</label>
-              <input type="text" id="comment-form-indexNumber" style="width:100%; padding:8px;">
+              <label style="display:block; font-size:12px;">Index Number (Optional)</label>
+              <input type="text" id="comment-form-indexNumber" style="width:100%; padding:8px; box-sizing:border-box;">
             </div>
 
             <div style="margin-bottom:8px;">
               <label style="display:block; font-size:12px;">Comment Text</label>
-              <textarea id="comment-form-text" rows="8" style="width:100%; padding:8px;"></textarea>
+              <textarea id="comment-form-text" rows="28" style="width:100%; padding:8px; box-sizing:border-box;"></textarea>
             </div>
 
             <div style="display:flex; gap:8px; margin-bottom:8px;">
               <button type="button" class="save-comment-modal-btn">Save Comment</button>
-              <button type="button" class="reset-comment-form-btn">Reset</button>
             </div>
           </div>
         </div>
@@ -1859,7 +1958,8 @@
     }).join("");
   }
 
-  async function openCommentSearchModal(row, container, targetListEl) {
+  async function openCommentSearchModal(row, container, targetListEl, existingComment = null) {
+    //async function openCommentSearchModal(row, container, targetListEl) {
     const modal = ensureCommentSearchModal();
     modal.style.display = "flex";
 
@@ -1901,6 +2001,31 @@
       resultsEl.innerHTML = `<div style="color:#900;">Failed to load comments.</div>`;
     }
 
+    if (existingComment) {
+      modal.__selectedComment = existingComment;
+      modal.__editingComment = existingComment;
+      loadCommentIntoForm(modal, existingComment);
+
+      requestAnimationFrame(() => {
+        focusCommentSearchOption(resultsEl, existingComment.commentId);
+      });
+
+      const selectedId = Number(existingComment.commentId);
+      const selectedOption = Array.from(
+        resultsEl.querySelectorAll(".comment-search-option")
+      ).find(el => Number(el.dataset.commentId) === selectedId);
+
+      if (selectedOption) {
+        resultsEl.querySelectorAll(".comment-search-option").forEach(el => {
+          el.style.background = "";
+          el.style.borderColor = "#ddd";
+        });
+
+        selectedOption.style.background = "#eef6ff";
+        selectedOption.style.borderColor = "#66a3ff";
+      }
+    }
+
     wireCommentSearchModal(modal);
   }
 
@@ -1914,7 +2039,6 @@
     const useBtn = modal.querySelector(".use-selected-comment-btn");
     const newBtn = modal.querySelector(".start-new-comment-btn");
     const saveBtn = modal.querySelector(".save-comment-modal-btn");
-    const resetBtn = modal.querySelector(".reset-comment-form-btn");
 
     function refreshResults() {
       const filtered = filterCommentOptions(
@@ -1931,13 +2055,6 @@
     idInput.addEventListener("input", refreshResults);
 
     newBtn.addEventListener("click", function () {
-      const container = modal.__targetContainer;
-      const rowKey = modal.__targetRowKey;
-      const row = (container?.__pesticideRows || []).find(r => getRowKey(r) === rowKey) || null;
-      resetCommentForm(modal, row);
-    });
-
-    resetBtn.addEventListener("click", function () {
       const container = modal.__targetContainer;
       const rowKey = modal.__targetRowKey;
       const row = (container?.__pesticideRows || []).find(r => getRowKey(r) === rowKey) || null;
@@ -2020,6 +2137,10 @@
 
         refreshResults();
         loadCommentIntoForm(modal, refreshed);
+        requestAnimationFrame(() => {
+          focusCommentSearchOption(resultsEl, refreshed.commentId);
+        });
+        syncEditedCommentBlock(modal.__targetCommentList, refreshed);
 
         alert("Comment saved.");
       } catch (err) {
@@ -2066,6 +2187,8 @@
       <div class="comment-editor-block existing-linked-comment"
           data-comment-index="linked"
           data-comment-id="${escapeHtml(comment.commentId ?? 0)}"
+          data-index-number="${escapeHtml(comment.indexNumber ?? "")}"
+          data-comment-text="${escapeHtml(comment.commentText || comment.comment || "")}"
           style="border:1px solid #66a3ff; padding:10px; margin-bottom:8px; background:#f5faff;">
 
         <div style="font-size:12px; color:#666; margin-bottom:8px;">
@@ -2088,6 +2211,7 @@
         </div>
 
         <div style="display:flex; gap:8px;">
+          <button type="button" class="edit-linked-comment-btn">Edit</button>
           <button type="button" class="remove-comment-block-btn">Remove</button>
         </div>
       </div>
@@ -2145,6 +2269,86 @@
       return {};
     }
   }
+
+  //Added 4/23/2026
+  function syncEditedCommentBlock(targetList, comment) {
+    if (!targetList || !comment?.commentId) return;
+
+    const block = Array.from(targetList.querySelectorAll(".comment-editor-block"))
+      .find(el => Number(el.dataset.commentId) === Number(comment.commentId));
+
+    if (!block) return;
+
+    block.outerHTML = renderExistingCommentEditorBlock(comment);
+  }
+  function focusCommentSearchOption(resultsEl, commentId) {
+    if (!resultsEl || !commentId) return;
+
+    const selectedId = Number(commentId);
+
+    const selectedOption = Array.from(
+      resultsEl.querySelectorAll(".comment-search-option")
+    ).find(el => Number(el.dataset.commentId) === selectedId);
+
+    if (!selectedOption) return;
+
+    resultsEl.querySelectorAll(".comment-search-option").forEach(el => {
+      el.style.background = "";
+      el.style.borderColor = "#ddd";
+    });
+
+    selectedOption.style.background = "#eef6ff";
+    selectedOption.style.borderColor = "#66a3ff";
+
+    selectedOption.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }
+/*
+  function syncEditedCommentBlock(targetList, comment) {
+    if (!targetList || !comment?.commentId) return;
+
+    const block = Array.from(targetList.querySelectorAll(".comment-editor-block"))
+      .find(el => Number(el.dataset.commentId) === Number(comment.commentId));
+
+    if (!block) return;
+
+    block.dataset.commentId = String(comment.commentId ?? 0);
+    block.dataset.indexNumber = comment.indexNumber ?? "";
+    block.dataset.commentText = comment.commentText ?? comment.comment ?? "";
+
+    block.innerHTML = `
+      <div style="font-size:12px; color:#666; margin-bottom:8px;">
+        <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
+        ${comment.indexNumber ? ` | <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
+      </div>
+
+      <div style="font-size:12px; color:#666; margin-bottom:8px;">
+        <strong>SiteId:</strong> ${escapeHtml(comment.siteId ?? "")}
+        &nbsp; | &nbsp;
+        <strong>GuidelineId:</strong> ${escapeHtml(comment.guidelineId ?? "")}
+        &nbsp; | &nbsp;
+        <strong>PestId:</strong> ${
+          escapeHtml(
+            Array.isArray(comment.pests) && comment.pests.length
+              ? comment.pests.map(p => p.pestId).join(", ")
+              : ""
+          )
+        }
+      </div>
+
+      <div style="margin-bottom:8px; white-space:pre-wrap;">
+        ${escapeHtml(comment.commentText || comment.comment || "") || "<em>No comment text</em>"}
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="edit-linked-comment-btn">Edit</button>
+        <button type="button" class="remove-comment-block-btn">Remove</button>
+      </div>
+    `;
+  }
+*/
 
 
 

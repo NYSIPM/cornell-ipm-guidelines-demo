@@ -46,11 +46,12 @@ collections:
         widget: "markdown"
         modes: [rich_text, raw]
         editor_components:
-          # - image
-          # - code-block
-          # - html-table
-          # - api-text
+          - image
+          #- code-block
+          - html-table
+          #- api-text
           - pesticide-table
+          - test-widget
 
   #I don't like this.
   - name: "decap-test"

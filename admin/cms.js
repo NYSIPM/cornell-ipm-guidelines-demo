@@ -127,6 +127,50 @@
     }
   }
 
+  //Get the API Guideline Options.
+  async function fetchGuidelineOptions() {
+    const url = "https://localhost:7144/api/Treatments/guideline-options";
+
+    console.log("Fetching guideline options:", url);
+
+    const response = await fetch(url, { credentials: "omit" });
+
+    if (!response.ok) {
+      throw new Error(`Guideline options fetch failed: HTTP ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    console.log("Guideline options JSON:", json);
+
+    return json;
+  }
+  async function testGuidelineOptionsFetch() {
+    try {
+      const results = await fetchGuidelineOptions();
+
+      console.log("Guideline options loaded successfully.");
+      console.log("Count:", Array.isArray(results) ? results.length : 0);
+
+      if (Array.isArray(results)) {
+        results.forEach((guideline, index) => {
+          console.log(`Guideline ${index + 1}:`, {
+            guidelineId: guideline.guidelineId,
+            name: guideline.name,
+            shortName: guideline.shortName,
+            pestCount: Array.isArray(guideline.pests) ? guideline.pests.length : 0,
+            siteCount: Array.isArray(guideline.sites) ? guideline.sites.length : 0
+          });
+        });
+      }
+
+      return results;
+    } catch (err) {
+      console.error("Failed to load guideline options:", err);
+      return null;
+    }
+  }
+
   function escapeHtml(str) {
     return String(str ?? "")
       .replace(/&/g, "&amp;")
@@ -135,4 +179,8 @@
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
   }
+
+  // 👇 ADD THIS HERE
+  testGuidelineOptionsFetch();
+  
 })();
