@@ -117,13 +117,14 @@
   }
 
   function formatComments(treatment) {
+    const SHOW_INDEX = false; // 👈 flip this to true/false
     const comments = (treatment?.comments || []).map(c => {
       const idx = clean(c.indexNumber);
       const text = clean(c.comment || c.commentText);
       if (!text) return "";
-      return idx ? `${idx}: ${text}` : text;
+      // 👇 controlled by toggle
+      return (SHOW_INDEX && idx) ? `${idx}: ${text}` : text;
     });
-
     return unique(comments).join("<br>");
   }
 
@@ -329,8 +330,12 @@
           pesticide: pesticide,
           matchingRates: matchingRates,
           product: formatProductName(pesticide),
+          //rate: [applicationMethodText, rateText].filter(Boolean).join("<br>"),
+          applicationMethod: applicationMethodText,
           siteTimings: siteTimingText,
-          rate: [applicationMethodText, rateText].filter(Boolean).join("<br>"),
+          conventional: "",
+          organic: "",
+          rate: rateText,
           rei: formatRei(pesticide?.sitePesticide || []),
           phi: formatPhi(pesticide?.sitePesticide || []),
           resistance: formatResistance(pesticide),
@@ -382,28 +387,83 @@
           data-pesticide-id="${escapeHtml(row.pesticideId)}"
           data-pest-id="${escapeHtml(row.pestId)}"
           data-site-id="${escapeHtml(row.siteId)}">
-          <td style="border:1px solid #ccc; border-bottom:none; padding:6px;">
-              ${renderEditButtons()}
+          <td rowspan="3" class="edit-cell">
+            ${renderEditButtons()}
           </td>
-          <td style="border:1px solid #ccc; border-bottom:none; padding:6px; font-size:12px; line-height:1.3;">
-              ${renderIdBlock(row, true)}
+          <td rowspan="3" class="id-cell">
+            ${renderIdBlock(row, true)}
           </td>
-          <td>${escapeHtml(row.product)}</td>
-          <td>${row.siteTimings || ""}</td>
-          <td>${row.rate || ""}</td>
-          <td>${escapeHtml(row.rei)}</td>
-          <td>${escapeHtml(row.phi)}</td>
-          <td>${escapeHtml(row.resistance)}</td>
-          <td style="border-right:1px solid #ccc; padding:6px; text-align:left;">${escapeHtml(row.efficacy)}</td>
+          <td class="product-cell">
+            <div class="product-text">
+              ${escapeHtml(row.product)}
+            </div>
+          </td>
+          <td class="data-cell rate-cell">
+            <div class="cell-text">
+              ${row.rate || ""}
+            </div>
+          </td>
+
+          <td class="data-cell rei-cell">
+            <div class="cell-text">
+              ${escapeHtml(row.rei)}
+            </div>
+          </td>
+
+          <td class="data-cell phi-cell">
+            <div class="cell-text">
+              ${escapeHtml(row.phi)}
+            </div>
+          </td>
+
+          <td class="data-cell resistance-cell">
+            <div class="cell-text">
+              ${escapeHtml(row.resistance)}
+            </div>
+          </td>
+
+          <td class="data-cell efficacy-cell">
+            <div class="cell-text">
+              ${escapeHtml(row.efficacy)}
+            </div>
+          </td>
+      </tr>
+
+      <tr class="misc-row">
+        <td colspan="6" class="misc-content-cell">
+          <button type="button" class="toggle-misc-row-btn">
+            See more details
+          </button>
+
+          <div class="misc-details is-hidden">
+            <div class="misc-detail-line">
+              <strong>Conventional:</strong>
+              ${row.conventional || "<em>Not set</em>"}
+            </div>
+
+            <div class="misc-detail-line">
+              <strong>Organic:</strong>
+              ${row.organic || "<em>Not set</em>"}
+            </div>
+
+            <div>
+              <strong>Application Method:</strong>
+              ${escapeHtml(row.applicationMethod) || "<em>None</em>"}
+            </div>
+
+            <div>
+              <strong>Site Timing:</strong>
+              ${row.siteTimings || "<em>None</em>"}
+            </div>
+          </div>
+        </td>
       </tr>
 
       <tr class="comment-row">
-          <td style="border-left:1px solid #ccc; border-right:1px solid #ccc; border-top:none; border-bottom:3px solid #999; background:#fff;"></td>
-          <td style="border-right:1px solid #ccc; border-top:none; border-bottom:3px solid #999; background:#fff;"></td>
-          <td colspan="7"
+          <td colspan="6"
               class="comment-content-cell"
-              style="border-right:1px solid #ccc; border-top:none; border-bottom:3px solid #999; padding:8px 10px; background:#f9f9f9;">
-              <strong>Comments:</strong><br>
+              style="border-right:1px solid #ccc; border-top:none; border-bottom:3px solid #999; padding:8px 10px;">
+              <!--<strong>Comments:</strong><br>-->
               ${row.comments || "<em>No comments</em>"}
           </td>
       </tr>
@@ -422,7 +482,6 @@
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Edit</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Id</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Product</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Site Timing</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Rate</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">REI</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">PHI</th>
@@ -551,7 +610,7 @@
     tr.classList.add("is-editing");
 
     const cells = tr.querySelectorAll("td");
-    if (cells.length < 9) return;
+    if (cells.length < 8) return;
 
     cells[0].innerHTML = `
       <button type="button" class="save-row-btn">Save</button>
@@ -565,13 +624,55 @@
         Edit Product
       </button>
     `;
-    cells[3].innerHTML = renderSiteTimingEditor(row, container.__editMetadata);
-    cells[4].innerHTML = renderApplicationMethodEditor(row, container.__editMetadata) + renderRateEditor(row, container.__editMetadata);
-    cells[5].innerHTML = renderReiEditor(row);
-    cells[6].innerHTML = renderPhiEditor(row);
-    cells[7].innerHTML = escapeHtml(row.resistance);
-    cells[8].innerHTML = renderEfficacyEditor(row, container.__editMetadata);
+    cells[3].innerHTML = renderRateEditor(row, container.__editMetadata);
 
+    cells[4].innerHTML = renderReiEditor(row);
+    cells[5].innerHTML = renderPhiEditor(row);
+    cells[6].innerHTML = escapeHtml(row.resistance);
+    cells[7].innerHTML = renderEfficacyEditor(row, container.__editMetadata);
+
+    /*
+    const miscTr = tr.nextElementSibling;
+    if (miscTr && miscTr.classList.contains("misc-row")) {
+      const miscCell = miscTr.querySelector(".misc-content-cell");
+      if (miscCell) {
+        miscCell.innerHTML = renderSiteTimingEditor(row, container.__editMetadata);
+      }
+    }
+    */
+
+    const miscTr = tr.nextElementSibling;
+
+    if (miscTr && miscTr.classList.contains("misc-row")) {
+      const miscCell = miscTr.querySelector(".misc-content-cell");
+      if (miscCell) {
+        miscCell.innerHTML = `
+          <div class="misc-edit-wrapper">
+            <div><strong>Miscellaneous</strong></div>
+            <div class="misc-edit-grid">
+              <div class="misc-edit-panel">
+                <div class="misc-edit-title">Application Method</div>
+                ${renderApplicationMethodEditor(row, container.__editMetadata)}
+              </div>
+              <div class="misc-edit-panel">
+                <div class="misc-edit-title">Site Timing</div>
+                ${renderSiteTimingEditor(row, container.__editMetadata)}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    const commentTr = miscTr?.nextElementSibling;
+
+    if (commentTr && commentTr.classList.contains("comment-row")) {
+      const commentCell = commentTr.querySelector(".comment-content-cell");
+      if (commentCell) {
+        commentCell.innerHTML = renderCommentEditor(row);
+      }
+    }
+    /*
     const commentTr = tr.nextElementSibling;
     if (commentTr && commentTr.classList.contains("comment-row")) {
       const commentCell = commentTr.querySelector(".comment-content-cell");
@@ -579,6 +680,7 @@
         commentCell.innerHTML = renderCommentEditor(row);
       }
     }
+    */
   }
 
   function wireTableEvents(container) {
@@ -600,6 +702,24 @@
       const openCommentSearchBtn = e.target.closest(".open-comment-search-btn");
       //Add 4-22-2026
       const editLinkedCommentBtn = e.target.closest(".edit-linked-comment-btn");
+      //Added 4-28-2026
+      const toggleMiscRowBtn = e.target.closest(".toggle-misc-row-btn");
+
+      if (toggleMiscRowBtn) {
+        const miscCell = toggleMiscRowBtn.closest(".misc-content-cell");
+        const details = miscCell?.querySelector(".misc-details");
+
+        if (details) {
+          details.classList.toggle("is-hidden");
+
+          toggleMiscRowBtn.textContent =
+            details.classList.contains("is-hidden")
+              ? "See more details"
+              : "Hide details";
+        }
+
+        return;
+      }
 
       if (editBtn) {
         console.log("Edit clicked");
@@ -639,7 +759,7 @@
       if (editLinkedCommentBtn) {
         const block = editLinkedCommentBtn.closest(".comment-editor-block");
         const commentRow = editLinkedCommentBtn.closest("tr.comment-row");
-        const dataRow = commentRow?.previousElementSibling;
+        const dataRow = commentRow?.previousElementSibling?.previousElementSibling;
         const row = dataRow ? findRowByElement(dataRow, container) : null;
         const editorArea = editLinkedCommentBtn.closest(".comment-editor-area");
         const list = editorArea?.querySelector(".comment-editor-list");
@@ -691,7 +811,7 @@
 
       if (openCommentSearchBtn) {
         const commentRow = openCommentSearchBtn.closest("tr.comment-row");
-        const dataRow = commentRow?.previousElementSibling;
+        const dataRow = commentRow?.previousElementSibling?.previousElementSibling;
         const row = dataRow ? findRowByElement(dataRow, container) : null;
         const editorArea = openCommentSearchBtn.closest(".comment-editor-area");
         const list = editorArea?.querySelector(".comment-editor-list");
@@ -704,7 +824,7 @@
 
       if (linkExistingCommentBtn) {
         const commentRow = linkExistingCommentBtn.closest("tr.comment-row");
-        const dataRow = commentRow?.previousElementSibling;
+        const dataRow = commentRow?.previousElementSibling?.previousElementSibling;
         const row = dataRow ? findRowByElement(dataRow, container) : null;
         const editorArea = linkExistingCommentBtn.closest(".comment-editor-area");
         const list = editorArea?.querySelector(".comment-editor-list");
@@ -1079,7 +1199,8 @@
     const getRowChecked = (field) => !!tr.querySelector(`[data-field="${field}"]`)?.checked;
     const rateBlocks = tr.querySelectorAll(".rate-editor-block");
 
-    const commentRow = tr.nextElementSibling;
+    const miscRow = tr.nextElementSibling;
+    const commentRow = miscRow?.nextElementSibling;
     const commentBlocks = commentRow?.querySelectorAll(".comment-editor-block") || [];
     const linkedComments = Array.from(commentBlocks)
       .map(block => {
@@ -1091,9 +1212,13 @@
     const updatedRates = [];
 
     const getCheckedValues = (field) =>
-      Array.from(tr.querySelectorAll(`[data-field="${field}"]:checked`))
-        .map(el => parseInt(el.value, 10))
-        .filter(Number.isFinite);
+      Array.from(
+        [tr, tr.nextElementSibling]
+          .filter(Boolean)
+          .flatMap(rowEl => Array.from(rowEl.querySelectorAll(`[data-field="${field}"]:checked`)))
+      )
+    .map(el => parseInt(el.value, 10))
+    .filter(Number.isFinite);
 
     const selectedSiteTimingIds = getCheckedValues("siteTimingIds");
 

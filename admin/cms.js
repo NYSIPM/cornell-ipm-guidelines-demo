@@ -3,6 +3,8 @@
 
   const API_BASE_URL = "https://localhost:7144/api/Treatments/search";
 
+  CMS.registerPreviewStyle("/assets/css/pesticide-table-editor.css");
+
   //const shortcodeLinePattern = /^\s*\{\{[<%]\s*pesticide-table\b[^}]*[>%]\}\}\s*$/m;
   const shortcodeLinePattern =
   /^\s*\{\{(?:<|%)\s*pesticide-table\b[\s\S]*?(?:>|%)\}\}\s*$/m;
@@ -11,7 +13,7 @@
     id: "pesticide-table",
     label: "Pesticide Table (DB)",
     fields: [
-      { name: "guidelineId", label: "Guideline ID", widget: "string", required: false },
+      { name: "guidelineId", label: "Guideline ID", widget: "string", required: true },
       { name: "pestId", label: "Pest ID", widget: "string" },
       { name: "siteId", label: "Site ID", widget: "string" }
     ],
@@ -88,6 +90,7 @@
 
       try {
         const url = new URL(API_BASE_URL);
+        url.searchParams.set("guidelineId", guidelineId);
         url.searchParams.set("pestId", pestId);
         url.searchParams.set("siteId", siteId);
 
@@ -145,6 +148,7 @@
 
     return json;
   }
+  
   async function testGuidelineOptionsFetch() {
     try {
       const results = await fetchGuidelineOptions();
@@ -182,5 +186,5 @@
 
   // 👇 ADD THIS HERE
   testGuidelineOptionsFetch();
-  
+
 })();
