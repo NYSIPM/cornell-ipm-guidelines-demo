@@ -333,12 +333,23 @@
           //rate: [applicationMethodText, rateText].filter(Boolean).join("<br>"),
           applicationMethod: applicationMethodText,
           siteTimings: siteTimingText,
-          conventional: "",
-          organic: "",
+          conventional: pesticide?.pesticideGuideline?.conventional ?? false,
+          organic: pesticide?.pesticideGuideline?.organic ?? false,
           rate: rateText,
           rei: formatRei(pesticide?.sitePesticide || []),
           phi: formatPhi(pesticide?.sitePesticide || []),
           resistance: formatResistance(pesticide),
+          eiq: unique(
+              (pesticide?.activeIngredients || [])
+                .map(ai => clean(ai?.eiq))
+                .filter(Boolean)
+            ).join("<br>"),
+
+            finalEiq: unique(
+              (pesticide?.activeIngredients || [])
+                .map(ai => clean(ai?.finalEiq))
+                .filter(Boolean)
+            ).join("<br>"),
           efficacy: efficacy,
           comments: comments
         });
@@ -346,6 +357,23 @@
     });
     console.log("built rows:", rows);
     return rows;
+  }
+
+  function renderConventionalOrganicEditor(row) {
+    const conventional = row?.conventional ?? false;
+    const organic = row?.organic ?? false;
+
+    return `
+      <label style="display:block; margin-bottom:6px; font-size:12px;">
+        <input type="checkbox" data-field="conventional" ${conventional ? "checked" : ""}>
+        Conventional
+      </label>
+
+      <label style="display:block; font-size:12px;">
+        <input type="checkbox" data-field="organic" ${organic ? "checked" : ""}>
+        Organic
+      </label>
+    `;
   }
 
   function renderEditButtons() {
@@ -438,12 +466,12 @@
           <div class="misc-details is-hidden">
             <div class="misc-detail-line">
               <strong>Conventional:</strong>
-              ${row.conventional || "<em>Not set</em>"}
+              ${row.conventional ? "Yes" : "No"}
             </div>
 
             <div class="misc-detail-line">
               <strong>Organic:</strong>
-              ${row.organic || "<em>Not set</em>"}
+              ${row.organic ? "Yes" : "No"}
             </div>
 
             <div>
@@ -454,6 +482,16 @@
             <div>
               <strong>Site Timing:</strong>
               ${row.siteTimings || "<em>None</em>"}
+            </div>
+
+            <div class="misc-detail-line">
+              <strong>EIQ:</strong>
+              ${row.eiq || "<em>None</em>"}
+            </div>
+
+            <div class="misc-detail-line">
+              <strong>Final EIQ:</strong>
+              ${row.finalEiq || "<em>None</em>"}
             </div>
           </div>
         </td>
@@ -650,6 +688,10 @@
           <div class="misc-edit-wrapper">
             <div><strong>Miscellaneous</strong></div>
             <div class="misc-edit-grid">
+              <div class="misc-edit-panel">
+                <div class="misc-edit-title">Designation</div>
+                ${renderConventionalOrganicEditor(row)}
+              </div>
               <div class="misc-edit-panel">
                 <div class="misc-edit-title">Application Method</div>
                 ${renderApplicationMethodEditor(row, container.__editMetadata)}
@@ -873,26 +915,42 @@
     modal.style.display = "flex";
 
     modal.__rowKey = getRowKey(row);
+    modal.__targetContainer = container;
 
     const current = modal.querySelector("#product-modal-current");
     current.innerHTML = `
       <div style="margin-bottom:8px;">
-        <strong>Current Product:</strong> ${escapeHtml(row.product || "-")}
-      </div>
-      <div style="margin-bottom:8px;">
         <strong>PesticideId:</strong> ${escapeHtml(row.pesticideId || "")}
       </div>
+
       <div style="margin-bottom:8px;">
-        <strong>Trade Name:</strong> ${escapeHtml(row.pesticide?.tradeName || "")}
+        <label style="display:block; font-size:12px;">Trade Name</label>
+        <input type="text"
+              data-product-field="tradeName"
+              value="${escapeHtml(row.pesticide?.tradeName || "")}"
+              style="width:100%; padding:6px;">
       </div>
+
       <div style="margin-bottom:8px;">
-        <strong>Common Name:</strong> ${escapeHtml(row.pesticide?.commonName || "")}
+        <label style="display:block; font-size:12px;">EPA Registration Number</label>
+        <input type="text"
+              data-product-field="epaRegistrationNumber"
+              value="${escapeHtml(row.pesticide?.epaRegistrationNumber || "")}"
+              style="width:100%; padding:6px;">
       </div>
+
       <div style="margin-bottom:8px;">
-        <strong>EPA Registration Number:</strong> ${escapeHtml(row.pesticide?.epaRegistrationNumber || "")}
+        <label style="display:block; font-size:12px;">Formulation</label>
+        <input type="text"
+              data-product-field="formulation"
+              value="${escapeHtml(row.pesticide?.formulation || "")}"
+              style="width:100%; padding:6px;">
       </div>
+
       <div style="margin-bottom:8px;">
-        <strong>Formulation:</strong> ${escapeHtml(row.pesticide?.formulation || "")}
+        <strong>Common Name:</strong>
+        ${escapeHtml(row.pesticide?.commonName || "")}
+        <div style="font-size:12px; color:#666;">Common Name editing can be added next.</div>
       </div>
     `;
   }
@@ -929,15 +987,10 @@
           <button type="button" class="close-product-modal-btn">Close</button>
         </div>
 
-        <div style="margin-bottom:12px;">
-          <input type="text" id="product-search-box" placeholder="Search pesticides..." style="width:100%; padding:8px;">
-        </div>
-
         <div id="product-modal-current" style="margin-bottom:12px;"></div>
-        <div id="product-modal-results"></div>
 
         <div style="margin-top:16px; display:flex; gap:8px;">
-          <button type="button" class="save-product-selection-btn">Use Selected Product</button>
+          <button type="button" class="save-product-fields-btn">Save Product</button>
           <button type="button" class="close-product-modal-btn">Cancel</button>
         </div>
       </div>
@@ -945,11 +998,79 @@
 
     document.body.appendChild(modal);
 
-    modal.addEventListener("click", function(e) {
-      //if (e.target === modal || e.target.closest(".close-product-modal-btn")) {
-      //Prevents White Space Clicks from Closing the Window. Above Allows it.
+    modal.addEventListener("click", async function(e) {
       if (e.target.closest(".close-product-modal-btn")) {
         closeProductModal();
+        return;
+      }
+
+      const saveBtn = e.target.closest(".save-product-fields-btn");
+      if (!saveBtn) return;
+
+      const rowKey = modal.__rowKey;
+      const container = modal.__targetContainer;
+
+      if (!rowKey || !container) {
+        alert("Could not find the selected product row.");
+        return;
+      }
+
+      const row = (container.__pesticideRows || [])
+        .find(r => getRowKey(r) === rowKey);
+
+      if (!row) {
+        alert("Could not find product row data.");
+        return;
+      }
+
+      const getProductValue = (field) =>
+        modal.querySelector(`[data-product-field="${field}"]`)?.value?.trim() ?? "";
+
+      const payload = {
+        controlTechniqueId: parseInt(row.controlTechniqueId, 10) || 0,
+        isMixture: row.treatment?.controlTechnique?.isMixture ?? false,
+
+        pesticides: [
+          {
+            pesticideId: parseInt(row.pesticideId, 10) || 0,
+            tradeName: getProductValue("tradeName"),
+            commonName: row.pesticide?.commonName ?? "",
+            commonNameUserDefined: row.pesticide?.commonNameUserDefined ?? false,
+            formulation: getProductValue("formulation"),
+            epaRegistrationNumber: getProductValue("epaRegistrationNumber"),
+            deleted: row.pesticide?.deleted ?? false
+          }
+        ],
+
+        biologicalControls: [],
+        culturalPractices: []
+      };
+
+      try {
+        saveBtn.disabled = true;
+
+        const response = await fetch("https://localhost:7144/api/Treatments/save-control-technique", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const text = await response.text();
+
+        if (!response.ok) {
+          console.error("Save pesticide failed:", response.status, text);
+          alert("Failed to save product. Check console for details.");
+          return;
+        }
+
+        closeProductModal();
+        await reloadTableData(container);
+        alert("Product saved.");
+      } catch (err) {
+        console.error(err);
+        alert("Failed to save product. Check console.");
+      } finally {
+        saveBtn.disabled = false;
       }
     });
 
@@ -1196,7 +1317,11 @@
 
     const treatment = row.treatment || {};
     const getRowField = (field) => tr.querySelector(`[data-field="${field}"]`)?.value ?? "";
-    const getRowChecked = (field) => !!tr.querySelector(`[data-field="${field}"]`)?.checked;
+    const getRowChecked = (field) =>
+      !![tr, tr.nextElementSibling]
+        .filter(Boolean)
+        .flatMap(rowEl => Array.from(rowEl.querySelectorAll(`[data-field="${field}"]`)))
+        .some(el => el.checked);
     const rateBlocks = tr.querySelectorAll(".rate-editor-block");
 
     const miscRow = tr.nextElementSibling;
@@ -1251,6 +1376,7 @@
 
       applicationMethodId: parseNullableInt(getRowField("applicationMethodId")),
       efficacyId: parseNullableInt(getRowField("efficacyId")),
+
       deleted: treatment.deleted ?? false,
       guidelineId: treatment.guidelineId ?? null,
 
@@ -1272,6 +1398,10 @@
 
       pesticide: {
         pesticideId: parseInt(row.pesticideId, 10) || 0,
+        pesticideGuideline: {
+            conventional: getRowChecked("conventional"),
+            organic: getRowChecked("organic")
+          },
         sitePesticide: {
           siteId: parseInt(row.siteId, 10) || 0,
           pesticideId: parseInt(row.pesticideId, 10) || 0,
@@ -1343,8 +1473,8 @@
     container.__pesticideJson = json;
     container.__pesticideRows = buildRows(json);
     container.innerHTML = renderTable(json);
-    container.__pesticideTableEventsBound = false;
-    wireTableEvents(container);
+    //container.__pesticideTableEventsBound = false;
+    //wireTableEvents(container);
   }
 
   // =========================================================
