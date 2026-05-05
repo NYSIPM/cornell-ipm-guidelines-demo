@@ -788,7 +788,13 @@
         const row = findRowByElement(tr, container);
         if (!row) return;
 
-        await openProductModal(row, container);
+        //await openProductModal(row, container);
+        await window.PesticideTableBuilderProductModal.openProductModal(row, container, {
+          escapeHtml,
+          clean,
+          getRowKey,
+          reloadTableData
+        });
         return;
       }
 
@@ -910,180 +916,23 @@
     });
   }
 
-  async function openProductModal(row, container) {
-    const modal = ensureProductModal();
-    modal.style.display = "flex";
-
-    modal.__rowKey = getRowKey(row);
-    modal.__targetContainer = container;
-
-    const current = modal.querySelector("#product-modal-current");
-    current.innerHTML = `
-      <div style="margin-bottom:8px;">
-        <strong>PesticideId:</strong> ${escapeHtml(row.pesticideId || "")}
-      </div>
-
-      <div style="margin-bottom:8px;">
-        <label style="display:block; font-size:12px;">Trade Name</label>
-        <input type="text"
-              data-product-field="tradeName"
-              value="${escapeHtml(row.pesticide?.tradeName || "")}"
-              style="width:100%; padding:6px;">
-      </div>
-
-      <div style="margin-bottom:8px;">
-        <label style="display:block; font-size:12px;">EPA Registration Number</label>
-        <input type="text"
-              data-product-field="epaRegistrationNumber"
-              value="${escapeHtml(row.pesticide?.epaRegistrationNumber || "")}"
-              style="width:100%; padding:6px;">
-      </div>
-
-      <div style="margin-bottom:8px;">
-        <label style="display:block; font-size:12px;">Formulation</label>
-        <input type="text"
-              data-product-field="formulation"
-              value="${escapeHtml(row.pesticide?.formulation || "")}"
-              style="width:100%; padding:6px;">
-      </div>
-
-      <div style="margin-bottom:8px;">
-        <strong>Common Name:</strong>
-        ${escapeHtml(row.pesticide?.commonName || "")}
-        <div style="font-size:12px; color:#666;">Common Name editing can be added next.</div>
-      </div>
-    `;
-  }
 
   
-  function ensureProductModal() {
-    let modal = document.getElementById("product-edit-modal");
-    if (modal) return modal;
 
-    modal = document.createElement("div");
-    modal.id = "product-edit-modal";
-    modal.style.cssText = `
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.45);
-      z-index:9999;
-      align-items:center;
-      justify-content:center;
-    `;
+  
 
-    modal.innerHTML = `
-      <div style="
-        background:#fff;
-        width:min(900px, 92vw);
-        max-height:85vh;
-        overflow:auto;
-        border-radius:8px;
-        padding:16px;
-        box-shadow:0 10px 30px rgba(0,0,0,0.2);
-      ">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <h3 style="margin:0;">Edit Product</h3>
-          <button type="button" class="close-product-modal-btn">Close</button>
-        </div>
+  
 
-        <div id="product-modal-current" style="margin-bottom:12px;"></div>
 
-        <div style="margin-top:16px; display:flex; gap:8px;">
-          <button type="button" class="save-product-fields-btn">Save Product</button>
-          <button type="button" class="close-product-modal-btn">Cancel</button>
-        </div>
-      </div>
-    `;
 
-    document.body.appendChild(modal);
+  
+  
 
-    modal.addEventListener("click", async function(e) {
-      if (e.target.closest(".close-product-modal-btn")) {
-        closeProductModal();
-        return;
-      }
+  
 
-      const saveBtn = e.target.closest(".save-product-fields-btn");
-      if (!saveBtn) return;
+  
 
-      const rowKey = modal.__rowKey;
-      const container = modal.__targetContainer;
-
-      if (!rowKey || !container) {
-        alert("Could not find the selected product row.");
-        return;
-      }
-
-      const row = (container.__pesticideRows || [])
-        .find(r => getRowKey(r) === rowKey);
-
-      if (!row) {
-        alert("Could not find product row data.");
-        return;
-      }
-
-      const getProductValue = (field) =>
-        modal.querySelector(`[data-product-field="${field}"]`)?.value?.trim() ?? "";
-
-      const payload = {
-        controlTechniqueId: parseInt(row.controlTechniqueId, 10) || 0,
-        isMixture: row.treatment?.controlTechnique?.isMixture ?? false,
-
-        pesticides: [
-          {
-            pesticideId: parseInt(row.pesticideId, 10) || 0,
-            tradeName: getProductValue("tradeName"),
-            commonName: row.pesticide?.commonName ?? "",
-            commonNameUserDefined: row.pesticide?.commonNameUserDefined ?? false,
-            formulation: getProductValue("formulation"),
-            epaRegistrationNumber: getProductValue("epaRegistrationNumber"),
-            deleted: row.pesticide?.deleted ?? false
-          }
-        ],
-
-        biologicalControls: [],
-        culturalPractices: []
-      };
-
-      try {
-        saveBtn.disabled = true;
-
-        const response = await fetch("https://localhost:7144/api/Treatments/save-control-technique", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        const text = await response.text();
-
-        if (!response.ok) {
-          console.error("Save pesticide failed:", response.status, text);
-          alert("Failed to save product. Check console for details.");
-          return;
-        }
-
-        closeProductModal();
-        await reloadTableData(container);
-        alert("Product saved.");
-      } catch (err) {
-        console.error(err);
-        alert("Failed to save product. Check console.");
-      } finally {
-        saveBtn.disabled = false;
-      }
-    });
-
-    return modal;
-  }
-
-  function closeProductModal() {
-    const modal = document.getElementById("product-edit-modal");
-    if (!modal) return;
-    modal.style.display = "none";
-    modal.__selectedProduct = null;
-    modal.__rowKey = null;
-  }
+  
 
 
 
