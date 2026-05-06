@@ -31,6 +31,30 @@
     return "";
   }
 
+  //Added 5/6/2026
+  function renderRestrictedUseSymbols(pesticide) {
+    const items = pesticide?.restrictedUse || [];
+    if (!items.length) return "";
+
+    return items
+      .map(ru => {
+        const symbol = clean(ru.symbol);
+        const description = clean(ru.description);
+
+        if (!symbol) return "";
+
+        return `
+          <span class="restricted-use-symbol"
+                title="${escapeHtml(description)}"
+                style="display:inline-block; margin-left:4px; font-weight:700; cursor:help;">
+            ${escapeHtml(symbol)}
+          </span>
+        `;
+      })
+      .filter(Boolean)
+      .join("");
+  }
+
   function formatRate(rate) {
     if (!rate) return "";
 
@@ -423,7 +447,7 @@
           </td>
           <td class="product-cell">
             <div class="product-text">
-              ${escapeHtml(row.product)}
+              ${escapeHtml(row.product)}${renderRestrictedUseSymbols(row.pesticide)}
             </div>
           </td>
           <td class="data-cell rate-cell">
@@ -1059,10 +1083,10 @@
 
             <div style="font-size:12px; color:#666; margin-bottom:8px;">
               <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
-              ${comment.indexNumber ? ` | <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
-            </div>
-
-            <div style="font-size:12px; color:#666; margin-bottom:8px;">
+              ${comment.indexNumber ? ` 
+              &nbsp; | &nbsp; 
+              <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
+              &nbsp; | &nbsp;
               <strong>SiteId:</strong> ${escapeHtml(siteId)}
               &nbsp; | &nbsp;
               <strong>GuidelineId:</strong> ${escapeHtml(guidelineId)}
@@ -1070,7 +1094,7 @@
               <strong>PestId:</strong> ${escapeHtml(pestId)}
             </div>
 
-            <div style="margin-bottom:8px; white-space:pre-wrap;">
+            <div style="margin-bottom:8px"><!-- ; white-space:pre-wrap; -->
               ${escapeHtml(comment.commentText || "") || "<em>No comment text</em>"}
             </div>
 
@@ -2283,35 +2307,30 @@
 
 
   function renderExistingCommentEditorBlock(comment) {
-    const pests = (comment.pests || [])
-      .map(p => p.name ? `${p.name} (${p.pestId})` : `Pest ${p.pestId}`)
-      .join(", ");
+  const pests = (comment.pests || [])
+    .map(p => p.name ? `${p.name} (${p.pestId})` : `Pest ${p.pestId}`)
+    .join(", ");
 
-    return `
+  return `
       <div class="comment-editor-block existing-linked-comment"
           data-comment-index="linked"
           data-comment-id="${escapeHtml(comment.commentId ?? 0)}"
           data-index-number="${escapeHtml(comment.indexNumber ?? "")}"
           data-comment-text="${escapeHtml(comment.commentText || comment.comment || "")}"
-          style="border:1px solid #66a3ff; padding:10px; margin-bottom:8px; background:#f5faff;">
+          style="border:1px solid #66a3ff; padding:6px 8px; margin-bottom:6px; background:#f5faff;">
 
-        <div style="font-size:12px; color:#666; margin-bottom:8px;">
+        <div style="font-size:12px; color:#666; margin-bottom:4px;">
           <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
-          ${comment.indexNumber ? ` | <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
-        </div>
-
-        <div style="font-size:12px; color:#666; margin-bottom:8px;">
+          ${comment.indexNumber ? ` &nbsp; | &nbsp; <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
+          &nbsp; | &nbsp;
           <strong>SiteId:</strong> ${escapeHtml(comment.siteId ?? "")}
           &nbsp; | &nbsp;
           <strong>GuidelineId:</strong> ${escapeHtml(comment.guidelineId ?? "")}
+          ${pests ? ` &nbsp; | &nbsp; <strong>Pests:</strong> ${escapeHtml(pests)}` : ""}
         </div>
 
-        <div style="font-size:12px; color:#666; margin-bottom:8px;">
-          <strong>Pests:</strong> ${escapeHtml(pests || "None")}
-        </div>
-
-        <div style="white-space:pre-wrap; margin-bottom:8px;">
-          ${escapeHtml(comment.commentText || "")}
+        <div style="margin-bottom:4px; line-height:1.2;">
+          ${escapeHtml(comment.commentText || comment.comment || "") || "<em>No comment text</em>"}
         </div>
 
         <div style="display:flex; gap:8px;">
@@ -2384,7 +2403,13 @@
     if (!block) return;
 
     block.outerHTML = renderExistingCommentEditorBlock(comment);
+
+
+
+
+
   }
+  
   function focusCommentSearchOption(resultsEl, commentId) {
     if (!resultsEl || !commentId) return;
 

@@ -35,35 +35,28 @@
           style="width:100%; padding:6px;">
       </div>
 
-      <div style="margin-bottom:8px;">
-        <label style="display:block; font-size:12px;">Formulation</label>
-        <input type="text" data-product-field="formulation"
-          value="${h().escapeHtml(row.pesticide?.formulation || "")}"
-          style="width:100%; padding:6px;">
-      </div>
+        <div style="margin-bottom:8px;">
+            <label style="display:block; font-size:12px;">Formulation</label>
+            <input type="text" data-product-field="formulation"
+            value="${h().escapeHtml(row.pesticide?.formulation || "")}"
+            style="width:100%; padding:6px;">
+        </div>
 
-
-
-      <div style="margin-bottom:8px; border:1px solid #ddd; padding:10px; background:#fafafa;">
-        <label style="display:block; font-size:12px; margin-bottom:6px;">
-            <input type="checkbox"
-                data-product-field="commonNameUserDefined"
-                ${row.pesticide?.commonNameUserDefined ? "checked" : ""}>
-                Manually enter Common Name
-            </label>
-
+        <div>
             <label style="display:block; font-size:12px;">Common Name</label>
             <input type="text"
                 data-product-field="commonName"
                 value="${h().escapeHtml(row.pesticide?.commonName || "")}"
-                style="width:100%; padding:6px; box-sizing:border-box;"
+                style="width:100%; padding:6px; box-sizing:border-box; ${row.pesticide?.commonNameUserDefined ? "" : "background:#eee; color:#666;"}"
                 ${row.pesticide?.commonNameUserDefined ? "" : "readonly"}>
 
-            <div style="font-size:12px; color:#666; margin-top:4px;">
-                If unchecked, this will be generated from selected Active Ingredients.
-            </div>
+            <label style="display:block; font-size:12px; margin-bottom:6px;">
+            <input type="checkbox"
+                data-product-field="commonNameUserDefined"
+                ${row.pesticide?.commonNameUserDefined ? "checked" : ""}>
+                Manually enter Common Name (If unchecked this name will be generated from selected Active Ingredients.)
+            </label>
         </div>
-
 
 
       <div style="border:1px solid #ccc; border-radius:6px; padding:12px; margin-top:12px; background:#fafafa;">
@@ -114,7 +107,8 @@
       finalEiq: ai.finalEiq,
       activeIngredientFungicide: ai.activeIngredientFungicide,
       activeIngredientInsecticide: ai.activeIngredientInsecticide,
-      activeIngredientHerbicide: ai.activeIngredientHerbicide
+      activeIngredientHerbicide: ai.activeIngredientHerbicide,
+      percentActiveIngredient: ai.percentActiveIngredient ?? ai.percent ?? 0
     }));
 
     renderSelectedActiveIngredients(modal);
@@ -124,6 +118,8 @@
 
     modal.__aiPickerBound = false;
     wireProductAiPicker(modal);
+
+    syncCommonNamePreview(modal);
   }
 
   function ensureProductModal() {
@@ -188,6 +184,12 @@
       const getProductValue = (field) =>
         modal.querySelector(`[data-product-field="${field}"]`)?.value?.trim() ?? "";
 
+      const commonNameUserDefined =
+        !!modal.querySelector('[data-product-field="commonNameUserDefined"]')?.checked;
+
+      const commonName =
+        modal.querySelector('[data-product-field="commonName"]')?.value?.trim() ?? "";
+
       const payload = {
         controlTechniqueId: parseInt(row.controlTechniqueId, 10) || 0,
         isMixture: row.treatment?.controlTechnique?.isMixture ?? false,
@@ -195,14 +197,16 @@
           {
             pesticideId: parseInt(row.pesticideId, 10) || 0,
             tradeName: getProductValue("tradeName"),
-            commonName: row.pesticide?.commonName ?? "",
-            commonNameUserDefined: row.pesticide?.commonNameUserDefined ?? false,
+
+            commonName: commonNameUserDefined ? commonName : buildCommonNameFromSelectedAis(modal),
+            commonNameUserDefined: commonNameUserDefined,
+
             formulation: getProductValue("formulation"),
             epaRegistrationNumber: getProductValue("epaRegistrationNumber"),
             deleted: row.pesticide?.deleted ?? false,
             activeIngredients: (modal.__selectedActiveIngredients || []).map(ai => ({
               activeIngredientId: parseInt(ai.activeIngredientId, 10) || 0,
-              percentActiveIngredient: 0,
+              percentActiveIngredient: parseFloat(modal.querySelector(`[data-ai-percent-id="${ai.activeIngredientId}"]`)?.value) || 0,
               name: ai.name ?? null,
               eiq: ai.eiq ?? null,
               frac: ai.activeIngredientFungicide?.frac ?? null,
@@ -256,59 +260,6 @@
     modal.__rowKey = null;
   }
 
-  function wireProductAiPicker(modal) {
-    if (modal.__aiPickerBound) return;
-    modal.__aiPickerBound = true;
-
-    const search = modal.querySelector("#product-ai-search");
-    const results = modal.querySelector("#product-ai-results");
-
-    if (!search || !results) return;
-
-    search.addEventListener("input", function () {
-      renderAvailableActiveIngredients(modal, search.value);
-    });
-
-    results.addEventListener("click", async function (e) {
-      const option = e.target.closest(".product-ai-option");
-      if (!option) return;
-
-      const id = parseInt(option.dataset.activeIngredientId, 10);
-      const all = await ensureActiveIngredientOptions();
-      const ai = all.find(x => Number(x.activeIngredientId) === id);
-
-      if (!ai) return;
-
-      modal.__selectedActiveIngredients = modal.__selectedActiveIngredients || [];
-
-      const alreadySelected = modal.__selectedActiveIngredients
-        .some(x => Number(x.activeIngredientId) === id);
-
-      if (!alreadySelected) {
-        modal.__selectedActiveIngredients.push(ai);
-        modal.__selectedActiveIngredients.sort((a, b) =>
-          String(a.name || "").localeCompare(String(b.name || ""))
-        );
-      }
-
-      renderSelectedActiveIngredients(modal);
-      renderAvailableActiveIngredients(modal, search.value);
-    });
-
-    modal.addEventListener("click", function (e) {
-      const removeBtn = e.target.closest(".remove-product-ai-btn");
-      if (!removeBtn) return;
-
-      const id = parseInt(removeBtn.dataset.activeIngredientId, 10);
-
-      modal.__selectedActiveIngredients = (modal.__selectedActiveIngredients || [])
-        .filter(ai => Number(ai.activeIngredientId) !== id);
-
-      renderSelectedActiveIngredients(modal);
-      renderAvailableActiveIngredients(modal, search.value);
-    });
-  }
-
   async function ensureActiveIngredientOptions() {
     if (window.__activeIngredientOptions) {
       return window.__activeIngredientOptions;
@@ -336,6 +287,32 @@
     }
 
     list.innerHTML = selected.map(ai => `
+        <div style="border:1px solid #ddd; padding:6px; margin-bottom:6px; background:#fff;">
+            <strong>${h().escapeHtml(ai.name || "")}</strong>
+            <span style="font-size:12px; color:#666;"> AI: ${h().escapeHtml(ai.activeIngredientId)}</span>
+
+            <button type="button"
+            class="remove-product-ai-btn"
+            data-active-ingredient-id="${h().escapeHtml(ai.activeIngredientId)}"
+            style="float:right;">
+            Remove
+            </button>
+
+            <div style="margin-top:6px;">
+            <label style="display:block; font-size:12px;">Percent Active Ingredient</label>
+            <input type="number"
+                    step="0.0000001"
+                    min="0"
+                    max="100"
+                    data-ai-percent-id="${h().escapeHtml(ai.activeIngredientId)}"
+                    value="${h().escapeHtml(ai.percentActiveIngredient ?? 0)}"
+                    style="width:120px; padding:4px;">
+            <span style="font-size:12px; color:#666;">%</span>
+            </div>
+        </div>
+    `).join("");
+    /*
+    list.innerHTML = selected.map(ai => `
       <div style="border:1px solid #ddd; padding:6px; margin-bottom:6px; background:#fff;">
         <strong>${h().escapeHtml(ai.name || "")}</strong>
         <span style="font-size:12px; color:#666;"> AI: ${h().escapeHtml(ai.activeIngredientId)}</span>
@@ -347,6 +324,7 @@
         </button>
       </div>
     `).join("");
+    */
   }
 
   function renderAvailableActiveIngredients(modal, term = "") {
@@ -384,259 +362,45 @@
     `).join("");
   }
 
-  window.PesticideTableBuilderProductModal = {
-    openProductModal
-  };
-})();
-
-// =========================================================
-// PRODUCT MODAL
-// =========================================================
-/*
-async function openProductModal(row, container) {
-    const modal = ensureProductModal();
-    modal.style.display = "flex";
-
-    modal.__rowKey = h().getRowKey(row);
-    modal.__targetContainer = container;
-
-    const current = modal.querySelector("#product-modal-current");
-    current.innerHTML = `
-        <div style="margin-bottom:8px;">
-        <strong>PesticideId:</strong> ${h().escapeHtml(row.pesticideId || "")}
-        </div>
-
-        <div style="margin-bottom:8px;">
-        <label style="display:block; font-size:12px;">Trade Name</label>
-        <input type="text"
-                data-product-field="tradeName"
-                value="${h().escapeHtml(row.pesticide?.tradeName || "")}"
-                style="width:100%; padding:6px;">
-        </div>
-
-        <div style="margin-bottom:8px;">
-        <label style="display:block; font-size:12px;">EPA Registration Number</label>
-        <input type="text"
-                data-product-field="epaRegistrationNumber"
-                value="${h().escapeHtml(row.pesticide?.epaRegistrationNumber || "")}"
-                style="width:100%; padding:6px;">
-        </div>
-
-        <div style="margin-bottom:8px;">
-        <label style="display:block; font-size:12px;">Formulation</label>
-        <input type="text"
-                data-product-field="formulation"
-                value="${h().escapeHtml(row.pesticide?.formulation || "")}"
-                style="width:100%; padding:6px;">
-        </div>
-
-        <div style="margin-bottom:8px;">
-        <strong>Common Name:</strong>
-        ${h().escapeHtml(row.pesticide?.commonName || "")}
-        <div style="font-size:12px; color:#666;">Common Name editing can be added next.</div>
-        </div>
-
-        <div style="border-top:1px solid #ddd; margin-top:12px; padding-top:12px;">
-        <div style="font-weight:600; margin-bottom:8px;">Active Ingredients</div>
-
-        <label for="product-ai-search" style="display:block; font-size:12px; margin-bottom:4px;">
-            Search Active Ingredients
-        </label>
-
-        <input type="text"
-                id="product-ai-search"
-                placeholder="Type to filter active ingredients..."
-                style="width:100%; padding:6px; margin-bottom:8px;">
-
-        <div style="font-weight:600; font-size:12px; margin-bottom:4px;">
-            Available Active Ingredients
-        </div>
-
-        <div id="product-ai-results" style="max-height:180px; overflow:auto; border:1px solid #ddd; padding:6px; margin-bottom:10px;">
-            Loading active ingredients...
-        </div>
-        </div>
-    `;
-
-    modal.__selectedActiveIngredients = (row.pesticide?.activeIngredients || []).map(ai => ({
-        activeIngredientId: ai.activeIngredientId,
-        name: ai.name,
-        eiq: ai.eiq,
-        finalEiq: ai.finalEiq
-    }));
-
-    renderSelectedActiveIngredients(modal);
-
-    await ensureActiveIngredientOptions();
-    renderAvailableActiveIngredients(modal);
-
-    modal.__aiPickerBound = false;
-    wireProductAiPicker(modal);
-}
-*/
-
-function ensureProductModal() {
-    let modal = document.getElementById("product-edit-modal");
-    if (modal) return modal;
-
-    modal = document.createElement("div");
-    modal.id = "product-edit-modal";
-    modal.style.cssText = `
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.45);
-      z-index:9999;
-      align-items:center;
-      justify-content:center;
-    `;
-
-    modal.innerHTML = `
-      <div style="
-        background:#fff;
-        width:min(900px, 92vw);
-        max-height:85vh;
-        overflow:auto;
-        border-radius:8px;
-        padding:16px;
-        box-shadow:0 10px 30px rgba(0,0,0,0.2);
-      ">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <h3 style="margin:0;">Edit Product</h3>
-          <button type="button" class="close-product-modal-btn">Close</button>
-        </div>
-
-        <div id="product-modal-current" style="margin-bottom:12px;"></div>
-
-        <div style="margin-top:16px; display:flex; gap:8px;">
-          <button type="button" class="save-product-fields-btn">Save Product</button>
-          <button type="button" class="close-product-modal-btn">Cancel</button>
-        </div>
-      </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    modal.addEventListener("click", async function(e) {
-      if (e.target.closest(".close-product-modal-btn")) {
-        closeProductModal();
-        return;
-      }
-
-      const saveBtn = e.target.closest(".save-product-fields-btn");
-      if (!saveBtn) return;
-
-      const rowKey = modal.__rowKey;
-      const container = modal.__targetContainer;
-
-      if (!rowKey || !container) {
-        alert("Could not find the selected product row.");
-        return;
-      }
-
-      const row = (container.__pesticideRows || [])
-        .find(r => h().getRowKey(r) === rowKey);
-
-      if (!row) {
-        alert("Could not find product row data.");
-        return;
-      }
-
-      const getProductValue = (field) =>
-        modal.querySelector(`[data-product-field="${field}"]`)?.value?.trim() ?? "";
-
-      const payload = {
-        controlTechniqueId: parseInt(row.controlTechniqueId, 10) || 0,
-        isMixture: row.treatment?.controlTechnique?.isMixture ?? false,
-
-        pesticides: [
-          {
-            pesticideId: parseInt(row.pesticideId, 10) || 0,
-            tradeName: getProductValue("tradeName"),
-
-            // For now this preserves the existing value.
-            // Later we will update this from the manual common-name UI.
-            commonName: row.pesticide?.commonName ?? "",
-            commonNameUserDefined: row.pesticide?.commonNameUserDefined ?? false,
-
-            formulation: getProductValue("formulation"),
-            epaRegistrationNumber: getProductValue("epaRegistrationNumber"),
-            deleted: row.pesticide?.deleted ?? false,
-
-            activeIngredients: (modal.__selectedActiveIngredients || []).map(ai => ({
-              activeIngredientId: parseInt(ai.activeIngredientId, 10) || 0,
-              percentActiveIngredient: 0,
-              name: ai.name ?? null,
-              eiq: ai.eiq ?? null,
-              frac: ai.activeIngredientFungicide?.frac ?? null,
-              irac: ai.activeIngredientInsecticide?.irac ?? null,
-              groupNumber: ai.activeIngredientHerbicide?.groupNumber ?? null
-            }))
-          }
-          /*
-          {
-            pesticideId: parseInt(row.pesticideId, 10) || 0,
-            tradeName: getProductValue("tradeName"),
-            commonName: row.pesticide?.commonName ?? "",
-            commonNameUserDefined: row.pesticide?.commonNameUserDefined ?? false,
-            formulation: getProductValue("formulation"),
-            epaRegistrationNumber: getProductValue("epaRegistrationNumber"),
-            deleted: row.pesticide?.deleted ?? false
-          }*/
-        ],
-
-        biologicalControls: [],
-        culturalPractices: []
-      };
-
-      console.log("Save control technique payload:", JSON.stringify(payload, null, 2));
-
-      try {
-        saveBtn.disabled = true;
-
-        const response = await fetch("https://localhost:7144/api/Treatments/save-control-technique", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        const text = await response.text();
-
-        if (!response.ok) {
-          console.error("Save pesticide failed:", response.status, text);
-          alert("Failed to save product. Check console for details.");
-          return;
-        }
-
-        closeProductModal();
-        await h().reloadTableData(container);
-        alert("Product saved.");
-      } catch (err) {
-        console.error(err);
-        alert("Failed to save product. Check console.");
-      } finally {
-        saveBtn.disabled = false;
-      }
-    });
-
-    return modal;
-}
-
-function closeProductModal() {
-    const modal = document.getElementById("product-edit-modal");
-    if (!modal) return;
-    modal.style.display = "none";
-    modal.__selectedProduct = null;
-    modal.__rowKey = null;
-}
-
-//Add 5-1-2026
-function wireProductAiPicker(modal) {
+  //Add 5-1-2026
+  function wireProductAiPicker(modal) {
     if (modal.__aiPickerBound) return;
     modal.__aiPickerBound = true;
 
     const search = modal.querySelector("#product-ai-search");
     const results = modal.querySelector("#product-ai-results");
+
+
+    const manualCommonName = modal.querySelector('[data-product-field="commonNameUserDefined"]');
+    const commonNameInput = modal.querySelector('[data-product-field="commonName"]');
+
+    /*
+    if (manualCommonName && commonNameInput) {
+    manualCommonName.addEventListener("change", function () {
+        commonNameInput.readOnly = !manualCommonName.checked;
+
+        if (!manualCommonName.checked) {
+        commonNameInput.value = buildCommonNameFromSelectedAis(modal);
+        }
+    });
+    }*/
+    if (manualCommonName && commonNameInput) {
+        manualCommonName.addEventListener("change", function () {
+            commonNameInput.readOnly = !manualCommonName.checked;
+            if (manualCommonName.checked) {
+                commonNameInput.style.background = "#fff";
+                commonNameInput.style.color = "";
+            } 
+            else 
+            {
+                commonNameInput.style.background = "#eee";
+                commonNameInput.style.color = "#666";
+                commonNameInput.value = buildCommonNameFromSelectedAis(modal);
+            }
+        });
+    }
+
+        
 
     if (!search || !results) return;
 
@@ -669,6 +433,7 @@ function wireProductAiPicker(modal) {
       renderSelectedActiveIngredients(modal);
 
       renderAvailableActiveIngredients(modal, search.value);
+      syncCommonNamePreview(modal);
     });
 
     modal.addEventListener("click", function (e) {
@@ -682,6 +447,44 @@ function wireProductAiPicker(modal) {
 
       renderSelectedActiveIngredients(modal);
     });
+  }
+
+  function syncCommonNamePreview(modal) {
+    const manualCommonName = modal.querySelector('[data-product-field="commonNameUserDefined"]');
+    const commonNameInput = modal.querySelector('[data-product-field="commonName"]');
+
+    if (!manualCommonName || !commonNameInput) return;
+
+    if (!manualCommonName.checked) {
+        commonNameInput.value = buildCommonNameFromSelectedAis(modal);
+    }
+  }
+
+  //Added 5-5-2026
+  function buildCommonNameFromSelectedAis(modal) {
+    return (modal.__selectedActiveIngredients || [])
+        .map(ai => h().clean ? h().clean(ai.name) : String(ai.name || "").trim())
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b))
+        .join(" + ");
+  }
+
+  window.PesticideTableBuilderProductModal = {
+    openProductModal
+  };
+})();
+
+// =========================================================
+// PRODUCT MODAL
+// =========================================================
+
+/*
+function closeProductModal() {
+    const modal = document.getElementById("product-edit-modal");
+    if (!modal) return;
+    modal.style.display = "none";
+    modal.__selectedProduct = null;
+    modal.__rowKey = null;
 }
 
 //Added 5-1-2026
@@ -699,6 +502,8 @@ async function ensureActiveIngredientOptions() {
     window.__activeIngredientOptions = await response.json();
     return window.__activeIngredientOptions;
 }
+
+
 
 function renderSelectedActiveIngredients(modal) {
     const list = modal.querySelector("#product-ai-selected-list");
@@ -723,12 +528,6 @@ function renderSelectedActiveIngredients(modal) {
         </button>
       </div>
     `).join("");
-
-    /*
-    window.__activeIngredientOptions = await response.json();
-    console.log("Loaded active ingredients:", window.__activeIngredientOptions);
-    return window.__activeIngredientOptions;
-    */
 }
 
 //Added 5-5-2026
@@ -766,7 +565,7 @@ function renderAvailableActiveIngredients(modal, term = "") {
       </div>
     `).join("");
 }
-
+*/
 // =========================================================
 // HELPER
 // =========================================================
