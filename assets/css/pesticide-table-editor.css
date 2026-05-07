@@ -137,3 +137,21 @@
   margin-top: 4px;
   line-height: 1.2;
 }
+
+/*****************
+* Product Modal
+******************/
+.pesticide-input {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.pesticide-input:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(74,144,226,0.2);
+}

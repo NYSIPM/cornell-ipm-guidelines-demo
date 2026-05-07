@@ -683,7 +683,7 @@
     cells[2].innerHTML = `
       <div>${escapeHtml(row.product)}</div>
       <button type="button" class="edit-product-btn" style="margin-top:6px;">
-        Edit Product
+        Edit Control Technique
       </button>
     `;
     cells[3].innerHTML = renderRateEditor(row, container.__editMetadata);
@@ -817,7 +817,8 @@
           escapeHtml,
           clean,
           getRowKey,
-          reloadTableData
+          reloadTableData,
+          editMetadata: container.__editMetadata
         });
         return;
       }
@@ -1220,26 +1221,30 @@
 
     const selectedSiteTimingIds = getCheckedValues("siteTimingIds");
 
+    //Checks to see if it is a pesticide.
+    const hasPesticide = parseInt(row.pesticideId, 10) > 0;
+
     //I don't understand what this does?
     const parseNullableInt = (value) => {
       const n = parseInt(value, 10);
       return Number.isNaN(n) || n <= 0 ? null : n;
     };
 
-    rateBlocks.forEach(block => {
-      const get = (field) =>
-        block.querySelector(`[data-field="${field}"]`)?.value ?? "";
-
-      updatedRates.push({
-        treatmentRateId: parseInt(block.dataset.treatmentRateId, 10) || 0,
-        rateKind: "Test", //get("rateKind").trim()
-        pesticideId: parseInt(row.pesticideId, 10) || 0,
-        concentration: get("concentration").trim(),
-        amountNote: get("amountNote").trim(),
-        unitId: parseNullableInt(get("unitId")),
-        unitAreaId: parseNullableInt(get("unitAreaId")),
+    if (hasPesticide) {
+      rateBlocks.forEach(block => {
+        const get = (field) =>
+          block.querySelector(`[data-field="${field}"]`)?.value ?? "";
+        updatedRates.push({
+          treatmentRateId: parseInt(block.dataset.treatmentRateId, 10) || 0,
+          rateKind: "Test", //get("rateKind").trim()
+          pesticideId: parseInt(row.pesticideId, 10) || 0,
+          concentration: get("concentration").trim(),
+          amountNote: get("amountNote").trim(),
+          unitId: parseNullableInt(get("unitId")),
+          unitAreaId: parseNullableInt(get("unitAreaId")),
+        });
       });
-    });
+    }
 
     const payload = {
       treatmentId: parseInt(row.treatmentId, 10) || 0,
@@ -1269,25 +1274,27 @@
 
       comments: linkedComments,
 
-      pesticide: {
-        pesticideId: parseInt(row.pesticideId, 10) || 0,
-        pesticideGuideline: {
+      pesticide: hasPesticide
+      ? {
+          pesticideId: parseInt(row.pesticideId, 10) || 0,
+          pesticideGuideline: {
             conventional: getRowChecked("conventional"),
             organic: getRowChecked("organic")
           },
-        sitePesticide: {
-          siteId: parseInt(row.siteId, 10) || 0,
-          pesticideId: parseInt(row.pesticideId, 10) || 0,
-          rei: getRowField("rei").trim(),
-          reiTime: getRowField("reiTime").trim(),
-          reiReferToLabel: getRowChecked("reiReferToLabel"),
-          reiUntilDry: getRowChecked("reiUntilDry"),
-          phi: getRowField("phi").trim(),
-          phiTime: getRowField("phiTime").trim(),
-          phiReferToLabel: getRowChecked("phiReferToLabel"),
-          phiUntilDry: getRowChecked("phiUntilDry")
+          sitePesticide: {
+            siteId: parseInt(row.siteId, 10) || 0,
+            pesticideId: parseInt(row.pesticideId, 10) || 0,
+            rei: getRowField("rei").trim(),
+            reiTime: getRowField("reiTime").trim(),
+            reiReferToLabel: getRowChecked("reiReferToLabel"),
+            reiUntilDry: getRowChecked("reiUntilDry"),
+            phi: getRowField("phi").trim(),
+            phiTime: getRowField("phiTime").trim(),
+            phiReferToLabel: getRowChecked("phiReferToLabel"),
+            phiUntilDry: getRowChecked("phiUntilDry")
+          }
         }
-      }
+      : null
     };
 
     console.log("Payload JSON:\n", JSON.stringify(payload, null, 2));
