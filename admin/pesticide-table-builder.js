@@ -20,6 +20,13 @@
     return String(value ?? "").replace(/\s+/g, " ").trim();
   }
 
+  //Added 5-8-2026
+  function formatControlTechniqueName(item, typeLabel) {
+    const name = clean(item?.name);
+    if (!name) return typeLabel;
+    return `${name}`;
+  }
+
   function formatProductName(pesticide) {
     const tradeName = clean(pesticide?.tradeName);
     const commonName = clean(pesticide?.commonName);
@@ -378,7 +385,85 @@
           comments: comments
         });
       });
+
+      //Cultural Practice
+      const culturalPractices = treatment?.controlTechnique?.culturalPractices || [];
+      culturalPractices.forEach(cp => {
+        const applicationMethodText = clean(treatment?.applicationMethod?.name);
+        const siteTimingText = formatSiteTimings(treatment);
+
+        rows.push({
+          treatmentId: treatment?.treatmentId ?? "",
+          controlTechniqueId: treatment?.controlTechniqueId ?? treatment?.controlTechnique?.controlTechniqueId ?? "",
+          pesticideId: "",
+          pestId: treatment?.pestId ?? "",
+          siteId: treatment?.siteId ?? "",
+          treatment: treatment,
+          pesticide: null,
+          culturalPractice: cp,
+          biologicalControl: null,
+          controlTechniqueType: "Cultural Practice",
+
+          matchingRates: [],
+          product: formatControlTechniqueName(cp, "Cultural Practice"),
+          description: clean(cp?.description),
+
+          applicationMethod: applicationMethodText,
+          siteTimings: siteTimingText,
+          conventional: false,
+          organic: false,
+
+          rate: "",
+          rei: "",
+          phi: "",
+          resistance: "",
+          eiq: "",
+          finalEiq: "",
+          efficacy: efficacy,
+          comments: comments
+        });
+      });
+
+      //Biological Control
+      const biologicalControls = treatment?.controlTechnique?.biologicalControls || [];
+      biologicalControls.forEach(bc => {
+        const applicationMethodText = clean(treatment?.applicationMethod?.name);
+        const siteTimingText = formatSiteTimings(treatment);
+
+        rows.push({
+          treatmentId: treatment?.treatmentId ?? "",
+          controlTechniqueId: treatment?.controlTechniqueId ?? treatment?.controlTechnique?.controlTechniqueId ?? "",
+          pesticideId: "",
+          pestId: treatment?.pestId ?? "",
+          siteId: treatment?.siteId ?? "",
+          treatment: treatment,
+          pesticide: null,
+          culturalPractice: null,
+          biologicalControl: bc,
+          controlTechniqueType: "Biological Control",
+
+          matchingRates: [],
+          product: formatControlTechniqueName(bc, "Biological Control"),
+          description: clean(bc?.description),
+
+          applicationMethod: applicationMethodText,
+          siteTimings: siteTimingText,
+          conventional: false,
+          organic: false,
+
+          rate: "",
+          rei: "",
+          phi: "",
+          resistance: "",
+          eiq: "",
+          finalEiq: "",
+          efficacy: efficacy,
+          comments: comments
+        });
+      });
     });
+
+
     console.log("built rows:", rows);
     return rows;
   }
@@ -450,29 +535,39 @@
               ${escapeHtml(row.product)}${renderRestrictedUseSymbols(row.pesticide)}
             </div>
           </td>
-          <td class="data-cell rate-cell">
-            <div class="cell-text">
-              ${row.rate || ""}
-            </div>
-          </td>
 
-          <td class="data-cell rei-cell">
-            <div class="cell-text">
-              ${escapeHtml(row.rei)}
-            </div>
-          </td>
+          ${row.pesticide ? `
+            <td class="data-cell rate-cell">
+              <div class="cell-text">
+                ${row.rate || ""}
+              </div>
+            </td>
 
-          <td class="data-cell phi-cell">
-            <div class="cell-text">
-              ${escapeHtml(row.phi)}
-            </div>
-          </td>
+            <td class="data-cell rei-cell">
+              <div class="cell-text">
+                ${escapeHtml(row.rei)}
+              </div>
+            </td>
 
-          <td class="data-cell resistance-cell">
-            <div class="cell-text">
-              ${escapeHtml(row.resistance)}
-            </div>
-          </td>
+            <td class="data-cell phi-cell">
+              <div class="cell-text">
+                ${escapeHtml(row.phi)}
+              </div>
+            </td>
+
+            <td class="data-cell resistance-cell">
+              <div class="cell-text">
+                ${escapeHtml(row.resistance)}
+              </div>
+            </td>
+          ` : `
+            <td class="data-cell non-pesticide-description-cell" colspan="4">
+              <div class="cell-text">
+                <strong>${escapeHtml(row.controlTechniqueType)}:</strong>
+                ${escapeHtml(row.description) || "<em>No description</em>"}
+              </div>
+            </td>
+          `}
 
           <td class="data-cell efficacy-cell">
             <div class="cell-text">
@@ -672,12 +767,36 @@
     tr.classList.add("is-editing");
 
     const cells = tr.querySelectorAll("td");
+    if (!row.pesticide) {
+      enterNonPesticideEditMode(tr, row, container, cells);
+      return;
+    }
     if (cells.length < 8) return;
 
+    /*
     cells[0].innerHTML = `
       <button type="button" class="save-row-btn">Save</button>
       <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
     `;
+    */
+    cells[0].innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:6px; min-height:120px;">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="save-row-btn">Save</button>
+          <button type="button" class="cancel-row-btn">Cancel</button>
+        </div>
+
+        <div style="margin-top:auto;">
+          <button type="button"
+                  class="delete-row-btn"
+                  style="color:#fff; background:#a00; border:1px solid #800; padding:4px 8px;">
+            Delete
+          </button>
+        </div>
+      </div>
+    `;
+
+
     cells[1].innerHTML = renderIdBlock(row, true);
     //cells[2].innerHTML = escapeHtml(row.product);
     cells[2].innerHTML = `
@@ -686,11 +805,27 @@
         Edit Control Technique
       </button>
     `;
-    cells[3].innerHTML = renderRateEditor(row, container.__editMetadata);
+    cells[3].innerHTML = row.pesticide
+      ? renderRateEditor(row, container.__editMetadata)
+      : `<em>Not applicable</em>`;
 
-    cells[4].innerHTML = renderReiEditor(row);
-    cells[5].innerHTML = renderPhiEditor(row);
-    cells[6].innerHTML = escapeHtml(row.resistance);
+    cells[4].innerHTML = row.pesticide
+      ? renderReiEditor(row)
+      : "";
+
+    cells[5].innerHTML = row.pesticide
+      ? renderPhiEditor(row)
+      : "";
+
+    cells[6].innerHTML = row.pesticide
+      ? escapeHtml(row.resistance)
+      : escapeHtml(row.description || "");
+      
+    //cells[3].innerHTML = renderRateEditor(row, container.__editMetadata);
+    //cells[4].innerHTML = renderReiEditor(row);
+    //cells[5].innerHTML = renderPhiEditor(row);
+    //cells[6].innerHTML = escapeHtml(row.resistance);
+
     cells[7].innerHTML = renderEfficacyEditor(row, container.__editMetadata);
 
     /*
@@ -749,6 +884,72 @@
     */
   }
 
+  function enterNonPesticideEditMode(tr, row, container, cells) {
+    if (cells.length < 5) return;
+
+    cells[0].innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:6px; min-height:120px;">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="save-row-btn">Save</button>
+          <button type="button" class="cancel-row-btn">Cancel</button>
+        </div>
+        <div style="margin-top:auto;">
+          <button type="button"
+              class="delete-row-btn"
+              style="color:#fff; background:#a00; border:1px solid #800; padding:4px 8px;">
+            Delete
+          </button>
+        </div>
+      </div>
+    `;
+
+    cells[1].innerHTML = renderIdBlock(row, true);
+
+    cells[2].innerHTML = `
+      <div>${escapeHtml(row.product)}</div>
+      <button type="button" class="edit-product-btn" style="margin-top:6px;">
+        Edit Control Technique
+      </button>
+    `;
+
+    cells[3].innerHTML = `
+      <div style="font-size:12px; color:#666; margin-bottom:4px;">
+        <strong>${escapeHtml(row.controlTechniqueType || "Control Technique")}</strong>
+      </div>
+      <div style="line-height:1.3;">
+        ${escapeHtml(row.description || "") || "<em>No description</em>"}
+      </div>
+    `;
+
+    cells[4].innerHTML = renderEfficacyEditor(row, container.__editMetadata);
+
+    const miscTr = tr.nextElementSibling;
+    if (miscTr && miscTr.classList.contains("misc-row")) {
+      const miscCell = miscTr.querySelector(".misc-content-cell");
+      if (miscCell) {
+        miscCell.innerHTML = `
+          <div class="misc-edit-wrapper">
+            <div><strong>Miscellaneous</strong></div>
+            <div class="misc-edit-grid">
+              <div class="misc-edit-panel">
+                <div class="misc-edit-title">Site Timing</div>
+                ${renderSiteTimingEditor(row, container.__editMetadata)}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    const commentTr = miscTr?.nextElementSibling;
+    if (commentTr && commentTr.classList.contains("comment-row")) {
+      const commentCell = commentTr.querySelector(".comment-content-cell");
+      if (commentCell) {
+        commentCell.innerHTML = renderCommentEditor(row);
+      }
+    }
+  }
+
   function wireTableEvents(container) {
     if (!container || container.__pesticideTableEventsBound) return;
     container.__pesticideTableEventsBound = true;
@@ -757,6 +958,7 @@
       const editBtn = e.target.closest(".edit-row-btn");
       const cancelBtn = e.target.closest(".cancel-row-btn");
       const saveBtn = e.target.closest(".save-row-btn"); //Added 3/30/2026
+      const deleteBtn = e.target.closest(".delete-row-btn"); //Added 5-8-2026
       const editProductBtn = e.target.closest(".edit-product-btn"); //Added 4/7/2026 For the Modal
       const insertTreatmentBtn = e.target.closest(".insert-treatment-btn"); //For Insert Button Added 4/7/2026
       //For Comments
@@ -934,7 +1136,20 @@
           wireTableEvents(container);
         }
 
+        if (deleteBtn) {
+          const tr = deleteBtn.closest("tr");
+          if (!tr) return;
 
+          const row = container.__pesticideRows?.find(r => r.__rowElement === tr);
+
+          if (!row) {
+            alert("Could not find row data.");
+            return;
+          }
+
+          await deleteTreatmentRow(row, container);
+          return;
+        }
 
         return;
       }
@@ -2410,11 +2625,34 @@
     if (!block) return;
 
     block.outerHTML = renderExistingCommentEditorBlock(comment);
+  }
 
+  //Added 5-8-2026
+  async function deleteTreatmentRow(row, container) {
+    const treatmentId = parseInt(row.treatmentId, 10) || 0;
 
+    if (!treatmentId) {
+      alert("Cannot delete this row because it has not been saved yet.");
+      return;
+    }
 
+    if (!confirm("Mark this treatment as deleted?")) {
+      return;
+    }
 
+    const response = await fetch(`https://localhost:7144/api/Treatments/delete-row/${treatmentId}`, {
+      method: "POST"
+    });
 
+    const text = await response.text();
+
+    if (!response.ok) {
+      console.error("Delete failed:", response.status, text);
+      alert("Delete failed. Check console for details.");
+      return;
+    }
+
+    await reloadTableData(container);
   }
   
   function focusCommentSearchOption(resultsEl, commentId) {

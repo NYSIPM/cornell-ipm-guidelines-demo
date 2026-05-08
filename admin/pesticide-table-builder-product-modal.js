@@ -245,23 +245,52 @@
         if (!items.length) return "";
 
         return `
-            <div class="ct-section-card">
-            <div class="ct-section-title">Biological Controls</div>
+            <div class="ct-section-card"
+                style="border:1px solid #ccc; border-radius:6px; padding:12px; margin-top:12px; background:#fafafa;">
 
-            ${items.map((item, index) => `
-                <div class="biological-control-editor" data-biological-control-index="${index}">
-                <input type="hidden" data-field="biologicalControlId" value="${h().escapeHtml(item.biologicalControlId || 0)}">
-
-                <label>Name</label>
-                <input class="pesticide-input" data-field="name" value="${h().escapeHtml(item.name || "")}">
-
-                <label>Fact Sheet URL</label>
-                <input class="pesticide-input" data-field="factSheetUrl" value="${h().escapeHtml(item.factSheetUrl || "")}">
-
-                <label>Description</label>
-                <textarea class="pesticide-input" data-field="description" rows="3">${h().escapeHtml(item.description || "")}</textarea>
+                <div style="font-weight:600; font-size:16px; color:#666; margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid #ddd;">
+                    Biological Controls
                 </div>
-            `).join("")}
+
+                ${items.map((item, index) => `
+                    <div class="biological-control-editor"
+                        data-biological-control-index="${index}"
+                        style="border:1px solid #ddd; border-radius:6px; padding:10px; margin-bottom:10px; background:#fff;">
+
+                        <input type="hidden"
+                            data-field="biologicalControlId"
+                            value="${h().escapeHtml(item.biologicalControlId || 0)}">
+
+                        <div style="margin-bottom:8px; font-size:13px; color:#666;">
+                            <strong>BiologicalControlId:</strong>
+                            ${h().escapeHtml(item.biologicalControlId || 0)}
+                        </div>
+
+                        <div style="margin-bottom:8px;">
+                            <label style="display:block; font-weight:600; font-size:13px;">Name</label>
+                            <input class="pesticide-input"
+                                data-field="name"
+                                value="${h().escapeHtml(item.name || "")}"
+                                style="width:100%; padding:6px; box-sizing:border-box;">
+                        </div>
+
+                        <div style="margin-bottom:8px;">
+                            <label style="display:block; font-weight:600; font-size:13px;">Fact Sheet URL</label>
+                            <input class="pesticide-input"
+                                data-field="factSheetUrl"
+                                value="${h().escapeHtml(item.factSheetUrl || "")}"
+                                style="width:100%; padding:6px; box-sizing:border-box;">
+                        </div>
+
+                        <div style="margin-bottom:8px;">
+                            <label style="display:block; font-weight:600; font-size:13px;">Description</label>
+                            <textarea class="pesticide-input"
+                                    data-field="description"
+                                    rows="10"
+                                    style="width:100%; min-height:220px; padding:6px; box-sizing:border-box; resize:vertical;">${h().escapeHtml(item.description || "")}</textarea>
+                        </div>
+                    </div>
+                `).join("")}
             </div>
         `;
     }
@@ -270,20 +299,44 @@
         if (!items.length) return "";
 
         return `
-            <div class="ct-section-card">
-            <div class="ct-section-title">Cultural Practices</div>
+            <div class="ct-section-card"
+                style="border:1px solid #ccc; border-radius:6px; padding:12px; margin-top:12px; background:#fafafa;">
 
-            ${items.map((item, index) => `
-                <div class="cultural-practice-editor" data-cultural-practice-index="${index}">
-                <input type="hidden" data-field="culturalPracticeId" value="${h().escapeHtml(item.culturalPracticeId || 0)}">
-
-                <label>Name</label>
-                <input class="pesticide-input" data-field="name" value="${h().escapeHtml(item.name || "")}">
-
-                <label>Description</label>
-                <textarea class="pesticide-input" data-field="description" rows="3">${h().escapeHtml(item.description || "")}</textarea>
+                <div style="font-weight:600; font-size:16px; color:#666; margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid #ddd;">
+                    Cultural Practices
                 </div>
-            `).join("")}
+
+                ${items.map((item, index) => `
+                    <div class="cultural-practice-editor"
+                        data-cultural-practice-index="${index}"
+                        style="border:1px solid #ddd; border-radius:6px; padding:10px; margin-bottom:10px; background:#fff;">
+
+                        <input type="hidden"
+                            data-field="culturalPracticeId"
+                            value="${h().escapeHtml(item.culturalPracticeId || 0)}">
+
+                        <div style="margin-bottom:8px; font-size:13px; color:#666;">
+                            <strong>CulturalPracticeId:</strong>
+                            ${h().escapeHtml(item.culturalPracticeId || 0)}
+                        </div>
+
+                        <div style="margin-bottom:8px;">
+                            <label style="display:block; font-weight:600; font-size:13px;">Name</label>
+                            <input class="pesticide-input"
+                                data-field="name"
+                                value="${h().escapeHtml(item.name || "")}"
+                                style="width:100%; padding:6px; box-sizing:border-box;">
+                        </div>
+
+                        <div style="margin-bottom:8px;">
+                            <label style="display:block; font-weight:600; font-size:13px;">Description</label>
+                            <textarea class="pesticide-input"
+                                    data-field="description"
+                                    rows="10"
+                                    style="width:100%; min-height:220px; padding:6px; box-sizing:border-box; resize:vertical;">${h().escapeHtml(item.description || "")}</textarea>
+                        </div>
+                    </div>
+                `).join("")}
             </div>
         `;
     }
