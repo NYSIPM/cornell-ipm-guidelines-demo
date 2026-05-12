@@ -486,7 +486,16 @@
   }
 
   function renderEditButtons() {
-    return `<button type="button" class="edit-row-btn">Edit</button>`;
+    return `
+      <div style="display:flex; gap:4px; flex-wrap:wrap;">
+        <button type="button" class="edit-row-btn">Edit</button>
+        <button type="button"
+                class="delete-row-btn"
+                style="color:#a00;">
+          Remove
+        </button>
+      </div>
+    `;
   }
 
   function renderIdBlock(row, showTreatmentRateIds) {
@@ -504,13 +513,22 @@
     `;
   }
 
-  function renderTable(data) {
+  function renderTable(data, options = {}) {
     const rows = buildRows(data);
-    const AddTreatmentButton = `<div style="margin-top:12px;">
+    const AddTreatmentButton = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; margin-bottom:8px;">
         <button type="button" class="insert-treatment-btn">
           Add Treatment
         </button>
-      </div>`
+
+        <label style="font-size:12px; display:flex; align-items:center; gap:4px;">
+          <input type="checkbox"
+                class="show-deleted-toggle"
+                ${options.showDeleted ? "checked" : ""}>
+          Show Deleted
+        </label>
+      </div>
+    `;
 
     if (!rows.length) {
       return AddTreatmentButton + `<div>No pesticide rows found.</div>`;
@@ -628,11 +646,7 @@
 
     return `
       <div class="pesticide-table-wrapper">
-        <div style="margin-top:12px;">
-          <button type="button" class="insert-treatment-btn">
-            Add Treatment
-          </button>
-        </div>
+        ${AddTreatmentButton}
         <table style="border-collapse:collapse; width:100%;">
           <thead>
             <tr>
@@ -888,18 +902,9 @@
     if (cells.length < 5) return;
 
     cells[0].innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:6px; min-height:120px;">
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button type="button" class="save-row-btn">Save</button>
-          <button type="button" class="cancel-row-btn">Cancel</button>
-        </div>
-        <div style="margin-top:auto;">
-          <button type="button"
-              class="delete-row-btn"
-              style="color:#fff; background:#a00; border:1px solid #800; padding:4px 8px;">
-            Delete
-          </button>
-        </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="save-row-btn">Save</button>
+        <button type="button" class="cancel-row-btn">Cancel</button>
       </div>
     `;
 
@@ -972,6 +977,14 @@
       const editLinkedCommentBtn = e.target.closest(".edit-linked-comment-btn");
       //Added 4-28-2026
       const toggleMiscRowBtn = e.target.closest(".toggle-misc-row-btn");
+      //Added 5-12-2026
+      const showDeletedToggle = e.target.closest(".show-deleted-toggle");
+
+      if (showDeletedToggle) {
+        container.__showDeleted = showDeletedToggle.checked;
+        await reloadTableData(container);
+        return;
+      }
 
       if (toggleMiscRowBtn) {
         const miscCell = toggleMiscRowBtn.closest(".misc-content-cell");
@@ -1059,6 +1072,22 @@
         return;
       }
 
+      if (deleteBtn) {
+        const tr = deleteBtn.closest("tr.data-row");
+        if (!tr) return;
+
+        const row = findRowByElement(tr, container);
+
+        if (!row) {
+          console.error("Could not find row for delete:", tr);
+          alert("Could not find row data.");
+          return;
+        }
+
+        await deleteTreatmentRow(row, container);
+        return;
+      }
+
 
       if (removeCommentBlockBtn) {
         const block = removeCommentBlockBtn.closest(".comment-editor-block");
@@ -1134,21 +1163,6 @@
         if (container.__pesticideJson) {
           container.innerHTML = renderTable(container.__pesticideJson);
           wireTableEvents(container);
-        }
-
-        if (deleteBtn) {
-          const tr = deleteBtn.closest("tr");
-          if (!tr) return;
-
-          const row = container.__pesticideRows?.find(r => r.__rowElement === tr);
-
-          if (!row) {
-            alert("Could not find row data.");
-            return;
-          }
-
-          await deleteTreatmentRow(row, container);
-          return;
         }
 
         return;
@@ -1555,6 +1569,10 @@
     if (pestId) params.append("pestId", pestId);
     if (siteId) params.append("siteId", siteId);
 
+    if (container.__showDeleted) {
+      params.append("deletedOnly", "true");
+    }
+
     const url = `https://localhost:7144/api/Treatments/search?${params.toString()}`;
     console.log("Reloading pesticide JSON:", url);
 
@@ -1567,7 +1585,10 @@
 
     container.__pesticideJson = json;
     container.__pesticideRows = buildRows(json);
-    container.innerHTML = renderTable(json);
+    container.innerHTML = renderTable(json, {
+      showDeleted: container.__showDeleted === true
+    });
+    
     //container.__pesticideTableEventsBound = false;
     //wireTableEvents(container);
   }
@@ -2632,13 +2653,15 @@
     const treatmentId = parseInt(row.treatmentId, 10) || 0;
 
     if (!treatmentId) {
-      alert("Cannot delete this row because it has not been saved yet.");
+      alert("Cannot remove this treatment because it has not been saved yet.");
       return;
     }
 
-    if (!confirm("Mark this treatment as deleted?")) {
-      return;
-    }
+    const confirmed = confirm(
+      `Would you like to remove this treatment?\n\n${row.product || "Treatment"}`
+    );
+
+    if (!confirmed) return;
 
     const response = await fetch(`https://localhost:7144/api/Treatments/delete-row/${treatmentId}`, {
       method: "POST"
@@ -2646,9 +2669,11 @@
 
     const text = await response.text();
 
+    console.log("Delete status:", response.status);
+    console.log("Delete response:", text);
+
     if (!response.ok) {
-      console.error("Delete failed:", response.status, text);
-      alert("Delete failed. Check console for details.");
+      alert("Remove failed. Check console for details.");
       return;
     }
 
