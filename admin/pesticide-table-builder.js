@@ -485,15 +485,25 @@
     `;
   }
 
-  function renderEditButtons() {
+  function renderEditButtons(options = {}) {
+    const isDeletedView = options.showDeleted === true;
+
     return `
       <div style="display:flex; gap:4px; flex-wrap:wrap;">
         <button type="button" class="edit-row-btn">Edit</button>
-        <button type="button"
-                class="delete-row-btn"
-                style="color:#a00;">
-          Remove
-        </button>
+
+        ${isDeletedView
+          ? `<button type="button"
+                    class="restore-row-btn"
+                    style="color:#006400;">
+              Restore
+            </button>`
+          : `<button type="button"
+                    class="delete-row-btn"
+                    style="color:#a00;">
+              Remove
+            </button>`
+        }
       </div>
     `;
   }
@@ -543,7 +553,7 @@
           data-pest-id="${escapeHtml(row.pestId)}"
           data-site-id="${escapeHtml(row.siteId)}">
           <td rowspan="3" class="edit-cell">
-            ${renderEditButtons()}
+            ${renderEditButtons(options)}
           </td>
           <td rowspan="3" class="id-cell">
             ${renderIdBlock(row, true)}
@@ -964,6 +974,7 @@
       const cancelBtn = e.target.closest(".cancel-row-btn");
       const saveBtn = e.target.closest(".save-row-btn"); //Added 3/30/2026
       const deleteBtn = e.target.closest(".delete-row-btn"); //Added 5-8-2026
+      const restoreBtn = e.target.closest(".restore-row-btn"); //Added 5-13-2026
       const editProductBtn = e.target.closest(".edit-product-btn"); //Added 4/7/2026 For the Modal
       const insertTreatmentBtn = e.target.closest(".insert-treatment-btn"); //For Insert Button Added 4/7/2026
       //For Comments
@@ -1088,6 +1099,21 @@
         return;
       }
 
+      if (restoreBtn) {
+        const tr = restoreBtn.closest("tr.data-row");
+        if (!tr) return;
+
+        const row = findRowByElement(tr, container);
+
+        if (!row) {
+          console.error("Could not find row for restore:", tr);
+          alert("Could not find row data.");
+          return;
+        }
+
+        await restoreTreatmentRow(row, container);
+        return;
+      }
 
       if (removeCommentBlockBtn) {
         const block = removeCommentBlockBtn.closest(".comment-editor-block");
@@ -2674,6 +2700,38 @@
 
     if (!response.ok) {
       alert("Remove failed. Check console for details.");
+      return;
+    }
+
+    await reloadTableData(container);
+  }
+
+  //Added 5-13-2026
+  async function restoreTreatmentRow(row, container) {
+    const treatmentId = parseInt(row.treatmentId, 10) || 0;
+
+    if (!treatmentId) {
+      alert("Cannot restore this treatment because it does not have a valid TreatmentId.");
+      return;
+    }
+
+    const confirmed = confirm(
+      `Would you like to restore this treatment?\n\n${row.product || "Treatment"}`
+    );
+
+    if (!confirmed) return;
+
+    const response = await fetch(`https://localhost:7144/api/Treatments/restore-row/${treatmentId}`, {
+      method: "POST"
+    });
+
+    const text = await response.text();
+
+    console.log("Restore status:", response.status);
+    console.log("Restore response:", text);
+
+    if (!response.ok) {
+      alert("Restore failed. Check console for details.");
       return;
     }
 
