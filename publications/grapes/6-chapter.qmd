@@ -1,5 +1,17 @@
 ---
 title: 6 Chapter
-date: 2026-01-12T15:47:00.000-05:00
+date: 2026-01-15T10:54:00.000-05:00
 ---
-Here is some blank content for 6
+# 6.1 Introduction
+
+Weeds are part of the vineyard ecosystem. Weed management decisions are based on balancing the positive and
+negative aspects of weed growth in the vineyard. Weeds can compete for water and nutrients, reducing vine growth; contaminate mechanically harvested fruit; provide alternate hosts for vineyard pests; and interfere with vineyard operations. Weed growth can also alter the microclimate around vines, leading to higher disease pressure and increasing the risk of spring frost. Managing weed or cover crop growth in row middles can be a powerful tool for managing overly vigorous vines, minimizing erosion, and improving equipment access in
+wet seasons. Weed management practices can have negative impacts on grapes if those strategies cause direct damage to the vines.
+
+This portion of the guide primarily addresses chemical methods to control weeds in vineyards. We have attempted to include all herbicides labeled for use in grapes even though some are not commonly used in eastern United States vineyards. Not all products or use patterns are labelled for use in each state or in every region of the same
+state. Registrations may change, so product users should always rely on the most up to date labels for use recommendations. Herbicides are listed in the sections, “preemergence herbicides,” “postemergence herbicides,” and “herbicides for nonbearing vineyards.” Herbicides that are registered for vineyard use and may have applicability under specific circumstances are listed in the section, “specialty use herbicides.”
+
+Cultivation is sometimes used as a weed management tool in vineyards. Low vine size restricts productivity of
+own-rooted *Vitis labruscana* varieties such as ‘Concord’ that generally have shallow root systems. Effective herbicide use has been shown to increase vine size and subsequent yields as compared with under-the-row cultivation, but this may be less of a concern when deep-rooted rootstocks are used, when vines are overly vigorous, or when maximum yields are not desired. Under trellis mowing and growing cover crops under the row are currently being researched in New York and Virginia. These methods might also be considered where vine growth is overly vigorous.
+
+Cultivation and organic mulches can also be used as tools for row middle management. Excessive cultivation can lead to undesirable consequences such as soil erosion, reduced soil organic matter, and breakdown in soil structure resulting in compaction and reduced permeability. Recently cultivated soil can restrict equipment mobility needed for critical vineyard operations such as timely pesticide applications and mechanical harvest. If cultivation is used for row middle management it is suggested that negative effects be limited by not cultivating more often than necessary to suppress weed growth, to shallow (1-2") depths only, and with the goal of reducing, rather than eliminating, weed or cover crop growth. Fall planting of ryegrass or other cover crops can be used in conjunction with cultivation to provide winter cover. Organic mulches are most effective where soil moisture and fertility are low and where low vine size restricts vineyard productivity.
