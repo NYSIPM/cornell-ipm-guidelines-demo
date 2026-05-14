@@ -5,6 +5,7 @@
         return helpers;
     }
 
+    //Nothing New here.
     async function openProductModal(row, container, injectedHelpers) {
         helpers = injectedHelpers || helpers;
 
