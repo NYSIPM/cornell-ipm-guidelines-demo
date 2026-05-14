@@ -526,12 +526,40 @@
   function renderTable(data, options = {}) {
     const rows = buildRows(data);
     const AddTreatmentButton = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; margin-bottom:8px;">
+      <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          margin-top:12px;
+          margin-bottom:8px;
+          gap:12px;
+          flex-wrap:wrap;
+      ">
         <button type="button" class="insert-treatment-btn">
           Add Treatment
         </button>
 
-        <label style="font-size:12px; display:flex; align-items:center; gap:4px;">
+        ${options.showDeleted ? `
+          <div style="
+              border:1px solid #b36b00;
+              background:#fff4e5;
+              padding:3px 10px;
+              border-radius:4px;
+              font-size:12px;
+              font-weight:600;
+              color:#7a4b00;
+          ">
+            Viewing Deleted Treatments - Use Restore to bring one back.
+          </div>
+        ` : `<div></div>`}
+
+        <label style="
+            font-size:12px;
+            display:flex;
+            align-items:center;
+            gap:4px;
+            white-space:nowrap;
+        ">
           <input type="checkbox"
                 class="show-deleted-toggle"
                 ${options.showDeleted ? "checked" : ""}>
@@ -657,7 +685,10 @@
     return `
       <div class="pesticide-table-wrapper">
         ${AddTreatmentButton}
-        <table style="border-collapse:collapse; width:100%;">
+        <table style="
+            border-collapse:collapse;
+            width:100%;
+            border:${options.showDeleted ? "2px solid #b36b00" : "1px solid #ccc"};">
           <thead>
             <tr>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Edit</th>
