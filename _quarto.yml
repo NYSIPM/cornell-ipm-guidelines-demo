@@ -36,10 +36,12 @@ format:
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <script src="/js/auth.js"></script>
 
+        
         <link rel="stylesheet" href="/assets/css/pesticide-table.css">
         <script src="/assets/js/pesticide-table-builder.js"></script>
         <script src="/assets/js/pesticide-table-public.js"></script>
         <link rel="stylesheet" href="/assets/css/pesticide-table-editor.css">
+        <link rel="stylesheet" href="/assets/css/pesticide-table-public.css">
 
         
     include-after-body:

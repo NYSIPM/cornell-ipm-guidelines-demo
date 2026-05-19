@@ -835,19 +835,9 @@
     `;
     */
     cells[0].innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:6px; min-height:120px;">
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button type="button" class="save-row-btn">Save</button>
-          <button type="button" class="cancel-row-btn">Cancel</button>
-        </div>
-
-        <div style="margin-top:auto;">
-          <button type="button"
-                  class="delete-row-btn"
-                  style="color:#fff; background:#a00; border:1px solid #800; padding:4px 8px;">
-            Delete
-          </button>
-        </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="save-row-btn">Save</button>
+        <button type="button" class="cancel-row-btn">Cancel</button>
       </div>
     `;
 
