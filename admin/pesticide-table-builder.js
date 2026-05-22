@@ -12,6 +12,44 @@
       .replace(/'/g, "&#039;");
   }
 
+  //Added 5/22/2026
+  function isRecentlyChanged(dateLastModified, changedSince) {
+    if (!dateLastModified || !changedSince) return false;
+
+    const modifiedDate = new Date(dateLastModified);
+    const sinceDate = new Date(changedSince);
+
+    if (Number.isNaN(modifiedDate.getTime()) || Number.isNaN(sinceDate.getTime())) {
+      return false;
+    }
+
+    return modifiedDate >= sinceDate;
+  }
+
+  function getWasChangedSince(dateValue, changedSince) {
+    if (!dateValue || !changedSince) return false;
+
+    const modified = new Date(dateValue);
+    const since = new Date(changedSince);
+
+    if (Number.isNaN(modified.getTime()) || Number.isNaN(since.getTime())) {
+      return false;
+    }
+
+    return modified >= since;
+  }
+
+  //Added 5/22/2026
+  function renderModifiedDate(row) {
+    if (!row?.dateLastModified) return "";
+
+    return `
+      <div style="font-size:11px; color:#999; margin-top:4px;">
+        Modified: ${escapeHtml(row.dateLastModified)}
+      </div>
+    `;
+  }
+
   function unique(values) {
     return [...new Set((values || []).filter(Boolean))];
   }
@@ -331,7 +369,7 @@
   // 3. ROW BUILDING / NORMAL TABLE RENDER
   // =========================================================
 
-  function buildRows(data) {
+  function buildRows(data, options = {}) {
     const treatments = Array.isArray(data) ? data : [data];
     const rows = [];
 
@@ -342,6 +380,10 @@
       const comments = formatComments(treatment);
       const pesticides = treatment?.controlTechnique?.pesticides || [];
       const rates = treatment?.treatmentRates || [];
+      const treatmentChanged = isRecentlyChanged(
+          treatment?.dateLastModified,
+          options.changedSince
+        );
 
       pesticides.forEach(pesticide => {
         const pesticideId = pesticide?.pesticideId;
@@ -349,7 +391,6 @@
         const rateText = unique(matchingRates.map(formatRate).filter(Boolean)).join("<br>");
         const applicationMethodText = clean(treatment?.applicationMethod?.name);
         const siteTimingText = formatSiteTimings(treatment);
-
         
         rows.push({
           treatmentId: treatment?.treatmentId ?? "",
@@ -357,6 +398,10 @@
           pesticideId: pesticideId ?? "",
           pestId: treatment?.pestId ?? "",
           siteId: treatment?.siteId ?? "",
+          dateLastModified: treatment?.dateLastModified ?? "", //Change Logs
+          changedSince: options.changedSince || "",
+          wasRecentlyChanged: isRecentlyChanged(treatment?.dateLastModified, options.changedSince),
+          treatmentChanged: treatmentChanged,
           treatment: treatment,
           pesticide: pesticide,
           matchingRates: matchingRates,
@@ -398,6 +443,10 @@
           pesticideId: "",
           pestId: treatment?.pestId ?? "",
           siteId: treatment?.siteId ?? "",
+          dateLastModified: treatment?.dateLastModified ?? "",
+          changedSince: options.changedSince || "",
+          wasRecentlyChanged: isRecentlyChanged(treatment?.dateLastModified, options.changedSince),
+          treatmentChanged: treatmentChanged,
           treatment: treatment,
           pesticide: null,
           culturalPractice: cp,
@@ -436,6 +485,10 @@
           pesticideId: "",
           pestId: treatment?.pestId ?? "",
           siteId: treatment?.siteId ?? "",
+          dateLastModified: treatment?.dateLastModified ?? "",
+          changedSince: options.changedSince || "",
+          wasRecentlyChanged: isRecentlyChanged(treatment?.dateLastModified, options.changedSince),
+          treatmentChanged: treatmentChanged,
           treatment: treatment,
           pesticide: null,
           culturalPractice: null,
@@ -524,7 +577,7 @@
   }
 
   function renderTable(data, options = {}) {
-    const rows = buildRows(data);
+    const rows = buildRows(data, options);
     const AddTreatmentButton = `
       <div style="
           display:flex;
@@ -593,9 +646,11 @@
           </td>
 
           ${row.pesticide ? `
-            <td class="data-cell rate-cell">
+            <td class="data-cell rate-cell"
+              style="${row.treatmentChanged ? 'background:#fff4b8;' : ''}"
               <div class="cell-text">
                 ${row.rate || ""}
+                ${row.treatmentChanged ? renderModifiedDate(row) : ""}
               </div>
             </td>
 
@@ -625,9 +680,11 @@
             </td>
           `}
 
-          <td class="data-cell efficacy-cell">
+          <td class="data-cell efficacy-cell"
+            style="${row.treatmentChanged ? 'background:#fff4b8;' : ''}"
             <div class="cell-text">
               ${escapeHtml(row.efficacy)}
+              ${row.treatmentChanged ? renderModifiedDate(row) : ""}
             </div>
           </td>
       </tr>
@@ -729,14 +786,44 @@
           <strong>TreatmentRateId:</strong> 0
         </div>
 
+        <!--
         <div style="margin-bottom:6px;">
           <label style="display:block; font-size:12px;">RateKind</label>
           <input type="text" data-field="rateKind" value="Primary" style="width:100%;">
         </div>
+        -->
 
-        <div style="margin-bottom:6px;">
-          <label style="display:block; font-size:12px;">Concentration</label>
-          <input type="text" data-field="concentration" value="" style="width:100%;">
+        <div style="
+            display:grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap:8px;
+            align-items:end;
+            margin-bottom:6px;">
+          <div>
+            <label style="display:block; font-size:12px;">
+              Concentration
+            </label>
+            <input type="text"
+                  data-field="concentration"
+                  value="${escapeHtml(rate.concentration || "")}"
+                  style="width:100%;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px;">
+              UnitId
+            </label>
+            <select data-field="unitId" style="width:100%;">
+              ${renderSelectOptions(units, rate.unit?.unitId ?? null, "-")}
+            </select>
+          </div>
+          <div>
+            <label style="display:block; font-size:12px;">
+              UnitAreaId
+            </label>
+            <select data-field="unitAreaId" style="width:100%;">
+              ${renderSelectOptions(unitAreas, rate.unitArea?.unitAreaId ?? null, "-")}
+            </select>
+          </div>
         </div>
 
         <div style="margin-bottom:6px;">
@@ -744,19 +831,6 @@
           <input type="text" data-field="amountNote" value="" style="width:100%;">
         </div>
 
-        <div style="margin-bottom:6px;">
-          <label style="display:block; font-size:12px;">UnitId</label>
-          <select data-field="unitId" style="width:100%;">
-            ${renderSelectOptions(units, null, "-- Select Unit --")}
-          </select>
-        </div>
-
-        <div>
-          <label style="display:block; font-size:12px;">UnitAreaId</label>
-          <select data-field="unitAreaId" style="width:100%;">
-            ${renderSelectOptions(unitAreas, null, "-- Select Unit Area --")}
-          </select>
-        </div>
       </div>
     `;
   }
@@ -769,8 +843,10 @@
 
       <div style="font-size:12px; color:#666; margin-bottom:6px;">
         <strong>TreatmentRateId:</strong> ${escapeHtml(rate.treatmentRateId ?? 0)}
+        ${row.treatmentChanged ? renderModifiedDate(row) : ""}
       </div>
 
+      <!--
       <div style="margin-bottom:6px;">
         <label style="display:block; font-size:12px;">RateKind</label>
         <input type="text"
@@ -778,13 +854,36 @@
               value="${escapeHtml(rate.rateKind || "")}"
               style="width:100%;">
       </div>
+      -->
 
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">Concentration</label>
-        <input type="text"
-              data-field="concentration"
-              value="${escapeHtml(rate.concentration || "")}"
-              style="width:100%;">
+      
+      <div style="
+          display:grid;
+          grid-template-columns: 1.3fr 1fr 2fr;
+          gap:8px;
+          align-items:end;
+          margin-bottom:6px;">
+        <div>
+          <label style="display:block; font-size:12px;">Concentration</label>
+          <input type="text"
+                data-field="concentration"
+                value="${escapeHtml(rate.concentration || "")}"
+                style="width:100%;">
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px;">UnitId</label>
+          <select data-field="unitId" style="width:100%;">
+            ${renderSelectOptions(units, rate.unit?.unitId ?? null, "-")}
+          </select>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px;">UnitAreaId</label>
+          <select data-field="unitAreaId" style="width:100%;">
+            ${renderSelectOptions(unitAreas, rate.unitArea?.unitAreaId ?? null, "-")}
+          </select>
+        </div>
       </div>
 
       <div style="margin-bottom:6px;">
@@ -795,19 +894,6 @@
               style="width:100%;">
       </div>
 
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">UnitId</label>
-        <select data-field="unitId" style="width:100%;">
-          ${renderSelectOptions(units, rate.unit?.unitId ?? null, "-")}
-        </select>
-      </div>
-
-      <div>
-        <label style="display:block; font-size:12px;">UnitAreaId</label>
-        <select data-field="unitAreaId" style="width:100%;">
-          ${renderSelectOptions(unitAreas, rate.unitArea?.unitAreaId ?? null, "-")}
-        </select>
-      </div>
     </div>
   `).join("");
 }
