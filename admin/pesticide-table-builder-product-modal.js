@@ -5,12 +5,100 @@
         return helpers;
     }
 
+    //New Create Product Added 5/26/2026
+    async function openProductModalForCreate(container, injectedHelpers, initialValues = {}) {
+        helpers = injectedHelpers || helpers;
+
+        const modal = ensureProductModal();
+        modal.style.display = "flex";
+
+        modal.__mode = "create";
+        modal.__rowKey = null;
+        modal.__targetContainer = container;
+
+        const current = modal.querySelector("#product-modal-current");
+        const tradeName = initialValues.tradeName || "";
+
+        const fakeRow = {
+            controlTechniqueId: 0,
+            pesticideId: 0,
+            treatment: {
+                controlTechnique: {
+                    controlTechniqueId: 0,
+                    isMixture: false,
+                    pesticides: [
+                        {
+                            pesticideId: 0,
+                            tradeName: tradeName,
+                            commonName: "",
+                            commonNameUserDefined: false,
+                            formulation: "",
+                            epaRegistrationNumber: "",
+                            deleted: false,
+                            activeIngredients: [],
+                            restrictedUse: []
+                        }
+                    ],
+                    biologicalControls: [],
+                    culturalPractices: []
+                }
+            },
+            pesticide: {
+                pesticideId: 0,
+                tradeName: tradeName,
+                commonName: "",
+                commonNameUserDefined: false,
+                formulation: "",
+                epaRegistrationNumber: "",
+                deleted: false,
+                activeIngredients: [],
+                restrictedUse: []
+            }
+        };
+
+        modal.__createRow = fakeRow;
+
+        const controlTechnique = fakeRow.treatment.controlTechnique;
+        const pesticides = controlTechnique.pesticides || [];
+
+        modal.__pesticides = pesticides;
+        modal.__selectedActiveIngredientsByPesticide = {};
+        modal.__selectedRestrictedUseIdsByPesticide = {};
+
+        pesticides.forEach((pesticide, index) => {
+            modal.__selectedActiveIngredientsByPesticide[index] = [];
+            modal.__selectedRestrictedUseIdsByPesticide[index] = [];
+        });
+
+        current.innerHTML = `
+            <div style="margin-bottom:6px; font-size:16px; color:#666;">
+                <strong>New Control Technique</strong>
+            </div>
+
+            ${pesticides.map((p, i) => renderPesticideEditor(p, i)).join("")}
+        `;
+
+        await ensureActiveIngredientOptions();
+
+        pesticides.forEach((pesticide, index) => {
+            renderSelectedActiveIngredients(modal, index);
+            renderAvailableActiveIngredients(modal, "", index);
+            syncCommonNamePreview(modal, index);
+        });
+
+        modal.__aiPickerBound = false;
+        wireProductAiPicker(modal);
+    }
+
     //Nothing New here.
     async function openProductModal(row, container, injectedHelpers) {
         helpers = injectedHelpers || helpers;
 
         const modal = ensureProductModal();
         modal.style.display = "flex";
+
+        modal.__mode = "edit";
+        modal.__createRow = null;
 
         modal.__rowKey = h().getRowKey(row);
         modal.__targetContainer = container;
@@ -385,6 +473,7 @@
         const saveBtn = e.target.closest(".save-product-fields-btn");
         if (!saveBtn) return;
 
+        /*
         const rowKey = modal.__rowKey;
         const container = modal.__targetContainer;
 
@@ -399,6 +488,35 @@
         if (!row) {
             alert("Could not find product row data.");
             return;
+        }
+        */
+
+        const container = modal.__targetContainer;
+
+        if (!container) {
+            alert("Could not find the target table.");
+            return;
+        }
+
+        let row = null;
+
+        if (modal.__mode === "create") {
+            row = modal.__createRow;
+        } else {
+            const rowKey = modal.__rowKey;
+
+            if (!rowKey) {
+                alert("Could not find the selected product row.");
+                return;
+            }
+
+            row = (container.__pesticideRows || [])
+                .find(r => h().getRowKey(r) === rowKey);
+
+            if (!row) {
+                alert("Could not find product row data.");
+                return;
+            }
         }
 
         const getProductValue = (field) =>
@@ -532,10 +650,56 @@
             alert("Failed to save product. Check console for details.");
             return;
             }
+            
+            //Added 5/27/2026
+            const saved = text ? JSON.parse(text) : {};
+            if (modal.__mode === "create") {
+                const firstPesticidePayload = pesticidePayloads[0] || null;
+                const firstPesticideId = saved.pesticideIds?.[0] || 0;
 
+                const selectedCt = {
+                    controlTechniqueId: saved.controlTechniqueId || 0,
+                    isMixture: saved.isMixture || false,
+                    displayName:
+                        firstPesticidePayload?.tradeName ||
+                        firstPesticidePayload?.commonName ||
+                        "New Control Technique",
+
+                    pesticides: firstPesticidePayload ? [
+                        {
+                            pesticideId: firstPesticideId,
+                            tradeName: firstPesticidePayload.tradeName || "",
+                            commonName: firstPesticidePayload.commonName || "",
+                            formulation: firstPesticidePayload.formulation || "",
+                            epaRegistrationNumber: firstPesticidePayload.epaRegistrationNumber || "",
+                            activeIngredients: firstPesticidePayload.activeIngredients || [],
+                            restrictedUse: firstPesticidePayload.restrictedUse || [],
+                            sitePesticide: []
+                        }
+                    ] : [],
+
+                    biologicalControls: [],
+                    culturalPractices: []
+                };
+
+                closeProductModal();
+
+                if (h().insertNewTreatmentRow) {
+                    h().insertNewTreatmentRow(selectedCt, container);
+                } else {
+                    await h().reloadTableData(container);
+                }
+
+                alert("Control Technique created. Finish the Treatment row and click Save.");
+                return;
+            }
             closeProductModal();
             await h().reloadTableData(container);
             alert("Product saved.");
+
+            //closeProductModal();
+            //await h().reloadTableData(container);
+            //alert("Product saved.");
         } catch (err) {
             console.error(err);
             alert("Failed to save product. Check console.");
@@ -887,7 +1051,8 @@
     }
 
     window.PesticideTableBuilderProductModal = {
-        openProductModal
+        openProductModal,
+        openProductModalForCreate
     };
 })();
 

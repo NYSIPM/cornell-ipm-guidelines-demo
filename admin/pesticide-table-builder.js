@@ -39,13 +39,34 @@
     return modified >= since;
   }
 
+  //5/26/2026
+  function formatModifiedDate(dateValue) {
+    if (!dateValue) return "";
+
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) {
+      return String(dateValue);
+    }
+
+    return date.toLocaleString("en-US", {
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    });
+  }
+
+
   //Added 5/22/2026
   function renderModifiedDate(row) {
     if (!row?.dateLastModified) return "";
 
     return `
       <div style="font-size:11px; color:#999; margin-top:4px;">
-        Modified: ${escapeHtml(row.dateLastModified)}
+        Modified: ${escapeHtml(formatModifiedDate(row.dateLastModified))}
       </div>
     `;
   }
@@ -1717,9 +1738,13 @@
     const json = await response.json();
 
     container.__pesticideJson = json;
-    container.__pesticideRows = buildRows(json);
+    container.__pesticideRows = buildRows(json, {
+      changedSince: container.__changedSince || ""
+    });
+
     container.innerHTML = renderTable(json, {
-      showDeleted: container.__showDeleted === true
+      showDeleted: container.__showDeleted === true,
+      changedSince: container.__changedSince || ""
     });
     
     //container.__pesticideTableEventsBound = false;
@@ -1941,8 +1966,34 @@
       option.style.borderColor = "#66a3ff";
     });
 
-    showCreateBtn.addEventListener("click", function () {
-      createForm.style.display = "block";
+    //showCreateBtn.addEventListener("click", function () {
+      //createForm.style.display = "block";
+    //});
+    showCreateBtn.addEventListener("click", async function () {
+      const container = modal.__targetContainer;
+      const searchTerm = searchBox.value.trim();
+
+      if (!window.PesticideTableBuilderProductModal?.openProductModalForCreate) {
+        alert("Product modal create function is not loaded.");
+        return;
+      }
+
+      closeControlTechniqueModal();
+
+      await window.PesticideTableBuilderProductModal.openProductModalForCreate(
+        container,
+        {
+          escapeHtml,
+          clean,
+          getRowKey,
+          reloadTableData,
+          insertNewTreatmentRow,
+          editMetadata: container.__editMetadata
+        },
+        {
+          tradeName: searchTerm
+        }
+      );
     });
 
     cancelCreateBtn.addEventListener("click", function () {

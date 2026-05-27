@@ -424,8 +424,8 @@
         console.log("Pesticide JSON:", json);
 
         node.__pesticideRows = window.PesticideTableBuilder.buildRows(json);
-        node.__pesticideJson = json;
         node.__changedSince = changedSince;
+        node.__pesticideJson = json;
 
         const html = window.PesticideTableBuilder.renderTable(json, {
           changedSince: changedSince
