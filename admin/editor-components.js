@@ -5,7 +5,7 @@
   // ```{=html}
   // <table>...</table>
   // ```
-  const pattern = /^```{=html}\s*\n([\s\S]*?<table[\s\S]*?<\/table>[\s\S]*?)\n```\s*$/m;
+  const pattern = /^```{=html}\s*\n([\s\S]*?<table[\s\S]*?<\/table>[\s\S]*?)\n```\s*$/;
 
   CMS.registerEditorComponent({
     id: "html-table",

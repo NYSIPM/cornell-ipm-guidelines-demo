@@ -394,8 +394,6 @@
     const treatments = Array.isArray(data) ? data : [data];
     const rows = [];
 
-    console.log("buildRows input:", treatments);
-
     treatments.forEach(treatment => {
       const efficacy = clean(treatment?.efficacy?.name);
       const comments = formatComments(treatment);
@@ -537,8 +535,6 @@
       });
     });
 
-
-    console.log("built rows:", rows);
     return rows;
   }
 
@@ -667,8 +663,7 @@
           </td>
 
           ${row.pesticide ? `
-            <td class="data-cell rate-cell"
-              style="${row.treatmentChanged ? 'background:#fff4b8;' : ''}"
+            <td class="data-cell rate-cell" style="${row.treatmentChanged ? 'background:#fff4b8;' : ''}">
               <div class="cell-text">
                 ${row.rate || ""}
                 ${row.treatmentChanged ? renderModifiedDate(row) : ""}
@@ -702,7 +697,7 @@
           `}
 
           <td class="data-cell efficacy-cell"
-            style="${row.treatmentChanged ? 'background:#fff4b8;' : ''}"
+            style="${row.treatmentChanged ? 'background:#fff4b8;' : ''}">
             <div class="cell-text">
               ${escapeHtml(row.efficacy)}
               ${row.treatmentChanged ? renderModifiedDate(row) : ""}
@@ -798,63 +793,54 @@
 
     //If Not Treatment Rates Exist.
     if (!rates.length) {
-    return `
-      <div class="rate-editor-block"
-          data-treatment-rate-id="0"
-          style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
+      return `
+        <div class="rate-editor-block"
+            data-treatment-rate-id="0"
+            style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
 
-        <div style="font-size:12px; color:#666; margin-bottom:6px;">
-          <strong>TreatmentRateId:</strong> 0
-        </div>
+          <div style="font-size:12px; color:#666; margin-bottom:6px;">
+            <strong>TreatmentRateId:</strong> 0
+          </div>
 
-        <!--
-        <div style="margin-bottom:6px;">
-          <label style="display:block; font-size:12px;">RateKind</label>
-          <input type="text" data-field="rateKind" value="Primary" style="width:100%;">
-        </div>
-        -->
+          <div style="
+              display:grid;
+              grid-template-columns: 1.3fr 1fr 2fr;
+              gap:8px;
+              align-items:end;
+              margin-bottom:6px;">
+            <div>
+              <label style="display:block; font-size:12px;">Concentration</label>
+              <input type="text"
+                    data-field="concentration"
+                    value=""
+                    style="width:100%;">
+            </div>
 
-        <div style="
-            display:grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap:8px;
-            align-items:end;
-            margin-bottom:6px;">
-          <div>
-            <label style="display:block; font-size:12px;">
-              Concentration
-            </label>
+            <div>
+              <label style="display:block; font-size:12px;">UnitId</label>
+              <select data-field="unitId" style="width:100%;">
+                ${renderSelectOptions(units, null, "-")}
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block; font-size:12px;">UnitAreaId</label>
+              <select data-field="unitAreaId" style="width:100%;">
+                ${renderSelectOptions(unitAreas, null, "-")}
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:6px;">
+            <label style="display:block; font-size:12px;">Amount Note</label>
             <input type="text"
-                  data-field="concentration"
-                  value="${escapeHtml(rate.concentration || "")}"
+                  data-field="amountNote"
+                  value=""
                   style="width:100%;">
           </div>
-          <div>
-            <label style="display:block; font-size:12px;">
-              UnitId
-            </label>
-            <select data-field="unitId" style="width:100%;">
-              ${renderSelectOptions(units, rate.unit?.unitId ?? null, "-")}
-            </select>
-          </div>
-          <div>
-            <label style="display:block; font-size:12px;">
-              UnitAreaId
-            </label>
-            <select data-field="unitAreaId" style="width:100%;">
-              ${renderSelectOptions(unitAreas, rate.unitArea?.unitAreaId ?? null, "-")}
-            </select>
-          </div>
         </div>
-
-        <div style="margin-bottom:6px;">
-          <label style="display:block; font-size:12px;">Amount Note</label>
-          <input type="text" data-field="amountNote" value="" style="width:100%;">
-        </div>
-
-      </div>
-    `;
-  }
+      `;
+    }
 
   return rates.map((rate, index) => `
     <div class="rate-editor-block"
@@ -1747,8 +1733,8 @@
       changedSince: container.__changedSince || ""
     });
     
-    //container.__pesticideTableEventsBound = false;
-    //wireTableEvents(container);
+    container.__pesticideTableEventsBound = false;
+    wireTableEvents(container);
   }
 
   // =========================================================
@@ -2115,7 +2101,6 @@
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Edit</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Id</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Product</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Site Timing</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">Rate</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">REI</th>
               <th style="border:1px solid #ccc; padding:6px; text-align:left;">PHI</th>
@@ -2131,10 +2116,26 @@
     `;
   }
 
-  //Add 4-10-2026
-  function renderRowsFromStoredState(container) {
+    //Add 4-10-2026
+    /*
+    function renderRowsFromStoredState(container) {
       const rows = container.__pesticideRows || [];
       container.innerHTML = renderRowsTable(rows);
+      container.__pesticideTableEventsBound = false;
+      wireTableEvents(container);
+    }*/
+
+    //Added 5/27/2026
+    function renderRowsFromStoredState(container) {
+      container.innerHTML = renderTable(container.__pesticideJson || [], {
+        showDeleted: container.__showDeleted === true,
+        changedSince: container.__changedSince || ""
+      });
+
+      container.__pesticideRows = buildRows(container.__pesticideJson || [], {
+        changedSince: container.__changedSince || ""
+      });
+
       container.__pesticideTableEventsBound = false;
       wireTableEvents(container);
     }
@@ -2256,18 +2257,57 @@
       comments: ""
     };
 
-    if (!container.__pesticideRows) {
-      container.__pesticideRows = [];
-    }
+    const tempTreatment = {
+      treatmentId: 0,
+      controlTechniqueId: selectedCt.controlTechniqueId ?? 0,
+      pestId,
+      siteId,
+      guidelineId,
+      deleted: false,
+      applicationMethodId: null,
+      efficacyId: null,
+      dateLastModified: null,
+      comments: [],
+      treatmentRates: [],
+      siteTimings: [],
+      siteHarvestPeriods: [],
+      pestLifeCycles: [],
+      efficacyComment: null,
 
-    container.__pesticideRows.unshift(newRow);
+      controlTechnique: {
+        controlTechniqueId: selectedCt.controlTechniqueId ?? 0,
+        isMixture: selectedCt.isMixture ?? false,
+        pesticides: selectedCt.pesticides || [],
+        biologicalControls: selectedCt.biologicalControls || [],
+        culturalPractices: selectedCt.culturalPractices || []
+      }
+    };
 
-    renderRowsFromStoredState(container);
+    const existingJson = Array.isArray(container.__pesticideJson)
+      ? container.__pesticideJson
+      : [];
 
-    const firstRow = container.querySelector("tr.data-row");
-    if (firstRow) {
+    container.__pesticideJson = [tempTreatment, ...existingJson];
+
+    container.innerHTML = renderTable(container.__pesticideJson, {
+      showDeleted: container.__showDeleted === true,
+      changedSince: container.__changedSince || ""
+    });
+
+    container.__pesticideRows = buildRows(container.__pesticideJson, {
+      changedSince: container.__changedSince || ""
+    });
+
+    container.__pesticideTableEventsBound = false;
+    wireTableEvents(container);
+
+    const newTr = container.querySelector(
+      `tr.data-row[data-treatment-id="0"][data-control-technique-id="${escapeHtml(selectedCt.controlTechniqueId ?? 0)}"]`
+    );
+
+    if (newTr) {
       ensureEditMetadata(container)
-        .then(() => enterEditMode(firstRow, container))
+        .then(() => enterEditMode(newTr, container))
         .catch(err => {
           console.error("Failed to load metadata for new row:", err);
         });

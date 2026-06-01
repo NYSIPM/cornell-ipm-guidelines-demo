@@ -6,8 +6,15 @@
 
   CMS.registerPreviewStyle("/assets/css/pesticide-table-editor.css");
 
+  /*
+  //Proven: Was working but was giving errors in Console.
   const shortcodeLinePattern =
     /^\s*\{\{(?:<|%)\s*pesticide-table\b[\s\S]*?(?:>|%)\}\}\s*$/m;
+  */
+
+  const shortcodeLinePattern =
+    /^{{<\s*pesticide-table\b[^>]*>}}$/;
+  
 
   let guidelineOptionsCache = null;
 
@@ -351,6 +358,7 @@
     },
 
     toPreview: (data) => {
+      console.log("pesticide-table toPreview data:", data);
       const selector = data.tableSelector || {};
 
       const g = String(selector.guidelineId || "").trim();
@@ -390,7 +398,20 @@
   }
 
   async function hydrateAllPesticideTables(previewDoc) {
+
     const nodes = previewDoc.querySelectorAll(".pesticide-table-preview");
+
+    /*
+    console.log("Pesticide preview nodes found:",
+      nodes.length,
+      Array.from(nodes).map(n => ({
+        guidelineId: n.dataset.guidelineId,
+        pestId: n.dataset.pestId,
+        siteId: n.dataset.siteId,
+        changedSince: n.dataset.changedSince
+      }))
+    );*/
+    //console.log("Pesticide preview nodes found:", nodes.length);
     if (!nodes.length) return;
 
     for (const node of nodes) {
@@ -432,7 +453,7 @@
         });
         node.innerHTML = html;
 
-        window.PesticideTableBuilder.wireTableEvents(node);
+        //window.PesticideTableBuilder.wireTableEvents(node);
 
         console.log("Pesticide table events wired");
       } catch (err) {
