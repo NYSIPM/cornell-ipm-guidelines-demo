@@ -1080,10 +1080,20 @@
   }
 
   function wireTableEvents(container) {
+    /*
     if (!container || container.__pesticideTableEventsBound) return;
     container.__pesticideTableEventsBound = true;
 
     container.addEventListener("click", async function (e) {
+    */
+    if (!container) return;
+
+    if (container.__pesticideClickHandler) {
+      container.removeEventListener("click", container.__pesticideClickHandler);
+    }
+
+    container.__pesticideClickHandler = async function (e) {
+      console.log("Pesticide table click:", e.target);
       const editBtn = e.target.closest(".edit-row-btn");
       const cancelBtn = e.target.closest(".cancel-row-btn");
       const saveBtn = e.target.closest(".save-row-btn"); //Added 3/30/2026
@@ -1307,7 +1317,10 @@
 
         return;
       }
-    });
+    //});
+    //}
+    };
+    container.addEventListener("click", container.__pesticideClickHandler);
   }
 
 
@@ -1733,7 +1746,7 @@
       changedSince: container.__changedSince || ""
     });
     
-    container.__pesticideTableEventsBound = false;
+    //container.__pesticideTableEventsBound = false;
     wireTableEvents(container);
   }
 

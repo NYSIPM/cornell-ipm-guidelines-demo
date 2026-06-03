@@ -424,6 +424,12 @@
 
       if (node.getAttribute("data-load-key") === loadKey) continue;
 
+      //I might End up removing the this block.
+      // Do not refresh the table while the user is actively editing it.
+      if (node.querySelector(".is-editing")) {
+        continue;
+      }
+
       node.setAttribute("data-load-key", loadKey);
 
       try {
@@ -453,7 +459,7 @@
         });
         node.innerHTML = html;
 
-        //window.PesticideTableBuilder.wireTableEvents(node);
+        window.PesticideTableBuilder.wireTableEvents(node);
 
         console.log("Pesticide table events wired");
       } catch (err) {
