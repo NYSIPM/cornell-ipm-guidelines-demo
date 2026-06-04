@@ -68,6 +68,3 @@ Apple scab fungicides can control disease through four different types of activi
 **Table 2.5.0 Ants on Highbush Blueberries**
 
 {{< pesticide-table guidelineId="3" pestId="206" siteId="29" changedSince="2020-01-01" >}}
-
-
-

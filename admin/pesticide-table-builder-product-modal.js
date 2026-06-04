@@ -561,10 +561,10 @@
 
         document.body.appendChild(modal);
 
-        
+        modal.addEventListener("change", async function (e) {
+            const typeSelect = e.target.closest(".create-control-technique-type");
+            if (!typeSelect || modal.__mode !== "create") return;
 
-        //Added 6-1-2026
-        if (typeSelect && modal.__mode === "create") {
             const currentName =
                 modal.querySelector('[data-product-field="tradeName"]')?.value?.trim() ||
                 modal.querySelector('.biological-control-editor [data-field="name"]')?.value?.trim() ||
@@ -576,12 +576,13 @@
 
             renderCreateControlTechniqueForm(modal);
 
+            modal.__selectedActiveIngredientsByPesticide = {};
+            modal.__selectedRestrictedUseIdsByPesticide = {};
+
             if (typeSelect.value === "P") {
                 await ensureActiveIngredientOptions();
 
                 const pesticides = modal.__createRow.treatment.controlTechnique.pesticides || [];
-                modal.__selectedActiveIngredientsByPesticide = {};
-                modal.__selectedRestrictedUseIdsByPesticide = {};
 
                 pesticides.forEach((pesticide, index) => {
                     modal.__selectedActiveIngredientsByPesticide[index] = [];
@@ -594,62 +595,10 @@
                 modal.__aiPickerBound = false;
                 wireProductAiPicker(modal);
             }
-
-            return;
-        }
-
-        //Added 6-4-2026
-        modal.addEventListener("click", async function (e) {
-            if (e.target.closest(".close-product-modal-btn")) {
-                closeProductModal();
-                return;
-            }
-
-            const typeSelect = e.target.closest(".create-control-technique-type");
-
-            if (typeSelect && modal.__mode === "create") {
-                const currentName =
-                modal.querySelector('[data-product-field="tradeName"]')?.value?.trim() ||
-                modal.querySelector('.biological-control-editor [data-field="name"]')?.value?.trim() ||
-                modal.querySelector('.cultural-practice-editor [data-field="name"]')?.value?.trim() ||
-                "";
-
-                modal.__createType = typeSelect.value;
-                modal.__createRow = createFakeControlTechniqueRow(typeSelect.value, currentName);
-
-                renderCreateControlTechniqueForm(modal);
-
-                if (typeSelect.value === "P") {
-                await ensureActiveIngredientOptions();
-
-                modal.__selectedActiveIngredientsByPesticide = {};
-                modal.__selectedRestrictedUseIdsByPesticide = {};
-
-                const pesticides = modal.__createRow.treatment.controlTechnique.pesticides || [];
-
-                pesticides.forEach((pesticide, index) => {
-                    modal.__selectedActiveIngredientsByPesticide[index] = [];
-                    modal.__selectedRestrictedUseIdsByPesticide[index] = [];
-                    renderSelectedActiveIngredients(modal, index);
-                    renderAvailableActiveIngredients(modal, "", index);
-                    syncCommonNamePreview(modal, index);
-                });
-
-                modal.__aiPickerBound = false;
-                wireProductAiPicker(modal);
-                }
-
-                return;
-            }
-
-            const saveBtn = e.target.closest(".save-product-fields-btn");
-            if (!saveBtn) return;
-
-        // save logic continues here...
         });
 
         modal.addEventListener("click", async function (e) {
-            const typeSelect = e.target.closest(".create-control-technique-type");
+            //const typeSelect = e.target.closest(".create-control-technique-type");
             
             if (e.target.closest(".close-product-modal-btn")) {
                 closeProductModal();
@@ -658,6 +607,9 @@
 
             const saveBtn = e.target.closest(".save-product-fields-btn");
         if (!saveBtn) return;
+
+
+
 
         /*
         const rowKey = modal.__rowKey;
