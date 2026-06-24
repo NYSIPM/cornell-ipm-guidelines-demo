@@ -1355,7 +1355,7 @@
 
     const guidelineId = container.dataset.guidelineId;
 
-    const url = `https://localhost:7144/api/Treatments/edit-metadata?guidelineId=${guidelineId || ""}`;
+    const url = window.TreatmentApiUrl(`/api/Treatments/edit-metadata?guidelineId=${guidelineId || ""}`);
     console.log("Fetching edit metadata:", url);
 
     const response = await fetch(url);
@@ -1684,7 +1684,7 @@
 
     //STUFF
     try {
-      const response = await fetch("https://localhost:7144/api/Treatments/save-row", {
+      const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-row"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -1726,7 +1726,7 @@
       params.append("deletedOnly", "true");
     }
 
-    const url = `https://localhost:7144/api/Treatments/search?${params.toString()}`;
+    const url = window.TreatmentApiUrl(`/api/Treatments/search?${params.toString()}`);
     console.log("Reloading pesticide JSON:", url);
 
     const response = await fetch(url);
@@ -1874,7 +1874,7 @@
       params.append("searchDisplayName", searchDisplayName);
     }
 
-    const url = `https://localhost:7144/api/Treatments/control-technique-options?${params.toString()}`;
+    const url = window.TreatmentApiUrl(`/api/Treatments/control-technique-options?${params.toString()}`);
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -2178,7 +2178,7 @@
   }
 
   async function saveNewControlTechnique(payload) {
-    const response = await fetch("https://localhost:7144/api/Treatments/save-control-technique", {
+    const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-control-technique"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -2506,7 +2506,7 @@
   }
 
   async function fetchCommentOptions(guidelineId) {
-    const url = `https://localhost:7144/api/Treatments/comment-options?guidelineId=${encodeURIComponent(guidelineId)}`;
+    const url = window.TreatmentApiUrl(`/api/Treatments/comment-options?guidelineId=${encodeURIComponent(guidelineId)}`);
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -2852,7 +2852,7 @@
   }
 
   async function saveComment(payload) {
-    const response = await fetch("https://localhost:7144/api/Treatments/save-comment", {
+    const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-comment"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -2900,7 +2900,7 @@
 
     if (!confirmed) return;
 
-    const response = await fetch(`https://localhost:7144/api/Treatments/delete-row/${treatmentId}`, {
+    const response = await fetch(window.TreatmentApiUrl(`/api/Treatments/delete-row/${treatmentId}`), {
       method: "POST"
     });
 
@@ -2932,7 +2932,7 @@
 
     if (!confirmed) return;
 
-    const response = await fetch(`https://localhost:7144/api/Treatments/restore-row/${treatmentId}`, {
+    const response = await fetch(window.TreatmentApiUrl(`/api/Treatments/restore-row/${treatmentId}`), {
       method: "POST"
     });
 

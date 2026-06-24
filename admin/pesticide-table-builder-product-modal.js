@@ -606,7 +606,7 @@
             }
 
             const saveBtn = e.target.closest(".save-product-fields-btn");
-        if (!saveBtn) return;
+            if (!saveBtn) return;
 
 
 
@@ -775,7 +775,7 @@
         try {
             saveBtn.disabled = true;
 
-            const response = await fetch("https://localhost:7144/api/Treatments/save-control-technique", {
+            const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-control-technique"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
@@ -959,7 +959,7 @@
         return window.__activeIngredientOptions;
         }
 
-        const response = await fetch("https://localhost:7144/api/Treatments/active-ingredient-options");
+        const response = await fetch(window.TreatmentApiUrl("/api/Treatments/active-ingredient-options"));
 
         if (!response.ok) {
         throw new Error(`Failed to load active ingredients: ${response.status}`);
@@ -1262,98 +1262,3 @@
     };
 })();
 
-// =========================================================
-// PRODUCT MODAL
-// =========================================================
-
-/*
-function closeProductModal() {
-    const modal = document.getElementById("product-edit-modal");
-    if (!modal) return;
-    modal.style.display = "none";
-    modal.__selectedProduct = null;
-    modal.__rowKey = null;
-}
-
-//Added 5-1-2026
-async function ensureActiveIngredientOptions() {
-    if (window.__activeIngredientOptions) {
-      return window.__activeIngredientOptions;
-    }
-
-    const response = await fetch("https://localhost:7144/api/Treatments/active-ingredient-options");
-
-    if (!response.ok) {
-      throw new Error(`Failed to load active ingredients: ${response.status}`);
-    }
-
-    window.__activeIngredientOptions = await response.json();
-    return window.__activeIngredientOptions;
-}
-
-
-
-function renderSelectedActiveIngredients(modal) {
-    const list = modal.querySelector("#product-ai-selected-list");
-    if (!list) return;
-
-    const selected = modal.__selectedActiveIngredients || [];
-
-    if (!selected.length) {
-      list.innerHTML = `<div style="font-size:12px; color:#666;">No active ingredients selected.</div>`;
-      return;
-    }
-
-    list.innerHTML = selected.map(ai => `
-      <div style="border:1px solid #ddd; padding:6px; margin-bottom:6px; background:#fafafa;">
-        <strong>${h().escapeHtml(ai.name || "")}</strong>
-        <span style="font-size:12px; color:#666;"> AI: ${h().escapeHtml(ai.activeIngredientId)}</span>
-        <button type="button"
-                class="remove-product-ai-btn"
-                data-active-ingredient-id="${h().escapeHtml(ai.activeIngredientId)}"
-                style="float:right;">
-          Remove
-        </button>
-      </div>
-    `).join("");
-}
-
-//Added 5-5-2026
-function renderAvailableActiveIngredients(modal, term = "") {
-    const results = modal.querySelector("#product-ai-results");
-    if (!results) return;
-
-    const all = window.__activeIngredientOptions || [];
-    const search = term.trim().toLowerCase();
-
-    const selectedIds = new Set(
-      (modal.__selectedActiveIngredients || [])
-        .map(ai => Number(ai.activeIngredientId))
-    );
-
-    const matches = all
-      .filter(ai => !selectedIds.has(Number(ai.activeIngredientId)))
-      .filter(ai => !search || (ai.name || "").toLowerCase().includes(search))
-      .sort((a, b) => String(a.name || "").localeCompare(String(b.name || "")))
-      .slice(0, 25);
-
-    if (!matches.length) {
-      results.innerHTML = `<div style="font-size:12px; color:#666;">No active ingredients found.</div>`;
-      return;
-    }
-
-    results.innerHTML = matches.map(ai => `
-      <div class="product-ai-option"
-          data-active-ingredient-id="${h().escapeHtml(ai.activeIngredientId)}"
-          style="border:1px solid #ddd; padding:6px; margin-bottom:6px; cursor:pointer;">
-        <strong>${h().escapeHtml(ai.name || "")}</strong>
-        <div style="font-size:12px; color:#666;">
-          AI: ${h().escapeHtml(ai.activeIngredientId)}
-        </div>
-      </div>
-    `).join("");
-}
-*/
-// =========================================================
-// HELPER
-// =========================================================
