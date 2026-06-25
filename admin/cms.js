@@ -11,7 +11,7 @@
       : "https://webguidelines2.psep.cce.cornell.edu"
   };*/
 
-  window.TreatmentEnvironment = "local";
+  window.TreatmentEnvironment = "live";
   // options: "local", "live"
 
   window.TreatmentConfig = window.TreatmentConfig || {
@@ -27,6 +27,109 @@
     return base + cleanPath;
   };
 
+  console.log("Auth0 object:", window.auth0);
+
+  // =========================================================
+  // Auth0
+  // =========================================================
+  window.TreatmentAuthConfig = {
+    domain: "newa-apps.auth0.com",
+    clientId: "de7WU6GhM1OR5eDJ7YY4eb7q6LdK01SV",
+    audience: "https://webguidelines2.psep.cce.cornell.edu/api",
+    redirectUri: "http://localhost:7144/admin/" //window.location.origin + window.location.pathname
+  };
+
+  window.TreatmentAuth = {
+    client: null,
+    user: null,
+
+    async init() {
+      this.client = await auth0.createAuth0Client({
+        domain: window.TreatmentAuthConfig.domain,
+        clientId: window.TreatmentAuthConfig.clientId,
+        authorizationParams: {
+          audience: window.TreatmentAuthConfig.audience,
+          redirect_uri: window.TreatmentAuthConfig.redirectUri
+        },
+        cacheLocation: "localstorage"
+      });
+
+      if (
+        window.location.search.includes("code=") &&
+        window.location.search.includes("state=")
+      ) {
+        await this.client.handleRedirectCallback();
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+      }
+
+      if (await this.client.isAuthenticated()) {
+        this.user = await this.client.getUser();
+        console.log("Logged in as:", this.user);
+      }
+    },
+
+    async login() {
+      await this.client.loginWithRedirect({
+        appState: {
+          returnTo: window.location.href
+        },
+        authorizationParams: {
+          audience: window.TreatmentAuthConfig.audience,
+          redirect_uri: window.TreatmentAuthConfig.redirectUri
+        }
+      });
+    },
+
+    async getTokenOrLogin() {
+      if (!this.client) {
+        await this.init();
+      }
+
+      const isAuthenticated = await this.client.isAuthenticated();
+
+      if (!isAuthenticated) {
+        await this.login();
+        return null;
+      }
+
+      return await this.client.getTokenSilently({
+        authorizationParams: {
+          audience: window.TreatmentAuthConfig.audience
+        }
+      });
+    },
+
+    async authHeaders() {
+      const token = await this.getTokenOrLogin();
+
+      if (!token) {
+        throw new Error("Login required.");
+      }
+
+      return {
+        Authorization: `Bearer ${token}`
+      };
+    },
+
+    async logout() {
+      await this.client.logout({
+        logoutParams: {
+          returnTo: window.location.origin
+        }
+      });
+    }
+  };
+
+
+
+  // =========================================================
+  // MAIN PART
+  // =========================================================
   const API_BASE_URL = window.TreatmentApiUrl("/api/Treatments/search");
   const GUIDELINE_OPTIONS_URL = window.TreatmentApiUrl("/api/Treatments/guideline-options");
 
@@ -49,7 +152,16 @@
 
     console.log("Fetching guideline options:", GUIDELINE_OPTIONS_URL);
 
-    const response = await fetch(GUIDELINE_OPTIONS_URL, { credentials: "omit" });
+    //const response = await fetch(GUIDELINE_OPTIONS_URL, { credentials: "omit" });
+
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+
+    const response = await fetch(GUIDELINE_OPTIONS_URL, {
+      headers: {
+        ...authHeaders
+      }
+    });
+    
 
     if (!response.ok) {
       throw new Error(`Guideline options fetch failed: HTTP ${response.status}`);
@@ -470,7 +582,16 @@
 
         console.log("Fetching pesticide JSON:", url.toString());
 
-        const res = await fetch(url.toString(), { credentials: "omit" });
+        //const res = await fetch(url.toString(), { credentials: "omit" });
+        
+        const authHeaders = await window.TreatmentAuth.authHeaders();
+
+        const res = await fetch(url.toString(), {
+          headers: {
+            ...authHeaders
+          }
+        });
+        
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const json = await res.json();
