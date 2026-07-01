@@ -775,11 +775,25 @@
         try {
             saveBtn.disabled = true;
 
+            /*
             const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-control-technique"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
             });
+            */
+            const authHeaders = await window.TreatmentAuth.authHeaders();
+            const response = await fetch(
+            window.TreatmentApiUrl("/api/Treatments/save-control-technique"),
+                {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    ...authHeaders
+                    },
+                    body: JSON.stringify(payload)
+                }
+            );
 
             const text = await response.text();
 
@@ -959,7 +973,15 @@
         return window.__activeIngredientOptions;
         }
 
-        const response = await fetch(window.TreatmentApiUrl("/api/Treatments/active-ingredient-options"));
+        const authHeaders = await window.TreatmentAuth.authHeaders();
+        const response = await fetch(
+        window.TreatmentApiUrl("/api/Treatments/active-ingredient-options"),
+            {
+                headers: {
+                ...authHeaders
+                }
+            }
+        );
 
         if (!response.ok) {
         throw new Error(`Failed to load active ingredients: ${response.status}`);

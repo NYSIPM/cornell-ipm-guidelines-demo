@@ -1358,7 +1358,14 @@
     const url = window.TreatmentApiUrl(`/api/Treatments/edit-metadata?guidelineId=${guidelineId || ""}`);
     console.log("Fetching edit metadata:", url);
 
-    const response = await fetch(url);
+    //const response = await fetch(url);
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+    const response = await fetch(url, {
+      headers: {
+        ...authHeaders
+      }
+    });
+  
     if (!response.ok) {
       throw new Error(`Metadata fetch failed: ${response.status}`);
     }
@@ -1684,6 +1691,20 @@
 
     //STUFF
     try {
+      const authHeaders = await window.TreatmentAuth.authHeaders();
+      const response = await fetch(
+          window.TreatmentApiUrl("/api/Treatments/save-row"),
+          {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  ...authHeaders
+              },
+              body: JSON.stringify(payload)
+          }
+      );
+      /*
+      //OLD
       const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-row"), {
         method: "POST",
         headers: {
@@ -1691,6 +1712,7 @@
         },
         body: JSON.stringify(payload)
       });
+      */
 
       const responseText = await response.text();
 
@@ -1729,10 +1751,22 @@
     const url = window.TreatmentApiUrl(`/api/Treatments/search?${params.toString()}`);
     console.log("Reloading pesticide JSON:", url);
 
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+    const response = await fetch(url, {
+      headers: {
+        ...authHeaders
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Reload failed with status ${response.status}`);
+    }
+    /*
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Reload failed with status ${response.status}`);
     }
+    */
 
     const json = await response.json();
 
@@ -1875,7 +1909,13 @@
     }
 
     const url = window.TreatmentApiUrl(`/api/Treatments/control-technique-options?${params.toString()}`);
-    const response = await fetch(url);
+    //const response = await fetch(url);
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+    const response = await fetch(url, {
+      headers: {
+        ...authHeaders
+      }
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch control techniques: ${response.status}`);
@@ -2178,10 +2218,21 @@
   }
 
   async function saveNewControlTechnique(payload) {
+    /*
     const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-control-technique"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+    */
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+    const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-control-technique"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeaders
       },
       body: JSON.stringify(payload)
     });
@@ -2506,8 +2557,17 @@
   }
 
   async function fetchCommentOptions(guidelineId) {
-    const url = window.TreatmentApiUrl(`/api/Treatments/comment-options?guidelineId=${encodeURIComponent(guidelineId)}`);
-    const response = await fetch(url);
+    const url = window.TreatmentApiUrl(
+      `/api/Treatments/comment-options?guidelineId=${encodeURIComponent(guidelineId)}`
+    );
+
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+
+    const response = await fetch(url, {
+      headers: {
+        ...authHeaders
+      }
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch comments: ${response.status}`);
@@ -2852,10 +2912,23 @@
   }
 
   async function saveComment(payload) {
+    /*
     const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-comment"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+    */
+    // POST: save-comment
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+
+    const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-comment"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeaders
       },
       body: JSON.stringify(payload)
     });
@@ -2900,8 +2973,18 @@
 
     if (!confirmed) return;
 
+    /*
     const response = await fetch(window.TreatmentApiUrl(`/api/Treatments/delete-row/${treatmentId}`), {
       method: "POST"
+    });
+    */
+   // POST: delete-row
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+    const response = await fetch(window.TreatmentApiUrl(`/api/Treatments/delete-row/${treatmentId}`), {
+      method: "POST",
+      headers: {
+        ...authHeaders
+      }
     });
 
     const text = await response.text();
@@ -2932,8 +3015,17 @@
 
     if (!confirmed) return;
 
+    /*
     const response = await fetch(window.TreatmentApiUrl(`/api/Treatments/restore-row/${treatmentId}`), {
       method: "POST"
+    });
+    */
+    const authHeaders = await window.TreatmentAuth.authHeaders();
+    const response = await fetch(window.TreatmentApiUrl(`/api/Treatments/restore-row/${treatmentId}`), {
+      method: "POST",
+      headers: {
+        ...authHeaders
+      }
     });
 
     const text = await response.text();
