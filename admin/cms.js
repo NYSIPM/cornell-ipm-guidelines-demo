@@ -36,7 +36,8 @@
     domain: "newa-apps.auth0.com",
     clientId: "de7WU6GhM1OR5eDJ7YY4eb7q6LdK01SV",
     audience: "https://webguidelines2.psep.cce.cornell.edu/api",
-    redirectUri: "http://localhost:7144/admin/" //window.location.origin + window.location.pathname
+    //redirectUri: "http://localhost:7144/admin/" //window.location.origin + window.location.pathname
+    redirectUri: `${window.location.origin}/admin/`
   };
 
   window.TreatmentAuth = {
@@ -119,7 +120,7 @@
     async logout() {
       await this.client.logout({
         logoutParams: {
-          returnTo: window.location.origin
+          returnTo: `${window.location.origin}/admin/`
         }
       });
     }
