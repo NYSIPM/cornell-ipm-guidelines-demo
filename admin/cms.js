@@ -71,6 +71,8 @@
       if (await this.client.isAuthenticated()) {
         this.user = await this.client.getUser();
         console.log("Logged in as:", this.user);
+        console.log("Auth0 sub:", this.user?.sub);
+        console.log("Email:", this.user?.email);
       }
     },
 
