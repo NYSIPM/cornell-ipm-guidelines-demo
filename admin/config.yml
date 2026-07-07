@@ -51,7 +51,6 @@ collections:
           - html-table
           #- api-text
           - pesticide-table
-          - test-widget
 
   #I don't like this.
   - name: "decap-test"
