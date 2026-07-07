@@ -2,12 +2,12 @@
 
 echo "=== Installing Quarto ==="
 QUARTO_VERSION="1.4.550"
-QUARTO_DIR="/tmp/quarto-${QUARTO_VERSION}" 
-wget -q "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz" -O /tmp/quarto.tar.gz
-tar -xzf /tmp/quarto.tar.gz -C /tmp
-export PATH="${QUARTO_DIR}/bin:${PATH}"
-#tar -xzf "quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
-#export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
+#QUARTO_DIR="/tmp/quarto-${QUARTO_VERSION}" 
+wget -q "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz" #-O /tmp/quarto.tar.gz
+#tar -xzf /tmp/quarto.tar.gz -C /tmp
+#export PATH="${QUARTO_DIR}/bin:${PATH}"
+tar -xzf "quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
 
 quarto --version
 
@@ -49,6 +49,11 @@ echo "=== Copying admin folder ==="
 rm -rf docs/admin
 mkdir -p docs/admin
 cp -r admin/* docs/admin/
+
+echo "=== Copying admin/editor CSS ==="
+mkdir -p docs/assets/css
+cp assets/css/pesticide-table-editor.css docs/assets/css/pesticide-table-editor.css
+ls -la docs/assets/css/pesticide-table-editor.css
 
 echo "=== Admin folder contents ==="
 ls -la docs/admin
