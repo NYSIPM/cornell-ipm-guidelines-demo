@@ -1,0 +1,16 @@
+---
+title: 1.2 Mac Muncher (Applemunchus voracious)
+---
+The Mac Muncher (*Applemunchus voracious*) is a stout, apple-loving beetle famous for its seemingly endless appetite and complete inability to finish what it starts. Adults typically measure 8–12 mm in length and possess a glossy olive-green shell decorated with pale cream spots resembling apple blossoms. Their powerful reddish mandibles are capable of chewing through even the crispest apple skin.
+
+While technically capable of eating other fruits, Mac Munchers stubbornly refuse to do so. Scientists have repeatedly offered them pears, peaches, and cherries, only to discover the insects sitting nearby in apparent protest.
+
+The species is most often found in orchards, backyard apple trees, and anywhere an unattended pie is cooling on a windowsill.
+
+{{< pesticide-table guidelineId="1" pestId="900" siteId="6" changedSince="2026-06-01" >}}
+
+## 1.2.1 Codling Moth
+
+The Codling Moth (Cydia pomonella) is a primary pest of apples and pears, with larvae causing "wormy" fruit by burrowing into the core to feed on seeds. Cornell IPM materials indicate that this species completes multiple generations annually, with larvae creating destructive, unmarketable tunnels. For more details, visit Cornell IPM.
+
+{{< pesticide-table guidelineId="1" pestId="6" siteId="6" changedSince="2026-01-01" >}}

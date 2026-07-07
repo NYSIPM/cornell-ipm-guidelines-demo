@@ -9,6 +9,7 @@ project:
 
 filters:
   - filters/api-insert.lua
+  - filters/pesticide-table.lua
 
 execute:
   enabled: false
@@ -28,10 +29,19 @@ format:
   html:
     theme: cosmo
     toc: true
+    shortcodes:
+      - filters/pesticide-table.lua #Part of the public table viewer.
     include-in-header:
       text: |
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <script src="/js/auth.js"></script>
+
+        
+        <link rel="stylesheet" href="/assets/css/pesticide-table.css">
+        <script src="/assets/js/pesticide-table-builder.js"></script>
+        <link rel="stylesheet" href="/assets/css/pesticide-table-public.css">
+
+        
     include-after-body:
       text: |
         <script>

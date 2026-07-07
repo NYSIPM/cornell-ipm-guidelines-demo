@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>PSEP Guidelines - Content Manager</title>
+  <link rel="stylesheet" href="/assets/css/pesticide-table-editor.css">
 </head>
 <body>
   <script>
@@ -15,13 +16,21 @@
 
   <script src="tinymce-table-widget.js"></script>
   <script src="editor-components.js"></script>
-  <script src="api-table-insert.js"></script>
+ 
+  <script src="api-table-formatter.js"></script>
   <script src="api-fetch-tool-widget.js"></script>
 
+  <!--These Work!-->
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
+  <script src="pesticide-table-builder-product-modal.js"></script>
+  <script src="pesticide-table-builder.js"></script>
   <script src="cms.js"></script>
+  
 
   <script>
-    window.CMS.init();
+    window.TreatmentAuth?.init?.().then(() => {
+      window.CMS.init();
+    });
   </script>
 
 </body>

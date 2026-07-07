@@ -1,3 +1,14 @@
+const isLocalDev =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+
+function getLocalDevUser() {
+  return {
+    email: "wbp5@cornell.edu",
+    name: "Local Dev User"
+  };
+}
+
 // Auth0 Configuration
 const AUTH0_CONFIG = {
     domain: 'newa-apps.auth0.com',
@@ -21,6 +32,11 @@ async function initAuth0() {
 
 // Login function
 async function login() {
+    //Development Ignore
+    if (isLocalDev) {
+        console.log("Local development mode: skipping Auth0 login.");
+        return;
+    }
     try {
         const client = await initAuth0();
         await client.loginWithRedirect();  // Simplified - no extra params
@@ -32,6 +48,11 @@ async function login() {
 
 // Logout function
 async function logout() {
+    //Development Ignore
+    if (isLocalDev) {
+        console.log("Local development mode: skipping Auth0 logout.");
+        return;
+    }
     try {
         const client = await initAuth0();
         client.logout({
@@ -46,6 +67,13 @@ async function logout() {
 
 // Check if user is authenticated
 async function checkAuth() {
+    //Development Ignore
+    if (isLocalDev) {
+        return {
+        authenticated: true,
+        user: getLocalDevUser()
+        };
+    }
     try {
         const client = await initAuth0();
         const isAuthenticated = await client.isAuthenticated();

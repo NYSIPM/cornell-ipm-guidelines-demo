@@ -1,6 +1,7 @@
 # Build output
 docs/
 .quarto/
+node_modules/
 _pdf-generator/
 # OS files
 .DS_Store

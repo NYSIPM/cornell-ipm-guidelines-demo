@@ -1,9 +1,12 @@
 ---
 title: 2.4 Test
 ---
-{{< pesticide-table guidelineId="222" pestId="222" siteId="222" >}}
+## Codling moth
 
+This is some Text.
 
-Test
+{{< pesticide-table guidelineId="1" pestId="6" siteId="6" >}}
 
-{{< pesticide-table guidelineId="11" pestId="11" siteId="11" >}}
+## Apple aphid, Spirea aphid
+
+{{< pesticide-table guidelineId="1" pestId="7" siteId="7" >}}
