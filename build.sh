@@ -50,6 +50,11 @@ rm -rf docs/admin
 mkdir -p docs/admin
 cp -r admin/* docs/admin/
 
+echo "=== Copying admin/editor CSS ==="
+mkdir -p docs/assets/css
+cp assets/css/pesticide-table-editor.css docs/assets/css/pesticide-table-editor.css
+ls -la docs/assets/css/pesticide-table-editor.css
+
 echo "=== Admin folder contents ==="
 ls -la docs/admin
 
