@@ -2,9 +2,12 @@
 
 echo "=== Installing Quarto ==="
 QUARTO_VERSION="1.4.550"
-wget -q "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
-tar -xzf "quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
-export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
+QUARTO_DIR="/tmp/quarto-${QUARTO_VERSION}" 
+wget -q "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz" -O /tmp/quarto.tar.gz
+tar -xzf /tmp/quarto.tar.gz -C /tmp
+export PATH="${QUARTO_DIR}/bin:${PATH}"
+#tar -xzf "quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+#export PATH="${PWD}/quarto-${QUARTO_VERSION}/bin:${PATH}"
 
 quarto --version
 
@@ -41,8 +44,14 @@ quarto render
 cd ../..
 
 echo "=== Copying admin folder ==="
+#mkdir -p docs/admin
+#cp -r admin/* docs/admin/
+rm -rf docs/admin
 mkdir -p docs/admin
 cp -r admin/* docs/admin/
+
+echo "=== Admin folder contents ==="
+ls -la docs/admin
 
 echo "=== Copying PDFs from source to output ==="
 mkdir -p docs/publications/grapes
