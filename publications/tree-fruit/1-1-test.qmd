@@ -22,3 +22,5 @@ Here is some simple normal text.
 2. List Item 2
 
 ![](/static/images/mcintoshes_on_cloth_1.jpg)
+
+Here is some more code.
