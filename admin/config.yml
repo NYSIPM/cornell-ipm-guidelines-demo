@@ -120,3 +120,16 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Body", name: "body", widget: "markdown"}
 
+  # Trees and Shrubs
+  - name: "Trees and Shrubs"
+    label: "Trees and Shrubs Guidelines"
+    label_singular: "New Section"
+    folder: "publications/trees-and-shrubs"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
