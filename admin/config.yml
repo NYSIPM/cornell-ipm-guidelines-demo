@@ -94,23 +94,10 @@ collections:
       - {label: "Last Updated", name: "date", widget: "datetime", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
   
-  # Apple Guidelines (placeholder for future)
-  - name: "apples"
-    label: "Apple Guidelines"
-    label_singular: "Chapter"
-    folder: "publications/apples"
-    create: true
-    slug: "{{slug}}"
-    extension: "qmd"
-    format: "frontmatter"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Body", name: "body", widget: "markdown"}
-  
-  # Tree Fruit Guidelines (placeholder)
+  # Tree Fruit Guidelines
   - name: "tree-fruit"
     label: "Tree Fruit Guidelines"
-    label_singular: "Chapter"
+    label_singular: "New Section"
     folder: "publications/tree-fruit"
     create: true
     slug: "{{slug}}"
@@ -125,6 +112,19 @@ collections:
     label: "Trees and Shrubs Guidelines"
     label_singular: "New Section"
     folder: "publications/trees-and-shrubs"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+    # Vegetable Crops
+  - name: "Vegetables"
+    label: "Vegetable Guidelines"
+    label_singular: "New Section"
+    folder: "publications/vegetables"
     create: true
     slug: "{{slug}}"
     extension: "qmd"

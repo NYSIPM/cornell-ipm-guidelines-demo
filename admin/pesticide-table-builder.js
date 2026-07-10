@@ -595,6 +595,8 @@
 
   function renderTable(data, options = {}) {
     const rows = buildRows(data, options);
+    const currentUser =
+        window.TreatmentAuth?.getDisplayName?.() ?? "";
     const AddTreatmentButton = `
       <div style="
           display:flex;
@@ -608,7 +610,7 @@
         <button type="button" class="insert-treatment-btn">
           Add Treatment
         </button>
-
+        
         ${options.showDeleted ? `
           <div style="
               border:1px solid #b36b00;
@@ -622,6 +624,8 @@
             Viewing Deleted Treatments - Use Restore to bring one back.
           </div>
         ` : `<div></div>`}
+
+        
 
         <label style="
             font-size:12px;
@@ -778,6 +782,33 @@
             ${bodyRows}
           </tbody>
         </table>
+        
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          margin-top:10px;
+          font-size:12px;
+          color:#666;
+        ">
+          <div>
+              DB Logged in as <strong>${escapeHtml(currentUser)}</strong>
+          </div>
+          <button
+              type="button"
+              class="treatment-logout-btn"
+              style="
+                  border:none;
+                  background:none;
+                  color:#666;
+                  cursor:pointer;
+                  font-size:12px;
+                  text-decoration:underline;
+              ">
+              Sign out
+          </button>
+        </div>
       </div>
     `;
   }
@@ -1114,6 +1145,17 @@
       const toggleMiscRowBtn = e.target.closest(".toggle-misc-row-btn");
       //Added 5-12-2026
       const showDeletedToggle = e.target.closest(".show-deleted-toggle");
+      //Added 6-9-2026
+      const logoutBtn = e.target.closest(".treatment-logout-btn");
+      if (logoutBtn) {
+        e.preventDefault();
+
+        if (window.TreatmentAuth?.logout) {
+          await window.TreatmentAuth.logout();
+        }
+
+        return;
+      }
 
       if (showDeletedToggle) {
         container.__showDeleted = showDeletedToggle.checked;

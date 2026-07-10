@@ -119,6 +119,7 @@
       };
     },
 
+    /*
     async logout() {
       await this.client.logout({
         logoutParams: {
@@ -126,6 +127,31 @@
         }
       });
     }
+    */
+    async logout() {
+      if (!this.client) {
+        await this.init();
+      }
+
+      await this.client.logout({
+        logoutParams: {
+          returnTo: `${window.location.origin}/admin/`
+        }
+      });
+    }
+  };
+
+  window.TreatmentAuth.getDisplayName = function () {
+      if (!this.user) {
+          return "Unknown User";
+      }
+
+      return (
+          this.user.name ||
+          this.user.nickname ||
+          this.user.email ||
+          this.user.sub
+      );
   };
 
 
@@ -175,6 +201,8 @@
 
     return guidelineOptionsCache;
   }
+
+  
 
   function normalizeWidgetValue(value) {
     if (!value) return {};
