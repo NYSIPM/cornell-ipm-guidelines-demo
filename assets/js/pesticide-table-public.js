@@ -1,4 +1,14 @@
-const API_BASE = "https://localhost:7144/api/Treatments/search";
+(function () {
+const isLocalDev =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1";
+
+const API_BASE = isLocalDev
+  ? "https://webguidelines2.psep.cce.cornell.edu/api/Treatments/search"
+  : "https://webguidelines2.psep.cce.cornell.edu/api/Treatments/search";
+  /*
+  https://localhost:7144/api/Treatments/search"
+  */
 
 async function hydrateOne(el) {
   const guidelineId = el.dataset.guidelineId;
@@ -12,10 +22,30 @@ async function hydrateOne(el) {
 
   el.innerHTML = `<div class="pesticide-table-loading">Loading table...</div>`;
 
+  /*
   const url = `${API_BASE}?pestId=${encodeURIComponent(pestId)}&siteId=${encodeURIComponent(siteId)}`;
+  */
+  const params = new URLSearchParams({
+    guidelineId,
+    pestId,
+    siteId
+  });
+
+  const url = `${API_BASE}?${params.toString()}`;
+
 
   try {
-    const response = await fetch(url, { mode: "cors" });
+
+    const token = await window.getTreatmentAccessToken();
+
+    const response = await fetch(url, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
@@ -39,3 +69,4 @@ if (document.readyState === "loading") {
 } else {
   hydrateAll();
 }
+})();
