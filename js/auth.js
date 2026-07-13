@@ -9,6 +9,18 @@ function getLocalDevUser() {
   };
 }
 
+const AUTH0_CONFIG = {
+    domain: 'newa-apps.auth0.com',
+    clientId: "de7WU6GhM1OR5eDJ7YY4eb7q6LdK01SV",
+    authorizationParams: {
+        audience: 'https://webguidelines2.psep.cce.cornell.edu/api',
+        redirect_uri: window.location.origin + '/callback/'
+    },
+    cacheLocation: 'localstorage',
+    useRefreshTokens: false
+};
+
+/*
 // Auth0 Configuration
 const AUTH0_CONFIG = {
     domain: 'newa-apps.auth0.com',
@@ -19,15 +31,40 @@ const AUTH0_CONFIG = {
     cacheLocation: 'localstorage',  // Try 'memory' if this doesn't work
     useRefreshTokens: false  // Disable for now to simplify
 };
+*/
 
 let auth0Client = null;
 
 // Initialize Auth0 client
+/*
 async function initAuth0() {
     if (!auth0Client) {
         auth0Client = await auth0.createAuth0Client(AUTH0_CONFIG);
     }
     return auth0Client;
+}
+*/
+async function initAuth0() {
+  if (!auth0Client) {
+    auth0Client =
+      await auth0.createAuth0Client(AUTH0_CONFIG);
+
+    const hasAuthCode =
+      window.location.search.includes("code=") &&
+      window.location.search.includes("state=");
+
+    if (hasAuthCode) {
+      await auth0Client.handleRedirectCallback();
+
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+    }
+  }
+
+  return auth0Client;
 }
 
 // Login function
@@ -89,3 +126,36 @@ async function checkAuth() {
         return { authenticated: false };
     }
 }
+
+async function getTreatmentAccessToken() {
+    const client = await initAuth0();
+
+    const isAuthenticated = await client.isAuthenticated();
+    /*
+    if (!isAuthenticated) {
+        return null;
+    }
+    */
+    if (!isAuthenticated) {
+        await client.loginWithRedirect({
+        appState: {
+            returnTo: window.location.href
+        },
+        authorizationParams: {
+            audience:
+            "https://webguidelines2.psep.cce.cornell.edu/api",
+            redirect_uri:
+            window.location.origin + "/callback/"
+        }
+        });
+        return null;
+    }
+
+    return await client.getTokenSilently({
+        authorizationParams: {
+            audience: 'https://webguidelines2.psep.cce.cornell.edu/api'
+        }
+    });
+}
+
+window.getTreatmentAccessToken = getTreatmentAccessToken;

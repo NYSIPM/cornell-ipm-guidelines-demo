@@ -1,0 +1,6 @@
+---
+title: Tree Fruit Guideline
+date: 2026-07-10T12:30:00.000-05:00
+---
+- [1.1 Test](/publications/tree-fruit/1-1-test.html)
+- [1.2 Macmuncher applemunchus voracious](/publications/tree-fruit/1-2-mac-muncher-applemunchus-voracious.html)
