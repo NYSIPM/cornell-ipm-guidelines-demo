@@ -1,0 +1,95 @@
+.treatment-gray td {
+    background: #f1f1f1;
+}
+
+.treatment-white td {
+    background: #ffffff;
+}
+
+.public-treatment-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.public-treatment-table th {
+    text-align: left;
+    font-weight: 700;
+    padding: 10px 12px;
+    border-bottom: 2px solid #6f6f6f;
+    vertical-align: bottom;
+}
+
+.public-treatment-table td {
+    padding: 10px 12px;
+    vertical-align: top;
+}
+
+.public-treatment-table tbody tr:last-child td {
+    border-bottom: 2px solid #6f6f6f;
+}
+
+.treatment-name {
+    font-weight: 700;
+}
+
+.public-treatment-table td {
+    padding: 12px;
+}
+
+.public-treatment-table th:nth-child(1) { width: 34%; }
+.public-treatment-table th:nth-child(2) { width: 16%; }
+.public-treatment-table th:nth-child(3) { width: 14%; }
+.public-treatment-table th:nth-child(4) { width: 14%; }
+.public-treatment-table th:nth-child(5) { width: 15%; }
+.public-treatment-table th:nth-child(6) { width: 12%; }
+
+
+.treatment-details.is-hidden {
+    display: none;
+}
+
+.toggle-details-button {
+    border: 0;
+    background: none;
+    padding: 0;
+    color: #005ea8;
+    text-decoration: underline;
+    cursor: pointer;
+    font: inherit;
+}
+
+.details-row td {
+    text-align: center;
+}
+
+.treatment-details {
+    margin-top: 4px;
+    text-align: left;
+}
+
+.restricted-use-symbol {
+    display: inline-block;
+    margin-right: 8px;
+    color: #b00000;
+    font-weight: 800;
+    cursor: help;
+}
+
+.treatment-status-label {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 1px 7px;
+    border: 1px solid #aaa;
+    border-radius: 999px;
+    background: #f7f7f7;
+    font-size: 0.82rem;
+    font-style: italic;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+.details-row td {
+    vertical-align: top;
+    padding: 2px 12px;
+}

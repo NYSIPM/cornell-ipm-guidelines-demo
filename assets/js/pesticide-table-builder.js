@@ -129,6 +129,30 @@
     return rows;
   }
 
+  //NEW 1-14-2026
+  function renderRestrictedUseSymbols(pesticide) {
+    const items = pesticide?.restrictedUse || [];
+
+    return items
+      .map(item => {
+        const symbol = clean(item?.symbol);
+        const description = clean(item?.description);
+
+        if (!symbol) return "";
+
+        return `
+          <span class="public-restricted-symbol"
+                title="${escapeHtml(description)}">
+            ${escapeHtml(symbol)}
+          </span>
+        `;
+      })
+      .filter(Boolean)
+      .join("");
+  }
+
+  //-----------TABLE RENDER
+
   function renderTable(data) {
     const rows = buildRows(data);
 

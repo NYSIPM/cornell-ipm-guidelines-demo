@@ -20,30 +20,9 @@ const AUTH0_CONFIG = {
     useRefreshTokens: false
 };
 
-/*
-// Auth0 Configuration
-const AUTH0_CONFIG = {
-    domain: 'newa-apps.auth0.com',
-    clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
-    authorizationParams: {
-        redirect_uri: window.location.origin + '/callback.html'
-    },
-    cacheLocation: 'localstorage',  // Try 'memory' if this doesn't work
-    useRefreshTokens: false  // Disable for now to simplify
-};
-*/
-
 let auth0Client = null;
 
 // Initialize Auth0 client
-/*
-async function initAuth0() {
-    if (!auth0Client) {
-        auth0Client = await auth0.createAuth0Client(AUTH0_CONFIG);
-    }
-    return auth0Client;
-}
-*/
 async function initAuth0() {
   if (!auth0Client) {
     auth0Client =
@@ -54,13 +33,16 @@ async function initAuth0() {
       window.location.search.includes("state=");
 
     if (hasAuthCode) {
-      await auth0Client.handleRedirectCallback();
+      const callbackResult =
+        await auth0Client.handleRedirectCallback();
 
-      window.history.replaceState(
-        {},
-        document.title,
-        window.location.pathname
-      );
+      const returnTo =
+        callbackResult?.appState?.returnTo ||
+        window.location.origin;
+
+      window.location.replace(returnTo);
+
+      return auth0Client;
     }
   }
 
@@ -69,27 +51,35 @@ async function initAuth0() {
 
 // Login function
 async function login() {
-    //Development Ignore
-    if (isLocalDev) {
-        console.log("Local development mode: skipping Auth0 login.");
-        return;
-    }
-    try {
-        const client = await initAuth0();
-        await client.loginWithRedirect();  // Simplified - no extra params
-    } catch (error) {
-        console.error('Login error:', error);
-        alert('Login failed: ' + error.message);
-    }
+  try {
+    const client = await initAuth0();
+
+    await client.loginWithRedirect({
+      appState: {
+        returnTo: window.location.href
+      },
+      authorizationParams: {
+        audience:
+          "https://webguidelines2.psep.cce.cornell.edu/api",
+        redirect_uri:
+          window.location.origin + "/callback/"
+      }
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Login failed: " + error.message);
+  }
 }
 
 // Logout function
 async function logout() {
     //Development Ignore
+    /*
     if (isLocalDev) {
         console.log("Local development mode: skipping Auth0 logout.");
         return;
     }
+    */
     try {
         const client = await initAuth0();
         client.logout({
@@ -105,12 +95,14 @@ async function logout() {
 // Check if user is authenticated
 async function checkAuth() {
     //Development Ignore
+    /*
     if (isLocalDev) {
         return {
         authenticated: true,
         user: getLocalDevUser()
         };
     }
+    */
     try {
         const client = await initAuth0();
         const isAuthenticated = await client.isAuthenticated();
@@ -128,34 +120,47 @@ async function checkAuth() {
 }
 
 async function getTreatmentAccessToken() {
-    const client = await initAuth0();
+  const client = await initAuth0();
 
-    const isAuthenticated = await client.isAuthenticated();
-    /*
-    if (!isAuthenticated) {
-        return null;
-    }
-    */
-    if (!isAuthenticated) {
-        await client.loginWithRedirect({
+  const isAuthenticated =
+    await client.isAuthenticated();
+
+  if (!isAuthenticated) {
+    await login();
+    return null;
+  }
+
+  try {
+    return await client.getTokenSilently({
+      authorizationParams: {
+        audience:
+          "https://webguidelines2.psep.cce.cornell.edu/api"
+      }
+    });
+  } catch (error) {
+    console.error("Silent token error:", error);
+
+    if (
+      error.error === "consent_required" ||
+      error.error === "login_required"
+    ) {
+      await client.loginWithRedirect({
         appState: {
-            returnTo: window.location.href
+          returnTo: window.location.href
         },
         authorizationParams: {
-            audience:
+          audience:
             "https://webguidelines2.psep.cce.cornell.edu/api",
-            redirect_uri:
-            window.location.origin + "/callback/"
+          redirect_uri:
+            window.location.origin + "/callback/",
         }
-        });
-        return null;
+      });
+
+      return null;
     }
 
-    return await client.getTokenSilently({
-        authorizationParams: {
-            audience: 'https://webguidelines2.psep.cce.cornell.edu/api'
-        }
-    });
+    throw error;
+  }
 }
 
 window.getTreatmentAccessToken = getTreatmentAccessToken;
