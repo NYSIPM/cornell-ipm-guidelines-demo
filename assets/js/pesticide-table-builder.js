@@ -170,5 +170,13 @@
     `;
   }
 
-  window.PesticideTableBuilder = { renderTable };
+  window.PesticideTableBuilder = {
+    renderTable,
+    version: "public-builder-2026-07-14-v2"
+  };
+
+  console.log(
+    "Loaded PesticideTableBuilder:",
+    window.PesticideTableBuilder.version
+  );
 })();
