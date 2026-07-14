@@ -39,14 +39,15 @@ format:
         <link rel="stylesheet" href="/assets/css/pesticide-table.css">
         <link rel="stylesheet" href="/assets/css/pesticide-table-public.css">
 
-        <script src="/assets/js/pesticide-table-builder.js"></script>
+        
+
         <script src="/assets/js/pesticide-table-public.js"></script>
+        <script src="/assets/js/public-treatment-builder.js?v=1"></script>
 
         <link rel="stylesheet" href="/assets/css/pesticide-table-editor.css">
-        <!--<link rel="stylesheet" href="/assets/css/pesticide-table-public.css">-->
+        <link rel="stylesheet" href="/assets/css/public-treatment-builder.css">
+        
 
-        <script src="/assets/js/pesticide-table-builder.js?v=20260714-2"></script>
-        <script src="/assets/js/pesticide-table-public.js?v=20260714-2"></script>
 
     include-after-body:
       text: |

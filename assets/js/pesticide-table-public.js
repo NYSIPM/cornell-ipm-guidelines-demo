@@ -10,6 +10,98 @@ const API_BASE = isLocalDev
   https://localhost:7144/api/Treatments/search"
   */
 
+  async function hydrateOne(el) {
+  const guidelineId = el.dataset.guidelineId;
+  const pestId = el.dataset.pestId;
+  const siteId = el.dataset.siteId;
+
+  if (!pestId || !siteId) {
+    el.innerHTML =
+      `<div class="pesticide-table-error">
+        Missing required data attributes.
+      </div>`;
+
+    return;
+  }
+
+  el.innerHTML =
+    `<div class="pesticide-table-loading">
+      Loading table...
+    </div>`;
+
+  const params = new URLSearchParams({
+    guidelineId,
+    pestId,
+    siteId
+  });
+
+  const url = `${API_BASE}?${params.toString()}`;
+
+  try {
+    if (
+      typeof window.getTreatmentAccessToken !== "function"
+    ) {
+      throw new Error(
+        "Authentication helper is not loaded."
+      );
+    }
+
+    const token =
+      await window.getTreatmentAccessToken();
+
+    if (!token) {
+      return;
+    }
+
+    const response = await fetch(url, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      const responseText = await response.text();
+
+      throw new Error(
+        `HTTP ${response.status}` +
+        (responseText ? `: ${responseText}` : "")
+      );
+    }
+
+    const data = await response.json();
+
+    if (
+      !window.PublicTreatmentBuilder ||
+      typeof window.PublicTreatmentBuilder.renderTable !==
+        "function"
+    ) {
+      throw new Error(
+        "PublicTreatmentBuilder is not loaded."
+      );
+    }
+
+    el.innerHTML = 
+      window.PublicTreatmentBuilder.renderTable(data);
+    window.PublicTreatmentBuilder.wireTableEvents(el);
+
+  } catch (error) {
+    console.error(
+      "Pesticide table hydration failed:",
+      error
+    );
+
+    el.innerHTML =
+      `<div class="pesticide-table-error">
+        Unable to load pesticide table:
+        ${error.message}
+      </div>`;
+  }
+}
+
+  /*
 async function hydrateOne(el) {
   const guidelineId = el.dataset.guidelineId;
   const pestId = el.dataset.pestId;
@@ -22,9 +114,7 @@ async function hydrateOne(el) {
 
   el.innerHTML = `<div class="pesticide-table-loading">Loading table...</div>`;
 
-  /*
-  const url = `${API_BASE}?pestId=${encodeURIComponent(pestId)}&siteId=${encodeURIComponent(siteId)}`;
-  */
+  
   const params = new URLSearchParams({
     guidelineId,
     pestId,
@@ -35,8 +125,11 @@ async function hydrateOne(el) {
 
 
   try {
-
     const token = await window.getTreatmentAccessToken();
+
+    if (!token) {
+      return;
+    }
 
     const response = await fetch(url, {
       method: "GET",
@@ -52,21 +145,23 @@ async function hydrateOne(el) {
     }
 
     const data = await response.json();
-    el.innerHTML = window.PesticideTableBuilder.renderTable(data);
+    el.innerHTML = window.PublicTreatmentBuilder.renderTable(data); //window.PesticideTableBuilder.renderTable(data);
+
   } catch (error) {
     console.error("Pesticide table hydration failed:", error);
     el.innerHTML = `<div class="pesticide-table-error">Unable to load pesticide table: ${error.message}</div>`;
   }
 }
+*/
 
-function hydrateAll() {
-  const elements = document.querySelectorAll(".pesticide-table-public");
-  elements.forEach(hydrateOne);
-}
+  function hydrateAll() {
+    const elements = document.querySelectorAll(".pesticide-table-public");
+    elements.forEach(hydrateOne);
+  }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", hydrateAll);
-} else {
-  hydrateAll();
-}
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", hydrateAll);
+  } else {
+    hydrateAll();
+  }
 })();
