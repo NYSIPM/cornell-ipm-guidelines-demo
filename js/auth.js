@@ -21,8 +21,54 @@ const AUTH0_CONFIG = {
 };
 
 let auth0Client = null;
+let auth0InitializationPromise = null;
+
+// Initialize Auth0 client exactly once
+function initAuth0() {
+  if (auth0InitializationPromise) {
+    return auth0InitializationPromise;
+  }
+
+  auth0InitializationPromise = (async () => {
+    auth0Client =
+      await auth0.createAuth0Client(AUTH0_CONFIG);
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const hasAuthCode =
+      params.has("code") &&
+      params.has("state");
+
+    if (hasAuthCode) {
+      const callbackResult =
+        await auth0Client.handleRedirectCallback();
+
+      const returnTo =
+        callbackResult?.appState?.returnTo ||
+        window.location.origin + "/";
+
+      window.location.replace(returnTo);
+
+      /*
+       * Prevent other startup scripts from continuing while
+       * the browser is redirecting away from the callback page.
+       */
+      return new Promise(() => {});
+    }
+
+    return auth0Client;
+  })().catch((error) => {
+    auth0InitializationPromise = null;
+    auth0Client = null;
+    throw error;
+  });
+
+  return auth0InitializationPromise;
+}
 
 // Initialize Auth0 client
+/*
 async function initAuth0() {
   if (!auth0Client) {
     auth0Client =
@@ -48,6 +94,7 @@ async function initAuth0() {
 
   return auth0Client;
 }
+*/
 
 // Login function
 async function login() {
@@ -163,4 +210,8 @@ async function getTreatmentAccessToken() {
   }
 }
 
+window.initAuth0 = initAuth0;
+window.login = login;
+window.logout = logout;
+window.checkAuth = checkAuth;
 window.getTreatmentAccessToken = getTreatmentAccessToken;
