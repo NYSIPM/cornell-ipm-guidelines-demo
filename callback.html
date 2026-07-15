@@ -50,9 +50,11 @@
                 // Create client with same config as main app
                 const auth0Client = await auth0.createAuth0Client({
                     domain: 'newa-apps.auth0.com',
-                    clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
+                    clientId: "de7WU6GhM1OR5eDJ7YY4eb7q6LdK01SV",
+                    //clientId: '0GNl2PlxcghopmChVFQDaZbu35gCxx8O',
                     authorizationParams: {
-                        redirect_uri: window.location.origin + '/callback.html'
+                        redirect_uri: window.location.origin + "/callback/"
+                        //redirect_uri: window.location.origin + '/callback.html'
                     },
                     cacheLocation: 'localstorage'
                 });
