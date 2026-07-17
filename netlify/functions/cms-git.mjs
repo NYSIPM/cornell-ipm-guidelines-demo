@@ -176,7 +176,26 @@ export async function handler(event) {
     body: isWrite ? body : undefined,
   });
 
-  const text = await ghRes.text();
+  let text = await ghRes.text();
+
+  // Decap checks write access via GET /repos/:owner/:repo and reads
+  // repo.permissions.push. A GitHub App installation token doesn't populate the
+  // user-style permissions object, so synthesize write access here. This is
+  // safe: access is already gated by the guidelines_editor role above.
+  if (
+    event.httpMethod === "GET" &&
+    ghRes.ok &&
+    /^\/repos\/[^/]+\/[^/]+$/.test(ghPath)
+  ) {
+    try {
+      const repo = JSON.parse(text);
+      repo.permissions = { ...(repo.permissions || {}), pull: true, push: true };
+      text = JSON.stringify(repo);
+    } catch {
+      /* not JSON; leave as-is */
+    }
+  }
+
   return {
     statusCode: ghRes.status,
     headers: {
