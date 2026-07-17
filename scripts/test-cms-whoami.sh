@@ -32,10 +32,20 @@ fi
 echo "GET $URL"
 echo "---"
 
-# Pretty-print with jq if available; otherwise print raw.
-if command -v jq >/dev/null 2>&1; then
-  curl -sS -H "Authorization: Bearer ${TOKEN}" "$URL" | jq .
+# Capture body + HTTP status separately so a non-JSON (e.g. 404 HTML) response
+# is still readable instead of crashing jq.
+tmp="$(mktemp)"
+code="$(curl -sS -o "$tmp" -w '%{http_code}' -H "Authorization: Bearer ${TOKEN}" "$URL")"
+
+echo "HTTP $code"
+echo "---"
+
+# Pretty-print only if the body actually looks like JSON.
+if command -v jq >/dev/null 2>&1 && head -c1 "$tmp" | grep -q '{'; then
+  jq . "$tmp"
 else
-  curl -sS -H "Authorization: Bearer ${TOKEN}" "$URL"
+  cat "$tmp"
   echo
 fi
+
+rm -f "$tmp"
