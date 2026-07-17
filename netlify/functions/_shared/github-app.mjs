@@ -10,16 +10,37 @@ import crypto from "node:crypto";
 
 const APP_ID = process.env.GITHUB_APP_ID;
 const INSTALLATION_ID = process.env.GITHUB_APP_INSTALLATION_ID;
-const PRIVATE_KEY_B64 = process.env.GITHUB_APP_PRIVATE_KEY_B64;
+// Accept the key either base64-encoded (recommended) or as raw PEM.
+const PRIVATE_KEY_RAW =
+  process.env.GITHUB_APP_PRIVATE_KEY_B64 ||
+  process.env.GITHUB_APP_PRIVATE_KEY ||
+  "";
 
 // Installation tokens last ~1h; cache and reuse until shortly before expiry.
 let cached = null; // { token, expiresAtMs }
 
+// Return a usable PEM whether the env var holds raw PEM or base64 of a PEM.
+// This tolerates the common mistake of pasting the raw key into the _B64 var.
 function privateKeyPem() {
-  if (!PRIVATE_KEY_B64) {
+  const raw = PRIVATE_KEY_RAW.trim();
+  if (!raw) {
     throw new Error("GITHUB_APP_PRIVATE_KEY_B64 is not set");
   }
-  return Buffer.from(PRIVATE_KEY_B64, "base64").toString("utf8");
+
+  // Already a PEM? Use as-is (normalize any literal "\n" escapes to newlines).
+  if (raw.includes("-----BEGIN")) {
+    return raw.replace(/\\n/g, "\n");
+  }
+
+  // Otherwise treat it as base64 of a PEM.
+  const decoded = Buffer.from(raw, "base64").toString("utf8");
+  if (!decoded.includes("-----BEGIN")) {
+    throw new Error(
+      "GITHUB_APP_PRIVATE_KEY_B64 did not decode to a PEM — re-encode the .pem " +
+        "with `base64 -w0 <key>.pem` and paste the single-line result (no wrapping)"
+    );
+  }
+  return decoded;
 }
 
 // Build a signed App JWT (max 10 min lifetime per GitHub) used to request an
