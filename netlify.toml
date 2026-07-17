@@ -2,8 +2,15 @@
   command = "bash build.sh"
   publish = "docs"
 
-# CMS auth broker (Phase 1). Serverless functions live in the repo and deploy
-# with the site at /.netlify/functions/<name>.
+# CMS auth broker. Serverless functions live in the repo and deploy with the
+# site at /.netlify/functions/<name>.
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# Pretty path for the GitHub-API proxy (Phase 2). Decap points api_root here.
+[[redirects]]
+  from = "/cms-git/*"
+  to = "/.netlify/functions/cms-git/:splat"
+  status = 200
+  force = true

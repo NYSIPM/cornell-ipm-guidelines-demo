@@ -100,12 +100,62 @@ The response shows your `sub`, your `roles` including `guidelines_editor`, and
 `"canEdit": true` — confirming the Auth0 login carried the role to the server
 with no GitHub login involved.
 
-## Not in Phase 1 (next steps)
+---
 
-- Create the GitHub App (org: NYSIPM, repo: `cornell-ipm-guidelines-demo`,
-  permissions: Contents R/W, Pull requests R/W); store its private key as a
-  Netlify env var.
-- Broker mints installation tokens and proxies `api.github.com` (B1).
-- Point Decap's `github` backend `api_root` at the broker; override token
-  acquisition to use the Auth0 token; login button reuses `TreatmentAuth`.
-- Enforce `guidelines_publisher` on the merge/publish endpoint.
+## Phase 2 (this branch): the role-gated GitHub proxy
+
+The server half of Auth0-only login. Editors authenticate with Auth0; a
+server-side GitHub App does the commits.
+
+Pieces added:
+
+- `netlify/functions/cms-git.mjs` — proxy: validates the Auth0 token + role,
+  answers Decap's `GET /user` from Auth0, gates PR-merge on
+  `guidelines_publisher`, and forwards everything else to `api.github.com` with
+  the App token, attributing commits to the editor.
+- `netlify/functions/_shared/` — `auth.mjs` (token validation + `/userinfo`
+  identity), `github-app.mjs` (installation-token minting via `node:crypto`),
+  `http.mjs` (CORS/JSON helpers). `cms-whoami.mjs` now reuses these.
+- `netlify.toml` — `/cms-git/*` redirect to the function.
+- `scripts/test-cms-git.sh` — reads a repo file *through the proxy* to verify
+  the whole server chain independently of Decap.
+
+### GitHub App setup (one time, you)
+
+Create it in the **NYSIPM** org (Settings > Developer settings > GitHub Apps >
+New). Webhook: **inactive**. Repository permissions:
+
+- **Contents:** Read and write
+- **Pull requests:** Read and write
+- **Issues:** Read and write  ← editorial-workflow status is stored as PR
+  labels, which live under the Issues permission for a GitHub App
+
+Install it on **only** `cornell-ipm-guidelines-demo`. Then set these Netlify env
+vars (all deploy contexts; mark secret):
+
+- `GITHUB_APP_ID`
+- `GITHUB_APP_INSTALLATION_ID`
+- `GITHUB_REPO` = `NYSIPM/cornell-ipm-guidelines-demo`
+- `GITHUB_APP_PRIVATE_KEY_B64` = the downloaded `.pem`, base64-encoded:
+  `base64 -w0 <key>.pem`  (the `.pem` is used as-is; no format conversion)
+
+### Verify the server chain
+
+Once the env vars are set and the preview redeploys, with an access token:
+
+```sh
+./scripts/test-cms-git.sh \
+  https://<preview>--dancing-sundae-a531d3.netlify.app/cms-git \
+  <ACCESS_TOKEN>
+```
+
+HTTP 200 with `index.qmd` metadata = Auth0 token -> role check -> App token ->
+GitHub read all working.
+
+### Still to do (next step, needs live iteration)
+
+Wire Decap itself: in `admin/config.yml` keep `backend.name: github` but set
+`api_root` to `<site>/cms-git`, and inject the Auth0 access token as Decap's
+token (login button reuses `TreatmentAuth`) so `/admin/` stops asking for
+GitHub. This is the fiddly client-side piece and will be built + tested against
+the Deploy Preview.
