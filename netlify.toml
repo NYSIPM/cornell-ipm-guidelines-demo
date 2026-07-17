@@ -2,6 +2,14 @@
   command = "bash build.sh"
   publish = "docs"
 
+# The repo slug and the numeric App/Installation IDs are not secrets and appear
+# legitimately in the build output (config, code, rendered site), so exclude
+# them from Netlify secrets scanning. The App PRIVATE KEY is intentionally NOT
+# listed here: it must never appear in output, and a failed scan would be a
+# real leak we want to catch.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "GITHUB_REPO,GITHUB_APP_ID,GITHUB_APP_INSTALLATION_ID"
+
 # CMS auth broker. Serverless functions live in the repo and deploy with the
 # site at /.netlify/functions/<name>.
 [functions]
