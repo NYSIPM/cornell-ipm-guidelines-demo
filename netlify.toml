@@ -1,3 +1,9 @@
 [build]
   command = "bash build.sh"
   publish = "docs"
+
+# CMS auth broker (Phase 1). Serverless functions live in the repo and deploy
+# with the site at /.netlify/functions/<name>.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
