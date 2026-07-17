@@ -62,31 +62,29 @@ Pieces added on this branch:
 
 - `netlify/functions/cms-whoami.mjs` — validates the Auth0 access token and
   echoes `{ sub, email, roles, canEdit, canPublish }`.
-- `cms-auth/auth0-action-add-roles.js` — Auth0 post-login Action that stamps the
-  roles (and email) into a namespaced claim.
 - `scripts/test-cms-whoami.sh` — CLI check against the deployed endpoint.
 - `netlify.toml` — registers `netlify/functions/`.
 - `package.json` — adds `jose` (JWT/JWKS validation).
+
+**Roles claim:** the broker reads the tenant's existing curated claim
+`https://cornell-ipm.org/roles` (added by the "Add roles to token" Post Login
+action, which the IPM team manages). No CMS-specific Auth0 action is required.
 
 ### Setup steps
 
 1. **Auth0 roles.** In Auth0 > User Management > Roles, create
    `guidelines_editor` and `guidelines_publisher`. Assign `guidelines_editor`
-   (and optionally `guidelines_publisher`) to your own user for testing.
+   (and optionally `guidelines_publisher`) to your own user for testing. They
+   flow into the token via the existing "Add roles to token" action.
 
-2. **Auth0 Action.** Auth0 > Actions > Library > Build Custom, trigger
-   *Login / Post Login*, paste `cms-auth/auth0-action-add-roles.js`, Deploy, then
-   drag it into the Login flow. Keep the `NAMESPACE` in the Action identical to
-   the broker's `CMS_ROLES_CLAIM` / `CMS_EMAIL_CLAIM`.
-
-3. **Deploy the function.** Push this branch; open its Netlify deploy preview.
+2. **Deploy the function.** Push this branch; open its Netlify deploy preview.
    The endpoint is:
    `https://<branch-preview>--dancing-sundae-a531d3.netlify.app/.netlify/functions/cms-whoami`
    Optionally set Netlify env vars (defaults already match this repo):
    `AUTH0_ISSUER`, `AUTH0_AUDIENCE`, `CMS_ROLES_CLAIM`, `CMS_EMAIL_CLAIM`,
    `CMS_ALLOWED_ORIGINS`.
 
-4. **Get a token + test.** On the preview's `/admin/`, log in with Auth0, then in
+3. **Get a token + test.** On the preview's `/admin/`, log in with Auth0, then in
    the devtools console run `await window.TreatmentAuth.getTokenOrLogin()` and
    copy the token. Then:
 

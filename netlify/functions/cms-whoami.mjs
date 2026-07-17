@@ -23,10 +23,15 @@ const AUDIENCE =
   "https://webguidelines2.psep.cce.cornell.edu/api";
 // Namespace for custom claims. Auth0 requires custom claims to be namespaced
 // URIs; this does not need to resolve to a real site.
+// Roles are read from the tenant's existing curated claim (added by the
+// "Add roles to token" Post Login action). No CMS-specific Auth0 action needed.
 const ROLES_CLAIM =
-  process.env.CMS_ROLES_CLAIM || "https://guidelines.cornell-ipm.org/roles";
+  process.env.CMS_ROLES_CLAIM || "https://cornell-ipm.org/roles";
+// Access tokens don't carry email by default and the curated action doesn't add
+// it. Phase 2 resolves the editor's name/email from Auth0 /userinfo (the token
+// already has that audience + the "email" scope). Until then this stays null.
 const EMAIL_CLAIM =
-  process.env.CMS_EMAIL_CLAIM || "https://guidelines.cornell-ipm.org/email";
+  process.env.CMS_EMAIL_CLAIM || "https://cornell-ipm.org/email";
 
 const EDITOR_ROLE = "guidelines_editor";
 const PUBLISHER_ROLE = "guidelines_publisher";
