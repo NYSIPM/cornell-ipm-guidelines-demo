@@ -506,10 +506,55 @@
     }
   });
 
+  const PesticideTableSelectorPreview = createClass({
+  render() {
+    const h = window.h || window.React.createElement;
+    const value = normalizeWidgetValue(this.props.value);
+
+    const guidelineId = value.guidelineId || "";
+    const pestId = value.pestId || "";
+    const siteId = value.siteId || "";
+
+    return h(
+      "div",
+      null,
+      `Guideline: ${guidelineId || "-"}, Pest: ${pestId || "-"}, Site: ${siteId || "-"}`
+    );
+  }
+});
+
+  const ChangedSincePreview = createClass({
+    render() {
+      const h = window.h || window.React.createElement;
+      const value = this.props.value || "";
+
+      return h(
+        "span",
+        null,
+        value
+          ? `Show changes since ${value}`
+          : "No change date selected"
+      );
+    }
+  });
+
+  CMS.registerWidget(
+    "pesticide_table_selector",
+    PesticideTableSelectorControl,
+    PesticideTableSelectorPreview
+  );
+
+  CMS.registerWidget(
+    "changed_since_selector",
+    ChangedSinceControl,
+    ChangedSincePreview
+  );
+
+  /*
   CMS.registerWidget("pesticide_table_selector", PesticideTableSelectorControl);
 
   CMS.registerWidget("changed_since_selector", ChangedSinceControl);
-
+  */
   CMS.registerEditorComponent({
     id: "pesticide-table",
     label: "Treatment Table (DB)",
