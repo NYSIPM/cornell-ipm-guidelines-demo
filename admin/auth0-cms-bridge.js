@@ -21,6 +21,20 @@
       console.error("[auth0-cms-bridge] Decap CMS not loaded");
       return;
     }
+    //TESTING Code
+    const isLocal =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+
+    if (isLocal) {
+      console.info(
+        "[auth0-cms-bridge] Local mode detected; skipping Auth0 bridge."
+      );
+
+      window.CMS.init();
+      return;
+    }
+    //Start of Orginal
     if (!window.TreatmentAuth) {
       console.error("[auth0-cms-bridge] TreatmentAuth (cms.js) not loaded");
       return;
