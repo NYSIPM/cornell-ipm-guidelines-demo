@@ -5,7 +5,9 @@
   "scripts": {
     "build": "quarto render"
   },
-  "dependencies": {},
+  "dependencies": {
+    "jose": "^5.10.0"
+  },
   "devDependencies": {
     "@quarto/netlify-plugin-quarto": "^0.0.5"
   }

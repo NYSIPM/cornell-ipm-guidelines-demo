@@ -5,6 +5,11 @@ backend:
   name: github
   repo: NYSIPM/cornell-ipm-guidelines-demo
   branch: main
+  # Route all GitHub API calls through our Auth0 role-gated proxy (a Netlify
+  # function) instead of api.github.com. Relative path = same origin as /admin/,
+  # so it works on the production domain and on Netlify deploy previews alike.
+  # See netlify/functions/cms-git.mjs and the /cms-git redirect in netlify.toml.
+  api_root: /cms-git
 
 publish_mode: editorial_workflow
 show_preview_links: true

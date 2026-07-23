@@ -27,11 +27,8 @@
   <script src="cms.js"></script>
   
 
-  <script>
-    window.TreatmentAuth?.init?.().then(() => {
-      window.CMS.init();
-    });
-  </script>
+  <!-- Authenticate via Auth0 (not GitHub OAuth), then CMS.init(). -->
+  <script src="auth0-cms-bridge.js"></script>
 
 </body>
 </html>
