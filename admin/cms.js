@@ -100,11 +100,45 @@
         return null;
       }
 
+      /*
       return await this.client.getTokenSilently({
         authorizationParams: {
           audience: window.TreatmentAuthConfig.audience
         }
       });
+      */
+     try {
+        return await this.client.getTokenSilently({
+          authorizationParams: {
+            audience: window.TreatmentAuthConfig.audience
+          }
+        });
+      } catch (err) {
+        const consentRequired =
+          err?.error === "consent_required" ||
+          err?.message === "Consent required";
+
+        if (consentRequired) {
+          console.warn(
+            "[TreatmentAuth] Consent required. Redirecting to Auth0 for approval."
+          );
+
+          await this.client.loginWithRedirect({
+            appState: {
+              returnTo: window.location.href
+            },
+            authorizationParams: {
+              audience: window.TreatmentAuthConfig.audience,
+              redirect_uri: window.TreatmentAuthConfig.redirectUri,
+              prompt: "consent"
+            }
+          });
+
+          return null;
+        }
+
+        throw err;
+      }
     },
 
     async authHeaders() {
