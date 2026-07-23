@@ -626,7 +626,7 @@
     }
   });
 
-  //startPreviewHydrationLoop();
+  startPreviewHydrationLoop();
 
   function startPreviewHydrationLoop() {
     setInterval(async () => {
