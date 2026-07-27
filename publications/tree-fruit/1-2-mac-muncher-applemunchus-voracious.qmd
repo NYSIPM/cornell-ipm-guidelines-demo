@@ -9,6 +9,10 @@ The species is most often found in orchards, backyard apple trees, and anywhere 
 
 Here is a 3rd change.
 
+Change 1
+
+Change 2
+
 ```{=html}
 <table style="border-collapse: collapse; width: 100%; height: 133.5px;" border="1"><colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
 <tbody>
