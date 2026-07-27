@@ -37,7 +37,6 @@ Here is a 3rd change.
 </tr>
 </tbody>
 </table>
-<p>&nbsp;</p>
 ```
 
 Here is a 4th change.
