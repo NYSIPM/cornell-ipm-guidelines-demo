@@ -180,6 +180,25 @@ export async function handler(event) {
 
   let text = await ghRes.text();
 
+  // Decap expects a JSON response, even when GitHub successfully returns
+  // 204 No Content after deleting the editorial-workflow branch.
+  if (
+    event.httpMethod === "DELETE" &&
+    ghRes.status === 204 &&
+    !text.trim()
+  ) {
+    return {
+      statusCode: 200,
+      headers: {
+        ...cors,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ok: true,
+        deleted: true,
+      }),
+    };
+  }
   //--- TEMP FOR DEBUGGING ---
   // --- TEMP FOR DEBUGGING ---
   console.log("=== GitHub Response ===");
