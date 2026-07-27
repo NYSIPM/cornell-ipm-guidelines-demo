@@ -135,11 +135,12 @@ export async function handler(event) {
       403,
       {
         error: "forbidden",
-        detail: "guidelines_publisher role required to publish",
+        detail: "guidelines_editor role required to publish",
       },
       cors
     );
   }
+  //detail: "guidelines_publisher role required to publish",
 
   // --- 5. Forward to GitHub with the App installation token ---
   let installationToken;

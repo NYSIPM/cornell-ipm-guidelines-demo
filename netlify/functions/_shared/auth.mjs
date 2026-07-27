@@ -34,11 +34,21 @@ export async function verifyAuth0Token(token) {
 
   const roles = Array.isArray(payload[ROLES_CLAIM]) ? payload[ROLES_CLAIM] : [];
 
+  /*
   return {
     sub: payload.sub,
     roles,
     canEdit: roles.includes(EDITOR_ROLE),
     canPublish: roles.includes(PUBLISHER_ROLE),
+    payload,
+  };
+  */
+  const canEdit = roles.includes(EDITOR_ROLE);
+  return {
+    sub: payload.sub,
+    roles,
+    canEdit,
+    canPublish: canEdit,
     payload,
   };
 }
