@@ -5,7 +5,7 @@
 // Decap CMS is configured with `backend: github` but `api_root` pointing here.
 // Decap sends the editor's Auth0 access token; this function:
 //   1. validates the Auth0 token and checks the guidelines_editor role
-//   2. gates publish (PR merge) on the guidelines_publisher role
+//   2. gates publish (PR merge) on the guidelines_editor (formaly guidelines_publisher) role
 //   3. answers Decap's identity call (GET /user) from Auth0 (there is no
 //      GitHub user in this flow)
 //   4. forwards everything else to api.github.com using a GitHub App
@@ -140,6 +140,7 @@ export async function handler(event) {
       cors
     );
   }
+  //guidelines_publisher formaly
   //detail: "guidelines_publisher role required to publish",
 
   // --- 5. Forward to GitHub with the App installation token ---
@@ -178,6 +179,15 @@ export async function handler(event) {
   });
 
   let text = await ghRes.text();
+
+  //--- TEMP FOR DEBUGGING ---
+  // --- TEMP FOR DEBUGGING ---
+  console.log("=== GitHub Response ===");
+  console.log("Request:", event.httpMethod, ghPath + search);
+  console.log("Status:", ghRes.status);
+  console.log("Headers:", Object.fromEntries(ghRes.headers.entries()));
+  console.log("Body:", text);
+  console.log("=======================");
 
   // Decap checks write access via GET /repos/:owner/:repo and reads
   // repo.permissions.push. A GitHub App installation token doesn't populate the
