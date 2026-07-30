@@ -34,10 +34,26 @@
         .filter(Boolean)
     ));
   }
-
+  /*
   function renderPesticideRow(pesticide, summaryType, index) {
     const resistanceCodes = getResistanceCodes(pesticide, summaryType);
     const rowClass = index % 2 === 0 ? "is-even" : "is-odd";
+
+    return `
+      <tr class="${rowClass}">
+        <td>${summary.escapeHtml(pesticide?.commonName || "")}</td>
+        <td>${summary.escapeHtml(pesticide?.tradeName || "")}</td>
+        <td>${summary.escapeHtml(pesticide?.epaRegistrationNumber || "")}</td>
+        <td>${summary.escapeHtml(pesticide?.phi || "")}</td>
+        <td>${summary.escapeHtml(pesticide?.rei || "")}</td>
+        <td>${summary.escapeHtml(resistanceCodes.join(", "))}</td>
+      </tr>
+    `;
+  }
+  */
+  function renderPesticideRow(pesticide, summaryType, groupIndex) {
+    const resistanceCodes = getResistanceCodes(pesticide, summaryType);
+    const rowClass = groupIndex % 2 === 0 ? "is-even" : "is-odd";
 
     return `
       <tr class="${rowClass}">
@@ -83,24 +99,40 @@
       `;
     }
 
+    /*
     const bodyRows = pesticides
       .map((pesticide, index) => renderPesticideRow(pesticide, summaryType, index))
       .join("");
+    */
+    let currentCommonName = null;
+    let groupIndex = -1;
+
+    const bodyRows = pesticides
+      .map(pesticide => {
+        const commonName = String(pesticide?.commonName || "")
+          .trim()
+          .toLowerCase();
+
+        if (commonName !== currentCommonName) {
+          currentCommonName = commonName;
+          groupIndex += 1;
+        }
+
+        return renderPesticideRow(pesticide, summaryType, groupIndex);
+      })
+      .join("");
+
 
     return `
       <div class="pesticide-summary">
-        <h3 class="pesticide-summary__title">${summary.escapeHtml(summaryType)} Summary</h3>
-        <div class="pesticide-summary__subtitle">
-          ${summary.escapeHtml(siteName)} &mdash; ${pesticides.length}
-          ${pesticides.length === 1 ? "product" : "products"}
-        </div>
+        <!--<h3 class="pesticide-summary__title">${summary.escapeHtml(summaryType)} Summary</h3>-->
         <div class="pesticide-summary__table-wrap">
           <table class="pesticide-summary__table">
             <thead>
               <tr>
                 <th>Common Name</th>
                 <th>Trade Name</th>
-                <th>EPA Registration Number</th>
+                <th>EPA Reg. Number</th>
                 <th>PHI</th>
                 <th>REI</th>
                 <th>${summary.escapeHtml(resistanceHeading)}</th>
@@ -109,6 +141,10 @@
             <tbody>${bodyRows}</tbody>
           </table>
         </div>
+      </div>
+      <div class="pesticide-summary__footer">
+          ${summary.escapeHtml(siteName)} &mdash; ${pesticides.length}
+          ${pesticides.length === 1 ? "product" : "products"}
       </div>
     `;
   };
