@@ -1,5 +1,5 @@
 # TEST GIT CHANGE
-#local_backend: true
+local_backend: true
 
 backend:
   name: github
@@ -76,6 +76,22 @@ collections:
         modes: [rich_text, raw]
         editor_components:
           - pesticide-table
+
+  # Field Crop Guidelines
+  - name: "field crops"
+    label: "Field Crop Guidelines"
+    label_singular: "New Section"
+    folder: "publications/field-crops"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    nested:
+      depth: 2
+      summary: "{{title}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
 
   # Grape Guidelines
   - name: "grapes"
