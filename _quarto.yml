@@ -32,6 +32,7 @@ format:
       - assets/css/pesticide-summary.css
       - assets/css/pesticide-summary-public.css
     theme: cosmo
+    html-math-method: katex
     toc: true
     shortcodes:
       - filters/pesticide-table.lua #Part of the public table viewer.

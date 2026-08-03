@@ -1,0 +1,31 @@
+.latex-equation-preview {
+  /*margin: 1rem 0;
+  padding: 0rem;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  background: #fff;*/
+}
+
+.latex-equation-preview__label {
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.latex-equation-preview__rendered {
+  padding: 1rem;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.latex-equation-preview__source {
+  margin: 0;
+  padding: 0.75rem;
+  white-space: pre-wrap;
+  background: #f7f7f7;
+}
+
+.latex-equation-preview__error {
+  margin-bottom: 0.5rem;
+  color: #b00020;
+  font-weight: 600;
+}
