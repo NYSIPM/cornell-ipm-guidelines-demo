@@ -1,4 +1,39 @@
 ---
 title: Mike Test Page
 ---
-Mike Test Page
+# Stay away...my Page.
+
+1. Testing the formatting **of this page.** *It's cool to use italics.*
+2. *Trying another line.*
+3. *And another.*
+
+```{=html}
+<table style="border-collapse: collapse; width: 61.0558%; height: 75px;" border="1"><colgroup><col style="width: 33.3388%;"><col style="width: 33.3266%;"><col style="width: 33.3347%;"></colgroup>
+<tbody>
+<tr>
+<td colspan="3"><strong>&nbsp;</strong><br><strong>&nbsp;</strong>Table 1.1.1 pH Conditions</td>
+</tr>
+<tr style="height: 37px;">
+<td><strong>Soil Type</strong></td>
+<td><strong>pH</strong></td>
+<td><strong>Lime to Add</strong></td>
+</tr>
+<tr style="height: 37px;">
+<td>Howard</td>
+<td>6.0</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+```
+
+![](/static/images/bag-trap.jpg)
+
+#### Testing text.
+
+{{< pesticide-table guidelineId="2" pestId="81" siteId="23" changedSince="2023-01-01" >}}
+
+
+
+{{< pesticide-summary siteId="23" type="Herbicide" >}}
