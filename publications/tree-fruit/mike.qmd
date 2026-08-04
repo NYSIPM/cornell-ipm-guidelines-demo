@@ -34,6 +34,4 @@ title: Mike Test Page
 
 {{< pesticide-table guidelineId="2" pestId="81" siteId="23" changedSince="2023-01-01" >}}
 
-
-
 {{< pesticide-summary siteId="23" type="Herbicide" >}}
