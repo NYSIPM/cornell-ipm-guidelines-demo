@@ -32,7 +32,7 @@ title: Mike Test Page
 
 #### Testing text.
 
-Onion Maggot Treatment
+Table 1.1.1. Onion Maggot Treatment Options
 
 {{< pesticide-table guidelineId="2" pestId="81" siteId="23" changedSince="2023-01-01" >}}
 
