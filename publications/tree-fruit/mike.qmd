@@ -27,3 +27,13 @@ title: Mike Test Page
 </table>
 <p>&nbsp;</p>
 ```
+
+![](/static/images/bag-trap.jpg)
+
+#### Testing text.
+
+{{< pesticide-table guidelineId="2" pestId="81" siteId="23" changedSince="2021-01-01" >}}
+
+
+
+{{< pesticide-summary siteId="23" type="Herbicide" >}}
