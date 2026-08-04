@@ -8,8 +8,11 @@ title: Mike Test Page
 3. *And another.*
 
 ```{=html}
-<table style="border-collapse: collapse; width: 61.0558%; height: 75px;" border="1"><colgroup><col style="width: 33.3383%;"><col style="width: 33.3271%;"><col style="width: 33.3346%;"></colgroup>
+<table style="border-collapse: collapse; width: 61.0558%; height: 75px;" border="1"><colgroup><col style="width: 33.3388%;"><col style="width: 33.3266%;"><col style="width: 33.3347%;"></colgroup>
 <tbody>
+<tr>
+<td colspan="3"><strong>&nbsp;</strong><br><strong>&nbsp;</strong>Table 1.1.1 pH Conditions</td>
+</tr>
 <tr style="height: 37px;">
 <td><strong>Soil Type</strong></td>
 <td><strong>pH</strong></td>
