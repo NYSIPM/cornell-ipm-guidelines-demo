@@ -115,3 +115,10 @@
 .pesticide-summary__error {
   color: #b00020;
 }
+
+.pesticide-summary-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  font-weight: 600;
+}

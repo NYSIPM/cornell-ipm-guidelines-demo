@@ -155,3 +155,16 @@
   outline: none;
   box-shadow: 0 0 0 1px rgba(74,144,226,0.2);
 }
+
+.pesticide-table-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.treatment-table-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  font-weight: 600;
+}

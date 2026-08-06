@@ -149,10 +149,17 @@
       const current = summary.normalizeWidgetValue(this.props.value);
 
       this.props.onChange({
+        title: String(current.title || ""),
         guidelineId: String(current.guidelineId || ""),
         siteId: String(current.siteId || ""),
         type: summary.normalizeSummaryType(current.type),
         ...changes
+      });
+    },
+
+    handleTitleChange(event) {
+      this.updateValue({
+        title: event.target.value
       });
     },
 
@@ -179,6 +186,7 @@
       const h = window.h || window.React.createElement;
       const value = summary.normalizeWidgetValue(this.props.value);
 
+      const title = String(value.title || "");
       const guidelineId = String(value.guidelineId || "");
       const siteId = String(value.siteId || "");
       const summaryType = summary.normalizeSummaryType(value.type);
@@ -216,148 +224,208 @@
         );
       }
 
-      return h("div", { className: "pesticide-summary-selector" }, [
-        h(
-          "div",
-          {
-            key: "description",
-            className: "pesticide-summary-selector__description"
-          },
-          "Select a guideline, then choose its Site / Crop and pesticide summary type."
-        ),
+      return h("div", {
+        className: "pesticide-summary-selector",
+        style: {
+          border: "1px solid #d6d6d6",
+          borderRadius: "4px",
+          padding: "16px",
+          background: "#fff"
+        }
+      }, [
 
-        h(
-          "div",
-          {
-            key: "guideline",
-            className: "pesticide-summary-selector__field"
-          },
-          [
-            h(
-              "label",
-              {
-                key: "label",
-                className: "pesticide-summary-selector__label"
-              },
-              "Guideline"
-            ),
-            h(
-              "select",
-              {
-                key: "select",
-                value: guidelineId,
-                onChange: this.handleGuidelineChange,
-                className: "pesticide-summary-selector__control"
-              },
-              [
+        // Table title
+        h("div", {
+          key: "title",
+          style: {
+            marginBottom: "14px"
+          }
+        }, [
+          h("label", {
+            key: "label",
+            style: {
+              display: "block",
+              fontWeight: "600",
+              marginBottom: "4px"
+            }
+          }, "Table Title"),
+
+          h("input", {
+            key: "input",
+            type: "text",
+            value: title,
+            onChange: this.handleTitleChange,
+            placeholder: "Enter the pesticide summary title",
+            style: {
+              width: "100%",
+              padding: "8px",
+              border: "1px solid #c5c5c5",
+              borderRadius: "4px",
+              background: "#fff",
+              boxSizing: "border-box"
+            }
+          })
+        ]),
+
+        // Guideline
+        h("div", {
+          key: "guideline",
+          style: {
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            marginBottom: "10px"
+          }
+        }, [
+          h("label", {
+            key: "label",
+            style: {
+              width: "175px",
+              flexShrink: "0",
+              fontWeight: "600"
+            }
+          }, "Guideline"),
+
+          h(
+            "select",
+            {
+              key: "select",
+              value: guidelineId,
+              onChange: this.handleGuidelineChange,
+              style: {
+                flex: "1",
+                minWidth: "0",
+                padding: "8px"
+              }
+            },
+            [
+              h(
+                "option",
+                { key: "empty", value: "" },
+                "-- Select Guideline --"
+              ),
+
+              ...this.state.options.map(guideline =>
                 h(
                   "option",
-                  { key: "empty", value: "" },
-                  "-- Select Guideline --"
-                ),
-                ...this.state.options.map(guideline =>
-                  h(
-                    "option",
-                    {
-                      key: String(guideline.guidelineId),
-                      value: String(guideline.guidelineId)
-                    },
-                    makeGuidelineLabel(guideline)
-                  )
+                  {
+                    key: String(guideline.guidelineId),
+                    value: String(guideline.guidelineId)
+                  },
+                  makeGuidelineLabel(guideline)
                 )
-              ]
-            )
-          ]
-        ),
+              )
+            ]
+          )
+        ]),
 
-        h(
-          "div",
-          {
-            key: "site",
-            className: "pesticide-summary-selector__field"
-          },
-          [
-            h(
-              "label",
-              {
-                key: "label",
-                className: "pesticide-summary-selector__label"
-              },
-              "Site / Crop"
-            ),
-            h(
-              "select",
-              {
-                key: "select",
-                value: siteId,
-                onChange: this.handleSiteChange,
-                disabled: !guidelineId,
-                className: "pesticide-summary-selector__control"
-              },
-              [
+        // Site / Crop
+        h("div", {
+          key: "site",
+          style: {
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            marginBottom: "10px"
+          }
+        }, [
+          h("label", {
+            key: "label",
+            style: {
+              width: "175px",
+              flexShrink: "0",
+              fontWeight: "600"
+            }
+          }, "Site / Crop"),
+
+          h(
+            "select",
+            {
+              key: "select",
+              value: siteId,
+              onChange: this.handleSiteChange,
+              disabled: !guidelineId,
+              style: {
+                flex: "1",
+                minWidth: "0",
+                padding: "8px"
+              }
+            },
+            [
+              h(
+                "option",
+                { key: "empty", value: "" },
+                guidelineId
+                  ? "-- Select Site / Crop --"
+                  : "-- Select a Guideline First --"
+              ),
+
+              ...siteOptions.map(site =>
                 h(
                   "option",
-                  { key: "empty", value: "" },
-                  guidelineId
-                    ? "-- Select Site / Crop --"
-                    : "-- Select a Guideline First --"
-                ),
-                ...siteOptions.map(site =>
-                  h(
-                    "option",
-                    {
-                      key: String(site.siteId),
-                      value: String(site.siteId)
-                    },
-                    makeSiteLabel(site)
-                  )
+                  {
+                    key: String(site.siteId),
+                    value: String(site.siteId)
+                  },
+                  makeSiteLabel(site)
                 )
-              ]
-            )
-          ]
-        ),
+              )
+            ]
+          )
+        ]),
 
-        h(
-          "div",
-          {
-            key: "type",
-            className: "pesticide-summary-selector__field"
-          },
-          [
-            h(
-              "label",
-              {
-                key: "label",
-                className: "pesticide-summary-selector__label"
-              },
-              "Pesticide Summary Type"
-            ),
-            h(
-              "select",
-              {
-                key: "select",
-                value: summaryType,
-                onChange: this.handleTypeChange,
-                className: "pesticide-summary-selector__control"
-              },
-              [
+        // Pesticide Summary Type
+        h("div", {
+          key: "type",
+          style: {
+            display: "flex",
+            alignItems: "center",
+            gap: "12px"
+          }
+        }, [
+          h("label", {
+            key: "label",
+            style: {
+              width: "175px",
+              flexShrink: "0",
+              fontWeight: "600"
+            }
+          }, "Pesticide Summary Type"),
+
+          h(
+            "select",
+            {
+              key: "select",
+              value: summaryType,
+              onChange: this.handleTypeChange,
+              style: {
+                flex: "1",
+                minWidth: "0",
+                padding: "8px"
+              }
+            },
+            [
+              h(
+                "option",
+                { key: "empty", value: "" },
+                "-- Select Summary Type --"
+              ),
+
+              ...summary.SUMMARY_TYPES.map(option =>
                 h(
                   "option",
-                  { key: "empty", value: "" },
-                  "-- Select Summary Type --"
-                ),
-                ...summary.SUMMARY_TYPES.map(option =>
-                  h(
-                    "option",
-                    { key: option.value, value: option.value },
-                    option.label
-                  )
+                  {
+                    key: option.value,
+                    value: option.value
+                  },
+                  option.label
                 )
-              ]
-            )
-          ]
-        )
+              )
+            ]
+          )
+        ])
       ]);
+      
     }
   });
 
@@ -369,7 +437,7 @@
       return h(
         "span",
         null,
-        `Guideline: ${value.guidelineId || "-"}, Site: ${value.siteId || "-"}, Summary: ${summary.normalizeSummaryType(value.type) || "-"}`
+        `${value.title || "Pesticide Summary"} — Guideline: ${value.guidelineId || "-"}, Site: ${value.siteId || "-"}, Summary: ${summary.normalizeSummaryType(value.type) || "-"}`
       );
     }
   });
