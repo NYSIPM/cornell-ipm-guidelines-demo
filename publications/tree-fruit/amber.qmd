@@ -1,4 +1,10 @@
 ---
 title: Amber
 ---
-Amber
+#### PSEP
+
+{{< pesticide-summary siteId="34" type="Fungicide" >}}
+
+
+
+{{< pesticide-table guidelineId="3" pestId="337" siteId="56" changedSince="" >}}
