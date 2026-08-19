@@ -1,0 +1,21 @@
+project:
+  type: book
+  output-dir: _output
+
+book:
+  title: "Tree Fruit Guidelines"
+  output-file: "tree-fruit-guidelines"
+
+  chapters:
+    - index.qmd
+    - 1-1-test.qmd
+    - 1-2-mac-muncher-applemunchus-voracious.qmd
+    - test.qmd
+
+format:
+  pdf:
+    documentclass: scrbook
+    toc: true
+    number-sections: true
+    resource-path:
+      - ../..
