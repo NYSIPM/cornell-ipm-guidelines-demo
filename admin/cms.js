@@ -43,7 +43,59 @@
   window.TreatmentAuth = {
     client: null,
     user: null,
+    initPromise: null,
 
+    async init() {
+      // If initialization has already started, reuse that same operation.
+      if (this.initPromise) {
+        return this.initPromise;
+      }
+
+      this.initPromise = (async () => {
+        this.client = await auth0.createAuth0Client({
+          domain: window.TreatmentAuthConfig.domain,
+          clientId: window.TreatmentAuthConfig.clientId,
+          authorizationParams: {
+            audience: window.TreatmentAuthConfig.audience,
+            redirect_uri: window.TreatmentAuthConfig.redirectUri
+          },
+          cacheLocation: "localstorage"
+        });
+
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.has("code") && params.has("state")) {
+          await this.client.handleRedirectCallback();
+
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+          );
+        }
+
+        if (await this.client.isAuthenticated()) {
+          this.user = await this.client.getUser();
+
+          console.log("Logged in as:", this.user);
+          console.log("Auth0 sub:", this.user?.sub);
+          console.log("Email:", this.user?.email);
+        }
+
+        return this.client;
+      })();
+
+      try {
+        return await this.initPromise;
+      } catch (err) {
+        // Allow another attempt if initialization genuinely failed.
+        this.initPromise = null;
+        throw err;
+      }
+    },
+
+
+    /*
     async init() {
       this.client = await auth0.createAuth0Client({
         domain: window.TreatmentAuthConfig.domain,
@@ -75,6 +127,7 @@
         console.log("Email:", this.user?.email);
       }
     },
+    */
 
     async login() {
       await this.client.loginWithRedirect({
@@ -89,11 +142,10 @@
     },
 
     async getTokenOrLogin() {
-      if (!this.client) {
+        // Always wait for the shared initialization operation to finish.
         await this.init();
-      }
 
-      const isAuthenticated = await this.client.isAuthenticated();
+        const isAuthenticated = await this.client.isAuthenticated();
 
       if (!isAuthenticated) {
         await this.login();
@@ -163,9 +215,12 @@
     }
     */
     async logout() {
+      /*
       if (!this.client) {
         await this.init();
       }
+      */
+      await this.init();
 
       await this.client.logout({
         logoutParams: {
@@ -209,6 +264,58 @@
   
 
   let guidelineOptionsCache = null;
+  let guidelineOptionsPromise = null;
+
+  async function fetchGuidelineOptions() {
+    if (guidelineOptionsCache) {
+      return guidelineOptionsCache;
+    }
+
+    if (guidelineOptionsPromise) {
+      return guidelineOptionsPromise;
+    }
+
+    guidelineOptionsPromise = (async () => {
+      console.log(
+        "Fetching guideline options:",
+        GUIDELINE_OPTIONS_URL
+      );
+
+      const authHeaders =
+        await window.TreatmentAuth.authHeaders();
+
+      const response = await fetch(GUIDELINE_OPTIONS_URL, {
+        headers: {
+          ...authHeaders
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Guideline options fetch failed: HTTP ${response.status}`
+        );
+      }
+
+      guidelineOptionsCache = await response.json();
+
+      console.log(
+        "Guideline options JSON:",
+        guidelineOptionsCache
+      );
+
+      return guidelineOptionsCache;
+    })();
+
+    try {
+      return await guidelineOptionsPromise;
+    } catch (err) {
+      guidelineOptionsPromise = null;
+      throw err;
+    }
+  }
+
+/*
+  let guidelineOptionsCache = null;
 
   async function fetchGuidelineOptions() {
     if (guidelineOptionsCache) return guidelineOptionsCache;
@@ -235,7 +342,7 @@
 
     return guidelineOptionsCache;
   }
-
+*/
   
 
   function normalizeWidgetValue(value) {
