@@ -5,6 +5,8 @@ The Mac Muncher (*Applemunchus voracious*) is a stout, apple-loving beetle famou
 
 While technically capable of eating other fruits, Mac Munchers stubbornly refuse to do so. Scientists have repeatedly offered them pears, peaches, and cherries, only to discover the insects sitting nearby in apparent protest.
 
+aaaaa
+
 $$
 \frac{a+b}{c}
 $$
@@ -14,8 +16,6 @@ $$
 The species is most often found in orchards, backyard apple trees, and anywhere an unattended pie is cooling on a windowsill.
 
 Here is a 3rd change.
-
-
 
 ```{=html}
 <table style="border-collapse: collapse; width: 100%; height: 133.5px;" border="1"><colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
