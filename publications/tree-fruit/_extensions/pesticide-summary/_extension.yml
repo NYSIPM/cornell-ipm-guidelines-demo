@@ -1,0 +1,7 @@
+title: Pesticide Summary
+author: Cornell IPM
+version: 1.0.0
+
+contributes:
+  shortcodes:
+    - pesticide-summary.lua

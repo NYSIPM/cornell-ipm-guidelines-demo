@@ -1,0 +1,7 @@
+title: Pesticide Table
+author: Cornell IPM
+version: 1.0.0
+
+contributes:
+  shortcodes:
+    - pesticide-table.lua

@@ -8,3 +8,7 @@ Test
 Test
 
 Test
+
+# Shortcode Test
+
+This is my shortcode output: {{< hello >}}
