@@ -457,22 +457,80 @@ local function get_comment_values(treatment)
   return unique(values)
 end
 
-local function text_blocks(value)
+local function text_blocks(
+  value,
+  shaded,
+  bold,
+  left_edge,
+  right_edge
+)
   local text = clean(value)
+  local inlines = {}
+
+  if shaded then
+    table.insert(
+      inlines,
+      pandoc.RawInline(
+        "latex",
+        "\\cellcolor{TreatmentGray}"
+      )
+    )
+  end
+
+  if bold then
+    table.insert(
+      inlines,
+      pandoc.Strong({
+        pandoc.Str(text)
+      })
+    )
+  else
+    table.insert(
+      inlines,
+      pandoc.Str(text)
+    )
+  end
 
   return {
-    pandoc.Plain({
-      pandoc.Str(text)
-    })
+    pandoc.Plain(inlines)
   }
 end
 
-local function table_cell(value, colspan)
+local function table_cell(
+  value,
+  colspan,
+  shaded,
+  bold,
+  left_edge,
+  right_edge
+)
   return pandoc.Cell(
-    text_blocks(value),
+    text_blocks(
+      value,
+      shaded,
+      bold,
+      left_edge,
+      right_edge
+    ),
     pandoc.AlignLeft,
     1,
     colspan or 1
+  )
+end
+
+local function separator_cell()
+  return pandoc.Cell(
+    {
+      pandoc.Plain({
+        pandoc.RawInline(
+          "latex",
+          "\\rule{\\linewidth}{0.4pt}"
+        )
+      })
+    },
+    pandoc.AlignLeft,
+    1,
+    6
   )
 end
 
@@ -572,18 +630,49 @@ return {
 
    local header = pandoc.TableHead({
       pandoc.Row({
-        table_cell("Control Technique"),
-        table_cell("Rate"),
-        table_cell("REI"),
-        table_cell("PHI"),
-        table_cell("Resistance Mgmt."),
-        table_cell("Efficacy")
+        table_cell(
+          "Control Technique",
+          1,
+          false,
+          true
+        ),
+        table_cell(
+          "Rate",
+          1,
+          false,
+          true
+        ),
+        table_cell(
+          "REI",
+          1,
+          false,
+          true
+        ),
+        table_cell(
+          "PHI",
+          1,
+          false,
+          true
+        ),
+        table_cell(
+          "Resistance Mgmt.",
+          1,
+          false,
+          true
+        ),
+        table_cell(
+          "Efficacy",
+          1,
+          false,
+          true
+        )
       })
     })
 
     local body_rows = {}
 
-    for _, treatment in ipairs(treatments) do
+    for treatment_index, treatment in ipairs(treatments) do
+      local shaded = treatment_index % 2 == 1
       local treatment_type =
         get_treatment_type(treatment)
 
@@ -630,12 +719,28 @@ return {
       table.insert(
         body_rows,
         pandoc.Row({
-          table_cell(control_name),
-          table_cell(rate),
-          table_cell(rei),
-          table_cell(phi),
-          table_cell(resistance),
-          table_cell(efficacy)
+          table_cell(
+            control_name,
+            1,
+            shaded,
+            false,
+            true,
+            false
+          ),
+
+          table_cell(rate, 1, shaded),
+          table_cell(rei, 1, shaded),
+          table_cell(phi, 1, shaded),
+          table_cell(resistance, 1, shaded),
+
+          table_cell(
+            efficacy,
+            1,
+            shaded,
+            false,
+            false,
+            true
+          )
         })
       )
 
@@ -643,20 +748,46 @@ return {
       local comments =
         get_comment_values(treatment)
 
-      if #comments > 0 then
-        local comment_blocks = {}
+            if #comments > 0 then
+        local comment_inlines = {}
 
-        for _, comment in ipairs(comments) do
+        if shaded then
           table.insert(
-            comment_blocks,
-            pandoc.Para({
-              pandoc.Str(comment)
-            })
+            comment_inlines,
+            pandoc.RawInline(
+              "latex",
+              "\\cellcolor{TreatmentGray}"
+            )
+          )
+        end
+
+        -- Add modest vertical height inside the colored cell.
+        table.insert(
+          comment_inlines,
+          pandoc.RawInline(
+            "latex",
+            "\\rule{0pt}{1.15em}"
+          )
+        )
+
+        for comment_index, comment in ipairs(comments) do
+          if comment_index > 1 then
+            table.insert(
+              comment_inlines,
+              pandoc.LineBreak()
+            )
+          end
+
+          table.insert(
+            comment_inlines,
+            pandoc.Str(comment)
           )
         end
 
         local comment_cell = pandoc.Cell(
-          comment_blocks,
+          {
+            pandoc.Plain(comment_inlines)
+          },
           pandoc.AlignLeft,
           1,
           6
@@ -666,6 +797,15 @@ return {
           body_rows,
           pandoc.Row({
             comment_cell
+          })
+        )
+      end
+
+      if treatment_index < #treatments then
+        table.insert(
+          body_rows,
+          pandoc.Row({
+            separator_cell()
           })
         )
       end

@@ -17,6 +17,10 @@ format:
     documentclass: scrbook
     toc: true
     number-sections: true
+    header-includes:
+      - |
+        \usepackage{colortbl}
+        \definecolor{TreatmentGray}{gray}{0.94}
     geometry:
       - top=0.5in
       - bottom=0.5in
