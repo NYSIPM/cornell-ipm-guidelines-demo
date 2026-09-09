@@ -1,5 +1,5 @@
 # TEST GIT CHANGE
-#local_backend: true
+local_backend: true
 
 backend:
   name: github
@@ -54,7 +54,7 @@ collections:
         editor_components:
           - image
           #- code-block
-          - html-table
+          - html-table-editor
           #- api-text
           - pesticide-table
 
@@ -110,7 +110,9 @@ collections:
     format: "frontmatter"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
 
   # Trees and Shrubs
   - name: "Trees and Shrubs"
