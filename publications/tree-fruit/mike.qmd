@@ -36,4 +36,4 @@ Table 1.1.1. Onion Maggot Treatment Options
 
 {{< pesticide-table guidelineId="2" pestId="81" siteId="23" changedSince="2023-01-01" >}}
 
-{{< pesticide-summary siteId="23" type="Herbicide" >}}
+{{< pesticide-summary siteId="37" type="Insecticide" >}}
