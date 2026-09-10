@@ -5,6 +5,13 @@ The Mac Muncher (*Applemunchus voracious*) is a stout, apple-loving beetle famou
 
 While technically capable of eating other fruits, Mac Munchers stubbornly refuse to do so. Scientists have repeatedly offered them pears, peaches, and cherries, only to discover the insects sitting nearby in apparent protest.
 
+**Tree Fruit 6.4.1 Activity Spectrum of stone fruit fungicides.**
+
+```{=html}
+<!-- html-table-editor -->
+<table border="1" style="border-collapse:collapse;width:100%;"><thead><tr><th rowspan="2">Fungicide1</th><th rowspan="2">Fungicide Family</th><th rowspan="2">FRAC Code3</th><th colspan="4">registered for use on:</th><th>Header 8</th><th>Header 9</th><th>Header 10</th><th>Header 11</th><th>Header 12</th><th>Header 13</th><th>Header 14</th></tr></thead><tbody><tr><td>Apircot</td><td>Cherry</td><td>Peach</td><td>Plum</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Aprovia</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+```
+
 $$
 \frac{a+b}{c}
 $$
