@@ -5,11 +5,16 @@ The Mac Muncher (*Applemunchus voracious*) is a stout, apple-loving beetle famou
 
 While technically capable of eating other fruits, Mac Munchers stubbornly refuse to do so. Scientists have repeatedly offered them pears, peaches, and cherries, only to discover the insects sitting nearby in apparent protest.
 
+```{=html}
+<!-- html-table-editor -->
+<table border="1" style="border-collapse:collapse;width:100%;"><thead><tr><th>Header 1</th><th>Header 2</th></tr></thead><tbody><tr><td colspan="2">11</td></tr><tr><td>2</td><td>3</td></tr></tbody></table>
+```
+
 $$
 \frac{a+b}{c}
 $$
 
-{{< pesticide-summary siteId="29" type="Insecticide" >}}
+{{< pesticide-summary title="" siteId="29" type="Insecticide" >}}
 
 The species is most often found in orchards, backyard apple trees, and anywhere an unattended pie is cooling on a windowsill.
 
@@ -49,7 +54,7 @@ Here is a 4th change.
 
 Here is a 5th change.
 
-{{< pesticide-table guidelineId="1" pestId="900" siteId="6" changedSince="2026-06-01" >}}
+{{< pesticide-table title="" guidelineId="1" pestId="900" siteId="6" changedSince="2026-06-01" >}}
 
 ## 1.2.1 Codling Moth
 
