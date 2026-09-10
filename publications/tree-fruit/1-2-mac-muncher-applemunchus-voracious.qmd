@@ -20,10 +20,6 @@ $$
 
 The species is most often found in orchards, backyard apple trees, and anywhere an unattended pie is cooling on a windowsill.
 
-{{< pesticide-table title="1.1 Mac Muncher, on Apples" guidelineId="1" pestId="900" siteId="6" changedSince="2026-06-01" >}}
-
 ## 1.2.1 Codling Moth
 
 The Codling Moth (Cydia pomonella) is a primary pest of apples and pears, with larvae causing "wormy" fruit by burrowing into the core to feed on seeds. Cornell IPM materials indicate that this species completes multiple generations annually, with larvae creating destructive, unmarketable tunnels. For more details, visit Cornell IPM.
-
-{{< pesticide-table title="1.2 Codling Moth, on Apples" guidelineId="1" pestId="6" siteId="6" changedSince="2026-01-01" >}}
