@@ -1,0 +1,15 @@
+---
+title: Test
+---
+Test
+
+Test
+
+Test
+
+Test
+
+```{=html}
+<!-- html-table-editor -->
+<table border="1" style="border-collapse:collapse;width:100%;"><thead><tr><th>Header 1</th><th>Header 2</th><th>Header 3</th><th>Header 4</th></tr></thead><tbody><tr><td>a</td><td>1</td><td colspan="2">2</td></tr><tr><td>b</td><td>1b</td><td rowspan="2" colspan="2">2bc</td></tr><tr><td>c</td><td>1c</td></tr><tr><td>d</td><td colspan="2">1d</td><td></td></tr><tr><td>e</td><td>1e</td><td>2e</td><td></td></tr></tbody></table>
+```

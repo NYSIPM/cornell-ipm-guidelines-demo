@@ -43,7 +43,59 @@
   window.TreatmentAuth = {
     client: null,
     user: null,
+    initPromise: null,
 
+    async init() {
+      // If initialization has already started, reuse that same operation.
+      if (this.initPromise) {
+        return this.initPromise;
+      }
+
+      this.initPromise = (async () => {
+        this.client = await auth0.createAuth0Client({
+          domain: window.TreatmentAuthConfig.domain,
+          clientId: window.TreatmentAuthConfig.clientId,
+          authorizationParams: {
+            audience: window.TreatmentAuthConfig.audience,
+            redirect_uri: window.TreatmentAuthConfig.redirectUri
+          },
+          cacheLocation: "localstorage"
+        });
+
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.has("code") && params.has("state")) {
+          await this.client.handleRedirectCallback();
+
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+          );
+        }
+
+        if (await this.client.isAuthenticated()) {
+          this.user = await this.client.getUser();
+
+          console.log("Logged in as:", this.user);
+          console.log("Auth0 sub:", this.user?.sub);
+          console.log("Email:", this.user?.email);
+        }
+
+        return this.client;
+      })();
+
+      try {
+        return await this.initPromise;
+      } catch (err) {
+        // Allow another attempt if initialization genuinely failed.
+        this.initPromise = null;
+        throw err;
+      }
+    },
+
+
+    /*
     async init() {
       this.client = await auth0.createAuth0Client({
         domain: window.TreatmentAuthConfig.domain,
@@ -75,6 +127,7 @@
         console.log("Email:", this.user?.email);
       }
     },
+    */
 
     async login() {
       await this.client.loginWithRedirect({
@@ -89,11 +142,10 @@
     },
 
     async getTokenOrLogin() {
-      if (!this.client) {
+        // Always wait for the shared initialization operation to finish.
         await this.init();
-      }
 
-      const isAuthenticated = await this.client.isAuthenticated();
+        const isAuthenticated = await this.client.isAuthenticated();
 
       if (!isAuthenticated) {
         await this.login();
@@ -163,9 +215,12 @@
     }
     */
     async logout() {
+      /*
       if (!this.client) {
         await this.init();
       }
+      */
+      await this.init();
 
       await this.client.logout({
         logoutParams: {
@@ -209,6 +264,58 @@
   
 
   let guidelineOptionsCache = null;
+  let guidelineOptionsPromise = null;
+
+  async function fetchGuidelineOptions() {
+    if (guidelineOptionsCache) {
+      return guidelineOptionsCache;
+    }
+
+    if (guidelineOptionsPromise) {
+      return guidelineOptionsPromise;
+    }
+
+    guidelineOptionsPromise = (async () => {
+      console.log(
+        "Fetching guideline options:",
+        GUIDELINE_OPTIONS_URL
+      );
+
+      const authHeaders =
+        await window.TreatmentAuth.authHeaders();
+
+      const response = await fetch(GUIDELINE_OPTIONS_URL, {
+        headers: {
+          ...authHeaders
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Guideline options fetch failed: HTTP ${response.status}`
+        );
+      }
+
+      guidelineOptionsCache = await response.json();
+
+      console.log(
+        "Guideline options JSON:",
+        guidelineOptionsCache
+      );
+
+      return guidelineOptionsCache;
+    })();
+
+    try {
+      return await guidelineOptionsPromise;
+    } catch (err) {
+      guidelineOptionsPromise = null;
+      throw err;
+    }
+  }
+
+/*
+  let guidelineOptionsCache = null;
 
   async function fetchGuidelineOptions() {
     if (guidelineOptionsCache) return guidelineOptionsCache;
@@ -235,7 +342,7 @@
 
     return guidelineOptionsCache;
   }
-
+*/
   
 
   function normalizeWidgetValue(value) {
@@ -292,6 +399,8 @@
       const current = normalizeWidgetValue(this.props.value);
 
       const next = {
+        title: current.title || "",
+        changedSince: current.changedSince || "",
         guidelineId: current.guidelineId || "",
         pestId: current.pestId || "",
         siteId: current.siteId || "",
@@ -299,6 +408,18 @@
       };
 
       this.props.onChange(next);
+    },
+
+    handleTitleChange(e) {
+      this.updateValue({
+        title: e.target.value
+      });
+    },
+
+    handleChangedSinceChange(e) {
+      this.updateValue({
+        changedSince: e.target.value
+      });
     },
 
     handleGuidelineChange(e) {
@@ -310,7 +431,6 @@
         siteId: ""
       });
     },
-
     handlePestChange(e) {
       this.updateValue({
         pestId: e.target.value
@@ -326,6 +446,9 @@
     render() {
       const h = window.h || window.React.createElement;
       const value = normalizeWidgetValue(this.props.value);
+
+      const title = value.title || "";
+      const changedSince = value.changedSince || "";
 
       const guidelineId = value.guidelineId || "";
       const pestId = value.pestId || "";
@@ -362,100 +485,231 @@
       }
 
       
-      return h("div", null, [
-        // =========================
-        // MAIN SELECTION BOX
-        // =========================
+      return h("div", {
+        style: {
+          border: "1px solid #d6d6d6",
+          borderRadius: "4px",
+          padding: "16px",
+          background: "#fff",
+          marginBottom: "16px"
+        }
+      }, [
+
+        // =====================================================
+        // TABLE TITLE
+        // =====================================================
         h("div", {
-          key: "mainSelectionBox",
+          key: "title",
           style: {
-            border: "1px solid #d6d6d6",
-            borderRadius: "4px",
-            padding: "16px",
-            background: "#fff",
-            marginBottom: "16px"
+            marginBottom: "14px"
+          }
+        }, [
+          h("label", {
+            style: {
+              display: "block",
+              fontWeight: "600",
+              marginBottom: "4px"
+            }
+          }, "Table Title"),
+
+          h("input", {
+            type: "text",
+            value: title,
+            onChange: this.handleTitleChange,
+            placeholder: "Enter the table title",
+            style: {
+              width: "100%",
+              padding: "8px",
+              border: "1px solid #c5c5c5",
+              borderRadius: "4px",
+              background: "#fff",
+              boxSizing: "border-box"
+            }
+          })
+        ]),
+
+        // =====================================================
+        // GUIDELINE + SHOW CHANGES SINCE
+        // =====================================================
+        h("div", {
+          key: "guidelineRow",
+          style: {
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            marginBottom: "10px"
           }
         }, [
 
-          h("div", { key: "guideline", style: fieldStyle }, [
-            h("label", { style: labelStyle }, "Guideline"),
-            h(
-              "select",
-              {
-                value: guidelineId,
-                onChange: this.handleGuidelineChange,
-                style: selectStyle
-              },
-              [
-                h("option", { key: "", value: "" }, "-- Select Guideline --"),
-                ...this.state.options.map(g =>
-                  h(
-                    "option",
-                    {
-                      key: g.guidelineId,
-                      value: String(g.guidelineId)
-                    },
-                    `${g.name || g.shortName || "Unnamed Guideline"} (${g.guidelineId})`
-                  )
-                )
-              ]
-            )
-          ]),
+          h("label", {
+            style: {
+              width: "85px",
+              flexShrink: "0",
+              fontWeight: "600"
+            }
+          }, "Guideline"),
 
-          h("div", { key: "pest", style: fieldStyle }, [
-            h("label", { style: labelStyle }, "Pest"),
-            h(
-              "select",
-              {
-                value: pestId,
-                onChange: this.handlePestChange,
-                disabled: !guidelineId,
-                style: selectStyle
-              },
-              [
-                h("option", { key: "", value: "" }, "-- Select Pest --"),
-                ...pestOptions.map(p =>
-                  h(
-                    "option",
-                    {
-                      key: p.pestId,
-                      value: String(p.pestId)
-                    },
-                    makeOptionLabel(p, "pestId")
-                  )
-                )
-              ]
-            )
-          ]),
+          h(
+            "select",
+            {
+              value: guidelineId,
+              onChange: this.handleGuidelineChange,
+              style: {
+                flex: "1 1 auto",
+                minWidth: "180px",
+                padding: "8px"
+              }
+            },
+            [
+              h("option", {
+                key: "",
+                value: ""
+              }, "-- Select Guideline --"),
 
-          h("div", { key: "site", style: fieldStyle }, [
-            h("label", { style: labelStyle }, "Site / Crop"),
-            h(
-              "select",
-              {
-                value: siteId,
-                onChange: this.handleSiteChange,
-                disabled: !guidelineId,
-                style: selectStyle
-              },
-              [
-                h("option", { key: "", value: "" }, "-- Select Site / Crop --"),
-                ...siteOptions.map(s =>
-                  h(
-                    "option",
-                    {
-                      key: s.siteId,
-                      value: String(s.siteId)
-                    },
-                    makeOptionLabel(s, "siteId")
-                  )
+              ...this.state.options.map(g =>
+                h(
+                  "option",
+                  {
+                    key: g.guidelineId,
+                    value: String(g.guidelineId)
+                  },
+                  `${g.name || g.shortName || "Unnamed Guideline"} (${g.guidelineId})`
                 )
-              ]
-            )
-          ])
+              )
+            ]
+          ),
 
+          h("label", {
+            style: {
+              flexShrink: "0",
+              fontWeight: "600",
+              marginLeft: "4px"
+            }
+          }, "Show Changes Since"),
+
+          h("input", {
+            type: "date",
+            value: changedSince,
+            onChange: this.handleChangedSinceChange,
+            style: {
+              width: "155px",
+              flexShrink: "0",
+              padding: "8px",
+              border: "1px solid #c5c5c5",
+              borderRadius: "4px",
+              background: "#fff",
+              boxSizing: "border-box"
+            }
+          })
         ]),
+
+        // =====================================================
+        // SITE / CROP
+        // =====================================================
+        h("div", {
+          key: "siteRow",
+          style: {
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            marginBottom: "10px"
+          }
+        }, [
+
+          h("label", {
+            style: {
+              width: "85px",
+              flexShrink: "0",
+              fontWeight: "600"
+            }
+          }, "Site / Crop"),
+
+          h(
+            "select",
+            {
+              value: siteId,
+              onChange: this.handleSiteChange,
+              disabled: !guidelineId,
+              style: {
+                flex: "1",
+                minWidth: "0",
+                padding: "8px"
+              }
+            },
+            [
+              h("option", {
+                key: "",
+                value: ""
+              }, "-- Select Site / Crop --"),
+
+              ...siteOptions.map(s =>
+                h(
+                  "option",
+                  {
+                    key: s.siteId,
+                    value: String(s.siteId)
+                  },
+                  makeOptionLabel(s, "siteId")
+                )
+              )
+            ]
+          )
+        ]),
+
+        // =====================================================
+        // PEST
+        // =====================================================
+        h("div", {
+          key: "pestRow",
+          style: {
+            display: "flex",
+            alignItems: "center",
+            gap: "12px"
+          }
+        }, [
+
+          h("label", {
+            style: {
+              width: "85px",
+              flexShrink: "0",
+              fontWeight: "600"
+            }
+          }, "Pest"),
+
+          h(
+            "select",
+            {
+              value: pestId,
+              onChange: this.handlePestChange,
+              disabled: !guidelineId,
+              style: {
+                flex: "1",
+                minWidth: "0",
+                padding: "8px"
+              }
+            },
+            [
+              h("option", {
+                key: "",
+                value: ""
+              }, "-- Select Pest --"),
+
+              ...pestOptions.map(p =>
+                h(
+                  "option",
+                  {
+                    key: p.pestId,
+                    value: String(p.pestId)
+                  },
+                  makeOptionLabel(p, "pestId")
+                )
+              )
+            ]
+          )
+        ])
       ]);
+
+
     }
   });
 
@@ -562,15 +816,9 @@
     fields: [
       {
         name: "tableSelector",
-        label: "Required",
+        label: "Treatment Table Options",
         widget: "pesticide_table_selector",
         required: true
-      },
-      {
-        name: "changedSince",
-        label: "Track Changes",
-        widget: "changed_since_selector",
-        required: false,
       }
     ],
 
@@ -586,40 +834,45 @@
 
       return {
         tableSelector: {
+          title: getAttr("title"),
+          changedSince: getAttr("changedSince"),
           guidelineId: getAttr("guidelineId"),
           pestId: getAttr("pestId"),
-          siteId: getAttr("siteId"),
-        },
-        changedSince: getAttr("changedSince")
+          siteId: getAttr("siteId")
+        }
       };
     },
 
     toBlock: (data) => {
-      const selector = data.tableSelector || {};
+      const selector = normalizeWidgetValue(data.tableSelector);
 
+      const t = String(selector.title || "").trim();
       const g = String(selector.guidelineId || "").trim();
       const p = String(selector.pestId || "").trim();
       const s = String(selector.siteId || "").trim();
-      const d = String(data.changedSince || "").trim();
+      const d = String(selector.changedSince || "").trim();
 
-      return `{{< pesticide-table guidelineId="${g}" pestId="${p}" siteId="${s}" changedSince="${d}" >}}`;
+      return `{{< pesticide-table title="${escapeShortcodeAttribute(t)}" guidelineId="${g}" pestId="${p}" siteId="${s}" changedSince="${d}" >}}`;
     },
 
     toPreview: (data) => {
       console.log("pesticide-table toPreview data:", data);
-      const selector = data.tableSelector || {};
 
+      const selector = normalizeWidgetValue(data.tableSelector);
+
+      const t = String(selector.title || "").trim();
       const g = String(selector.guidelineId || "").trim();
       const p = String(selector.pestId || "").trim();
       const s = String(selector.siteId || "").trim();
-      const d = String(data.changedSince || "").trim();
+      const d = String(selector.changedSince || "").trim();
 
       return `
         <div class="pesticide-table-preview"
-             data-guideline-id="${escapeHtml(g)}"
-             data-pest-id="${escapeHtml(p)}"
-             data-site-id="${escapeHtml(s)}"
-             data-changed-since="${escapeHtml(d)}">
+            data-table-title="${escapeHtml(t)}"
+            data-guideline-id="${escapeHtml(g)}"
+            data-pest-id="${escapeHtml(p)}"
+            data-site-id="${escapeHtml(s)}"
+            data-changed-since="${escapeHtml(d)}">
           Loading pesticide table...
         </div>
       `;
@@ -648,21 +901,11 @@
   async function hydrateAllPesticideTables(previewDoc) {
 
     const nodes = previewDoc.querySelectorAll(".pesticide-table-preview");
-
-    /*
-    console.log("Pesticide preview nodes found:",
-      nodes.length,
-      Array.from(nodes).map(n => ({
-        guidelineId: n.dataset.guidelineId,
-        pestId: n.dataset.pestId,
-        siteId: n.dataset.siteId,
-        changedSince: n.dataset.changedSince
-      }))
-    );*/
     //console.log("Pesticide preview nodes found:", nodes.length);
     if (!nodes.length) return;
 
     for (const node of nodes) {
+      const tableTitle = node.getAttribute("data-table-title") || "";
       const guidelineId = node.getAttribute("data-guideline-id") || "";
       const pestId = node.getAttribute("data-pest-id") || "";
       const siteId = node.getAttribute("data-site-id") || "";
@@ -714,7 +957,11 @@
         const html = window.PesticideTableBuilder.renderTable(json, {
           changedSince: changedSince
         });
-        node.innerHTML = html;
+        const titleHtml = tableTitle
+          ? `<div class="treatment-table-title">${escapeHtml(tableTitle)}</div>`
+          : "";
+
+        node.innerHTML = titleHtml + html;
 
         window.PesticideTableBuilder.wireTableEvents(node);
 
@@ -733,6 +980,12 @@
         `;
       }
     }
+  }
+
+  function escapeShortcodeAttribute(value) {
+    return String(value ?? "")
+      .replace(/\\/g, "\\\\")
+      .replace(/"/g, '\\"');
   }
 
   function escapeHtml(str) {

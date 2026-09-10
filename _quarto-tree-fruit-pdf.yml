@@ -1,0 +1,35 @@
+project:
+  type: book
+  output-dir: _output/tree-fruit-pdf
+  render:
+    - publications/tree-fruit/index.qmd
+    - publications/tree-fruit/1-1-test.qmd
+    - publications/tree-fruit/1-2-mac-muncher-applemunchus-voracious.qmd
+    - publications/tree-fruit/test.qmd
+
+book:
+  title: "Tree Fruit Guidelines"
+  output-file: "tree-fruit-guidelines"
+
+  chapters:
+    - publications/tree-fruit/index.qmd
+    - publications/tree-fruit/1-1-test.qmd
+    - publications/tree-fruit/1-2-mac-muncher-applemunchus-voracious.qmd
+    - publications/tree-fruit/test.qmd
+
+format:
+  pdf:
+    documentclass: scrbook
+    toc: true
+    number-sections: true
+    header-includes:
+      - |
+        \usepackage{colortbl}
+        \definecolor{TreatmentGray}{gray}{0.94}
+    geometry:
+      - top=0.5in
+      - bottom=0.5in
+      - left=0.5in
+      - right=0.5in
+    resource-path:
+      - .

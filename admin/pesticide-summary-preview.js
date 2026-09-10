@@ -33,12 +33,30 @@
     }
   }
 
+  function renderTitle(title) {
+    if (!title) return "";
+
+    return `
+      <div class="pesticide-summary-title">
+        ${summary.escapeHtml(title)}
+      </div>
+    `;
+  }
+
   async function hydrateNode(node) {
-    const siteId = String(node.getAttribute("data-site-id") || "").trim();
+    const tableTitle = String(
+      node.getAttribute("data-table-title") || ""
+    ).trim();
+
+    const siteId = String(
+      node.getAttribute("data-site-id") || ""
+    ).trim();
+
     const summaryType = summary.normalizeSummaryType(
       node.getAttribute("data-summary-type")
     );
-    const loadKey = `${siteId}|${summaryType}`;
+
+    const loadKey = `${tableTitle}|${siteId}|${summaryType}`;
 
     if (node.getAttribute("data-load-key") === loadKey) return;
     node.setAttribute("data-load-key", loadKey);
@@ -51,12 +69,15 @@
     }
 
     try {
-      node.innerHTML = summary.renderMessage("Loading pesticide summary...");
+      node.innerHTML = summary.renderMessage(
+        "Loading pesticide summary..."
+      );
 
       const url = summary.getApiUrl(siteId, summaryType);
       console.log("[PesticideSummary] Fetching:", url);
 
       const authHeaders = await summary.getAuthenticationHeaders();
+
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -67,17 +88,25 @@
 
       if (!response.ok) {
         const errorBody = await safelyReadResponseText(response);
+
         throw new Error(
-          errorBody ? `HTTP ${response.status} — ${errorBody}` : `HTTP ${response.status}`
+          errorBody
+            ? `HTTP ${response.status} — ${errorBody}`
+            : `HTTP ${response.status}`
         );
       }
 
       const json = await response.json();
       node.__pesticideSummaryJson = json;
-      node.innerHTML = summary.renderTable(json);
+
+      const titleHtml = renderTitle(tableTitle);
+      const tableHtml = summary.renderTable(json);
+
+      node.innerHTML = titleHtml + tableHtml;
     } catch (error) {
       console.error("[PesticideSummary] Preview failed:", error);
       node.removeAttribute("data-load-key");
+
       node.innerHTML = summary.renderErrorMessage({
         siteId,
         summaryType,
