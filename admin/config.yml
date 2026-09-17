@@ -1,5 +1,5 @@
 # TEST GIT CHANGE
-# local_backend: true
+local_backend: true
 
 backend:
   name: github
@@ -140,3 +140,19 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Body", name: "body", widget: "markdown"}
 
+  # Organic Vegetable Crops
+  - name: "organic-vegetable-crops"
+    label: "Organic Vegetable Crops"
+    label_singular: "New Section"
+    folder: "publications/organic-vegetable-crops"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    sortable_fields: ["order", "title"]
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Order", name: "order", widget: "number", value_type: "int"}
+      - label: "Body"
+        name: "body"
+        widget: "markdown"

@@ -266,6 +266,14 @@
   let guidelineOptionsCache = null;
   let guidelineOptionsPromise = null;
 
+  // Keyed by "guidelineId|pestId|siteId|changedSince". Decap's preview pane
+  // fully re-renders the markdown -> HTML tree on every keystroke, which
+  // recreates the .pesticide-table-preview node from scratch (no
+  // data-load-key). Without this cache we'd flash back to "Loading..." and
+  // re-fetch on every single edit, which shrinks/regrows the preview and
+  // is what was kicking the iframe's scroll position around.
+  const pesticideTableRenderCache = new Map();
+
   async function fetchGuidelineOptions() {
     if (guidelineOptionsCache) {
       return guidelineOptionsCache;
@@ -921,6 +929,21 @@
         continue;
       }
 
+      const cached = pesticideTableRenderCache.get(loadKey);
+
+      if (cached) {
+        // Restore instantly instead of re-fetching. This is what a plain
+        // markdown/text edit hits every time: the preview pane rebuilt this
+        // node from scratch, but the underlying table data hasn't changed.
+        node.setAttribute("data-load-key", loadKey);
+        node.__pesticideRows = cached.rows;
+        node.__changedSince = changedSince;
+        node.__pesticideJson = cached.json;
+        node.innerHTML = cached.titleHtml + cached.html;
+        window.PesticideTableBuilder.wireTableEvents(node);
+        continue;
+      }
+
       node.setAttribute("data-load-key", loadKey);
 
       try {
@@ -965,9 +988,17 @@
 
         window.PesticideTableBuilder.wireTableEvents(node);
 
+        pesticideTableRenderCache.set(loadKey, {
+          html,
+          titleHtml,
+          json,
+          rows: node.__pesticideRows
+        });
+
         console.log("Pesticide table events wired");
       } catch (err) {
         console.error("Pesticide preview failed:", err);
+        node.removeAttribute("data-load-key");
 
         node.innerHTML = `
           <div><strong>Preview failed.</strong></div>

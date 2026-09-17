@@ -1,0 +1,22 @@
+---
+title: 1 Vegetable-specific chapters
+order: 0
+---
+Explore detailed, crop-specific organic production and Integrated Pest Management (IPM) guidelines. 
+
+* [Asparagus](1-1-asparagus.qmd)
+* [Beans — Dry, Snap, and Lima](1-2-beans-—-dry-snap-and-lima.qmd)
+* [Beets](1-3-beets.qmd)
+* [Heading and Leafy Brassicas](1-4-heading-and-leafy-brassicas.qmd)
+* [Carrot](1-5-carrot.qmd)
+* [Cucurbits: Cucumber, Melon, Pumpkin, Squash, and Watermelon](1-6-cucurbits-cucumber-melon-pumpkin-squash-and-watermelon.qmd)
+* [Eggplant](1-7-eggplant.qmd)
+* [Lettuce](1-8-lettuce.qmd)
+* [Onion, Shallot, and Leek](1-9-onion-shallot-and-leek.qmd)
+* [Peas](1-10-peas.qmd)
+* [Pepper](1-11-pepper.qmd)
+* [Potato](1-12-potato.qmd)
+* [Spinach](1-13-spinach.qmd)
+* [Sweet Corn](1-14-sweet-corn.qmd)
+* [Field Tomato](1-15-field-tomato.qmd)
+* [Turnip, Rutabaga, Radish, and Kohlrabi](1-16-turnip-rutabaga-radish-and-kohlrabi.qmd)

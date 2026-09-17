@@ -43,15 +43,15 @@ format:
         <script src="/js/auth.js"></script>
 
         <link rel="stylesheet" href="/assets/css/pesticide-table.css">
-        <link rel="stylesheet" href="/assets/css/pesticide-table-public.css">
+        
 
         
 
         <script src="/assets/js/pesticide-table-public.js"></script>
         <script src="/assets/js/public-treatment-builder.js?v=1"></script>
 
-
-        <link rel="stylesheet" href="/assets/css/pesticide-table-editor.css">
+        
+        
         <link rel="stylesheet" href="/assets/css/public-treatment-builder.css">
         <link rel="stylesheet" href="/assets/css/pesticide-summary.css">
         

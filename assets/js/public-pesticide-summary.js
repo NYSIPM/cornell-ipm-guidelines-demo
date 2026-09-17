@@ -91,6 +91,18 @@
     );
   }
 
+  function formatDurationValue(value) {
+    const text = clean(value);
+    if (!text) return "";
+
+    // Collapse values like "- Hours" or "- Days" down to just "-" since
+    // the unit is meaningless when there's no actual number.
+    const dashOnly = text.match(/^[-–—]+\s*(hours?|days?)$/i);
+    if (dashOnly) return "-";
+
+    return text;
+  }
+
   function renderMessage(message) {
     return `
       <div class="pesticide-summary pesticide-summary-message">
@@ -116,12 +128,12 @@
 
     return `
       <tr class="${rowClass}">
-        <td>${escapeHtml(pesticide?.commonName || "")}</td>
-        <td>${escapeHtml(pesticide?.tradeName || "")}</td>
-        <td>${escapeHtml(pesticide?.epaRegistrationNumber || "")}</td>
-        <td>${escapeHtml(pesticide?.phi || "")}</td>
-        <td>${escapeHtml(pesticide?.rei || "")}</td>
-        <td>${escapeHtml(resistanceCodes.join(", "))}</td>
+        <td class="pesticide-summary__col-common-name">${escapeHtml(pesticide?.commonName || "")}</td>
+        <td class="pesticide-summary__col-trade-name">${escapeHtml(pesticide?.tradeName || "")}</td>
+        <td class="pesticide-summary__col-epa-number">${escapeHtml(pesticide?.epaRegistrationNumber || "")}</td>
+        <td class="pesticide-summary__col-phi">${escapeHtml(formatDurationValue(pesticide?.phi))}</td>
+        <td class="pesticide-summary__col-rei">${escapeHtml(formatDurationValue(pesticide?.rei))}</td>
+        <td class="pesticide-summary__col-resistance">${escapeHtml(resistanceCodes.join(", "))}</td>
       </tr>
     `;
   }
@@ -167,12 +179,12 @@
           <table class="pesticide-summary__table">
             <thead>
               <tr>
-                <th>Common Name</th>
-                <th>Trade Name</th>
-                <th>EPA Reg. Number</th>
-                <th>PHI</th>
-                <th>REI</th>
-                <th>${escapeHtml(resistanceHeading)}</th>
+                <th class="pesticide-summary__col-common-name">Common Name</th>
+                <th class="pesticide-summary__col-trade-name">Trade Name</th>
+                <th class="pesticide-summary__col-epa-number">EPA Reg. Number</th>
+                <th class="pesticide-summary__col-phi">PHI</th>
+                <th class="pesticide-summary__col-rei">REI</th>
+                <th class="pesticide-summary__col-resistance">${escapeHtml(resistanceHeading)}</th>
               </tr>
             </thead>
             <tbody>${bodyRows}</tbody>

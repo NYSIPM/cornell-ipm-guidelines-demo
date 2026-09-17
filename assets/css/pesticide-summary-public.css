@@ -16,29 +16,53 @@
 
 .pesticide-summary__table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   border-spacing: 0;
 }
 
 .pesticide-summary__table th,
 .pesticide-summary__table td {
-  padding: 0.55rem 0.65rem;
+  padding: 0.15rem 0.35rem;
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid #d7d7d7;
+  overflow-wrap: break-word;
 }
 
 .pesticide-summary__table th {
   font-weight: 600;
-  white-space: nowrap;
+  vertical-align: bottom;
 }
 
 .pesticide-summary__row--alternate {
   background: rgba(0, 0, 0, 0.035);
 }
 
-.pesticide-summary__trade-name {
-  min-width: 12rem;
+/* Per-column widths — adjust these percentages to resize individual columns.
+   They should add up to 100% across all six columns. */
+.pesticide-summary__col-common-name {
+  width: 34%;
+}
+
+.pesticide-summary__col-trade-name {
+  width: 22%;
+}
+
+.pesticide-summary__col-epa-number {
+  width: 16%;
+}
+
+.pesticide-summary__col-phi {
+  width: 10%;
+}
+
+.pesticide-summary__col-rei {
+  width: 10%;
+}
+
+.pesticide-summary__col-resistance {
+  width: 8%;
 }
 
 .pesticide-summary__restricted {

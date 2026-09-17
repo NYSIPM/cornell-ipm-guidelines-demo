@@ -1,0 +1,5 @@
+---
+title: 1.1 Beans — Dry, Snap, and Lima
+order: 2
+---
+Beans — Dry, Snap, and Lima

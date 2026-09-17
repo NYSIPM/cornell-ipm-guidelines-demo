@@ -1,0 +1,25 @@
+---
+title: 1.1 Asparagus
+order: 1
+---
+## 7. Disease Management
+
+{{< pesticide-summary title="Summary of Fungicides usable for Asparagus" siteId="77" type="Fungicide" >}}
+
+### 7.1 Fern Diseases: Rust, Puccinia asparagi, Purple Spot, Stemphylium vesicarium, and other fern diseases
+
+{{< pesticide-table title="Pesticides for Management of Rust, Purple Spot, and other Fern Diseases in Asparagus" guidelineId="11" pestId="736" siteId="77" changedSince="" >}}
+
+### 7.2 Fusarium Root Rot and Fusarium Crown Rot, Fusarium spp.
+
+{{< pesticide-table title="Pesticides for Management of Fusarium Root Rot and Fusarium Crown Rot in Asparagus" guidelineId="11" pestId="737" siteId="77" changedSince="" >}}
+
+### 7.3 Phytophthora Spear and Crown Rot, Phytophthora spp.
+
+{{< pesticide-table title="Pesticides for Management of Phytophthora Spear and Crown Rot in Asparagus" guidelineId="11" pestId="738" siteId="77" changedSince="" >}}
+
+## 8. Insect Management
+
+### 8.1 Asparagus Beetle, Crioceris asparagi, and Spotted Asparagus Beetle, C. duodecimpunctata
+
+{{< pesticide-table title="Pesticides for Management of Asparagus Beetle and Spotted Asparagus Beetle" guidelineId="11" pestId="760" siteId="77" changedSince="" >}}

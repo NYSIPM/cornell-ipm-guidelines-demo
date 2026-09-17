@@ -47,6 +47,11 @@ cd publications/berries
 quarto render
 cd ../..
 
+echo "=== Rendering Organic Vegetable Crops Guidelines ==="
+cd publications/organic-vegetable-crops
+quarto render
+cd ../..
+
 echo "=== Copying admin folder ==="
 #mkdir -p docs/admin
 #cp -r admin/* docs/admin/

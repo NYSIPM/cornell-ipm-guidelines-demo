@@ -1,0 +1,5 @@
+---
+title: "1.6 Cucurbits: Cucumber, Melon, Pumpkin, Squash, and Watermelon"
+order: 6
+---
+Cucurbits: Cucumber, Melon, Pumpkin, Squash, and Watermelon
