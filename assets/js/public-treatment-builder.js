@@ -1,4 +1,14 @@
 (function () {
+    "use strict";
+
+    const isLocalDev =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+
+    const API_BASE = isLocalDev
+        ? "https://webguidelines2.psep.cce.cornell.edu/api/Treatments/search"
+        : "https://webguidelines2.psep.cce.cornell.edu/api/Treatments/search";
+
     function escapeHtml(value) {
         return String(value ?? "")
         .replace(/&/g, "&amp;")
@@ -147,7 +157,7 @@
         return [...new Set([...biological, ...cultural])]
             .join("<br>");
     }
-    
+
     //Sub Functions
     function unique(values) {
         return [...new Set((values || []).filter(Boolean))];
@@ -198,13 +208,8 @@
         return unique(comments).join("<br>");
     }
 
-
-
-
-
-
     //Sub Function Rate
-    function getControlTechniqueName(treatment) 
+    function getControlTechniqueName(treatment)
     {
         const controlTechnique = treatment?.controlTechnique;
 
@@ -475,14 +480,96 @@
         `;
     }
 
-    window.PublicTreatmentBuilder = {
-        renderTable,
-        wireTableEvents,
-        version: "basic-v2"
-    };
+    //Loader — finds the placeholder(s) dropped in by the
+    //{{< pesticide-table >}} shortcode and hydrates them from the API.
+    async function hydrateOne(el) {
+        const guidelineId = el.dataset.guidelineId;
+        const pestId = el.dataset.pestId;
+        const siteId = el.dataset.siteId;
 
-    console.log(
-        "Loaded PublicTreatmentBuilder:",
-        window.PublicTreatmentBuilder.version
-    );
+        if (!pestId || !siteId) {
+            el.innerHTML =
+                `<div class="pesticide-table-error">
+                    Missing required data attributes.
+                </div>`;
+
+            return;
+        }
+
+        el.innerHTML =
+            `<div class="pesticide-table-loading">
+                Loading table...
+            </div>`;
+
+        const params = new URLSearchParams({
+            guidelineId,
+            pestId,
+            siteId
+        });
+
+        const url = `${API_BASE}?${params.toString()}`;
+
+        try {
+            if (
+                typeof window.getTreatmentAccessToken !== "function"
+            ) {
+                throw new Error(
+                    "Authentication helper is not loaded."
+                );
+            }
+
+            const token =
+                await window.getTreatmentAccessToken();
+
+            if (!token) {
+                return;
+            }
+
+            const response = await fetch(url, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                const responseText = await response.text();
+
+                throw new Error(
+                    `HTTP ${response.status}` +
+                    (responseText ? `: ${responseText}` : "")
+                );
+            }
+
+            const data = await response.json();
+
+            el.innerHTML = renderTable(data);
+            wireTableEvents(el);
+
+        } catch (error) {
+            console.error(
+                "Pesticide table hydration failed:",
+                error
+            );
+
+            el.innerHTML =
+                `<div class="pesticide-table-error">
+                    Unable to load pesticide table:
+                    ${error.message}
+                </div>`;
+        }
+    }
+
+    function hydrateAll() {
+        const elements = document.querySelectorAll(".pesticide-table-public");
+        elements.forEach(hydrateOne);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", hydrateAll);
+    } else {
+        hydrateAll();
+    }
 })();

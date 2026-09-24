@@ -9,7 +9,7 @@
     return;
   }
 
-  const stylesheetUrl = "/assets/css/pesticide-summary.css?v=2";
+  const stylesheetUrl = "/assets/css/pesticide-summary-public.css?v=3";
 
   if (typeof CMS.registerPreviewStyle === "function") {
     CMS.registerPreviewStyle(stylesheetUrl);

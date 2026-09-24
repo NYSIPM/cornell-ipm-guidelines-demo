@@ -28,9 +28,9 @@ website:
 
 format:
   html:
-    css: 
-      - assets/css/pesticide-summary.css
+    css:
       - assets/css/pesticide-summary-public.css
+      - assets/css/public-treatment-builder.css
     theme: cosmo
     html-math-method: katex
     toc: true
@@ -42,20 +42,11 @@ format:
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <script src="/js/auth.js"></script>
 
-        <link rel="stylesheet" href="/assets/css/pesticide-table.css">
-        
-
-        
-
-        <script src="/assets/js/pesticide-table-public.js"></script>
         <script src="/assets/js/public-treatment-builder.js?v=1"></script>
 
         
-        
-        <link rel="stylesheet" href="/assets/css/public-treatment-builder.css">
-        <link rel="stylesheet" href="/assets/css/pesticide-summary.css">
-        
-
+        <!--<link rel="stylesheet" href="/assets/css/public-treatment-builder.css">-->
+        <!--<link rel="stylesheet" href="/assets/css/pesticide-table.css">-->
 
     include-after-body:
       text: |

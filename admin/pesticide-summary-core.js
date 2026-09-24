@@ -10,7 +10,7 @@
   ];
 
   namespace.SHORTCODE_PATTERN = /^{{<\s*pesticide-summary\b[^>]*>}}$/;
-  namespace.STYLESHEET_URL = "/assets/css/pesticide-summary.css";
+  namespace.STYLESHEET_URL = "/assets/css/pesticide-summary-public.css";
 
   namespace.normalizeWidgetValue = function (value) {
     if (!value) return {};

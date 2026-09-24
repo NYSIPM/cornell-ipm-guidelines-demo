@@ -94,41 +94,6 @@
       }
     },
 
-
-    /*
-    async init() {
-      this.client = await auth0.createAuth0Client({
-        domain: window.TreatmentAuthConfig.domain,
-        clientId: window.TreatmentAuthConfig.clientId,
-        authorizationParams: {
-          audience: window.TreatmentAuthConfig.audience,
-          redirect_uri: window.TreatmentAuthConfig.redirectUri
-        },
-        cacheLocation: "localstorage"
-      });
-
-      if (
-        window.location.search.includes("code=") &&
-        window.location.search.includes("state=")
-      ) {
-        await this.client.handleRedirectCallback();
-
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
-        );
-      }
-
-      if (await this.client.isAuthenticated()) {
-        this.user = await this.client.getUser();
-        console.log("Logged in as:", this.user);
-        console.log("Auth0 sub:", this.user?.sub);
-        console.log("Email:", this.user?.email);
-      }
-    },
-    */
-
     async login() {
       await this.client.loginWithRedirect({
         appState: {
@@ -152,13 +117,6 @@
         return null;
       }
 
-      /*
-      return await this.client.getTokenSilently({
-        authorizationParams: {
-          audience: window.TreatmentAuthConfig.audience
-        }
-      });
-      */
      try {
         return await this.client.getTokenSilently({
           authorizationParams: {
