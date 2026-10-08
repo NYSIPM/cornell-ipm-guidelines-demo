@@ -29,6 +29,14 @@
         container.__publicTreatmentEventsBound = true;
 
         container.addEventListener("click", function (event) {
+            const sortButton =
+                event.target.closest(".sort-button");
+
+            if (sortButton) {
+                handleSortClick(container, sortButton.dataset.sortKey);
+                return;
+            }
+
             const button =
                 event.target.closest(".toggle-details-button");
 
@@ -370,13 +378,158 @@
         return unique(symbols).join("");
     }
 
-    //MAIN
-    function renderTable(data) {
-        const treatments = Array.isArray(data) ? data : [data];
+    //Sorting
+    // Rows with no value for the active column always sort last, in either direction.
+    function getSitePesticides(treatment) {
+        return (treatment?.controlTechnique?.pesticides || [])
+            .map(pesticide => (pesticide?.sitePesticide || [])[0])
+            .filter(Boolean);
+    }
 
-        if (!treatments.length) {
+    function getReiSortValue(treatment) {
+        for (const sp of getSitePesticides(treatment)) {
+            const hours = parseFloat(clean(sp.rei));
+            if (!Number.isNaN(hours)) return hours;
+        }
+        return null;
+    }
+
+    // Normalized to hours so "2 days" sorts after "24 hours".
+    function getPhiSortValue(treatment) {
+        for (const sp of getSitePesticides(treatment)) {
+            const amount = parseFloat(clean(sp.phi));
+            if (Number.isNaN(amount)) continue;
+
+            const unit = clean(sp.phiTime).toLowerCase();
+            if (unit.startsWith("week")) return amount * 168;
+            if (unit.startsWith("day")) return amount * 24;
+            return amount;
+        }
+        return null;
+    }
+
+    const SORT_COLUMNS = [
+        {
+            key: "name",
+            label: "Control Technique",
+            type: "text",
+            value: getControlTechniqueName
+        },
+        {
+            key: "rate",
+            label: "Rate",
+            type: "text",
+            value: treatment => (treatment?.treatmentRates || [])
+                .map(formatRate)
+                .filter(Boolean)
+                .join(" ")
+        },
+        {
+            key: "rei",
+            label: "REI",
+            type: "number",
+            value: getReiSortValue
+        },
+        {
+            key: "phi",
+            label: "PHI",
+            type: "number",
+            value: getPhiSortValue
+        },
+        {
+            key: "resistance",
+            label: "Resistance Mgmt.",
+            type: "text",
+            value: treatment => getResistanceText(treatment).replace(/<br>/g, " ")
+        },
+        {
+            key: "efficacy",
+            label: "Efficacy",
+            type: "text",
+            value: treatment => clean(treatment?.efficacy?.name)
+        }
+    ];
+
+    const collator = new Intl.Collator(undefined, {
+        numeric: true,
+        sensitivity: "base"
+    });
+
+    function sortTreatments(treatments, sort) {
+        const column = SORT_COLUMNS.find(c => c.key === sort?.key);
+        if (!column) return treatments;
+
+        const direction = sort.direction === "desc" ? -1 : 1;
+
+        return treatments
+            .map((treatment, index) => ({
+                treatment,
+                index,
+                value: column.value(treatment)
+            }))
+            .sort((a, b) => {
+                const aMissing = a.value === null || a.value === "";
+                const bMissing = b.value === null || b.value === "";
+
+                if (aMissing || bMissing) {
+                    if (aMissing && bMissing) return a.index - b.index;
+                    return aMissing ? 1 : -1;
+                }
+
+                const result = column.type === "number"
+                    ? a.value - b.value
+                    : collator.compare(a.value, b.value);
+
+                return result !== 0 ? result * direction : a.index - b.index;
+            })
+            .map(entry => entry.treatment);
+    }
+
+    // Cycles asc -> desc -> back to the API's default order.
+    function handleSortClick(container, key) {
+        if (!container.__treatments) return;
+
+        const current = container.__treatmentSort;
+        let next = null;
+
+        if (!current || current.key !== key) {
+            next = { key, direction: "asc" };
+        } else if (current.direction === "asc") {
+            next = { key, direction: "desc" };
+        }
+
+        container.__treatmentSort = next;
+        container.innerHTML = renderTable(container.__treatments, next);
+
+        container
+            .querySelector(`.sort-button[data-sort-key="${key}"]`)
+            ?.focus();
+    }
+
+    function renderSortableHeader(column, sort) {
+        const active = sort?.key === column.key;
+        const ariaSort = active
+            ? (sort.direction === "desc" ? "descending" : "ascending")
+            : "none";
+
+        return `
+            <th aria-sort="${ariaSort}">
+                <button type="button" class="sort-button" data-sort-key="${column.key}">
+                    ${escapeHtml(column.label)}
+                </button>
+            </th>
+        `;
+    }
+
+    //MAIN
+    function renderTable(data, sort) {
+        const allTreatments = Array.isArray(data) ? data : [data];
+
+        if (!allTreatments.length) {
         return `<div>No treatments found.</div>`;
         }
+
+        const treatments = sortTreatments(allTreatments, sort);
 
         const rows = treatments.map((treatment, index) => {
         const rowClass = index % 2 === 0
@@ -464,18 +617,17 @@
             <table class="public-treatment-table">
             <thead>
                 <tr>
-                <th>Control Technique</th>
-                <th>Rate</th>
-                <th>REI</th>
-                <th>PHI</th>
-                <th>Resistance Mgmt.</th>
-                <th>Efficacy</th>
+                ${SORT_COLUMNS.map(column => renderSortableHeader(column, sort)).join("")}
                 </tr>
             </thead>
             <tbody>
                 ${rows}
             </tbody>
             </table>
+        </div>
+        <div class="treatment-table-footer">
+            ${allTreatments.length}
+            ${allTreatments.length === 1 ? "treatment" : "treatments"}
         </div>
         `;
     }
@@ -545,6 +697,8 @@
 
             const data = await response.json();
 
+            el.__treatments = data;
+            el.__treatmentSort = null;
             el.innerHTML = renderTable(data);
             wireTableEvents(el);
 

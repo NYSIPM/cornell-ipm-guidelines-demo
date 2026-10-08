@@ -3,3 +3,21 @@ title: 1.1 Beans — Dry, Snap, and Lima
 order: 2
 ---
 Beans — Dry, Snap, and Lima
+
+### 8.1 Anthracnose (Colletotrichum lindemuthianum and other species)
+
+{{< pesticide-table title="Pesticides for Management of Anthracnose in Beans" guidelineId="11" pestId="759" siteId="68" changedSince="" >}}
+
+### 8.2 Bacterial Diseases: Bacterial brown spot, Pseudomonas syringae pv. syringae; Common bacterial blight, Xanthomonas campestris pv. phaseoli; and
+
+### Halo blight, Pseudomonas syringae pv. phaseolicola
+
+{{< pesticide-table title="Pesticides for Management of Bacterial Diseases in Beans" guidelineId="11" pestId="660" siteId="68" changedSince="" >}}
+
+### 8.3 Botrytis Gray Mold, Botrytis cinerea
+
+{{< pesticide-table title="Pesticides for Management of Botrytis Gray Mold in Beans" guidelineId="11" pestId="620" siteId="68" changedSince="" >}}
+
+### 8.4 Phytophthora Blight
+
+{{< pesticide-table title="Pesticides for Management of Phytophthora Blight in Bean" guidelineId="11" pestId="893" siteId="68" changedSince="" >}}
