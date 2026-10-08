@@ -53,8 +53,19 @@ format:
     toc: true
     toc-location: left
     toc-title: "On this page"
+    # This folder is its own Quarto project, so the root _quarto.yml shortcodes
+    # don't apply here. Point at the shared Lua files instead of copying them.
+    shortcodes:
+      - ../../filters/pesticide-table.lua
+      - ../../filters/pesticide-summary.lua
     include-in-header:
       text: |
+        <!-- Shared assets that populate the pesticide-table / pesticide-summary placeholders.
+             Relative to docs/publications/organic-vegetable-crops/ -> docs/assets (copied by the root render). -->
+        <link rel="stylesheet" href="../../assets/css/pesticide-summary-public.css">
+        <link rel="stylesheet" href="../../assets/css/public-treatment-builder.css">
+        <script src="../../assets/js/public-treatment-builder.js?v=1"></script>
+        <script src="../../assets/js/public-pesticide-summary.js" defer></script>
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <!-- Load your existing auth file (as-is) -->
         <script src="../../js/auth.js" defer></script>
