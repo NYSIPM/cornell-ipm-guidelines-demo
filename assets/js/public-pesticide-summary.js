@@ -91,6 +91,163 @@
     );
   }
 
+  function formatDurationValue(value) {
+    const text = clean(value);
+    if (!text) return "";
+
+    // Collapse values like "- Hours" or "- Days" down to just "-" since
+    // the unit is meaningless when there's no actual number.
+    const dashOnly = text.match(/^[-–—]+\s*(hours?|days?)$/i);
+    if (dashOnly) return "-";
+
+    return text;
+  }
+
+  // Rows with no value for the active column always sort last, in either direction.
+  function getDurationSortValue(value) {
+    const match = clean(value).match(/^(\d+(?:\.\d+)?)\s*([a-z]+)?/i);
+    if (!match) return null;
+
+    const amount = parseFloat(match[1]);
+    const unit = (match[2] || "").toLowerCase();
+
+    // Normalized to hours so "2 days" sorts after "24 hours".
+    if (unit.startsWith("week")) return amount * 168;
+    if (unit.startsWith("day")) return amount * 24;
+    return amount;
+  }
+
+  const SORT_COLUMNS = [
+    {
+      key: "commonName",
+      className: "pesticide-summary__col-common-name",
+      label: "Common Name",
+      type: "text",
+      value: pesticide => clean(pesticide?.commonName)
+    },
+    {
+      key: "tradeName",
+      className: "pesticide-summary__col-trade-name",
+      label: "Trade Name",
+      type: "text",
+      value: pesticide => clean(pesticide?.tradeName)
+    },
+    {
+      key: "epa",
+      className: "pesticide-summary__col-epa-number",
+      label: "EPA Reg. Number",
+      type: "text",
+      value: pesticide => clean(pesticide?.epaRegistrationNumber)
+    },
+    {
+      key: "phi",
+      className: "pesticide-summary__col-phi",
+      label: "PHI",
+      type: "number",
+      value: pesticide => getDurationSortValue(pesticide?.phi)
+    },
+    {
+      key: "rei",
+      className: "pesticide-summary__col-rei",
+      label: "REI",
+      type: "number",
+      value: pesticide => getDurationSortValue(pesticide?.rei)
+    },
+    {
+      key: "resistance",
+      className: "pesticide-summary__col-resistance",
+      label: null,
+      type: "text",
+      value: (pesticide, summaryType) =>
+        getResistanceCodes(pesticide, summaryType).join(", ")
+    }
+  ];
+
+  const collator = new Intl.Collator(undefined, {
+    numeric: true,
+    sensitivity: "base"
+  });
+
+  function sortPesticides(pesticides, sort, summaryType) {
+    const column = SORT_COLUMNS.find(c => c.key === sort?.key);
+    if (!column) return pesticides;
+
+    const direction = sort.direction === "desc" ? -1 : 1;
+
+    return pesticides
+      .map((pesticide, index) => ({
+        pesticide,
+        index,
+        value: column.value(pesticide, summaryType)
+      }))
+      .sort((a, b) => {
+        const aMissing = a.value === null || a.value === "";
+        const bMissing = b.value === null || b.value === "";
+
+        if (aMissing || bMissing) {
+          if (aMissing && bMissing) return a.index - b.index;
+          return aMissing ? 1 : -1;
+        }
+
+        const result = column.type === "number"
+          ? a.value - b.value
+          : collator.compare(a.value, b.value);
+
+        return result !== 0 ? result * direction : a.index - b.index;
+      })
+      .map(entry => entry.pesticide);
+  }
+
+  function renderSortableHeader(column, sort, resistanceHeading) {
+    const active = sort?.key === column.key;
+    const ariaSort = active
+      ? (sort.direction === "desc" ? "descending" : "ascending")
+      : "none";
+    const label = column.key === "resistance" ? resistanceHeading : column.label;
+
+    return `
+      <th class="${column.className}" aria-sort="${ariaSort}">
+        <button type="button" class="pesticide-summary__sort-button" data-sort-key="${column.key}">
+          ${escapeHtml(label)}
+        </button>
+      </th>
+    `;
+  }
+
+  // Cycles asc -> desc -> back to the API's default order.
+  function handleSortClick(container, key) {
+    const json = container.__pesticideSummaryJson;
+    if (!json) return;
+
+    const current = container.__pesticideSummarySort;
+    let next = null;
+
+    if (!current || current.key !== key) {
+      next = { key, direction: "asc" };
+    } else if (current.direction === "asc") {
+      next = { key, direction: "desc" };
+    }
+
+    container.__pesticideSummarySort = next;
+    container.innerHTML = renderTable(json, container.__pesticideSummaryType, next);
+
+    container
+      .querySelector(`.pesticide-summary__sort-button[data-sort-key="${key}"]`)
+      ?.focus();
+  }
+
+  function wireSortEvents(container) {
+    if (container.__pesticideSummarySortBound) return;
+    container.__pesticideSummarySortBound = true;
+
+    container.addEventListener("click", event => {
+      const button = event.target.closest(".pesticide-summary__sort-button");
+      if (!button) return;
+
+      handleSortClick(container, button.dataset.sortKey);
+    });
+  }
+
   function renderMessage(message) {
     return `
       <div class="pesticide-summary pesticide-summary-message">
@@ -116,18 +273,18 @@
 
     return `
       <tr class="${rowClass}">
-        <td>${escapeHtml(pesticide?.commonName || "")}</td>
-        <td>${escapeHtml(pesticide?.tradeName || "")}</td>
-        <td>${escapeHtml(pesticide?.epaRegistrationNumber || "")}</td>
-        <td>${escapeHtml(pesticide?.phi || "")}</td>
-        <td>${escapeHtml(pesticide?.rei || "")}</td>
-        <td>${escapeHtml(resistanceCodes.join(", "))}</td>
+        <td class="pesticide-summary__col-common-name">${escapeHtml(pesticide?.commonName || "")}</td>
+        <td class="pesticide-summary__col-trade-name">${escapeHtml(pesticide?.tradeName || "")}</td>
+        <td class="pesticide-summary__col-epa-number">${escapeHtml(pesticide?.epaRegistrationNumber || "")}</td>
+        <td class="pesticide-summary__col-phi">${escapeHtml(formatDurationValue(pesticide?.phi))}</td>
+        <td class="pesticide-summary__col-rei">${escapeHtml(formatDurationValue(pesticide?.rei))}</td>
+        <td class="pesticide-summary__col-resistance">${escapeHtml(resistanceCodes.join(", "))}</td>
       </tr>
     `;
   }
 
-  function renderTable(json, requestedSummaryType) {
-    const pesticides = Array.isArray(json?.pesticides) ? json.pesticides : [];
+  function renderTable(json, requestedSummaryType, sort) {
+    const apiPesticides = Array.isArray(json?.pesticides) ? json.pesticides : [];
     const summaryType =
       normalizeSummaryType(json?.summaryType) ||
       normalizeSummaryType(requestedSummaryType) ||
@@ -136,7 +293,7 @@
     const siteName = json?.siteName || (siteId ? `Site ${siteId}` : "Selected Site");
     const resistanceHeading = getResistanceHeading(summaryType);
 
-    if (!pesticides.length) {
+    if (!apiPesticides.length) {
       return `
         <div class="pesticide-summary">
           <div class="pesticide-summary__subtitle">${escapeHtml(siteName)}</div>
@@ -144,6 +301,8 @@
         </div>
       `;
     }
+
+    const pesticides = sortPesticides(apiPesticides, sort, summaryType);
 
     let currentCommonName = null;
     let groupIndex = -1;
@@ -167,12 +326,7 @@
           <table class="pesticide-summary__table">
             <thead>
               <tr>
-                <th>Common Name</th>
-                <th>Trade Name</th>
-                <th>EPA Reg. Number</th>
-                <th>PHI</th>
-                <th>REI</th>
-                <th>${escapeHtml(resistanceHeading)}</th>
+                ${SORT_COLUMNS.map(column => renderSortableHeader(column, sort, resistanceHeading)).join("")}
               </tr>
             </thead>
             <tbody>${bodyRows}</tbody>
@@ -242,7 +396,10 @@
       console.log("[PublicPesticideSummary] API response:", json);
 
       container.__pesticideSummaryJson = json;
+      container.__pesticideSummaryType = summaryType;
+      container.__pesticideSummarySort = null;
       container.innerHTML = renderTable(json, summaryType);
+      wireSortEvents(container);
     } catch (error) {
       console.error("[PublicPesticideSummary] Failed to load summary:", error);
       container.removeAttribute("data-load-key");

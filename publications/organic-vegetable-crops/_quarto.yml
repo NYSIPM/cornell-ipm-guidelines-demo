@@ -1,0 +1,141 @@
+project:
+  type: website
+  output-dir: ../../docs/publications/organic-vegetable-crops
+
+website:
+  title: "Cornell IPM | Organic Vegetable Crops Guidelines"
+  navbar:
+    left:
+      - text: "← Back to Guidelines Home"
+        href: ../../index.html
+
+      - text: "Chapters"
+        menu:
+          - text: "Overview"
+            href: index.qmd
+          - text: "---"
+          - text: "1.1 Asparagus"
+            href: 1-1-asparagus.qmd
+          - text: "1.2 Beans — Dry, Snap, and Lima"
+            href: 1-2-beans-—-dry-snap-and-lima.qmd
+          - text: "1.3 Beets"
+            href: 1-3-beets.qmd
+          - text: "1.4 Heading and Leafy Brassicas"
+            href: 1-4-heading-and-leafy-brassicas.qmd
+          - text: "1.5 Carrot"
+            href: 1-5-carrot.qmd
+          - text: "1.6 Cucurbits"
+            href: 1-6-cucurbits-cucumber-melon-pumpkin-squash-and-watermelon.qmd
+          - text: "1.7 Eggplant"
+            href: 1-7-eggplant.qmd
+          - text: "1.8 Lettuce"
+            href: 1-8-lettuce.qmd
+          - text: "1.9 Onion, Shallot, and Leek"
+            href: 1-9-onion-shallot-and-leek.qmd
+          - text: "1.10 Peas"
+            href: 1-10-peas.qmd
+          - text: "1.11 Pepper"
+            href: 1-11-pepper.qmd
+          - text: "1.12 Potato"
+            href: 1-12-potato.qmd
+          - text: "1.13 Spinach"
+            href: 1-13-spinach.qmd
+          - text: "1.14 Sweet Corn"
+            href: 1-14-sweet-corn.qmd
+          - text: "1.15 Field Tomato"
+            href: 1-15-field-tomato.qmd
+          - text: "1.16 Turnip, Rutabaga, Radish, and Kohlrabi"
+            href: 1-16-turnip-rutabaga-radish-and-kohlrabi.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-location: left
+    toc-title: "On this page"
+    include-in-header:
+      text: |
+        <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+        <!-- Load your existing auth file (as-is) -->
+        <script src="../../js/auth.js" defer></script>
+
+        <!-- Bridge: expose functions globally no matter how auth.js is authored -->
+        <script type="module">
+          // If auth.js is an ES module, import it and attach its exports to window.
+          try {
+            const mod = await import("/js/auth.js");
+            window.checkAuth ??= mod.checkAuth;
+            window.login ??= mod.login;
+            window.logout ??= mod.logout;
+          } catch (e) {
+            // Ignore: auth.js might not be a module (in that case it should define globals itself)
+          }
+
+          // If auth.js attaches under a namespace like window.auth, map it to globals.
+          if (!window.checkAuth && window.auth?.checkAuth) window.checkAuth = window.auth.checkAuth;
+          if (!window.login && window.auth?.login) window.login = window.auth.login;
+          if (!window.logout && window.auth?.logout) window.logout = window.auth.logout;
+        </script>
+
+    include-after-body:
+      text: |
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarCollapse = document.querySelector('#navbarCollapse') || document.querySelector('.navbar-collapse');
+
+            if (navbarCollapse) {
+                const rightNav = document.createElement('ul');
+                rightNav.className = 'navbar-nav ms-auto';
+
+                const authStatusLi = document.createElement('li');
+                authStatusLi.className = 'nav-item';
+                authStatusLi.innerHTML = '<div id="auth-status" style="display:flex;align-items:center;"></div>';
+
+                rightNav.appendChild(authStatusLi);
+                navbarCollapse.appendChild(rightNav);
+
+                setTimeout(updateNavAuthStatus, 100);
+            }
+        });
+
+        async function updateNavAuthStatus() {
+            const authStatusDiv = document.getElementById('auth-status');
+            if (!authStatusDiv) return;
+
+            try {
+                const authStatus = await checkAuth();
+
+                if (authStatus.authenticated) {
+                    const email = authStatus.user?.email || 'User';
+                    const displayName = email.split('@')[0];
+                    authStatusDiv.innerHTML = `
+                        <span style="color:#28a745;margin-right:10px;font-size:14px;">
+                            ✓ ${displayName}
+                        </span>
+                        <button onclick="logout()"
+                                style="background:#dc3545;color:white;border:none;
+                                       padding:4px 12px;border-radius:4px;cursor:pointer;font-size:14px;">
+                            Log Out
+                        </button>
+                    `;
+                } else {
+                    authStatusDiv.innerHTML = `
+                        <button onclick="login()"
+                                style="background:#B31B1B;color:white;border:none;
+                                       padding:6px 16px;border-radius:4px;cursor:pointer;font-size:14px;">
+                            Log In
+                        </button>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error updating nav auth status:', error);
+                authStatusDiv.innerHTML = `
+                    <button onclick="login()"
+                            style="background:#B31B1B;color:white;border:none;
+                                   padding:6px 16px;border-radius:4px;cursor:pointer;font-size:14px;">
+                        Log In
+                    </button>
+                `;
+            }
+        }
+        </script>

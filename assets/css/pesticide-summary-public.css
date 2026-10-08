@@ -1,3 +1,45 @@
+/* Pesticide summary selector (Decap CMS editor modal) */
+.pesticide-summary-selector {
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.pesticide-summary-selector__description {
+  margin-bottom: 16px;
+  color: #555;
+}
+
+.pesticide-summary-selector__field {
+  margin-bottom: 14px;
+}
+
+.pesticide-summary-selector__label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.pesticide-summary-selector__control {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #c5c5c5;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* Pesticide summary table container */
+.pesticide-summary {
+  box-sizing: border-box;
+  padding: 16px;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  background: #fff;
+}
+
 .pesticide-summary-public {
   margin: 1rem 0;
 }
@@ -9,6 +51,13 @@
   background: transparent;
 }
 
+.pesticide-summary-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
 .pesticide-summary__table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -16,29 +65,88 @@
 
 .pesticide-summary__table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   border-spacing: 0;
 }
 
 .pesticide-summary__table th,
 .pesticide-summary__table td {
-  padding: 0.55rem 0.65rem;
+  padding: 0.15rem 0.35rem;
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid #d7d7d7;
+  overflow-wrap: break-word;
 }
 
 .pesticide-summary__table th {
   font-weight: 600;
-  white-space: nowrap;
+  vertical-align: bottom;
 }
 
-.pesticide-summary__row--alternate {
-  background: rgba(0, 0, 0, 0.035);
+.pesticide-summary__sort-button {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-.pesticide-summary__trade-name {
-  min-width: 12rem;
+.pesticide-summary__sort-button:hover {
+  text-decoration: underline;
+}
+
+.pesticide-summary__sort-button::after {
+  content: " \2195";
+  color: #999;
+  font-size: 0.8em;
+}
+
+.pesticide-summary__table th[aria-sort="ascending"] .pesticide-summary__sort-button::after {
+  content: " \25B2";
+  color: inherit;
+}
+
+.pesticide-summary__table th[aria-sort="descending"] .pesticide-summary__sort-button::after {
+  content: " \25BC";
+  color: inherit;
+}
+
+.pesticide-summary__table tbody tr.is-even {
+  background: #ffffff;
+}
+
+.pesticide-summary__table tbody tr.is-odd {
+  background: #f3f3f3;
+}
+
+/* Per-column widths — adjust these percentages to resize individual columns.
+   They should add up to 100% across all six columns. */
+.pesticide-summary__col-common-name {
+  width: 34%;
+}
+
+.pesticide-summary__col-trade-name {
+  width: 22%;
+}
+
+.pesticide-summary__col-epa-number {
+  width: 16%;
+}
+
+.pesticide-summary__col-phi {
+  width: 10%;
+}
+
+.pesticide-summary__col-rei {
+  width: 10%;
+}
+
+.pesticide-summary__col-resistance {
+  width: 8%;
 }
 
 .pesticide-summary__restricted {
@@ -62,4 +170,5 @@
 
 .pesticide-summary__error {
   margin-top: 0.35rem;
+  color: #b00020;
 }

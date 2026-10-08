@@ -1,0 +1,5 @@
+---
+title: 1.7 Eggplant
+order: 7
+---
+Eggplant

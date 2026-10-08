@@ -1,0 +1,5 @@
+---
+title: 1.16 Turnip, Rutabaga, Radish, and Kohlrabi
+order: 16
+---
+Turnip, Rutabaga, Radish, and Kohlrabi

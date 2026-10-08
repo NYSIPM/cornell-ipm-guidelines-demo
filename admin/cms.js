@@ -94,41 +94,6 @@
       }
     },
 
-
-    /*
-    async init() {
-      this.client = await auth0.createAuth0Client({
-        domain: window.TreatmentAuthConfig.domain,
-        clientId: window.TreatmentAuthConfig.clientId,
-        authorizationParams: {
-          audience: window.TreatmentAuthConfig.audience,
-          redirect_uri: window.TreatmentAuthConfig.redirectUri
-        },
-        cacheLocation: "localstorage"
-      });
-
-      if (
-        window.location.search.includes("code=") &&
-        window.location.search.includes("state=")
-      ) {
-        await this.client.handleRedirectCallback();
-
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname
-        );
-      }
-
-      if (await this.client.isAuthenticated()) {
-        this.user = await this.client.getUser();
-        console.log("Logged in as:", this.user);
-        console.log("Auth0 sub:", this.user?.sub);
-        console.log("Email:", this.user?.email);
-      }
-    },
-    */
-
     async login() {
       await this.client.loginWithRedirect({
         appState: {
@@ -152,13 +117,6 @@
         return null;
       }
 
-      /*
-      return await this.client.getTokenSilently({
-        authorizationParams: {
-          audience: window.TreatmentAuthConfig.audience
-        }
-      });
-      */
      try {
         return await this.client.getTokenSilently({
           authorizationParams: {
@@ -265,6 +223,14 @@
 
   let guidelineOptionsCache = null;
   let guidelineOptionsPromise = null;
+
+  // Keyed by "guidelineId|pestId|siteId|changedSince". Decap's preview pane
+  // fully re-renders the markdown -> HTML tree on every keystroke, which
+  // recreates the .pesticide-table-preview node from scratch (no
+  // data-load-key). Without this cache we'd flash back to "Loading..." and
+  // re-fetch on every single edit, which shrinks/regrows the preview and
+  // is what was kicking the iframe's scroll position around.
+  const pesticideTableRenderCache = new Map();
 
   async function fetchGuidelineOptions() {
     if (guidelineOptionsCache) {
@@ -921,6 +887,21 @@
         continue;
       }
 
+      const cached = pesticideTableRenderCache.get(loadKey);
+
+      if (cached) {
+        // Restore instantly instead of re-fetching. This is what a plain
+        // markdown/text edit hits every time: the preview pane rebuilt this
+        // node from scratch, but the underlying table data hasn't changed.
+        node.setAttribute("data-load-key", loadKey);
+        node.__pesticideRows = cached.rows;
+        node.__changedSince = changedSince;
+        node.__pesticideJson = cached.json;
+        node.innerHTML = cached.titleHtml + cached.html;
+        window.PesticideTableBuilder.wireTableEvents(node);
+        continue;
+      }
+
       node.setAttribute("data-load-key", loadKey);
 
       try {
@@ -965,9 +946,17 @@
 
         window.PesticideTableBuilder.wireTableEvents(node);
 
+        pesticideTableRenderCache.set(loadKey, {
+          html,
+          titleHtml,
+          json,
+          rows: node.__pesticideRows
+        });
+
         console.log("Pesticide table events wired");
       } catch (err) {
         console.error("Pesticide preview failed:", err);
+        node.removeAttribute("data-load-key");
 
         node.innerHTML = `
           <div><strong>Preview failed.</strong></div>

@@ -1,4 +1,14 @@
 (function () {
+    "use strict";
+
+    const isLocalDev =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+
+    const API_BASE = isLocalDev
+        ? "https://webguidelines2.psep.cce.cornell.edu/api/Treatments/search"
+        : "https://webguidelines2.psep.cce.cornell.edu/api/Treatments/search";
+
     function escapeHtml(value) {
         return String(value ?? "")
         .replace(/&/g, "&amp;")
@@ -19,6 +29,14 @@
         container.__publicTreatmentEventsBound = true;
 
         container.addEventListener("click", function (event) {
+            const sortButton =
+                event.target.closest(".sort-button");
+
+            if (sortButton) {
+                handleSortClick(container, sortButton.dataset.sortKey);
+                return;
+            }
+
             const button =
                 event.target.closest(".toggle-details-button");
 
@@ -147,7 +165,7 @@
         return [...new Set([...biological, ...cultural])]
             .join("<br>");
     }
-    
+
     //Sub Functions
     function unique(values) {
         return [...new Set((values || []).filter(Boolean))];
@@ -198,13 +216,8 @@
         return unique(comments).join("<br>");
     }
 
-
-
-
-
-
     //Sub Function Rate
-    function getControlTechniqueName(treatment) 
+    function getControlTechniqueName(treatment)
     {
         const controlTechnique = treatment?.controlTechnique;
 
@@ -365,13 +378,158 @@
         return unique(symbols).join("");
     }
 
-    //MAIN
-    function renderTable(data) {
-        const treatments = Array.isArray(data) ? data : [data];
+    //Sorting
+    // Rows with no value for the active column always sort last, in either direction.
+    function getSitePesticides(treatment) {
+        return (treatment?.controlTechnique?.pesticides || [])
+            .map(pesticide => (pesticide?.sitePesticide || [])[0])
+            .filter(Boolean);
+    }
 
-        if (!treatments.length) {
+    function getReiSortValue(treatment) {
+        for (const sp of getSitePesticides(treatment)) {
+            const hours = parseFloat(clean(sp.rei));
+            if (!Number.isNaN(hours)) return hours;
+        }
+        return null;
+    }
+
+    // Normalized to hours so "2 days" sorts after "24 hours".
+    function getPhiSortValue(treatment) {
+        for (const sp of getSitePesticides(treatment)) {
+            const amount = parseFloat(clean(sp.phi));
+            if (Number.isNaN(amount)) continue;
+
+            const unit = clean(sp.phiTime).toLowerCase();
+            if (unit.startsWith("week")) return amount * 168;
+            if (unit.startsWith("day")) return amount * 24;
+            return amount;
+        }
+        return null;
+    }
+
+    const SORT_COLUMNS = [
+        {
+            key: "name",
+            label: "Control Technique",
+            type: "text",
+            value: getControlTechniqueName
+        },
+        {
+            key: "rate",
+            label: "Rate",
+            type: "text",
+            value: treatment => (treatment?.treatmentRates || [])
+                .map(formatRate)
+                .filter(Boolean)
+                .join(" ")
+        },
+        {
+            key: "rei",
+            label: "REI",
+            type: "number",
+            value: getReiSortValue
+        },
+        {
+            key: "phi",
+            label: "PHI",
+            type: "number",
+            value: getPhiSortValue
+        },
+        {
+            key: "resistance",
+            label: "Resistance Mgmt.",
+            type: "text",
+            value: treatment => getResistanceText(treatment).replace(/<br>/g, " ")
+        },
+        {
+            key: "efficacy",
+            label: "Efficacy",
+            type: "text",
+            value: treatment => clean(treatment?.efficacy?.name)
+        }
+    ];
+
+    const collator = new Intl.Collator(undefined, {
+        numeric: true,
+        sensitivity: "base"
+    });
+
+    function sortTreatments(treatments, sort) {
+        const column = SORT_COLUMNS.find(c => c.key === sort?.key);
+        if (!column) return treatments;
+
+        const direction = sort.direction === "desc" ? -1 : 1;
+
+        return treatments
+            .map((treatment, index) => ({
+                treatment,
+                index,
+                value: column.value(treatment)
+            }))
+            .sort((a, b) => {
+                const aMissing = a.value === null || a.value === "";
+                const bMissing = b.value === null || b.value === "";
+
+                if (aMissing || bMissing) {
+                    if (aMissing && bMissing) return a.index - b.index;
+                    return aMissing ? 1 : -1;
+                }
+
+                const result = column.type === "number"
+                    ? a.value - b.value
+                    : collator.compare(a.value, b.value);
+
+                return result !== 0 ? result * direction : a.index - b.index;
+            })
+            .map(entry => entry.treatment);
+    }
+
+    // Cycles asc -> desc -> back to the API's default order.
+    function handleSortClick(container, key) {
+        if (!container.__treatments) return;
+
+        const current = container.__treatmentSort;
+        let next = null;
+
+        if (!current || current.key !== key) {
+            next = { key, direction: "asc" };
+        } else if (current.direction === "asc") {
+            next = { key, direction: "desc" };
+        }
+
+        container.__treatmentSort = next;
+        container.innerHTML = renderTable(container.__treatments, next);
+
+        container
+            .querySelector(`.sort-button[data-sort-key="${key}"]`)
+            ?.focus();
+    }
+
+    function renderSortableHeader(column, sort) {
+        const active = sort?.key === column.key;
+        const ariaSort = active
+            ? (sort.direction === "desc" ? "descending" : "ascending")
+            : "none";
+
+        return `
+            <th aria-sort="${ariaSort}">
+                <button type="button" class="sort-button" data-sort-key="${column.key}">
+                    ${escapeHtml(column.label)}
+                </button>
+            </th>
+        `;
+    }
+
+    //MAIN
+    function renderTable(data, sort) {
+        const allTreatments = Array.isArray(data) ? data : [data];
+
+        if (!allTreatments.length) {
         return `<div>No treatments found.</div>`;
         }
+
+        const treatments = sortTreatments(allTreatments, sort);
 
         const rows = treatments.map((treatment, index) => {
         const rowClass = index % 2 === 0
@@ -459,12 +617,7 @@
             <table class="public-treatment-table">
             <thead>
                 <tr>
-                <th>Control Technique</th>
-                <th>Rate</th>
-                <th>REI</th>
-                <th>PHI</th>
-                <th>Resistance Mgmt.</th>
-                <th>Efficacy</th>
+                ${SORT_COLUMNS.map(column => renderSortableHeader(column, sort)).join("")}
                 </tr>
             </thead>
             <tbody>
@@ -472,17 +625,105 @@
             </tbody>
             </table>
         </div>
+        <div class="treatment-table-footer">
+            ${allTreatments.length}
+            ${allTreatments.length === 1 ? "treatment" : "treatments"}
+        </div>
         `;
     }
 
-    window.PublicTreatmentBuilder = {
-        renderTable,
-        wireTableEvents,
-        version: "basic-v2"
-    };
+    //Loader — finds the placeholder(s) dropped in by the
+    //{{< pesticide-table >}} shortcode and hydrates them from the API.
+    async function hydrateOne(el) {
+        const guidelineId = el.dataset.guidelineId;
+        const pestId = el.dataset.pestId;
+        const siteId = el.dataset.siteId;
 
-    console.log(
-        "Loaded PublicTreatmentBuilder:",
-        window.PublicTreatmentBuilder.version
-    );
+        if (!pestId || !siteId) {
+            el.innerHTML =
+                `<div class="pesticide-table-error">
+                    Missing required data attributes.
+                </div>`;
+
+            return;
+        }
+
+        el.innerHTML =
+            `<div class="pesticide-table-loading">
+                Loading table...
+            </div>`;
+
+        const params = new URLSearchParams({
+            guidelineId,
+            pestId,
+            siteId
+        });
+
+        const url = `${API_BASE}?${params.toString()}`;
+
+        try {
+            if (
+                typeof window.getTreatmentAccessToken !== "function"
+            ) {
+                throw new Error(
+                    "Authentication helper is not loaded."
+                );
+            }
+
+            const token =
+                await window.getTreatmentAccessToken();
+
+            if (!token) {
+                return;
+            }
+
+            const response = await fetch(url, {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                const responseText = await response.text();
+
+                throw new Error(
+                    `HTTP ${response.status}` +
+                    (responseText ? `: ${responseText}` : "")
+                );
+            }
+
+            const data = await response.json();
+
+            el.__treatments = data;
+            el.__treatmentSort = null;
+            el.innerHTML = renderTable(data);
+            wireTableEvents(el);
+
+        } catch (error) {
+            console.error(
+                "Pesticide table hydration failed:",
+                error
+            );
+
+            el.innerHTML =
+                `<div class="pesticide-table-error">
+                    Unable to load pesticide table:
+                    ${error.message}
+                </div>`;
+        }
+    }
+
+    function hydrateAll() {
+        const elements = document.querySelectorAll(".pesticide-table-public");
+        elements.forEach(hydrateOne);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", hydrateAll);
+    } else {
+        hydrateAll();
+    }
 })();
