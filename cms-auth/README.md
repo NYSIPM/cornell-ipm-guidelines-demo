@@ -42,8 +42,11 @@ Roles map onto Decap's editorial workflow:
 
 | Auth0 role             | Can do                                   |
 | ---------------------- | ---------------------------------------- |
-| `guidelines_editor`    | create/edit entries -> PRs; Draft <-> In Review |
-| `guidelines_publisher` | the above **+ merge to `main`** (publish) |
+| `guidelines_contributor` | open `/admin/`; create/edit entries -> PRs; Draft / In Review / Ready. **Cannot publish** (no merge or other write to `main`) |
+| `guidelines_editor`      | the above **+ publish** (merge to `main`) |
+
+(`guidelines_publisher` was folded into `guidelines_editor`; see
+`netlify/functions/_shared/auth.mjs`.)
 
 Recommended build: **B1**, a GitHub-API proxy. Keep Decap's built-in `github`
 backend but point `api_root` at the broker and override token acquisition to use

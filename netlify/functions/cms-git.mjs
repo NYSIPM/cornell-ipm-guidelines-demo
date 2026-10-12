@@ -4,8 +4,11 @@
 //
 // Decap CMS is configured with `backend: github` but `api_root` pointing here.
 // Decap sends the editor's Auth0 access token; this function:
-//   1. validates the Auth0 token and checks the guidelines_editor role
-//   2. gates publish (PR merge) on the guidelines_editor (formaly guidelines_publisher) role
+//   1. validates the Auth0 token and requires guidelines_contributor or
+//      guidelines_editor
+//   2. gates publishing (PR merge, or any other write that lands on the
+//      published branch) on guidelines_editor (formerly guidelines_publisher),
+//      so contributors can draft but not publish
 //   3. answers Decap's identity call (GET /user) from Auth0 (there is no
 //      GitHub user in this flow)
 //   4. forwards everything else to api.github.com using a GitHub App
@@ -54,9 +57,49 @@ function parseTarget(event) {
   return { ghPath: p, search };
 }
 
-// Publishing == merging a PR into the target branch.
-function isPublishRequest(method, ghPath) {
-  return method === "PUT" && /\/pulls\/\d+\/merge$/.test(ghPath);
+// The live branch (config.yml backend.branch). Writes that land here publish.
+const PUBLISH_BRANCH = process.env.CMS_PUBLISH_BRANCH || "main";
+
+function parseJsonBody(rawBody, isBase64) {
+  if (!rawBody) return null;
+  try {
+    const raw = isBase64
+      ? Buffer.from(rawBody, "base64").toString("utf8")
+      : rawBody;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+// Publishing == anything that changes the live branch. In the editorial
+// workflow that is normally merging the entry's PR, but Decap also commits
+// straight to the live branch for some actions (e.g. deleting a published
+// entry, media library changes), so treat those as publishing too.
+function isPublishRequest(method, ghPath, event) {
+  if (["GET", "HEAD", "OPTIONS"].includes(method)) return false;
+
+  // PUT /repos/:o/:r/pulls/:n/merge
+  if (method === "PUT" && /\/pulls\/\d+\/merge$/.test(ghPath)) return true;
+
+  // PATCH/DELETE /repos/:o/:r/git/refs/heads/<live branch>
+  const ref = ghPath.match(/\/git\/refs\/heads\/(.+)$/);
+  if (ref && decodeURIComponent(ref[1]) === PUBLISH_BRANCH) return true;
+
+  const body = parseJsonBody(event.body, event.isBase64Encoded);
+
+  // POST /repos/:o/:r/merges into the live branch
+  if (method === "POST" && /\/merges$/.test(ghPath)) {
+    return !body || body.base === PUBLISH_BRANCH;
+  }
+
+  // PUT/DELETE /repos/:o/:r/contents/... with no branch writes to the
+  // default branch, so only allow it when another branch is named.
+  if (/\/contents\//.test(ghPath)) {
+    return !body?.branch || body.branch === PUBLISH_BRANCH;
+  }
+
+  return false;
 }
 
 // Attribute commit-creating requests to the editor (not the App bot).
@@ -103,11 +146,14 @@ export async function handler(event) {
     );
   }
 
-  // --- 2. Authorize (baseline editor role) ---
+  // --- 2. Authorize (baseline: contributor or editor) ---
   if (!auth.canEdit) {
     return json(
       403,
-      { error: "forbidden", detail: "guidelines_editor role required" },
+      {
+        error: "forbidden",
+        detail: "guidelines_contributor or guidelines_editor role required",
+      },
       cors
     );
   }
@@ -129,19 +175,18 @@ export async function handler(event) {
     );
   }
 
-  // --- 4. Gate publish on the publisher role ---
-  if (isPublishRequest(event.httpMethod, ghPath) && !auth.canPublish) {
+  // --- 4. Gate publish on the editor role (contributors can't publish) ---
+  if (isPublishRequest(event.httpMethod, ghPath, event) && !auth.canPublish) {
     return json(
       403,
       {
         error: "forbidden",
+        message: "Only guidelines editors can publish. Set the entry to Ready and an editor will publish it.",
         detail: "guidelines_editor role required to publish",
       },
       cors
     );
   }
-  //guidelines_publisher formaly
-  //detail: "guidelines_publisher role required to publish",
 
   // --- 5. Forward to GitHub with the App installation token ---
   let installationToken;
@@ -211,7 +256,8 @@ export async function handler(event) {
   // Decap checks write access via GET /repos/:owner/:repo and reads
   // repo.permissions.push. A GitHub App installation token doesn't populate the
   // user-style permissions object, so synthesize write access here. This is
-  // safe: access is already gated by the guidelines_editor role above.
+  // safe: access is already gated by role above, and publishing writes are
+  // blocked for contributors in step 4.
   if (
     event.httpMethod === "GET" &&
     ghRes.ok &&

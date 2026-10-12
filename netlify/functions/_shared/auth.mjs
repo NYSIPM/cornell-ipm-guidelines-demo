@@ -12,6 +12,9 @@ const AUDIENCE =
 const ROLES_CLAIM =
   process.env.CMS_ROLES_CLAIM || "https://cornell-ipm.org/roles";
 
+// contributor: can open /admin and create/edit drafts (PRs), but not publish.
+// editor:      everything a contributor can do + publish to the live branch.
+export const CONTRIBUTOR_ROLE = "guidelines_contributor";
 export const EDITOR_ROLE = "guidelines_editor";
 export const PUBLISHER_ROLE = "guidelines_publisher";
 
@@ -43,12 +46,12 @@ export async function verifyAuth0Token(token) {
     payload,
   };
   */
-  const canEdit = roles.includes(EDITOR_ROLE);
+  const isEditor = roles.includes(EDITOR_ROLE);
   return {
     sub: payload.sub,
     roles,
-    canEdit,
-    canPublish: canEdit,
+    canEdit: isEditor || roles.includes(CONTRIBUTOR_ROLE),
+    canPublish: isEditor,
     payload,
   };
 }
