@@ -1,0 +1,132 @@
+/* =========================================================
+   Shared look for form fields in the pesticide table builder modals:
+     #treatment-edit-modal     - Edit Treatment (pesticide-table-builder-edit-modal.js)
+     #product-edit-modal       - Edit Control Technique (pesticide-table-builder-product-modal.js)
+     #comment-search-modal     - Comments (pesticide-table-builder-comments.js)
+     #control-technique-modal  - Add Treatment (pesticide-table-builder.js)
+   Gives text boxes a visible border so they don't disappear against the white background.
+   ========================================================= */
+
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="button"]):not([type="submit"]),
+    textarea,
+    select
+  ) {
+  box-sizing: border-box;
+  max-width: 100%;
+  border: 1px solid #8f8f8f;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #222;
+  padding: 5px 7px;
+}
+
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(input, textarea, select):focus {
+  border-color: #2f6fd6;
+  outline: 2px solid rgba(47, 111, 214, 0.25);
+  outline-offset: 0;
+}
+
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(input, textarea, select):is(:disabled, [readonly]) {
+  background-color: #f3f3f3;
+  color: #555;
+}
+
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(input, textarea)::placeholder {
+  color: #999;
+}
+
+/* =========================================================
+   Buttons - colors match the Decap CMS toolbar
+     Primary   (Publish teal)          - the main action: Save, Use Selected ...
+     Secondary (Save light blue)       - smaller edit actions: Edit, Add Comment ...
+     Neutral   (disabled-Save gray)    - Cancel / Close
+     Danger    (Delete changes red)    - Remove
+   Buttons are grouped by their existing class names, so no markup changes are needed.
+   For a new button, either add its class to a group below or give it
+   ptb-btn-primary / ptb-btn-secondary / ptb-btn-neutral / ptb-btn-danger.
+   To make Cancel red instead of gray, move .cancel-edit-modal-btn etc. to the Danger group.
+   ========================================================= */
+
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal) button {
+  border: 0;
+  border-radius: 5px;
+  padding: 7px 15px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal) button:focus-visible {
+  outline: 2px solid #3a69c7;
+  outline-offset: 2px;
+}
+
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal) button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Smaller buttons that sit inside a panel or list item */
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.toggle-locked-section-btn, .edit-linked-comment-btn, .remove-comment-block-btn, .link-existing-comment-btn, .remove-product-ai-btn) {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+/* Primary - Decap "Publish" */
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.ptb-btn-primary, .save-edit-modal-btn, .save-product-fields-btn, .save-comment-modal-btn,
+      .use-selected-comment-btn, .use-selected-ct-btn, .save-created-ct-btn) {
+  background-color: #17a2b8;
+  color: #fff;
+}
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.ptb-btn-primary, .save-edit-modal-btn, .save-product-fields-btn, .save-comment-modal-btn,
+      .use-selected-comment-btn, .use-selected-ct-btn, .save-created-ct-btn):hover:not(:disabled) {
+  background-color: #138496;
+}
+
+/* Secondary - Decap "Save" */
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.ptb-btn-secondary, .edit-product-btn, .open-comment-search-btn, .start-new-comment-btn,
+      .edit-linked-comment-btn, .toggle-locked-section-btn, .show-create-ct-form-btn, .link-existing-comment-btn) {
+  background-color: #e8f5fe;
+  color: #3a69c7;
+}
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.ptb-btn-secondary, .edit-product-btn, .open-comment-search-btn, .start-new-comment-btn,
+      .edit-linked-comment-btn, .toggle-locked-section-btn, .show-create-ct-form-btn, .link-existing-comment-btn):hover:not(:disabled) {
+  background-color: #d2e9fb;
+}
+
+/* Neutral - Decap gray. Also used for an unlocked REI/PHI/Designation panel's "Cancel" button */
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.ptb-btn-neutral, .cancel-edit-modal-btn, .close-product-modal-btn, .close-comment-search-modal-btn,
+      .close-ct-modal-btn, .cancel-create-ct-form-btn, [data-unlocked="true"] .toggle-locked-section-btn) {
+  background-color: #eff0f4;
+  color: #798291;
+}
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.ptb-btn-neutral, .cancel-edit-modal-btn, .close-product-modal-btn, .close-comment-search-modal-btn,
+      .close-ct-modal-btn, .cancel-create-ct-form-btn, [data-unlocked="true"] .toggle-locked-section-btn):hover:not(:disabled) {
+  background-color: #e0e2e8;
+  color: #5b6472;
+}
+
+/* Danger - Decap "Delete unpublished changes" */
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.ptb-btn-danger, .remove-comment-block-btn, .remove-product-ai-btn) {
+  background-color: #fcefea;
+  color: #d60032;
+}
+:is(#treatment-edit-modal, #product-edit-modal, #comment-search-modal, #control-technique-modal)
+  :is(.ptb-btn-danger, .remove-comment-block-btn, .remove-product-ai-btn):hover:not(:disabled) {
+  background-color: #f9dcd2;
+}

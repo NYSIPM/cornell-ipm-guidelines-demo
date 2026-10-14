@@ -218,118 +218,17 @@
     return unique(comments).join("<br>");
   }
 
-  //EfficacyId? 3/31/2026
-  function getEfficacyId(row) {
-    return row?.treatment?.efficacyId ?? row?.treatment?.efficacy?.efficacyId ?? null;
-  }
+  //EfficacyComment comes back from the API as an object once it has a value (save-row sends a plain string)
+  function getEfficacyCommentText(treatment) {
+    const value = treatment?.efficacyComment;
+    if (value == null) return "";
+    if (typeof value === "string") return value.trim();
 
-  //Application Method 3/31/2026
-  function renderApplicationMethodEditor(row, metadata) {
-    const applicationMethods = metadata?.applicationMethods || [];
-    const selectedValue = row?.treatment?.applicationMethodId ?? row?.applicationMethodId ?? null;
+    const text = value.comment ?? value.commentText ?? value.efficacyCommentText ?? value.text ?? value.description;
+    if (typeof text === "string") return text.trim();
 
-    return `
-      <div style="font-size:12px; color:#666; margin-bottom:6px;">
-        <strong>ApplicationMethodId:</strong> ${escapeHtml(selectedValue ?? 0)}
-      </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">Application Method</label>
-        <select data-field="applicationMethodId" style="width:100%;">
-          ${renderSelectOptions(applicationMethods, selectedValue, "-")}
-        </select>
-      </div>
-    `;
-  }
-
-  //REI PHI Helpers - 4/2/2026
-  function getPrimarySitePesticide(row) {
-      return row?.pesticide?.sitePesticide?.[0] || null;
-  }
-  function renderReiEditor(row) {
-    const sp = getPrimarySitePesticide(row);
-
-    return `
-      <div style="font-size:12px; color:#666; margin-bottom:6px;">
-        <strong>Shared SitePesticide</strong>
-      </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">REI</label>
-        <input type="text" data-field="rei" value="${escapeHtml(sp?.rei || "")}" style="width:100%;">
-      </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">REI Time</label>
-        <select data-field="reiTime" style="width:100%;">
-          ${renderTimeOptions(sp?.reiTime)}
-        </select>
-      </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">
-          <input type="checkbox" data-field="reiReferToLabel" ${sp?.reiReferToLabel ? "checked" : ""}>
-          REI Refer To Label
-        </label>
-      </div>
-
-      <div>
-        <label style="display:block; font-size:12px;">
-          <input type="checkbox" data-field="reiUntilDry" ${sp?.reiUntilDry ? "checked" : ""}>
-          REI Until Dry
-        </label>
-      </div>
-    `;
-  }
-  function renderPhiEditor(row) {
-    const sp = getPrimarySitePesticide(row);
-
-    return `
-      <div style="font-size:12px; color:#666; margin-bottom:6px;">
-        <strong>Shared SitePesticide</strong>
-      </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">PHI</label>
-        <input type="text" data-field="phi" value="${escapeHtml(sp?.phi || "")}" style="width:100%;">
-      </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">PHI Time</label>
-        <select data-field="phiTime" style="width:100%;">
-          ${renderTimeOptions(sp?.phiTime)}
-        </select>
-      </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">
-          <input type="checkbox" data-field="phiReferToLabel" ${sp?.phiReferToLabel ? "checked" : ""}>
-          PHI Refer To Label
-        </label>
-      </div>
-
-      <div>
-        <label style="display:block; font-size:12px;">
-          <input type="checkbox" data-field="phiUntilDry" ${sp?.phiUntilDry ? "checked" : ""}>
-          PHI Until Dry
-        </label>
-      </div>
-    `;
-  }
-
-  function renderTimeOptions(selectedValue) {
-    const options = [
-      { value: "", label: "-" },
-      { value: "Hours", label: "Hours" },
-      { value: "Days", label: "Days" }
-    ];
-
-    const selected = String(selectedValue ?? "");
-
-    return options.map(opt => {
-      const isSelected = opt.value === selected ? " selected" : "";
-      return `<option value="${escapeHtml(opt.value)}"${isSelected}>${escapeHtml(opt.label)}</option>`;
-    }).join("");
+    console.warn("Unknown efficacyComment shape, add its text field to getEfficacyCommentText:", value);
+    return "";
   }
 
   //SiteTiming - Added 4/3/2026
@@ -339,21 +238,6 @@
       .filter(Boolean);
 
     return unique(values).join("<br>");
-  }
-
-  //SiteTiming Added 4/6/2026
-  function getAvailableSiteTimings(row, metadata) {
-    const siteId = parseInt(row?.siteId ?? row?.treatment?.siteId ?? 0, 10);
-    if (!siteId) return [];
-
-    const siteEntry = (metadata?.siteTimings || []).find(s => Number(s.siteId) === siteId);
-    if (!siteEntry || !Array.isArray(siteEntry.siteTimings)) return [];
-
-    return [...siteEntry.siteTimings].sort((a, b) => {
-      const aOrder = Number(a?.timingOrder ?? 9999);
-      const bOrder = Number(b?.timingOrder ?? 9999);
-      return aOrder - bOrder;
-    });
   }
 
   // =========================================================
@@ -396,6 +280,7 @@
 
     treatments.forEach(treatment => {
       const efficacy = clean(treatment?.efficacy?.name);
+      const efficacyComment = getEfficacyCommentText(treatment); //Not using clean() so line breaks are kept
       const comments = formatComments(treatment);
       const pesticides = treatment?.controlTechnique?.pesticides || [];
       const rates = treatment?.treatmentRates || [];
@@ -446,6 +331,7 @@
                 .filter(Boolean)
             ).join("<br>"),
           efficacy: efficacy,
+          efficacyComment: efficacyComment,
           comments: comments
         });
       });
@@ -488,6 +374,7 @@
           eiq: "",
           finalEiq: "",
           efficacy: efficacy,
+          efficacyComment: efficacyComment,
           comments: comments
         });
       });
@@ -530,29 +417,13 @@
           eiq: "",
           finalEiq: "",
           efficacy: efficacy,
+          efficacyComment: efficacyComment,
           comments: comments
         });
       });
     });
 
     return rows;
-  }
-
-  function renderConventionalOrganicEditor(row) {
-    const conventional = row?.conventional ?? false;
-    const organic = row?.organic ?? false;
-
-    return `
-      <label style="display:block; margin-bottom:6px; font-size:12px;">
-        <input type="checkbox" data-field="conventional" ${conventional ? "checked" : ""}>
-        Conventional
-      </label>
-
-      <label style="display:block; font-size:12px;">
-        <input type="checkbox" data-field="organic" ${organic ? "checked" : ""}>
-        Organic
-      </label>
-    `;
   }
 
   function renderEditButtons(options = {}) {
@@ -563,16 +434,8 @@
         <button type="button" class="edit-row-btn">Edit</button>
 
         ${isDeletedView
-          ? `<button type="button"
-                    class="restore-row-btn"
-                    style="color:#006400;">
-              Restore
-            </button>`
-          : `<button type="button"
-                    class="delete-row-btn"
-                    style="color:#a00;">
-              Remove
-            </button>`
+          ? `<button type="button" class="restore-row-btn">Restore</button>`
+          : `<button type="button" class="delete-row-btn">Remove</button>`
         }
       </div>
     `;
@@ -704,6 +567,8 @@
             style="${row.treatmentChanged ? 'background:#fff4b8;' : ''}">
             <div class="cell-text">
               ${escapeHtml(row.efficacy)}
+              ${row.efficacyComment ? `
+                <div class="efficacy-comment" style="font-size:12px; color:#555; margin-top:4px; white-space:pre-wrap;">${escapeHtml(row.efficacyComment)}</div>` : ""}
               ${row.treatmentChanged ? renderModifiedDate(row) : ""}
             </div>
           </td>
@@ -814,302 +679,8 @@
   }
 
   // =========================================================
-  // 4. EDIT VIEW ONLY
+  // 4. TABLE EVENTS (editing a row happens in pesticide-table-builder-edit-modal.js)
   // =========================================================
-
-  function renderRateEditor(row, metadata) {
-    const rates = row.matchingRates || [];
-    const units = metadata?.units || [];
-    const unitAreas = metadata?.unitAreas || [];
-
-    //If Not Treatment Rates Exist.
-    if (!rates.length) {
-      return `
-        <div class="rate-editor-block"
-            data-treatment-rate-id="0"
-            style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
-
-          <div style="font-size:12px; color:#666; margin-bottom:6px;">
-            <strong>TreatmentRateId:</strong> 0
-          </div>
-
-          <div style="
-              display:grid;
-              grid-template-columns: 1.3fr 1fr 2fr;
-              gap:8px;
-              align-items:end;
-              margin-bottom:6px;">
-            <div>
-              <label style="display:block; font-size:12px;">Concentration</label>
-              <input type="text"
-                    data-field="concentration"
-                    value=""
-                    style="width:100%;">
-            </div>
-
-            <div>
-              <label style="display:block; font-size:12px;">UnitId</label>
-              <select data-field="unitId" style="width:100%;">
-                ${renderSelectOptions(units, null, "-")}
-              </select>
-            </div>
-
-            <div>
-              <label style="display:block; font-size:12px;">UnitAreaId</label>
-              <select data-field="unitAreaId" style="width:100%;">
-                ${renderSelectOptions(unitAreas, null, "-")}
-              </select>
-            </div>
-          </div>
-
-          <div style="margin-bottom:6px;">
-            <label style="display:block; font-size:12px;">Amount Note</label>
-            <input type="text"
-                  data-field="amountNote"
-                  value=""
-                  style="width:100%;">
-          </div>
-        </div>
-      `;
-    }
-
-  return rates.map((rate, index) => `
-    <div class="rate-editor-block"
-        data-rate-index="${index}"
-        data-treatment-rate-id="${escapeHtml(rate.treatmentRateId ?? 0)}"
-        style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
-
-      <div style="font-size:12px; color:#666; margin-bottom:6px;">
-        <strong>TreatmentRateId:</strong> ${escapeHtml(rate.treatmentRateId ?? 0)}
-        ${row.treatmentChanged ? renderModifiedDate(row) : ""}
-      </div>
-
-      <!--
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">RateKind</label>
-        <input type="text"
-              data-field="rateKind"
-              value="${escapeHtml(rate.rateKind || "")}"
-              style="width:100%;">
-      </div>
-      -->
-
-      
-      <div style="
-          display:grid;
-          grid-template-columns: 1.3fr 1fr 2fr;
-          gap:8px;
-          align-items:end;
-          margin-bottom:6px;">
-        <div>
-          <label style="display:block; font-size:12px;">Concentration</label>
-          <input type="text"
-                data-field="concentration"
-                value="${escapeHtml(rate.concentration || "")}"
-                style="width:100%;">
-        </div>
-
-        <div>
-          <label style="display:block; font-size:12px;">UnitId</label>
-          <select data-field="unitId" style="width:100%;">
-            ${renderSelectOptions(units, rate.unit?.unitId ?? null, "-")}
-          </select>
-        </div>
-
-        <div>
-          <label style="display:block; font-size:12px;">UnitAreaId</label>
-          <select data-field="unitAreaId" style="width:100%;">
-            ${renderSelectOptions(unitAreas, rate.unitArea?.unitAreaId ?? null, "-")}
-          </select>
-        </div>
-      </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">Amount Note</label>
-        <input type="text"
-              data-field="amountNote"
-              value="${escapeHtml(rate.amountNote || "")}"
-              style="width:100%;">
-      </div>
-
-    </div>
-  `).join("");
-}
-
-  function enterEditMode(tr, container) {
-    console.log("enterEditMode called");
-    const row = findRowByElement(tr, container);
-    console.log("row found:", row);
-    if (!row) return;
-    if (tr.classList.contains("is-editing")) return;
-
-    tr.classList.add("is-editing");
-
-    const cells = tr.querySelectorAll("td");
-    if (!row.pesticide) {
-      enterNonPesticideEditMode(tr, row, container, cells);
-      return;
-    }
-    if (cells.length < 8) return;
-
-    /*
-    cells[0].innerHTML = `
-      <button type="button" class="save-row-btn">Save</button>
-      <button type="button" class="cancel-row-btn" style="margin-left:6px;">Cancel</button>
-    `;
-    */
-    cells[0].innerHTML = `
-      <div style="display:flex; gap:6px; flex-wrap:wrap;">
-        <button type="button" class="save-row-btn">Save</button>
-        <button type="button" class="cancel-row-btn">Cancel</button>
-      </div>
-    `;
-
-
-    cells[1].innerHTML = renderIdBlock(row, true);
-    //cells[2].innerHTML = escapeHtml(row.product);
-    cells[2].innerHTML = `
-      <div>${escapeHtml(row.product)}</div>
-      <button type="button" class="edit-product-btn" style="margin-top:6px;">
-        Edit Control Technique
-      </button>
-    `;
-    cells[3].innerHTML = row.pesticide
-      ? renderRateEditor(row, container.__editMetadata)
-      : `<em>Not applicable</em>`;
-
-    cells[4].innerHTML = row.pesticide
-      ? renderReiEditor(row)
-      : "";
-
-    cells[5].innerHTML = row.pesticide
-      ? renderPhiEditor(row)
-      : "";
-
-    cells[6].innerHTML = row.pesticide
-      ? escapeHtml(row.resistance)
-      : escapeHtml(row.description || "");
-      
-    //cells[3].innerHTML = renderRateEditor(row, container.__editMetadata);
-    //cells[4].innerHTML = renderReiEditor(row);
-    //cells[5].innerHTML = renderPhiEditor(row);
-    //cells[6].innerHTML = escapeHtml(row.resistance);
-
-    cells[7].innerHTML = renderEfficacyEditor(row, container.__editMetadata);
-
-    /*
-    const miscTr = tr.nextElementSibling;
-    if (miscTr && miscTr.classList.contains("misc-row")) {
-      const miscCell = miscTr.querySelector(".misc-content-cell");
-      if (miscCell) {
-        miscCell.innerHTML = renderSiteTimingEditor(row, container.__editMetadata);
-      }
-    }
-    */
-
-    const miscTr = tr.nextElementSibling;
-
-    if (miscTr && miscTr.classList.contains("misc-row")) {
-      const miscCell = miscTr.querySelector(".misc-content-cell");
-      if (miscCell) {
-        miscCell.innerHTML = `
-          <div class="misc-edit-wrapper">
-            <div><strong>Miscellaneous</strong></div>
-            <div class="misc-edit-grid">
-              <div class="misc-edit-panel">
-                <div class="misc-edit-title">Designation</div>
-                ${renderConventionalOrganicEditor(row)}
-              </div>
-              <div class="misc-edit-panel">
-                <div class="misc-edit-title">Application Method</div>
-                ${renderApplicationMethodEditor(row, container.__editMetadata)}
-              </div>
-              <div class="misc-edit-panel">
-                <div class="misc-edit-title">Site Timing</div>
-                ${renderSiteTimingEditor(row, container.__editMetadata)}
-              </div>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    const commentTr = miscTr?.nextElementSibling;
-
-    if (commentTr && commentTr.classList.contains("comment-row")) {
-      const commentCell = commentTr.querySelector(".comment-content-cell");
-      if (commentCell) {
-        commentCell.innerHTML = renderCommentEditor(row);
-      }
-    }
-    /*
-    const commentTr = tr.nextElementSibling;
-    if (commentTr && commentTr.classList.contains("comment-row")) {
-      const commentCell = commentTr.querySelector(".comment-content-cell");
-      if (commentCell) {
-        commentCell.innerHTML = renderCommentEditor(row);
-      }
-    }
-    */
-  }
-
-  function enterNonPesticideEditMode(tr, row, container, cells) {
-    if (cells.length < 5) return;
-
-    cells[0].innerHTML = `
-      <div style="display:flex; gap:6px; flex-wrap:wrap;">
-        <button type="button" class="save-row-btn">Save</button>
-        <button type="button" class="cancel-row-btn">Cancel</button>
-      </div>
-    `;
-
-    cells[1].innerHTML = renderIdBlock(row, true);
-
-    cells[2].innerHTML = `
-      <div>${escapeHtml(row.product)}</div>
-      <button type="button" class="edit-product-btn" style="margin-top:6px;">
-        Edit Control Technique
-      </button>
-    `;
-
-    cells[3].innerHTML = `
-      <div style="font-size:12px; color:#666; margin-bottom:4px;">
-        <strong>${escapeHtml(row.controlTechniqueType || "Control Technique")}</strong>
-      </div>
-      <div style="line-height:1.3;">
-        ${escapeHtml(row.description || "") || "<em>No description</em>"}
-      </div>
-    `;
-
-    cells[4].innerHTML = renderEfficacyEditor(row, container.__editMetadata);
-
-    const miscTr = tr.nextElementSibling;
-    if (miscTr && miscTr.classList.contains("misc-row")) {
-      const miscCell = miscTr.querySelector(".misc-content-cell");
-      if (miscCell) {
-        miscCell.innerHTML = `
-          <div class="misc-edit-wrapper">
-            <div><strong>Miscellaneous</strong></div>
-            <div class="misc-edit-grid">
-              <div class="misc-edit-panel">
-                <div class="misc-edit-title">Site Timing</div>
-                ${renderSiteTimingEditor(row, container.__editMetadata)}
-              </div>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    const commentTr = miscTr?.nextElementSibling;
-    if (commentTr && commentTr.classList.contains("comment-row")) {
-      const commentCell = commentTr.querySelector(".comment-content-cell");
-      if (commentCell) {
-        commentCell.innerHTML = renderCommentEditor(row);
-      }
-    }
-  }
-
   function wireTableEvents(container) {
     /*
     if (!container || container.__pesticideTableEventsBound) return;
@@ -1126,21 +697,9 @@
     container.__pesticideClickHandler = async function (e) {
       console.log("Pesticide table click:", e.target);
       const editBtn = e.target.closest(".edit-row-btn");
-      const cancelBtn = e.target.closest(".cancel-row-btn");
-      const saveBtn = e.target.closest(".save-row-btn"); //Added 3/30/2026
       const deleteBtn = e.target.closest(".delete-row-btn"); //Added 5-8-2026
       const restoreBtn = e.target.closest(".restore-row-btn"); //Added 5-13-2026
-      const editProductBtn = e.target.closest(".edit-product-btn"); //Added 4/7/2026 For the Modal
       const insertTreatmentBtn = e.target.closest(".insert-treatment-btn"); //For Insert Button Added 4/7/2026
-      //For Comments
-      //const addCommentBlockBtn = e.target.closest(".add-comment-block-btn");
-      const removeCommentBlockBtn = e.target.closest(".remove-comment-block-btn");
-      //const showLinkCommentPlaceholderBtn = e.target.closest(".show-link-comment-placeholder-btn"); //No Longer Neded
-      const linkExistingCommentBtn = e.target.closest(".link-existing-comment-btn");
-      //Comment Modol
-      const openCommentSearchBtn = e.target.closest(".open-comment-search-btn");
-      //Add 4-22-2026
-      const editLinkedCommentBtn = e.target.closest(".edit-linked-comment-btn");
       //Added 4-28-2026
       const toggleMiscRowBtn = e.target.closest(".toggle-misc-row-btn");
       //Added 5-12-2026
@@ -1179,39 +738,15 @@
         return;
       }
 
+      //Editing happens in a modal - see pesticide-table-builder-edit-modal.js
       if (editBtn) {
-        console.log("Edit clicked");
-
         const tr = editBtn.closest("tr.data-row");
-        if (!tr) return;
-
-        try {
-          await ensureEditMetadata(container);
-        } catch (err) {
-          console.error("Failed to load metadata:", err);
-          alert("Failed to load edit options.");
-          return;
-        }
-
-        enterEditMode(tr, container);
-        return;
-      }
-
-      if (editProductBtn) {
-        const tr = editProductBtn.closest("tr.data-row");
         if (!tr) return;
 
         const row = findRowByElement(tr, container);
         if (!row) return;
 
-        //await openProductModal(row, container);
-        await window.PesticideTableBuilderProductModal.openProductModal(row, container, {
-          escapeHtml,
-          clean,
-          getRowKey,
-          reloadTableData,
-          editMetadata: container.__editMetadata
-        });
+        await window.PesticideTableBuilderEditModal.openEditModal(row, container, tr);
         return;
       }
 
@@ -1220,35 +755,6 @@
         return;
       }
       
-      //Added 4-22-2026
-      if (editLinkedCommentBtn) {
-        const block = editLinkedCommentBtn.closest(".comment-editor-block");
-        const commentRow = editLinkedCommentBtn.closest("tr.comment-row");
-        const dataRow = commentRow?.previousElementSibling?.previousElementSibling;
-        const row = dataRow ? findRowByElement(dataRow, container) : null;
-        const editorArea = editLinkedCommentBtn.closest(".comment-editor-area");
-        const list = editorArea?.querySelector(".comment-editor-list");
-
-        if (!block || !row || !list) return;
-
-        const existingComment = {
-          commentId: parseInt(block.dataset.commentId, 10) || 0,
-          indexNumber: block.dataset.indexNumber || "",
-          commentText: block.dataset.commentText || "",
-          siteId: row?.siteId ?? row?.treatment?.siteId ?? null,
-          guidelineId: row?.treatment?.guidelineId ?? null,
-          pests: [
-            {
-              pestId: parseInt(row?.pestId ?? row?.treatment?.pestId ?? 0, 10) || 0,
-              name: null
-            }
-          ].filter(p => p.pestId > 0)
-        };
-
-        await openCommentSearchModal(row, container, list, existingComment);
-        return;
-      }
-
       if (deleteBtn) {
         const tr = deleteBtn.closest("tr.data-row");
         if (!tr) return;
@@ -1281,84 +787,6 @@
         return;
       }
 
-      if (removeCommentBlockBtn) {
-        const block = removeCommentBlockBtn.closest(".comment-editor-block");
-        if (block) {
-          block.remove();
-        }
-        return;
-      }
-
-      /*
-      if (showLinkCommentPlaceholderBtn) {
-        const editorArea = showLinkCommentPlaceholderBtn.closest(".comment-editor-area");
-        const placeholder = editorArea?.querySelector(".comment-link-placeholder");
-        if (placeholder) {
-          placeholder.style.display = placeholder.style.display === "none" ? "block" : "none";
-        }
-        return;
-      }
-
-      if (linkExistingCommentBtn) {
-        alert("Existing comment linking UI can be added here later.");
-        return;
-      }
-      */
-
-      if (openCommentSearchBtn) {
-        const commentRow = openCommentSearchBtn.closest("tr.comment-row");
-        const dataRow = commentRow?.previousElementSibling?.previousElementSibling;
-        const row = dataRow ? findRowByElement(dataRow, container) : null;
-        const editorArea = openCommentSearchBtn.closest(".comment-editor-area");
-        const list = editorArea?.querySelector(".comment-editor-list");
-
-        if (row && list) {
-          await openCommentSearchModal(row, container, list);
-        }
-        return;
-      }
-
-      if (linkExistingCommentBtn) {
-        const commentRow = linkExistingCommentBtn.closest("tr.comment-row");
-        const dataRow = commentRow?.previousElementSibling?.previousElementSibling;
-        const row = dataRow ? findRowByElement(dataRow, container) : null;
-        const editorArea = linkExistingCommentBtn.closest(".comment-editor-area");
-        const list = editorArea?.querySelector(".comment-editor-list");
-
-        if (row && list) {
-          await openCommentSearchModal(row, container, list);
-        }
-        return;
-      }
-
-
-      if (saveBtn) {
-        console.log("Save clicked");
-
-        const tr = saveBtn.closest("tr.data-row");
-        if (!tr) return;
-
-        await handleSaveRow(tr, container);
-
-        return;
-      }
-
-      if (cancelBtn) {
-        console.log("Cancel clicked");
-
-        // rebuild data from stored rows
-        const rows = container.__pesticideRows || [];
-
-        // IMPORTANT: we need original API shape, not rows
-        // easiest fix: store original JSON too (see next step)
-
-        if (container.__pesticideJson) {
-          container.innerHTML = renderTable(container.__pesticideJson);
-          wireTableEvents(container);
-        }
-
-        return;
-      }
     //});
     //}
     };
@@ -1389,392 +817,13 @@
 
   
 
-  //Fetches the Meta Data JSON File
-  async function ensureEditMetadata(container) {
-    if (container.__editMetadata) {
-      return container.__editMetadata;
-    }
-
-    const guidelineId = container.dataset.guidelineId;
-
-    const url = window.TreatmentApiUrl(`/api/Treatments/edit-metadata?guidelineId=${guidelineId || ""}`);
-    console.log("Fetching edit metadata:", url);
-
-    //const response = await fetch(url);
-    const authHeaders = await window.TreatmentAuth.authHeaders();
-    const response = await fetch(url, {
-      headers: {
-        ...authHeaders
-      }
-    });
-  
-    if (!response.ok) {
-      throw new Error(`Metadata fetch failed: ${response.status}`);
-    }
-
-    const json = await response.json();
-
-    container.__editMetadata = json;
-
-    console.log("Metadata loaded:", json);
-
-    return json;
-  }
-
-  function renderSelectOptions(options, selectedValue, placeholder = "-- Select --") {
-    const selected = String(selectedValue ?? "");
-
-    const optionHtml = (options || []).map(opt => {
-      const value = String(opt.id ?? "");
-      const isSelected = value === selected ? " selected" : "";
-      return `<option value="${escapeHtml(value)}"${isSelected}>${escapeHtml(opt.name)}</option>`;
-    }).join("");
-
-    return `
-      <option value="">${escapeHtml(placeholder)}</option>
-      ${optionHtml}
-    `;
-  }
-  
-  //Efficacy 3/31/2026
-  function renderEfficacyEditor(row, metadata) {
-    const efficacies = metadata?.efficacies || [];
-    const selectedEfficacyId = getEfficacyId(row);
-
-    return `
-      <div style="font-size:12px; color:#666; margin-bottom:6px;">
-        <strong>EfficacyId:</strong> ${escapeHtml(selectedEfficacyId ?? 0)}
-      </div>
-
-      <select data-field="efficacyId" style="width:100%;">
-        ${renderSelectOptions(efficacies, selectedEfficacyId, "-")}
-      </select>
-    `;
-  }
-
-  //SiteTiming Added 4/6/2026
-  function renderSiteTimingEditor(row, metadata) {
-    const available = getAvailableSiteTimings(row, metadata);
-    const selectedIds = new Set(
-      (row?.treatment?.siteTimings || [])
-        .map(st => Number(st.siteTimingId))
-        .filter(Number.isFinite)
-    );
-
-    if (!available.length) {
-      return `
-        <div style="font-size:12px; color:#666;">
-          No Site Timing options found for SiteId ${escapeHtml(row?.siteId ?? "")}
-        </div>
-      `;
-    }
-
-    const optionsHtml = available.map(st => {
-      const id = Number(st.siteTimingId);
-      const checked = selectedIds.has(id) ? "checked" : "";
-      const label = clean(st?.name);
-      const order = st?.timingOrder ?? "";
-
-      return `
-        <label style="display:block; margin-bottom:4px; font-size:12px;">
-          <input type="checkbox"
-                data-field="siteTimingIds"
-                value="${escapeHtml(id)}"
-                ${checked}>
-          ${escapeHtml(label)}
-          ${order !== "" ? `<span style="color:#666;">(#${escapeHtml(order)})</span>` : ""}
-        </label>
-      `;
-    }).join("");
-
-    return `
-      <div style="font-size:12px; color:#666; margin-bottom:6px;">
-        <strong>Site Timing</strong>
-      </div>
-      <div style="max-height:220px; overflow:auto; border:1px solid #ddd; padding:8px; background:#fafafa;">
-        ${optionsHtml}
-      </div>
-    `;
-  }
-
-  //Added 4/14/2026
-  function renderCommentEditor(row) {
-    const comments = row?.treatment?.comments || [];
-    const siteId = row?.siteId ?? row?.treatment?.siteId ?? "";
-    const guidelineId = row?.treatment?.guidelineId ?? "";
-    const pestId = row?.pestId ?? row?.treatment?.pestId ?? "";
-
-    const existingBlocks = comments.length
-      ? comments.map((comment, index) => `
-          <div class="comment-editor-block"
-            data-comment-index="${index}"
-            data-comment-id="${escapeHtml(comment.commentId ?? 0)}"
-            data-index-number="${escapeHtml(comment.indexNumber ?? "")}"
-            data-comment-text="${escapeHtml(comment.commentText || comment.comment || "")}"
-            style="border:1px solid #ddd; padding:10px; margin-bottom:8px; background:#fafafa;">
-
-            <div style="font-size:12px; color:#666; margin-bottom:8px;">
-              <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
-              ${comment.indexNumber ? ` 
-              &nbsp; | &nbsp; 
-              <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
-              &nbsp; | &nbsp;
-              <strong>SiteId:</strong> ${escapeHtml(siteId)}
-              &nbsp; | &nbsp;
-              <strong>GuidelineId:</strong> ${escapeHtml(guidelineId)}
-              &nbsp; | &nbsp;
-              <strong>PestId:</strong> ${escapeHtml(pestId)}
-            </div>
-
-            <div style="margin-bottom:8px"><!-- ; white-space:pre-wrap; -->
-              ${escapeHtml(comment.commentText || "") || "<em>No comment text</em>"}
-            </div>
-
-            <div style="display:flex; gap:8px;">
-              <button type="button" class="edit-linked-comment-btn">Edit</button>
-              <button type="button" class="remove-comment-block-btn">Remove</button>
-            </div>
-          </div>
-        `).join("")
-      : `
-        <div style="font-size:12px; color:#666; margin-bottom:8px;">
-          No comments yet for this treatment.
-        </div>
-      `;
-
-    return `
-      <div class="comment-editor-area">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <strong>Comments</strong>
-          <div style="display:flex; gap:8px;">
-            <button type="button" class="open-comment-search-btn">Add Comment</button>
-          </div>
-        </div>
-
-        <div class="comment-editor-list">
-          ${existingBlocks}
-        </div>
-      </div>
-    `;
-  }
-
-  
-  function renderBlankCommentEditorBlock(row) {
-    const siteId = row?.siteId ?? row?.treatment?.siteId ?? "";
-    const guidelineId = row?.treatment?.guidelineId ?? "";
-    const pestId = row?.pestId ?? row?.treatment?.pestId ?? "";
-
-    return `
-      <div class="comment-editor-block"
-          data-comment-index="new"
-          data-comment-id="0"
-          data-index-number=""
-          data-comment-text=""
-          style="border:1px solid #ddd; padding:10px; margin-bottom:8px; background:#fafafa;">
-
-        <div style="font-size:12px; color:#666; margin-bottom:8px;">
-          <strong>CommentId:</strong> 0
-        </div>
-
-        <div style="font-size:12px; color:#666; margin-bottom:8px;">
-          <strong>SiteId:</strong> ${escapeHtml(siteId)}
-          &nbsp; | &nbsp;
-          <strong>GuidelineId:</strong> ${escapeHtml(guidelineId)}
-          &nbsp; | &nbsp;
-          <strong>PestId:</strong> ${escapeHtml(pestId)}
-        </div>
-
-        <div style="margin-bottom:8px;">
-          <label style="display:block; font-size:12px;">Index Number</label>
-          <input type="text" data-field="comment-indexNumber" value="" style="width:100%;">
-        </div>
-
-        <div style="margin-bottom:8px;">
-          <label style="display:block; font-size:12px;">Comment Text</label>
-          <textarea data-field="comment-commentText" rows="3" style="width:100%;"></textarea>
-        </div>
-
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="link-existing-comment-btn">Link Existing</button>
-          <button type="button" class="remove-comment-block-btn">Remove</button>
-        </div>
-      </div>
-    `;
-  }
 
 
 
 
   // =========================================================
-  // 5. SAVE - added 3/30/2026
+  // 5. RELOAD
   // =========================================================
-  async function handleSaveRow(tr, container) {
-    if (tr.dataset.isSaving === "true") {
-      console.log("Save already in progress for this row.");
-      return;
-    }
-    tr.dataset.isSaving = "true";
-
-    const row = findRowByElement(tr, container);
-    if (!row) return;
-
-    console.log("Saving row:", row);
-
-    const treatment = row.treatment || {};
-    const getRowField = (field) => tr.querySelector(`[data-field="${field}"]`)?.value ?? "";
-    const getRowChecked = (field) =>
-      !![tr, tr.nextElementSibling]
-        .filter(Boolean)
-        .flatMap(rowEl => Array.from(rowEl.querySelectorAll(`[data-field="${field}"]`)))
-        .some(el => el.checked);
-    const rateBlocks = tr.querySelectorAll(".rate-editor-block");
-
-    const miscRow = tr.nextElementSibling;
-    const commentRow = miscRow?.nextElementSibling;
-    const commentBlocks = commentRow?.querySelectorAll(".comment-editor-block") || [];
-    const linkedComments = Array.from(commentBlocks)
-      .map(block => {
-        const commentId = parseInt(block.dataset.commentId, 10) || 0;
-        return commentId > 0 ? { commentId } : null;
-      })
-      .filter(Boolean);
-
-    const updatedRates = [];
-
-    const getCheckedValues = (field) =>
-      Array.from(
-        [tr, tr.nextElementSibling]
-          .filter(Boolean)
-          .flatMap(rowEl => Array.from(rowEl.querySelectorAll(`[data-field="${field}"]:checked`)))
-      )
-    .map(el => parseInt(el.value, 10))
-    .filter(Number.isFinite);
-
-    const selectedSiteTimingIds = getCheckedValues("siteTimingIds");
-
-    //Checks to see if it is a pesticide.
-    const hasPesticide = parseInt(row.pesticideId, 10) > 0;
-
-    //I don't understand what this does?
-    const parseNullableInt = (value) => {
-      const n = parseInt(value, 10);
-      return Number.isNaN(n) || n <= 0 ? null : n;
-    };
-
-    if (hasPesticide) {
-      rateBlocks.forEach(block => {
-        const get = (field) =>
-          block.querySelector(`[data-field="${field}"]`)?.value ?? "";
-        updatedRates.push({
-          treatmentRateId: parseInt(block.dataset.treatmentRateId, 10) || 0,
-          rateKind: "Test", //get("rateKind").trim()
-          pesticideId: parseInt(row.pesticideId, 10) || 0,
-          concentration: get("concentration").trim(),
-          amountNote: get("amountNote").trim(),
-          unitId: parseNullableInt(get("unitId")),
-          unitAreaId: parseNullableInt(get("unitAreaId")),
-        });
-      });
-    }
-
-    const payload = {
-      treatmentId: parseInt(row.treatmentId, 10) || 0,
-      controlTechniqueId: parseInt(row.controlTechniqueId, 10) || 0,
-      pestId: parseInt(row.pestId, 10) || 0,
-      siteId: parseInt(row.siteId, 10) || 0,
-
-      applicationMethodId: parseNullableInt(getRowField("applicationMethodId")),
-      efficacyId: parseNullableInt(getRowField("efficacyId")),
-
-      deleted: treatment.deleted ?? false,
-      guidelineId: treatment.guidelineId ?? null,
-
-      treatmentRates: updatedRates,
-
-      efficacyComment: treatment.efficacyComment ?? "",
-
-      siteTimingIds: selectedSiteTimingIds,
-
-      siteHarvestPeriodIds: (treatment.siteHarvestPeriods || [])
-        .map(x => x.siteHarvestPeriodId)
-        .filter(x => x != null),
-
-      pestLifeCycleIds: (treatment.pestLifeCycles || [])
-        .map(x => x.pestLifeCycleId)
-        .filter(x => x != null),
-
-      comments: linkedComments,
-
-      pesticide: hasPesticide
-      ? {
-          pesticideId: parseInt(row.pesticideId, 10) || 0,
-          pesticideGuideline: {
-            conventional: getRowChecked("conventional"),
-            organic: getRowChecked("organic")
-          },
-          sitePesticide: {
-            siteId: parseInt(row.siteId, 10) || 0,
-            pesticideId: parseInt(row.pesticideId, 10) || 0,
-            rei: getRowField("rei").trim(),
-            reiTime: getRowField("reiTime").trim(),
-            reiReferToLabel: getRowChecked("reiReferToLabel"),
-            reiUntilDry: getRowChecked("reiUntilDry"),
-            phi: getRowField("phi").trim(),
-            phiTime: getRowField("phiTime").trim(),
-            phiReferToLabel: getRowChecked("phiReferToLabel"),
-            phiUntilDry: getRowChecked("phiUntilDry")
-          }
-        }
-      : null
-    };
-
-    console.log("Payload JSON:\n", JSON.stringify(payload, null, 2));
-    //console.log("Payload to save:", payload);
-
-    //STUFF
-    try {
-      const authHeaders = await window.TreatmentAuth.authHeaders();
-      const response = await fetch(
-          window.TreatmentApiUrl("/api/Treatments/save-row"),
-          {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-                  ...authHeaders
-              },
-              body: JSON.stringify(payload)
-          }
-      );
-      /*
-      //OLD
-      const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-row"), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
-      */
-
-      const responseText = await response.text();
-
-      console.log("Save status:", response.status);
-      console.log("Save response:", responseText);
-
-      if (!response.ok) {
-        alert("Save failed. Check console for details.");
-        return;
-      }
-      await reloadTableData(container);
-
-      alert("Save succeeded.");
-    } catch (err) {
-      console.error("Save request failed:", err);
-      alert("Save request failed. Check console.");
-    } finally {
-      tr.dataset.isSaving = "false";
-    }
-  }
 
   async function reloadTableData(container) {
     const pestId = container.dataset.pestId;
@@ -2093,6 +1142,7 @@
 
       const payload = {
         controlTechniqueId: null,
+        guidelineId: parseInt(container.dataset.guidelineId, 10) || 0,
         isMixture: false,
         pesticides: [
           {
@@ -2412,592 +1462,8 @@
     );
 
     if (newTr) {
-      ensureEditMetadata(container)
-        .then(() => enterEditMode(newTr, container))
-        .catch(err => {
-          console.error("Failed to load metadata for new row:", err);
-        });
+      window.PesticideTableBuilderEditModal.openEditModal(findRowByElement(newTr, container), container, newTr);
     }
-  }
-
-  // =========================================================
-  // Comment Modal
-  // =========================================================
-
-  function ensureCommentSearchModal() {
-    let modal = document.getElementById("comment-search-modal");
-    if (modal) return modal;
-
-    modal = document.createElement("div");
-    modal.id = "comment-search-modal";
-    modal.style.cssText = `
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.45);
-      z-index:9999;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      box-sizing:border-box;
-    `;
-
-    modal.innerHTML = `
-      <div style="
-        background:#fff;
-        width:min(1100px, 96vw);
-        height:min(88vh, 900px);
-        border-radius:8px;
-        box-shadow:0 10px 30px rgba(0,0,0,0.2);
-        display:flex;
-        flex-direction:column;
-        overflow:hidden;
-        min-height:0;
-      ">
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          padding:16px 16px 12px 16px;
-          border-bottom:1px solid #ddd;
-          flex:0 0 auto;
-        ">
-          <h3 style="margin:0;">Comments</h3>
-          <button type="button" class="close-comment-search-modal-btn">Close</button>
-        </div>
-
-        <div style="
-          padding:12px 16px 0 16px;
-          flex:1 1 auto;
-          min-height:0;
-          display:grid;
-          grid-template-columns:minmax(0, 1.2fr) minmax(320px, 1fr);
-          gap:16px;
-          overflow:hidden;
-        ">
-          <!-- LEFT SIDE -->
-          <div style="
-            display:flex;
-            flex-direction:column;
-            min-height:0;
-            overflow:hidden;
-          ">
-            <div id="comment-search-context" style="
-              font-size:12px;
-              color:#666;
-              margin-bottom:12px;
-              padding:8px 10px;
-              background:#f8f8f8;
-              border:1px solid #e3e3e3;
-              border-radius:4px;
-              flex:0 0 auto;
-            "></div>
-
-            <div style="
-              display:grid;
-              grid-template-columns:2fr 1fr;
-              gap:8px;
-              margin-bottom:12px;
-              flex:0 0 auto;
-            ">
-              <div>
-                <label style="display:block; font-size:12px;">Search Comment Text</label>
-                <input type="text"
-                      id="comment-search-text"
-                      placeholder="Search within comment text..."
-                      style="width:100%; padding:8px; box-sizing:border-box;">
-              </div>
-              <div>
-                <label style="display:block; font-size:12px;">Search CommentId</label>
-                <input type="text"
-                      id="comment-search-id"
-                      placeholder="e.g. 123"
-                      style="width:100%; padding:8px; box-sizing:border-box;">
-              </div>
-            </div>
-
-            <div style="
-              display:flex;
-              gap:8px;
-              margin-bottom:12px;
-              flex:0 0 auto;
-            ">
-              <button type="button" class="start-new-comment-btn">New Comment</button>
-              <button type="button" class="use-selected-comment-btn">Use Selected Comment</button>
-            </div>
-
-            <div id="comment-search-results" style="
-              flex:1 1 auto;
-              min-height:0;
-              overflow-y:auto;
-              overflow-x:hidden;
-              border:1px solid #ddd;
-              padding:8px;
-              background:#fafafa;
-              border-radius:4px;
-            ">
-              Loading comments...
-            </div>
-          </div>
-
-          <!-- RIGHT SIDE -->
-          <div style="
-            border-left:1px solid #ddd;
-            padding-left:16px;
-            min-height:0;
-            overflow-y:auto;
-          ">
-            <div style="font-weight:600; margin-bottom:8px;">Comment Editor</div>
-
-            <div style="font-size:12px; color:#666; margin-bottom:8px;" id="comment-form-status">
-              Select a comment or create a new one.
-            </div>
-
-            <div style="margin-bottom:8px;">
-              <label style="display:block; font-size:12px;">CommentId</label>
-              <input type="text" id="comment-form-id" disabled style="width:100%; padding:8px; box-sizing:border-box; background:#f5f5f5;">
-            </div>
-
-            <div style="margin-bottom:8px;">
-              <label style="display:block; font-size:12px;">Index Number (Optional)</label>
-              <input type="text" id="comment-form-indexNumber" style="width:100%; padding:8px; box-sizing:border-box;">
-            </div>
-
-            <div style="margin-bottom:8px;">
-              <label style="display:block; font-size:12px;">Comment Text</label>
-              <textarea id="comment-form-text" rows="28" style="width:100%; padding:8px; box-sizing:border-box;"></textarea>
-            </div>
-
-            <div style="display:flex; gap:8px; margin-bottom:8px;">
-              <button type="button" class="save-comment-modal-btn">Save Comment</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    modal.addEventListener("click", function (e) {
-      if (e.target.closest(".close-comment-search-modal-btn")) {
-        closeCommentSearchModal();
-      }
-    });
-
-    return modal;
-  }
-
-  function closeCommentSearchModal() {
-    const modal = document.getElementById("comment-search-modal");
-    if (!modal) return;
-
-    modal.style.display = "none";
-    modal.__selectedComment = null;
-    modal.__targetRowKey = null;
-    modal.__targetContainer = null;
-    modal.__targetCommentList = null;
-  }
-
-  async function fetchCommentOptions(guidelineId) {
-    const url = window.TreatmentApiUrl(
-      `/api/Treatments/comment-options?guidelineId=${encodeURIComponent(guidelineId)}`
-    );
-
-    const authHeaders = await window.TreatmentAuth.authHeaders();
-
-    const response = await fetch(url, {
-      headers: {
-        ...authHeaders
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch comments: ${response.status}`);
-    }
-
-    return await response.json();
-  }
-
-  function filterCommentOptions(items, textTerm, idTerm) {
-    const textSearch = clean(textTerm).toLowerCase();
-    const idSearch = clean(idTerm);
-
-    return (items || []).filter(item => {
-      const commentText = clean(item.commentText).toLowerCase();
-      const indexNumber = clean(item.indexNumber).toLowerCase();
-      const commentIdText = String(item.commentId ?? "");
-
-      const matchesText = !textSearch ||
-        commentText.includes(textSearch) ||
-        indexNumber.includes(textSearch);
-
-      const matchesId = !idSearch ||
-        commentIdText.includes(idSearch);
-
-      return matchesText && matchesId;
-    });
-  }
-
-  function renderCommentSearchResults(items) {
-    if (!items.length) {
-      return `<div style="color:#666;">No comments found.</div>`;
-    }
-
-    return items.map(item => {
-      const pests = (item.pests || [])
-        .map(p => p.name ? `${p.name} (${p.pestId})` : `Pest ${p.pestId}`)
-        .join(", ");
-
-      return `
-        <div class="comment-search-option"
-            data-comment-id="${escapeHtml(item.commentId)}"
-            style="border:1px solid #ddd; padding:10px; margin-bottom:8px; cursor:pointer;">
-          <div style="font-size:12px; color:#666; margin-bottom:4px;">
-            <strong>CommentId:</strong> ${escapeHtml(item.commentId)}
-            ${item.indexNumber ? ` | <strong>Index:</strong> ${escapeHtml(item.indexNumber)}` : ""}
-            ${item.siteId ? ` | <strong>SiteId:</strong> ${escapeHtml(item.siteId)}` : ""}
-          </div>
-          <div style="margin-bottom:6px;">
-            ${escapeHtml(item.commentText || "")}
-          </div>
-          <div style="font-size:12px; color:#666;">
-            <strong>Pests:</strong> ${escapeHtml(pests || "None")}
-          </div>
-        </div>
-      `;
-    }).join("");
-  }
-
-  async function openCommentSearchModal(row, container, targetListEl, existingComment = null) {
-    //async function openCommentSearchModal(row, container, targetListEl) {
-    const modal = ensureCommentSearchModal();
-    modal.style.display = "flex";
-
-    modal.__selectedComment = null;
-    modal.__editingComment = null;
-    modal.__targetRowKey = getRowKey(row);
-    modal.__targetContainer = container;
-    modal.__targetCommentList = targetListEl;
-
-    const guidelineId = row?.treatment?.guidelineId ?? container?.dataset?.guidelineId ?? "";
-    const siteId = row?.siteId ?? row?.treatment?.siteId ?? "";
-    const pestId = row?.pestId ?? row?.treatment?.pestId ?? "";
-
-    modal.querySelector("#comment-search-context").innerHTML = `
-      <strong>GuidelineId:</strong> ${escapeHtml(guidelineId)}
-      &nbsp; | &nbsp;
-      <strong>SiteId:</strong> ${escapeHtml(siteId)}
-      &nbsp; | &nbsp;
-      <strong>PestId:</strong> ${escapeHtml(pestId)}
-    `;
-
-    const resultsEl = modal.querySelector("#comment-search-results");
-    const textInput = modal.querySelector("#comment-search-text");
-    const idInput = modal.querySelector("#comment-search-id");
-
-    textInput.value = "";
-    idInput.value = "";
-    resultsEl.innerHTML = "Loading comments...";
-
-    resetCommentForm(modal, row);
-
-    try {
-      const items = await fetchCommentOptions(guidelineId);
-      modal.__commentOptions = items || [];
-      modal.__filteredCommentOptions = items || [];
-      resultsEl.innerHTML = renderCommentSearchResults(modal.__commentOptions);
-    } catch (err) {
-      console.error(err);
-      resultsEl.innerHTML = `<div style="color:#900;">Failed to load comments.</div>`;
-    }
-
-    if (existingComment) {
-      modal.__selectedComment = existingComment;
-      modal.__editingComment = existingComment;
-      loadCommentIntoForm(modal, existingComment);
-
-      requestAnimationFrame(() => {
-        focusCommentSearchOption(resultsEl, existingComment.commentId);
-      });
-
-      const selectedId = Number(existingComment.commentId);
-      const selectedOption = Array.from(
-        resultsEl.querySelectorAll(".comment-search-option")
-      ).find(el => Number(el.dataset.commentId) === selectedId);
-
-      if (selectedOption) {
-        resultsEl.querySelectorAll(".comment-search-option").forEach(el => {
-          el.style.background = "";
-          el.style.borderColor = "#ddd";
-        });
-
-        selectedOption.style.background = "#eef6ff";
-        selectedOption.style.borderColor = "#66a3ff";
-      }
-    }
-
-    wireCommentSearchModal(modal);
-  }
-
-  function wireCommentSearchModal(modal) {
-    if (modal.__commentSearchBound) return;
-    modal.__commentSearchBound = true;
-
-    const textInput = modal.querySelector("#comment-search-text");
-    const idInput = modal.querySelector("#comment-search-id");
-    const resultsEl = modal.querySelector("#comment-search-results");
-    const useBtn = modal.querySelector(".use-selected-comment-btn");
-    const newBtn = modal.querySelector(".start-new-comment-btn");
-    const saveBtn = modal.querySelector(".save-comment-modal-btn");
-
-    function refreshResults() {
-      const filtered = filterCommentOptions(
-        modal.__commentOptions || [],
-        textInput.value,
-        idInput.value
-      );
-
-      modal.__filteredCommentOptions = filtered;
-      resultsEl.innerHTML = renderCommentSearchResults(filtered);
-    }
-
-    textInput.addEventListener("input", refreshResults);
-    idInput.addEventListener("input", refreshResults);
-
-    newBtn.addEventListener("click", function () {
-      const container = modal.__targetContainer;
-      const rowKey = modal.__targetRowKey;
-      const row = (container?.__pesticideRows || []).find(r => getRowKey(r) === rowKey) || null;
-      resetCommentForm(modal, row);
-    });
-
-    resultsEl.addEventListener("click", function (e) {
-      const option = e.target.closest(".comment-search-option");
-      if (!option) return;
-
-      const commentId = parseInt(option.dataset.commentId, 10);
-      const item = (modal.__filteredCommentOptions || modal.__commentOptions || [])
-        .find(x => Number(x.commentId) === commentId);
-
-      if (!item) return;
-
-      modal.__selectedComment = item;
-      loadCommentIntoForm(modal, item);
-
-      resultsEl.querySelectorAll(".comment-search-option").forEach(el => {
-        el.style.background = "";
-        el.style.borderColor = "#ddd";
-      });
-
-      option.style.background = "#eef6ff";
-      option.style.borderColor = "#66a3ff";
-    });
-
-    saveBtn.addEventListener("click", async function () {
-      const defaults = modal.__commentFormDefaults || {};
-      const editing = modal.__editingComment || null;
-
-      const payload = {
-        commentId: editing?.commentId ?? null,
-        siteId: editing?.siteId ?? defaults.siteId ?? null,
-        guidelineId: editing?.guidelineId ?? defaults.guidelineId ?? null,
-        indexNumber: clean(modal.querySelector("#comment-form-indexNumber").value),
-        commentText: clean(modal.querySelector("#comment-form-text").value),
-        pestComment: Array.isArray(editing?.pests) && editing.pests.length
-          ? editing.pests.map(p => p.pestId)
-          : (defaults.pestIds || [])
-      };
-
-      if (!payload.commentText) {
-        alert("Comment text is required.");
-        return;
-      }
-
-      try {
-        saveBtn.disabled = true;
-
-        const saved = await saveComment(payload);
-        const savedCommentId = saved?.commentId;
-
-        if (!savedCommentId) {
-          alert("Comment saved, but no CommentId was returned.");
-          return;
-        }
-
-        const refreshed = {
-          commentId: savedCommentId,
-          siteId: payload.siteId,
-          guidelineId: payload.guidelineId,
-          indexNumber: payload.indexNumber,
-          commentText: payload.commentText,
-          pests: (payload.pestComment || []).map(id => ({ pestId: id, name: null }))
-        };
-
-        // update modal selection
-        modal.__selectedComment = refreshed;
-        modal.__editingComment = refreshed;
-
-        // merge/update local option list
-        const existing = (modal.__commentOptions || []).find(x => Number(x.commentId) === Number(savedCommentId));
-        if (existing) {
-          Object.assign(existing, refreshed);
-        } else {
-          modal.__commentOptions = [refreshed, ...(modal.__commentOptions || [])];
-        }
-
-        refreshResults();
-        loadCommentIntoForm(modal, refreshed);
-        requestAnimationFrame(() => {
-          focusCommentSearchOption(resultsEl, refreshed.commentId);
-        });
-        syncEditedCommentBlock(modal.__targetCommentList, refreshed);
-
-        alert("Comment saved.");
-      } catch (err) {
-        console.error(err);
-        alert("Failed to save comment. Check console for details.");
-      } finally {
-        saveBtn.disabled = false;
-      }
-    });
-
-    useBtn.addEventListener("click", function () {
-      const selected = modal.__selectedComment;
-      const targetList = modal.__targetCommentList;
-
-      if (!selected || !targetList) {
-        alert("Please select or save a comment first.");
-        return;
-      }
-
-      // prevent duplicate insert in the same row editor
-      const alreadyThere = Array.from(targetList.querySelectorAll(".comment-editor-block"))
-        .some(el => Number(el.dataset.commentId) === Number(selected.commentId));
-
-      if (!alreadyThere) {
-        targetList.insertAdjacentHTML("beforeend", renderExistingCommentEditorBlock(selected));
-      }
-
-      closeCommentSearchModal();
-    });
-  }
-
-  
-
-
-
-
-
-  function renderExistingCommentEditorBlock(comment) {
-  const pests = (comment.pests || [])
-    .map(p => p.name ? `${p.name} (${p.pestId})` : `Pest ${p.pestId}`)
-    .join(", ");
-
-  return `
-      <div class="comment-editor-block existing-linked-comment"
-          data-comment-index="linked"
-          data-comment-id="${escapeHtml(comment.commentId ?? 0)}"
-          data-index-number="${escapeHtml(comment.indexNumber ?? "")}"
-          data-comment-text="${escapeHtml(comment.commentText || comment.comment || "")}"
-          style="border:1px solid #66a3ff; padding:6px 8px; margin-bottom:6px; background:#f5faff;">
-
-        <div style="font-size:12px; color:#666; margin-bottom:4px;">
-          <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
-          ${comment.indexNumber ? ` &nbsp; | &nbsp; <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
-          &nbsp; | &nbsp;
-          <strong>SiteId:</strong> ${escapeHtml(comment.siteId ?? "")}
-          &nbsp; | &nbsp;
-          <strong>GuidelineId:</strong> ${escapeHtml(comment.guidelineId ?? "")}
-          ${pests ? ` &nbsp; | &nbsp; <strong>Pests:</strong> ${escapeHtml(pests)}` : ""}
-        </div>
-
-        <div style="margin-bottom:4px; line-height:1.2;">
-          ${escapeHtml(comment.commentText || comment.comment || "") || "<em>No comment text</em>"}
-        </div>
-
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="edit-linked-comment-btn">Edit</button>
-          <button type="button" class="remove-comment-block-btn">Remove</button>
-        </div>
-      </div>
-    `;
-  }
-
-  //Added 4/20/2026
-  function resetCommentForm(modal, row) {
-    modal.__editingComment = null;
-
-    const guidelineId = row?.treatment?.guidelineId ?? row?.guidelineId ?? null;
-    const siteId = row?.siteId ?? row?.treatment?.siteId ?? null;
-    const pestId = row?.pestId ?? row?.treatment?.pestId ?? null;
-
-    modal.querySelector("#comment-form-id").value = "";
-    modal.querySelector("#comment-form-indexNumber").value = "";
-    modal.querySelector("#comment-form-text").value = "";
-    modal.querySelector("#comment-form-status").textContent = "Creating a new comment.";
-
-    modal.__commentFormDefaults = {
-      guidelineId,
-      siteId,
-      pestIds: pestId ? [Number(pestId)] : []
-    };
-  }
-
-  function loadCommentIntoForm(modal, comment) {
-    modal.__editingComment = comment || null;
-
-    modal.querySelector("#comment-form-id").value = comment?.commentId ?? "";
-    modal.querySelector("#comment-form-indexNumber").value = comment?.indexNumber ?? "";
-    modal.querySelector("#comment-form-text").value = comment?.commentText ?? "";
-    modal.querySelector("#comment-form-status").textContent =
-      comment?.commentId ? `Editing Comment ${comment.commentId}` : "Creating a new comment.";
-  }
-
-  async function saveComment(payload) {
-    /*
-    const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-comment"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-    */
-    // POST: save-comment
-    const authHeaders = await window.TreatmentAuth.authHeaders();
-
-    const response = await fetch(window.TreatmentApiUrl("/api/Treatments/save-comment"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...authHeaders
-      },
-      body: JSON.stringify(payload)
-    });
-
-    const text = await response.text();
-
-    if (!response.ok) {
-      throw new Error(`Save comment failed: ${response.status} ${text}`);
-    }
-
-    try {
-      return JSON.parse(text);
-    } catch {
-      return {};
-    }
-  }
-
-  //Added 4/23/2026
-  function syncEditedCommentBlock(targetList, comment) {
-    if (!targetList || !comment?.commentId) return;
-
-    const block = Array.from(targetList.querySelectorAll(".comment-editor-block"))
-      .find(el => Number(el.dataset.commentId) === Number(comment.commentId));
-
-    if (!block) return;
-
-    block.outerHTML = renderExistingCommentEditorBlock(comment);
   }
 
   //Added 5-8-2026
@@ -3083,80 +1549,30 @@
     await reloadTableData(container);
   }
   
-  function focusCommentSearchOption(resultsEl, commentId) {
-    if (!resultsEl || !commentId) return;
-
-    const selectedId = Number(commentId);
-
-    const selectedOption = Array.from(
-      resultsEl.querySelectorAll(".comment-search-option")
-    ).find(el => Number(el.dataset.commentId) === selectedId);
-
-    if (!selectedOption) return;
-
-    resultsEl.querySelectorAll(".comment-search-option").forEach(el => {
-      el.style.background = "";
-      el.style.borderColor = "#ddd";
-    });
-
-    selectedOption.style.background = "#eef6ff";
-    selectedOption.style.borderColor = "#66a3ff";
-
-    selectedOption.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-  }
-/*
-  function syncEditedCommentBlock(targetList, comment) {
-    if (!targetList || !comment?.commentId) return;
-
-    const block = Array.from(targetList.querySelectorAll(".comment-editor-block"))
-      .find(el => Number(el.dataset.commentId) === Number(comment.commentId));
-
-    if (!block) return;
-
-    block.dataset.commentId = String(comment.commentId ?? 0);
-    block.dataset.indexNumber = comment.indexNumber ?? "";
-    block.dataset.commentText = comment.commentText ?? comment.comment ?? "";
-
-    block.innerHTML = `
-      <div style="font-size:12px; color:#666; margin-bottom:8px;">
-        <strong>CommentId:</strong> ${escapeHtml(comment.commentId ?? 0)}
-        ${comment.indexNumber ? ` | <strong>Index:</strong> ${escapeHtml(comment.indexNumber)}` : ""}
-      </div>
-
-      <div style="font-size:12px; color:#666; margin-bottom:8px;">
-        <strong>SiteId:</strong> ${escapeHtml(comment.siteId ?? "")}
-        &nbsp; | &nbsp;
-        <strong>GuidelineId:</strong> ${escapeHtml(comment.guidelineId ?? "")}
-        &nbsp; | &nbsp;
-        <strong>PestId:</strong> ${
-          escapeHtml(
-            Array.isArray(comment.pests) && comment.pests.length
-              ? comment.pests.map(p => p.pestId).join(", ")
-              : ""
-          )
-        }
-      </div>
-
-      <div style="margin-bottom:8px; white-space:pre-wrap;">
-        ${escapeHtml(comment.commentText || comment.comment || "") || "<em>No comment text</em>"}
-      </div>
-
-      <div style="display:flex; gap:8px;">
-        <button type="button" class="edit-linked-comment-btn">Edit</button>
-        <button type="button" class="remove-comment-block-btn">Remove</button>
-      </div>
-    `;
-  }
-*/
 
 
 
   // =========================================================
   // Interface?
   // =========================================================
+  window.PesticideTableBuilderEditModal.setHelpers({
+    escapeHtml,
+    clean,
+    getRowKey,
+    findRowByElement,
+    renderIdBlock,
+    renderModifiedDate,
+    getEfficacyCommentText,
+    reloadTableData
+  });
+
+  window.PesticideTableBuilderComments.setHelpers({
+    escapeHtml,
+    clean,
+    getRowKey,
+    findRowByElement
+  });
+
   window.PesticideTableBuilder = {
     buildRows,
     renderTable,

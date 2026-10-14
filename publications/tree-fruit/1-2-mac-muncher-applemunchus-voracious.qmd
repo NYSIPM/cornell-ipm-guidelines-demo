@@ -20,7 +20,7 @@ $$
 
 The species is most often found in orchards, backyard apple trees, and anywhere an unattended pie is cooling on a windowsill.
 
-{{< pesticide-table title="" guidelineId="1" pestId="29" siteId="6" changedSince="" >}}
+{{< pesticide-table title="" guidelineId="1" pestId="900" siteId="6" changedSince="" >}}
 
 ## 1.2.1 Codling Moth
 
