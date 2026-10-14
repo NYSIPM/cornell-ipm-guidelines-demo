@@ -188,22 +188,26 @@
   function formatResistance(pesticide) {
     const iracValues = [];
     const fracValues = [];
+    const groupNumberValues = [];
 
     (pesticide?.activeIngredients || []).forEach(ai => {
       const irac = clean(ai?.activeIngredientInsecticide?.irac);
       const frac = clean(ai?.activeIngredientFungicide?.frac);
+      const groupNumber = clean(ai?.activeIngredientHerbicide?.groupNumber);
 
       if (irac) iracValues.push(irac);
       if (frac) fracValues.push(frac);
+      if (groupNumber) groupNumberValues.push(groupNumber);
     });
 
-    const iracText = unique(iracValues).join(", ");
-    const fracText = unique(fracValues).join(", ");
-
-    if (iracText && fracText) return `IRAC: ${iracText} / FRAC: ${fracText}`;
-    if (iracText) return `IRAC: ${iracText}`;
-    if (fracText) return `FRAC: ${fracText}`;
-    return "";
+    return [
+      ["IRAC", unique(iracValues).join(", ")],
+      ["FRAC", unique(fracValues).join(", ")],
+      ["Group Number", unique(groupNumberValues).join(", ")]
+    ]
+      .filter(([, text]) => text)
+      .map(([label, text]) => `${label}: ${text}`)
+      .join(" / ");
   }
 
   function formatComments(treatment) {

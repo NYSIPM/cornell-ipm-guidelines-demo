@@ -203,7 +203,74 @@
     `;
   }
 
+  //Resistance Mgmt. codes live on each Active Ingredient (IRAC = insecticide, FRAC = fungicide, Group Number = herbicide)
+  const RESISTANCE_CODES = [
+    { field: "irac", label: "IRAC: ", read: ai => ai?.activeIngredientInsecticide?.irac },
+    { field: "frac", label: "FRAC: ", read: ai => ai?.activeIngredientFungicide?.frac },
+    { field: "groupNumber", label: "Group Number: ", read: ai => ai?.activeIngredientHerbicide?.groupNumber }
+  ];
+
+  function getActiveIngredients(row) {
+    return row?.pesticide?.activeIngredients || [];
+  }
+
+  function renderResistanceReadOnly(row) {
+    const ais = getActiveIngredients(row);
+    if (!ais.length) {
+      return `<div style="margin-bottom:8px;"><em>No active ingredients on this product.</em></div>`;
+    }
+
+    return `
+      <div style="margin-bottom:8px;">
+        ${ais.map(ai => {
+          //One line per code
+          const codeLines = RESISTANCE_CODES
+            .filter(c => clean(c.read(ai)))
+            .map(c => `<div>${escapeHtml(c.label)} ${escapeHtml(clean(c.read(ai)))}</div>`)
+            .join("");
+
+          return `
+            <div style="margin-bottom:6px;">
+              <div><strong>${escapeHtml(ai.name || `AI ${ai.activeIngredientId}`)}:</strong></div>
+              <div>
+                ${codeLines || "<em>None</em>"}
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    `;
+  }
+
+  function renderResistanceEditor(row) {
+    return getActiveIngredients(row).map(ai => `
+      <div class="resistance-ai-block"
+          data-active-ingredient-id="${escapeHtml(ai.activeIngredientId ?? 0)}"
+          style="border:1px solid #ddd; background:#fafafa; border-radius:4px; padding:8px; margin-bottom:6px;">
+        <div style="font-weight:600; font-size:12px; margin-bottom:6px;">
+          ${escapeHtml(ai.name || `AI ${ai.activeIngredientId}`)}
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:6px;">
+          ${RESISTANCE_CODES.map(c => `
+            <div>
+              <label style="display:block; font-size:12px;">${escapeHtml(c.label)}</label>
+              <input type="text" data-ai-field="${c.field}" value="${escapeHtml(clean(c.read(ai)))}" style="width:100%;">
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
   const LOCKED_SECTIONS = {
+    resistance: {
+      title: "Resistance Mgmt.",
+      sharedNote: "Shared by every product and treatment using these active ingredients.",
+      saveNote: "Saving will update these codes on the active ingredients, for every product that uses them.",
+      readOnly: row => renderResistanceReadOnly(row),
+      editor: row => renderResistanceEditor(row),
+      canEdit: row => getActiveIngredients(row).length > 0
+    },
     rei: {
       title: "REI",
       sharedNote: "Shared by every treatment using this product on this site.",
@@ -248,13 +315,16 @@
   }
 
   function renderLockedSection(row, key) {
-    return renderEditSection(LOCKED_SECTIONS[key].title, `
+    const def = LOCKED_SECTIONS[key];
+    const canEdit = def.canEdit ? def.canEdit(row) : true;
+
+    return renderEditSection(def.title, `
       <div class="locked-section-body">
         ${renderLockedSectionBody(row, key, false)}
       </div>
     `, {
       attrs: `data-locked-section="${key}" data-unlocked="false"`,
-      action: `<button type="button" class="toggle-locked-section-btn" style="font-size:12px;">Edit</button>`
+      action: canEdit ? `<button type="button" class="toggle-locked-section-btn" style="font-size:12px;">Edit</button>` : ""
     });
   }
 
@@ -556,7 +626,7 @@
     modal.innerHTML = `
       <div class="treatment-edit-form" style="
         background:#fff;
-        width:min(1300px, 96vw);
+        width:min(1400px, 96vw);
         max-height:92vh;
         border-radius:8px;
         box-shadow:0 10px 30px rgba(0,0,0,0.2);
@@ -649,10 +719,6 @@
       <div>
         <h3 style="margin:0 0 4px 0;">${row.treatmentId && Number(row.treatmentId) > 0 ? "Edit Treatment" : "New Treatment"}</h3>
         <div style="font-size:15px;">${escapeHtml(row.product)}</div>
-        ${row.pesticide && row.resistance ? `
-          <div style="font-size:12px; color:#666; margin-top:2px;">
-            <strong>Resistance Mgmt.:</strong> ${escapeHtml(row.resistance)}
-          </div>` : ""}
         <button type="button" class="edit-product-btn" style="margin-top:8px;">
           Edit Control Technique
         </button>
@@ -688,9 +754,10 @@
 
     return `
       ${renderEditRow([
-        ["2.2 1 400px", renderEditSection("Rate", renderRateEditor(row, metadata))],
+        ["1.75 1 320px", renderEditSection("Rate", renderRateEditor(row, metadata))],
         ["1 1 160px", renderLockedSection(row, "rei")],
         ["1 1 160px", renderLockedSection(row, "phi")],
+        ["1.4 1 230px", renderLockedSection(row, "resistance")],
         ["1.3 1 200px", renderEditSection("Efficacy", renderEfficacyEditor(row, metadata))]
       ])}
 
@@ -866,6 +933,34 @@
     const reiUnlocked = isUnlocked("rei");
     const phiUnlocked = isUnlocked("phi");
     const designationUnlocked = isUnlocked("designation");
+    const resistanceUnlocked = isUnlocked("resistance");
+
+    //Every AI on the product is sent with its stored values; only IRAC/FRAC/Group Number come from the inputs.
+    //Each code is sent as one of three values:
+    //  "4A" -> set the code to this value
+    //  ""   -> the user cleared a code that had a value: remove it
+    //  null -> empty before and still empty: leave it alone (don't create an empty record)
+    const buildActiveIngredientsPayload = () =>
+      getActiveIngredients(row).map(ai => {
+        const block = form.querySelector(`.resistance-ai-block[data-active-ingredient-id="${ai.activeIngredientId}"]`);
+        const code = (field) => {
+          const typed = block?.querySelector(`[data-ai-field="${field}"]`)?.value?.trim() ?? "";
+          if (typed) return typed;
+
+          const stored = clean(RESISTANCE_CODES.find(c => c.field === field).read(ai));
+          return stored ? "" : null;
+        };
+
+        return {
+          percentActiveIngredient: ai.percentActiveIngredient ?? null,
+          activeIngredientId: parseInt(ai.activeIngredientId, 10) || 0,
+          name: ai.name ?? null,
+          eiq: ai.eiq ?? null,
+          irac: code("irac"),
+          frac: code("frac"),
+          groupNumber: code("groupNumber")
+        };
+      });
     const storedSitePesticide = getPrimarySitePesticide(row);
 
     //I don't understand what this does?
@@ -927,6 +1022,9 @@
       pesticide: hasPesticide
       ? {
           pesticideId: parseInt(row.pesticideId, 10) || 0,
+          //IRAC/FRAC/Group Number live on the Active Ingredients, not the treatment. Only sent when the user
+          //clicked Edit on Resistance Mgmt.; null means "leave the Active Ingredients alone".
+          activeIngredients: resistanceUnlocked ? buildActiveIngredientsPayload() : null,
           //Designation is not part of the treatment. Only sent when the user clicked Edit on it;
           //null means "leave the PesticideGuideline alone".
           pesticideGuideline: designationUnlocked
