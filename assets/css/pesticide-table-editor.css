@@ -1,7 +1,142 @@
+/*****************
+* Public-table look (assets/css/public-treatment-builder.css):
+*   alternating gray/white per treatment, no vertical borders,
+*   a dark line under the header and under the last row, bold product name.
+* The stripe classes are set in renderTable (pesticide-table-builder.js).
+******************/
+.pesticide-table-wrapper .pesticide-admin-table {
+  border-bottom: 2px solid #6f6f6f;
+}
+
+.pesticide-table-wrapper .pesticide-admin-table th {
+  text-align: left;
+  font-weight: 700;
+  padding: 5px 6px;
+  border-bottom: 2px solid #6f6f6f;
+  vertical-align: bottom;
+  box-sizing: border-box;
+}
+
+/* Column widths. Edit and Id keep a fixed 82px. The other six columns start from the public table's
+   percentages (public-treatment-builder.css), with 3 points moved from Product to Rate:
+   Product 31% (public 34%), Rate 19% (public 16%), REI 14%, PHI 14%, Resistance 15%, Efficacy 12%.
+   Those add up to 105%, so the browser scales them to fit the space left after Edit/Id
+   (the public table does the same).
+   (calc() widths like calc((100% - 164px) * 0.34) are ignored by fixed-layout tables, so plain % is used.) */
+.pesticide-table-wrapper .pesticide-admin-table {
+  table-layout: fixed;
+}
+
+.pesticide-table-wrapper .pesticide-admin-table td {
+  overflow-wrap: break-word;
+}
+
+.pesticide-table-wrapper .pesticide-admin-table th:nth-child(1),
+.pesticide-table-wrapper .pesticide-admin-table th:nth-child(2) { width: 82px; }
+.pesticide-table-wrapper .pesticide-admin-table th:nth-child(3) { width: 31%; }
+.pesticide-table-wrapper .pesticide-admin-table th:nth-child(4) { width: 19%; }
+.pesticide-table-wrapper .pesticide-admin-table th:nth-child(5) { width: 14%; }
+.pesticide-table-wrapper .pesticide-admin-table th:nth-child(6) { width: 14%; }
+.pesticide-table-wrapper .pesticide-admin-table th:nth-child(7) { width: 15%; }
+.pesticide-table-wrapper .pesticide-admin-table th:nth-child(8) { width: 12%; }
+
+/* RestrictedUse symbols in front of the product name - red like the public table.
+   Hover shows the description. Spacing is a plain space (added in renderRestrictedUseSymbols), not a margin. */
+.pesticide-table-wrapper .restricted-use-symbol {
+  color: #b00000;
+  font-weight: 800;
+  cursor: help;
+}
+
+/* RestrictedUse key in the table footer (spans the whole table). Each symbol + description shows once. */
+.pesticide-table-wrapper .restricted-use-key {
+  border-top: 2px solid #6f6f6f;
+  background: #ffffff;
+  padding: 6px;
+  font-size: 13px;
+  text-align: left;
+}
+
+/* With a key, the dark line sits between the treatments and the key only - none under the key */
+.pesticide-table-wrapper .pesticide-admin-table.has-key {
+  border-bottom: none;
+}
+
+.pesticide-table-wrapper .restricted-use-key-item {
+  display: inline-block;
+  margin-right: 18px;
+}
+
+.pesticide-table-wrapper .restricted-use-key .restricted-use-symbol {
+  cursor: default;
+}
+
+/* "Refer To Label" / "Until Dry" tags in the REI and PHI columns - same as the public table */
+.pesticide-table-wrapper .treatment-status-label {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 7px;
+  border: 1px solid #aaa;
+  border-radius: 999px;
+  background: #f7f7f7;
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+/* Mixtures: tags sit on the same line as their value, so no top gap (keeps the lines matched to the Product column) */
+.pesticide-table-wrapper .cell-text > div > .treatment-status-label {
+  margin-top: 0;
+  padding: 0 6px;
+  line-height: 1.1;
+}
+
+/* Thin line under each treatment (lighter than the 2px header line). Not in the public table - admin only.
+   Edit/Id span all three rows of a treatment, so they get the line too and it runs the full width.
+   The last treatment shows the table's 2px bottom line instead (the thicker border wins). */
+.pesticide-table-wrapper tr.comment-row > td,
 .pesticide-table-wrapper .edit-cell,
 .pesticide-table-wrapper .id-cell {
-  border: 1px solid #ccc;
-  border-bottom: 3px solid #999;
+  border-bottom: 1px solid #b5b5b5;
+}
+
+/* When "See more details" sits in the Product cell (DETAILS_TOGGLE_IN_PRODUCT in pesticide-table-builder.js),
+   the details row takes no space until opened, and the link is not bold like the product name.
+   The row is collapsed to zero height rather than display:none - Edit/Id span all 3 rows of a treatment
+   (rowspan="3"), and removing a row from the layout makes the following treatments shift out of line. */
+.pesticide-table-wrapper tr.misc-row.is-hidden > td {
+  padding: 0;
+  border: 0;
+  height: 0;
+  line-height: 0;
+}
+
+.pesticide-table-wrapper .product-text .toggle-misc-row-btn {
+  margin-top: 0;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* "See more details" centered in its row like the public table; the opened details stay left-aligned */
+.pesticide-table-wrapper .misc-content-cell {
+  text-align: center;
+}
+
+.pesticide-table-wrapper .misc-details {
+  text-align: left;
+}
+
+.pesticide-table-wrapper tr.treatment-gray > td {
+  background: #f1f1f1;
+}
+
+.pesticide-table-wrapper tr.treatment-white > td {
+  background: #ffffff;
+}
+
+.pesticide-table-wrapper .edit-cell,
+.pesticide-table-wrapper .id-cell {
   padding: 6px;
   vertical-align: top;
 }
@@ -12,10 +147,7 @@
 }
 
 .pesticide-table-wrapper .comment-content-cell {
-  border-right: 1px solid #ccc;
-  border-bottom: 3px solid #999;
-  padding: 2px 10px;
-  background: #f9f9f9;
+  padding: 2px 10px 6px 10px;
   vertical-align: top;
 }
 
@@ -27,6 +159,7 @@
 .pesticide-table-wrapper .product-text {
   line-height: 1.2;
   margin: 0;
+  font-weight: 700;
 }
 
 .pesticide-table-wrapper .data-cell {
@@ -39,16 +172,8 @@
   margin: 0;
 }
 
-.pesticide-table-wrapper .efficacy-cell {
-  border-right: 1px solid #ccc;
-}
-
 .pesticide-table-wrapper .misc-content-cell {
-  border-right: 1px solid #ccc;
-  border-top: none;
-  border-bottom: 1px solid #ddd;
   padding: 2px 10px;
-  background: #fff;
   vertical-align: top;
 }
 
@@ -71,10 +196,6 @@
   display: none;
 }
 
-.pesticide-table-wrapper .misc-content-cell {
-  padding: 2px 10px;
-  border-right: 1px solid #ccc;
-}
 
 .pesticide-table-wrapper .toggle-misc-row-btn {
   padding: 0;
@@ -200,6 +321,68 @@
 }
 .pesticide-table-wrapper .restore-row-btn:hover {
   background-color: #b8e352;
+}
+
+/*****************
+* Sortable column headers - same look as the public table (assets/css/public-treatment-builder.css)
+*   unsorted: header text + faint up/down arrow, sorted: solid up or down arrow
+******************/
+.pesticide-table-wrapper .sort-button {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pesticide-table-wrapper .sort-button:hover {
+  text-decoration: underline;
+}
+
+.pesticide-table-wrapper .sort-button:focus-visible {
+  outline: 2px solid #3a69c7;
+  outline-offset: 2px;
+}
+
+.pesticide-table-wrapper .sort-button::after {
+  content: " \2195";
+  color: #999;
+  font-size: 0.8em;
+}
+
+.pesticide-table-wrapper th[aria-sort="ascending"] .sort-button::after {
+  content: " \25B2";
+  color: inherit;
+}
+
+.pesticide-table-wrapper th[aria-sort="descending"] .sort-button::after {
+  content: " \25BC";
+  color: inherit;
+}
+
+/*****************
+* Save feedback - after a successful save the treatment's rows flash green
+* and a "Saved" badge shows in the Edit column (added by pesticide-table-builder-edit-modal.js)
+* No end keyframe, so each cell fades back to whatever background it normally has.
+******************/
+.pesticide-table-wrapper tr.ptb-row-saved > td {
+  animation: ptb-row-saved-flash 4s ease-out;
+}
+
+@keyframes ptb-row-saved-flash {
+  0%, 40% { background-color: #eaf9cf; }
+}
+
+.pesticide-table-wrapper .ptb-saved-badge {
+  animation: ptb-saved-badge-fade 4s ease-out forwards;
+}
+
+@keyframes ptb-saved-badge-fade {
+  0%, 75% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 /*****************

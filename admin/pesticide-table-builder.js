@@ -109,16 +109,72 @@
 
         if (!symbol) return "";
 
-        return `
-          <span class="restricted-use-symbol"
-                title="${escapeHtml(description)}"
-                style="display:inline-block; margin-left:4px; font-weight:700; cursor:help;">
-            ${escapeHtml(symbol)}
-          </span>
-        `;
+        //Kept on one line with no extra spaces inside, so the spacing is exactly the single space added by join(" ")
+        return `<span class="restricted-use-symbol" title="${escapeHtml(description)}">${escapeHtml(symbol)}</span>`;
       })
       .filter(Boolean)
-      .join("");
+      .join(" ");
+  }
+
+  //Product name with its RestrictedUse symbols in front, like the public table: "* ** Assail 30SC"
+  //Table footer key for the RestrictedUse symbols used in this table: each symbol + description once,
+  //in the order they first appear (rows are passed unsorted so the key doesn't change when sorting).
+  //Returns "" when no product in the table has a symbol. The cell spans all 8 columns.
+  function renderRestrictedUseKey(rows) {
+    const seen = new Set();
+    const items = [];
+
+    rows.forEach(row => (row.pesticides || []).forEach(pesticide => (pesticide?.restrictedUse || []).forEach(ru => {
+      const symbol = clean(ru?.symbol);
+      const description = clean(ru?.description);
+      const key = `${symbol}|${description}`;
+
+      if (!symbol || seen.has(key)) return;
+      seen.add(key);
+      items.push({ symbol, description });
+    })));
+
+    if (!items.length) return "";
+
+    return `
+      <tfoot>
+        <tr>
+          <td colspan="8" class="restricted-use-key">
+            ${items.map(item => `
+              <span class="restricted-use-key-item"><span class="restricted-use-symbol">${escapeHtml(item.symbol)}</span> ${escapeHtml(item.description) || "<em>No description</em>"}</span>
+            `).join("")}
+          </td>
+        </tr>
+      </tfoot>
+    `;
+  }
+
+  //Where the "See more details" link goes (added 10-16-2026, may be switched back):
+  //  true  = in the Product cell right after the product name; the details row is hidden until opened (saves a line per treatment)
+  //  false = on its own line under the treatment, centered (the earlier layout)
+  const DETAILS_TOGGLE_IN_PRODUCT = true;
+
+  function renderDetailsToggle() {
+    return `<button type="button" class="toggle-misc-row-btn">See more details</button>`;
+  }
+
+  //Product cell: one line per pesticide (symbols + name). With DETAILS_TOGGLE_IN_PRODUCT the
+  //"See more details" link gets its own line under the name(s).
+  function renderProductCellNames(row) {
+    const lines = row.pesticideDetails
+      ? row.pesticideDetails.map(d => renderProductNameWithSymbols(d.name, d.pesticide))
+      : [escapeHtml(row.product)];
+
+    const nameLines = lines.map(line => `<div>${line}</div>`).join("");
+
+    return DETAILS_TOGGLE_IN_PRODUCT
+      ? `${nameLines}<div class="product-details-toggle">${renderDetailsToggle()}</div>`
+      : nameLines;
+  }
+
+  function renderProductNameWithSymbols(name, pesticide) {
+    const symbols = renderRestrictedUseSymbols(pesticide);
+    return symbols ? `${symbols} ${escapeHtml(name)}` : escapeHtml(name);
   }
 
   function formatRate(rate) {
@@ -133,10 +189,24 @@
 
     if (concentration) text += concentration;
     if (unit) text += (text ? " " : "") + unit;
-    if (unitArea) text += "/ " + unitArea;
+    if (unitArea) text += "/" + unitArea; //"gal/acre" (no space after the slash)
     if (amountNote) text += (text ? " " : "") + `(${amountNote})`;
 
     return clean(text);
+  }
+
+  //REI / PHI amount with its unit: "12" + "Hours" -> "12 Hours", "1" + "Days" -> "1 Day".
+  //defaultUnit is used when no unit was saved (REI has always meant hours, so it passes "hr").
+  function formatTimeValue(value, unit, defaultUnit = "") {
+    const amount = clean(value);
+    if (!amount) return "";
+
+    let label = clean(unit) || defaultUnit;
+    if (parseFloat(amount) === 1 && /s$/i.test(label)) {
+      label = label.slice(0, -1);
+    }
+
+    return label ? `${amount} ${label}` : amount;
   }
 
   function formatRei(sitePesticideList) {
@@ -145,9 +215,10 @@
 
     const parts = [];
 
-    const rei = clean(sp.rei);
+    //Uses the saved REI unit (Hours/Days). Before 10-16-2026 this always said "hr", even for Days.
+    const rei = formatTimeValue(sp.rei, sp.reiTime, "hr");
     if (rei) {
-      parts.push(`${rei} hr`);
+      parts.push(rei);
     }
 
     if (sp.reiReferToLabel) {
@@ -167,11 +238,10 @@
 
     const parts = [];
 
-    const phi = clean(sp.phi);
-    const phiTime = clean(sp.phiTime);
+    const phi = formatTimeValue(sp.phi, sp.phiTime);
 
     if (phi) {
-      parts.push(phiTime ? `${phi} ${phiTime}` : phi);
+      parts.push(phi);
     }
 
     if (sp.phiReferToLabel) {
@@ -293,17 +363,42 @@
           options.changedSince
         );
 
-      pesticides.forEach(pesticide => {
-        const pesticideId = pesticide?.pesticideId;
-        const matchingRates = rates.filter(r => r?.pesticideId === pesticideId);
-        const rateText = unique(matchingRates.map(formatRate).filter(Boolean)).join("<br>");
+      //One row per treatment. A mixture (a control technique with more than one pesticide) stays on ONE row;
+      //each pesticide's rate / REI / PHI / resistance is listed under that pesticide's name.
+      if (pesticides.length) {
+        const isMixture = pesticides.length > 1;
         const applicationMethodText = clean(treatment?.applicationMethod?.name);
         const siteTimingText = formatSiteTimings(treatment);
-        
+
+        const pesticideDetails = pesticides.map(pesticide => {
+          const pesticideRates = rates.filter(r => r?.pesticideId === pesticide?.pesticideId);
+
+          return {
+            pesticide: pesticide,
+            name: formatProductName(pesticide),
+            rates: pesticideRates,
+            rate: unique(pesticideRates.map(formatRate).filter(Boolean)).join("<br>"),
+            rei: formatRei(pesticide?.sitePesticide || []),
+            phi: formatPhi(pesticide?.sitePesticide || []),
+            resistance: formatResistance(pesticide),
+            conventional: pesticide?.pesticideGuideline?.conventional ?? false,
+            organic: pesticide?.pesticideGuideline?.organic ?? false
+          };
+        });
+
+        //Plain-text version for places that show one line (mixtures get "Name: value; Name: value")
+        const joinText = (field) => pesticideDetails
+          .filter(d => d[field])
+          .map(d => isMixture ? `${d.name}: ${d[field]}` : d[field])
+          .join("; ");
+
+        const allActiveIngredients = pesticides.flatMap(p => p?.activeIngredients || []);
+        const firstPesticide = pesticides[0];
+
         rows.push({
           treatmentId: treatment?.treatmentId ?? "",
           controlTechniqueId: treatment?.controlTechniqueId ?? treatment?.controlTechnique?.controlTechniqueId ?? "",
-          pesticideId: pesticideId ?? "",
+          pesticideId: firstPesticide?.pesticideId ?? "", //First pesticide - used in the row key. See pesticides for all of them.
           pestId: treatment?.pestId ?? "",
           siteId: treatment?.siteId ?? "",
           dateLastModified: treatment?.dateLastModified ?? "", //Change Logs
@@ -311,34 +406,30 @@
           wasRecentlyChanged: isRecentlyChanged(treatment?.dateLastModified, options.changedSince),
           treatmentChanged: treatmentChanged,
           treatment: treatment,
-          pesticide: pesticide,
-          matchingRates: matchingRates,
-          product: formatProductName(pesticide),
-          //rate: [applicationMethodText, rateText].filter(Boolean).join("<br>"),
+          pesticide: firstPesticide, //First pesticide only - use pesticides / pesticideDetails for mixtures
+          pesticides: pesticides,
+          pesticideDetails: pesticideDetails,
+          isMixture: isMixture,
+          matchingRates: rates.filter(r => pesticides.some(p => p?.pesticideId === r?.pesticideId)),
+          product: pesticideDetails.map(d => d.name).join(" + "),
           applicationMethod: applicationMethodText,
           siteTimings: siteTimingText,
-          conventional: pesticide?.pesticideGuideline?.conventional ?? false,
-          organic: pesticide?.pesticideGuideline?.organic ?? false,
-          rate: rateText,
-          rei: formatRei(pesticide?.sitePesticide || []),
-          phi: formatPhi(pesticide?.sitePesticide || []),
-          resistance: formatResistance(pesticide),
-          eiq: unique(
-              (pesticide?.activeIngredients || [])
-                .map(ai => clean(ai?.eiq))
-                .filter(Boolean)
-            ).join("<br>"),
-
-            finalEiq: unique(
-              (pesticide?.activeIngredients || [])
-                .map(ai => clean(ai?.finalEiq))
-                .filter(Boolean)
-            ).join("<br>"),
+          conventional: firstPesticide?.pesticideGuideline?.conventional ?? false,
+          organic: firstPesticide?.pesticideGuideline?.organic ?? false,
+          //Mixtures: one line per pesticide, in the same order as the Product column (no names; "–" keeps the order when empty)
+          rate: isMixture
+            ? pesticideDetails.map(d => `<div>${d.rate || "&ndash;"}</div>`).join("")
+            : pesticideDetails[0].rate,
+          rei: joinText("rei"),
+          phi: joinText("phi"),
+          resistance: joinText("resistance"),
+          eiq: unique(allActiveIngredients.map(ai => clean(ai?.eiq)).filter(Boolean)).join("<br>"),
+          finalEiq: unique(allActiveIngredients.map(ai => clean(ai?.finalEiq)).filter(Boolean)).join("<br>"),
           efficacy: efficacy,
           efficacyComment: efficacyComment,
           comments: comments
         });
-      });
+      }
 
       //Cultural Practice
       const culturalPractices = treatment?.controlTechnique?.culturalPractices || [];
@@ -445,6 +536,65 @@
     `;
   }
 
+  //A table cell value that can differ per pesticide. Mixtures show one line per pesticide, in the same
+  //order as the Product column, so the lines match up without repeating the names. "–" keeps the order when a value is empty.
+  function renderPerPesticideText(row, field) {
+    if (!row.isMixture) {
+      return escapeHtml(row[field]);
+    }
+
+    return row.pesticideDetails
+      .map(d => `<div>${escapeHtml(d[field]) || "&ndash;"}</div>`)
+      .join("");
+  }
+
+  //"Refer To Label" / "Until Dry" shown as small tags, like the public table (renderStatusLabel in public-treatment-builder.js)
+  function renderStatusLabel(text) {
+    return `<span class="treatment-status-label">${escapeHtml(text)}</span>`;
+  }
+
+  //REI or PHI for one pesticide: the value, then the tags.
+  //separator is "<br>" (tags on their own lines) or " " (tags on the same line, used for mixtures so lines stay lined up)
+  function renderTimingHtml(pesticide, kind, separator) {
+    const sp = (pesticide?.sitePesticide || [])[0];
+    if (!sp) return "";
+
+    const parts = [];
+
+    //Same wording as formatRei / formatPhi
+    const value = formatTimeValue(sp[kind], sp[`${kind}Time`], kind === "rei" ? "hr" : "");
+    if (value) {
+      parts.push(escapeHtml(value));
+    }
+    if (sp[`${kind}ReferToLabel`]) parts.push(renderStatusLabel("Refer To Label"));
+    if (sp[`${kind}UntilDry`]) parts.push(renderStatusLabel("Until Dry"));
+
+    return parts.join(separator);
+  }
+
+  //REI / PHI table cell. Mixtures: one line per pesticide in Product order ("–" when empty).
+  function renderTimingCell(row, kind) {
+    const pesticides = row.pesticides || [];
+
+    if (!row.isMixture) {
+      return renderTimingHtml(pesticides[0], kind, "<br>");
+    }
+
+    return pesticides
+      .map(pesticide => `<div>${renderTimingHtml(pesticide, kind, " ") || "&ndash;"}</div>`)
+      .join("");
+  }
+
+  function renderPerPesticideYesNo(row, field) {
+    if (!row.isMixture) {
+      return row[field] ? "Yes" : "No";
+    }
+
+    return row.pesticideDetails
+      .map(d => `${escapeHtml(d.name)}: ${d[field] ? "Yes" : "No"}`)
+      .join(", ");
+  }
+
   function renderIdBlock(row, showTreatmentRateIds) {
     const rateIds = showTreatmentRateIds
       ? (row.matchingRates || [])
@@ -455,13 +605,133 @@
     return `
       <div><strong>T:</strong> ${escapeHtml(row.treatmentId)}</div>
       <div><strong>CT:</strong> ${escapeHtml(row.controlTechniqueId)}</div>
-      <div><strong>P:</strong> ${escapeHtml(row.pesticideId)}</div>
+      <div><strong>P:</strong> ${escapeHtml((row.pesticides || []).map(p => p?.pesticideId).join(", ") || row.pesticideId)}</div>
       ${rateIds}
     `;
   }
 
+  // =========================================================
+  // Sorting - works like the public table (assets/js/public-treatment-builder.js):
+  // click a column header to sort ascending, again for descending, a third time for the API's order.
+  // Rows with no value for the column always sort last. The sort is kept on the container
+  // (container.__treatmentSort) so it survives saves and reloads.
+  // =========================================================
+
+  //REI/PHI in hours so "2 Days" sorts after "24 Hours"
+  function getTimeInHours(sitePesticide, kind) {
+    const amount = parseFloat(clean(sitePesticide?.[kind]));
+    if (Number.isNaN(amount)) return null;
+
+    const unit = clean(sitePesticide?.[`${kind}Time`]).toLowerCase();
+    if (unit.startsWith("week")) return amount * 168;
+    if (unit.startsWith("day")) return amount * 24;
+    return amount;
+  }
+
+  //Mixtures sort by the first pesticide that has a value
+  function getSortHours(row, kind) {
+    for (const pesticide of (row.pesticides || [])) {
+      const hours = getTimeInHours(pesticide?.sitePesticide?.[0], kind);
+      if (hours !== null) return hours;
+    }
+    return null;
+  }
+
+  function stripHtml(html) {
+    return clean(String(html ?? "").replace(/<[^>]*>/g, " "));
+  }
+
+  const SORT_COLUMNS = [
+    //New, unsaved treatments (id 0) sort last
+    { key: "id", label: "Id", type: "number", value: row => parseInt(row.treatmentId, 10) > 0 ? parseInt(row.treatmentId, 10) : null },
+    { key: "product", label: "Product", type: "text", value: row => clean(row.product) },
+    {
+      key: "rate",
+      label: "Rate",
+      type: "text",
+      value: row => (row.pesticideDetails || []).map(d => stripHtml(d.rate)).filter(Boolean).join(" ")
+    },
+    { key: "rei", label: "REI", type: "number", value: row => getSortHours(row, "rei") },
+    { key: "phi", label: "PHI", type: "number", value: row => getSortHours(row, "phi") },
+    { key: "resistance", label: "Resistance Mgmt.", type: "text", value: row => clean(row.resistance) },
+    { key: "efficacy", label: "Efficacy", type: "text", value: row => clean(row.efficacy) }
+  ];
+
+  const sortCollator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
+
+  function sortRows(rows, sort) {
+    const column = SORT_COLUMNS.find(c => c.key === sort?.key);
+    if (!column) return rows;
+
+    const direction = sort.direction === "desc" ? -1 : 1;
+
+    return rows
+      .map((row, index) => ({ row, index, value: column.value(row) }))
+      .sort((a, b) => {
+        const aMissing = a.value === null || a.value === "";
+        const bMissing = b.value === null || b.value === "";
+
+        if (aMissing || bMissing) {
+          if (aMissing && bMissing) return a.index - b.index;
+          return aMissing ? 1 : -1;
+        }
+
+        const result = column.type === "number"
+          ? a.value - b.value
+          : sortCollator.compare(a.value, b.value);
+
+        return result !== 0 ? result * direction : a.index - b.index;
+      })
+      .map(entry => entry.row);
+  }
+
+  function renderSortableHeader(key, sort) {
+    const column = SORT_COLUMNS.find(c => c.key === key);
+    const active = sort?.key === key;
+    const ariaSort = active ? (sort.direction === "desc" ? "descending" : "ascending") : "none";
+
+    return `
+      <th aria-sort="${ariaSort}">
+        <button type="button" class="sort-button" data-sort-key="${escapeHtml(key)}">
+          ${escapeHtml(column.label)}
+        </button>
+      </th>
+    `;
+  }
+
+  //Cycles asc -> desc -> back to the API's order. Only the table is redrawn (not the title above it).
+  function handleSortClick(container, key) {
+    const current = container.__treatmentSort;
+    let next = null;
+
+    if (!current || current.key !== key) {
+      next = { key, direction: "asc" };
+    } else if (current.direction === "asc") {
+      next = { key, direction: "desc" };
+    }
+
+    container.__treatmentSort = next;
+
+    const html = renderTable(container.__pesticideJson || [], {
+      showDeleted: container.__showDeleted === true,
+      changedSince: container.__changedSince || "",
+      sort: next
+    });
+
+    const wrapper = container.querySelector(".pesticide-table-wrapper");
+    if (wrapper) {
+      wrapper.outerHTML = html;
+    } else {
+      container.innerHTML = html;
+    }
+
+    container.querySelector(`.sort-button[data-sort-key="${key}"]`)?.focus();
+  }
+
   function renderTable(data, options = {}) {
-    const rows = buildRows(data, options);
+    const unsortedRows = buildRows(data, options);
+    const rows = sortRows(unsortedRows, options.sort);
+    const restrictedUseKey = renderRestrictedUseKey(unsortedRows); //"" when no product has a symbol
     const currentUser =
         window.TreatmentAuth?.getDisplayName?.() ?? "";
     const AddTreatmentButton = `
@@ -513,9 +783,12 @@
       return AddTreatmentButton + `<div>No pesticide rows found.</div>`;
     }
 
-    const bodyRows = rows.map(row => `
+    //Alternating gray/white per treatment, like the public table (all three rows of a treatment share a color)
+    const bodyRows = rows.map((row, index) => {
+      const stripeClass = index % 2 === 0 ? "treatment-gray" : "treatment-white";
+      return `
       <tr
-          class="data-row"
+          class="data-row ${stripeClass}"
           data-treatment-id="${escapeHtml(row.treatmentId)}"
           data-control-technique-id="${escapeHtml(row.controlTechniqueId)}"
           data-pesticide-id="${escapeHtml(row.pesticideId)}"
@@ -529,7 +802,7 @@
           </td>
           <td class="product-cell">
             <div class="product-text">
-              ${escapeHtml(row.product)}${renderRestrictedUseSymbols(row.pesticide)}
+              ${renderProductCellNames(row)}
             </div>
           </td>
 
@@ -543,19 +816,19 @@
 
             <td class="data-cell rei-cell">
               <div class="cell-text">
-                ${escapeHtml(row.rei)}
+                ${renderTimingCell(row, "rei")}
               </div>
             </td>
 
             <td class="data-cell phi-cell">
               <div class="cell-text">
-                ${escapeHtml(row.phi)}
+                ${renderTimingCell(row, "phi")}
               </div>
             </td>
 
             <td class="data-cell resistance-cell">
               <div class="cell-text">
-                ${escapeHtml(row.resistance)}
+                ${renderPerPesticideText(row, "resistance")}
               </div>
             </td>
           ` : `
@@ -578,21 +851,19 @@
           </td>
       </tr>
 
-      <tr class="misc-row">
+      <tr class="misc-row ${stripeClass}${DETAILS_TOGGLE_IN_PRODUCT ? " is-hidden" : ""}">
         <td colspan="6" class="misc-content-cell">
-          <button type="button" class="toggle-misc-row-btn">
-            See more details
-          </button>
+          ${DETAILS_TOGGLE_IN_PRODUCT ? "" : renderDetailsToggle()}
 
           <div class="misc-details is-hidden">
             <div class="misc-detail-line">
               <strong>Conventional:</strong>
-              ${row.conventional ? "Yes" : "No"}
+              ${renderPerPesticideYesNo(row, "conventional")}
             </div>
 
             <div class="misc-detail-line">
               <strong>Organic:</strong>
-              ${row.organic ? "Yes" : "No"}
+              ${renderPerPesticideYesNo(row, "organic")}
             </div>
 
             <div>
@@ -618,40 +889,34 @@
         </td>
       </tr>
 
-      <tr class="comment-row">
-          <td colspan="6"
-              class="comment-content-cell"
-              style="border-right:1px solid #ccc; border-top:none; border-bottom:3px solid #999; padding:8px 10px;">
+      <tr class="comment-row ${stripeClass}">
+          <td colspan="6" class="comment-content-cell">
               <!--<strong>Comments:</strong><br>-->
               ${row.comments || "<em>No comments</em>"}
           </td>
       </tr>
-    `).join("");
+    `;
+    }).join("");
 
     return `
       <div class="pesticide-table-wrapper">
         ${AddTreatmentButton}
-        <table style="
+        <table class="pesticide-admin-table${restrictedUseKey ? " has-key" : ""}" style="
             border-collapse:collapse;
             width:100%;
-            border:${options.showDeleted ? "2px solid #b36b00" : "1px solid #ccc"};">
+            ${options.showDeleted ? "outline:2px solid #b36b00;" : ""}">
           <thead>
             <tr>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Edit</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Id</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Product</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Rate</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">REI</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">PHI</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Resistance Mgmt.</th>
-              <th style="border:1px solid #ccc; padding:6px; text-align:left;">Efficacy</th>
+              <th>Edit</th>
+              ${["id", "product", "rate", "rei", "phi", "resistance", "efficacy"].map(key => renderSortableHeader(key, options.sort)).join("")}
             </tr>
           </thead>
           <tbody>
             ${bodyRows}
           </tbody>
+          ${restrictedUseKey}
         </table>
-        
+
 
         <div style="
           display:flex;
@@ -710,6 +975,13 @@
       const showDeletedToggle = e.target.closest(".show-deleted-toggle");
       //Added 6-9-2026
       const logoutBtn = e.target.closest(".treatment-logout-btn");
+      //Column header sorting - Added 10-16-2026
+      const sortBtn = e.target.closest(".sort-button");
+      if (sortBtn) {
+        handleSortClick(container, sortBtn.dataset.sortKey);
+        return;
+      }
+
       if (logoutBtn) {
         e.preventDefault();
 
@@ -727,16 +999,21 @@
       }
 
       if (toggleMiscRowBtn) {
-        const miscCell = toggleMiscRowBtn.closest(".misc-content-cell");
-        const details = miscCell?.querySelector(".misc-details");
+        //The link sits either in the details row itself or in the Product cell (see DETAILS_TOGGLE_IN_PRODUCT)
+        const miscRow = toggleMiscRowBtn.closest("tr.misc-row") ||
+          toggleMiscRowBtn.closest("tr.data-row")?.nextElementSibling;
+        const details = miscRow?.querySelector(".misc-details");
 
         if (details) {
           details.classList.toggle("is-hidden");
+          const hidden = details.classList.contains("is-hidden");
 
-          toggleMiscRowBtn.textContent =
-            details.classList.contains("is-hidden")
-              ? "See more details"
-              : "Hide details";
+          //With the link in the Product cell, the details row only takes up space while it is open
+          if (DETAILS_TOGGLE_IN_PRODUCT) {
+            miscRow.classList.toggle("is-hidden", hidden);
+          }
+
+          toggleMiscRowBtn.textContent = hidden ? "See more details" : "Hide details";
         }
 
         return;
@@ -872,7 +1149,8 @@
 
     container.innerHTML = renderTable(json, {
       showDeleted: container.__showDeleted === true,
-      changedSince: container.__changedSince || ""
+      changedSince: container.__changedSince || "",
+      sort: container.__treatmentSort || null
     });
     
     //container.__pesticideTableEventsBound = false;
@@ -1278,7 +1556,8 @@
     function renderRowsFromStoredState(container) {
       container.innerHTML = renderTable(container.__pesticideJson || [], {
         showDeleted: container.__showDeleted === true,
-        changedSince: container.__changedSince || ""
+        changedSince: container.__changedSince || "",
+        sort: container.__treatmentSort || null
       });
 
       container.__pesticideRows = buildRows(container.__pesticideJson || [], {
@@ -1451,7 +1730,8 @@
 
     container.innerHTML = renderTable(container.__pesticideJson, {
       showDeleted: container.__showDeleted === true,
-      changedSince: container.__changedSince || ""
+      changedSince: container.__changedSince || "",
+      sort: container.__treatmentSort || null
     });
 
     container.__pesticideRows = buildRows(container.__pesticideJson, {
@@ -1567,6 +1847,7 @@
     renderIdBlock,
     renderModifiedDate,
     getEfficacyCommentText,
+    formatTimeValue,
     reloadTableData
   });
 

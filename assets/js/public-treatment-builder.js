@@ -76,10 +76,24 @@
 
         if (concentration) text += concentration;
         if (unit) text += (text ? " " : "") + unit;
-        if (unitArea) text += "/ " + unitArea;
+        if (unitArea) text += "/" + unitArea; // "gal/acre" (no space after the slash)
         if (amountNote) text += (text ? " " : "") + `(${amountNote})`;
 
         return clean(text);
+    }
+
+    // REI / PHI amount with its unit: "12" + "Hours" -> "12 Hours", "1" + "Days" -> "1 Day".
+    // defaultUnit is used when no unit was saved (REI has always meant hours, so it passes "hr").
+    function formatTimeValue(value, unit, defaultUnit = "") {
+        const amount = clean(value);
+        if (!amount) return "";
+
+        let label = clean(unit) || defaultUnit;
+        if (parseFloat(amount) === 1 && /s$/i.test(label)) {
+            label = label.slice(0, -1);
+        }
+
+        return label ? `${amount} ${label}` : amount;
     }
 
     function formatRei(sitePesticideList) {
@@ -88,10 +102,11 @@
 
         const parts = [];
 
-        const rei = clean(sp.rei);
+        // Uses the saved REI unit (Hours/Days). Before 10-16-2026 this always said "hr", even for Days.
+        const rei = formatTimeValue(sp.rei, sp.reiTime, "hr");
 
         if (rei) {
-            parts.push(escapeHtml(`${rei} hr`));
+            parts.push(escapeHtml(rei));
         }
 
         if (sp.reiReferToLabel) {
@@ -111,15 +126,10 @@
 
         const parts = [];
 
-        const phi = clean(sp.phi);
-        const phiTime = clean(sp.phiTime);
+        const phi = formatTimeValue(sp.phi, sp.phiTime);
 
         if (phi) {
-            const phiText = phiTime
-                ? `${phi} ${phiTime}`
-                : phi;
-
-            parts.push(escapeHtml(phiText));
+            parts.push(escapeHtml(phi));
         }
 
         if (sp.phiReferToLabel) {
@@ -386,10 +396,16 @@
             .filter(Boolean);
     }
 
+    // Normalized to hours like PHI, so an REI of "2 Days" sorts after "24 Hours" (no unit = hours)
     function getReiSortValue(treatment) {
         for (const sp of getSitePesticides(treatment)) {
-            const hours = parseFloat(clean(sp.rei));
-            if (!Number.isNaN(hours)) return hours;
+            const amount = parseFloat(clean(sp.rei));
+            if (Number.isNaN(amount)) continue;
+
+            const unit = clean(sp.reiTime).toLowerCase();
+            if (unit.startsWith("week")) return amount * 168;
+            if (unit.startsWith("day")) return amount * 24;
+            return amount;
         }
         return null;
     }

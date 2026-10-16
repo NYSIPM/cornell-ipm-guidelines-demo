@@ -40,6 +40,10 @@
     return helpers.getEfficacyCommentText(treatment);
   }
 
+  function formatTimeValue(value, unit, defaultUnit) {
+    return helpers.formatTimeValue(value, unit, defaultUnit);
+  }
+
   function reloadTableData(container) {
     return helpers.reloadTableData(container);
   }
@@ -72,12 +76,22 @@
     `;
   }
 
-  //REI PHI Helpers - 4/2/2026
-  function getPrimarySitePesticide(row) {
-      return row?.pesticide?.sitePesticide?.[0] || null;
+  //All pesticides on the row. A mixture (control technique with more than one pesticide) has several.
+  function getRowPesticides(row) {
+    return row?.pesticides || (row?.pesticide ? [row.pesticide] : []);
   }
-  function renderReiEditor(row) {
-    const sp = getPrimarySitePesticide(row);
+
+  function getPesticideName(row, pesticide) {
+    const detail = (row?.pesticideDetails || []).find(d => d.pesticide === pesticide);
+    return detail?.name || pesticide?.tradeName || pesticide?.commonName || `Pesticide ${pesticide?.pesticideId ?? ""}`;
+  }
+
+  //REI PHI Helpers - 4/2/2026
+  function getSitePesticide(pesticide) {
+      return pesticide?.sitePesticide?.[0] || null;
+  }
+  function renderReiEditor(pesticide) {
+    const sp = getSitePesticide(pesticide);
 
     return `
       <div style="font-size:12px; color:#666; margin-bottom:6px;">
@@ -111,8 +125,8 @@
       </div>
     `;
   }
-  function renderPhiEditor(row) {
-    const sp = getPrimarySitePesticide(row);
+  function renderPhiEditor(pesticide) {
+    const sp = getSitePesticide(pesticide);
 
     return `
       <div style="font-size:12px; color:#666; margin-bottom:6px;">
@@ -154,13 +168,13 @@
   //   Designation  -> PesticideGuideline (this product in this guideline)
   // They show read-only until the user clicks Edit; only then are they included in save-row.
   // =========================================================
-  function renderSitePesticideReadOnly(row, kind) {
-    const sp = getPrimarySitePesticide(row);
-    const value = clean(sp?.[kind]);
-    const time = clean(sp?.[`${kind}Time`]);
+  function renderSitePesticideReadOnly(pesticide, kind) {
+    const sp = getSitePesticide(pesticide);
+    //Same wording as the table: "12 Hours", "1 Day"; an REI with no saved unit is in hours
+    const value = formatTimeValue(sp?.[kind], sp?.[`${kind}Time`], kind === "rei" ? "hr" : "");
 
     const parts = [];
-    if (value) parts.push(time ? `${value} ${time}` : value);
+    if (value) parts.push(value);
     if (sp?.[`${kind}ReferToLabel`]) parts.push("Refer To Label");
     if (sp?.[`${kind}UntilDry`]) parts.push("Until Dry");
 
@@ -174,21 +188,23 @@
     `;
   }
 
-  function renderDesignationReadOnly(row) {
+  function renderDesignationReadOnly(pesticide) {
+    const guideline = pesticide?.pesticideGuideline;
+
     return `
       <div style="font-size:12px; color:#666; margin-bottom:6px;">
         <strong>Shared PesticideGuideline</strong>
       </div>
       <div style="margin-bottom:8px;">
-        <div><strong>Conventional:</strong> ${row?.conventional ? "Yes" : "No"}</div>
-        <div><strong>Organic:</strong> ${row?.organic ? "Yes" : "No"}</div>
+        <div><strong>Conventional:</strong> ${guideline?.conventional ? "Yes" : "No"}</div>
+        <div><strong>Organic:</strong> ${guideline?.organic ? "Yes" : "No"}</div>
       </div>
     `;
   }
 
-  function renderConventionalOrganicEditor(row) {
-    const conventional = row?.conventional ?? false;
-    const organic = row?.organic ?? false;
+  function renderConventionalOrganicEditor(pesticide) {
+    const conventional = pesticide?.pesticideGuideline?.conventional ?? false;
+    const organic = pesticide?.pesticideGuideline?.organic ?? false;
 
     return `
       <label style="display:block; margin-bottom:6px; font-size:12px;">
@@ -210,12 +226,12 @@
     { field: "groupNumber", label: "Group Number: ", read: ai => ai?.activeIngredientHerbicide?.groupNumber }
   ];
 
-  function getActiveIngredients(row) {
-    return row?.pesticide?.activeIngredients || [];
+  function getActiveIngredients(pesticide) {
+    return pesticide?.activeIngredients || [];
   }
 
-  function renderResistanceReadOnly(row) {
-    const ais = getActiveIngredients(row);
+  function renderResistanceReadOnly(pesticide) {
+    const ais = getActiveIngredients(pesticide);
     if (!ais.length) {
       return `<div style="margin-bottom:8px;"><em>No active ingredients on this product.</em></div>`;
     }
@@ -242,8 +258,8 @@
     `;
   }
 
-  function renderResistanceEditor(row) {
-    return getActiveIngredients(row).map(ai => `
+  function renderResistanceEditor(pesticide) {
+    return getActiveIngredients(pesticide).map(ai => `
       <div class="resistance-ai-block"
           data-active-ingredient-id="${escapeHtml(ai.activeIngredientId ?? 0)}"
           style="border:1px solid #ddd; background:#fafafa; border-radius:4px; padding:8px; margin-bottom:6px;">
@@ -267,34 +283,35 @@
       title: "Resistance Mgmt.",
       sharedNote: "Shared by every product and treatment using these active ingredients.",
       saveNote: "Saving will update these codes on the active ingredients, for every product that uses them.",
-      readOnly: row => renderResistanceReadOnly(row),
-      editor: row => renderResistanceEditor(row),
-      canEdit: row => getActiveIngredients(row).length > 0
+      readOnly: pesticide => renderResistanceReadOnly(pesticide),
+      editor: pesticide => renderResistanceEditor(pesticide),
+      canEdit: pesticide => getActiveIngredients(pesticide).length > 0
     },
     rei: {
       title: "REI",
       sharedNote: "Shared by every treatment using this product on this site.",
       saveNote: "Saving will update the REI for this product on this site.",
-      readOnly: row => renderSitePesticideReadOnly(row, "rei"),
-      editor: row => renderReiEditor(row)
+      readOnly: pesticide => renderSitePesticideReadOnly(pesticide, "rei"),
+      editor: pesticide => renderReiEditor(pesticide)
     },
     phi: {
       title: "PHI",
       sharedNote: "Shared by every treatment using this product on this site.",
       saveNote: "Saving will update the PHI for this product on this site.",
-      readOnly: row => renderSitePesticideReadOnly(row, "phi"),
-      editor: row => renderPhiEditor(row)
+      readOnly: pesticide => renderSitePesticideReadOnly(pesticide, "phi"),
+      editor: pesticide => renderPhiEditor(pesticide)
     },
     designation: {
       title: "Designation",
       sharedNote: "Shared by every treatment using this product for this guideline.",
       saveNote: "Saving will update the designation for this product for this guideline.",
-      readOnly: row => renderDesignationReadOnly(row),
-      editor: row => renderConventionalOrganicEditor(row)
+      readOnly: pesticide => renderDesignationReadOnly(pesticide),
+      editor: pesticide => renderConventionalOrganicEditor(pesticide)
     }
   };
 
-  function renderLockedSectionBody(row, key, unlocked) {
+  //showSharedNote is false for mixtures, where the note is shown once at the bottom of the panel instead
+  function renderLockedSectionBody(pesticide, key, unlocked, showSharedNote = true) {
     const def = LOCKED_SECTIONS[key];
 
     if (unlocked) {
@@ -302,39 +319,83 @@
         <div style="font-size:12px; color:#7a4b00; background:#fff4e5; border:1px solid #f0c27a; border-radius:4px; padding:4px 6px; margin-bottom:8px;">
           ${escapeHtml(def.saveNote)}
         </div>
-        ${def.editor(row)}
+        ${def.editor(pesticide)}
       `;
     }
 
     return `
-      ${def.readOnly(row)}
-      <div style="font-size:12px; color:#666;">
-        ${escapeHtml(def.sharedNote)}
-      </div>
+      ${def.readOnly(pesticide)}
+      ${showSharedNote ? `
+        <div style="font-size:12px; color:#666;">
+          ${escapeHtml(def.sharedNote)}
+        </div>` : ""}
     `;
   }
 
+  //One product: the Edit button sits in the panel title.
+  //Mixture: the panel lists each pesticide under its name, each with its own Edit button.
   function renderLockedSection(row, key) {
     const def = LOCKED_SECTIONS[key];
-    const canEdit = def.canEdit ? def.canEdit(row) : true;
+    const pesticides = getRowPesticides(row);
+    const canEdit = pesticide => def.canEdit ? def.canEdit(pesticide) : true;
+    const editButton = `<button type="button" class="toggle-locked-section-btn" style="font-size:12px;">Edit</button>`;
+    const lockAttrs = pesticide =>
+      `data-locked-section="${key}" data-pesticide-id="${escapeHtml(pesticide?.pesticideId ?? 0)}" data-unlocked="false"`;
+
+    if (pesticides.length <= 1) {
+      const pesticide = pesticides[0] || null;
+
+      return renderEditSection(def.title, `
+        <div class="locked-section-body">
+          ${renderLockedSectionBody(pesticide, key, false)}
+        </div>
+      `, {
+        attrs: lockAttrs(pesticide),
+        action: canEdit(pesticide) ? editButton : ""
+      });
+    }
 
     return renderEditSection(def.title, `
-      <div class="locked-section-body">
-        ${renderLockedSectionBody(row, key, false)}
+      ${pesticides.map((pesticide, index) => `
+        <div ${lockAttrs(pesticide)} style="${index > 0 ? "border-top:1px solid #ddd; padding-top:8px; margin-top:8px;" : ""}">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:4px;">
+            <div style="font-weight:600; font-size:13px;">${escapeHtml(getPesticideName(row, pesticide))}</div>
+            ${canEdit(pesticide) ? editButton : ""}
+          </div>
+          <div class="locked-section-body">
+            ${renderLockedSectionBody(pesticide, key, false, false)}
+          </div>
+        </div>
+      `).join("")}
+      <div style="font-size:12px; color:#666; margin-top:8px;">
+        ${escapeHtml(def.sharedNote)}
       </div>
-    `, {
-      attrs: `data-locked-section="${key}" data-unlocked="false"`,
-      action: canEdit ? `<button type="button" class="toggle-locked-section-btn" style="font-size:12px;">Edit</button>` : ""
-    });
+    `);
   }
 
   //Switches a locked panel between read-only and editable. Cancel throws away any changes.
+  //save-row has a single "pesticide", so in a mixture only one pesticide's shared values can be unlocked per save.
   function toggleLockedSection(section, row) {
     const key = section.dataset.lockedSection;
     const unlocking = section.dataset.unlocked !== "true";
+    const pesticides = getRowPesticides(row);
+    const pesticide = pesticides.find(p => String(p?.pesticideId ?? 0) === section.dataset.pesticideId) || null;
 
+    if (unlocking) {
+      const form = section.closest(".treatment-edit-form") || document;
+      const otherPesticideUnlocked = Array.from(form.querySelectorAll('[data-locked-section][data-unlocked="true"]'))
+        .some(el => el.dataset.pesticideId !== section.dataset.pesticideId);
+
+      if (otherPesticideUnlocked) {
+        showEditModalError("Only one product's shared values (REI, PHI, Resistance Mgmt., Designation) can be edited per save. Save, or Cancel the other product's edits first.");
+        return;
+      }
+    }
+
+    showEditModalError("");
     section.dataset.unlocked = unlocking ? "true" : "false";
-    section.querySelector(".locked-section-body").innerHTML = renderLockedSectionBody(row, key, unlocking);
+    section.querySelector(".locked-section-body").innerHTML =
+      renderLockedSectionBody(pesticide, key, unlocking, pesticides.length <= 1);
     section.querySelector(".toggle-locked-section-btn").textContent = unlocking ? "Cancel" : "Edit";
   }
 
@@ -368,124 +429,87 @@
     });
   }
 
+  //One block per treatment rate. Each block knows which pesticide it is for (data-pesticide-id).
+  //Mixtures group the rates under each pesticide's name; a pesticide with no rate gets one blank block.
   function renderRateEditor(row, metadata) {
-    const rates = row.matchingRates || [];
     const units = metadata?.units || [];
     const unitAreas = metadata?.unitAreas || [];
+    const pesticides = getRowPesticides(row);
+    const isMixture = pesticides.length > 1;
+    const allRates = row.matchingRates || [];
 
-    //If Not Treatment Rates Exist.
-    if (!rates.length) {
+    return pesticides.map((pesticide, pIndex) => {
+      const pesticideId = pesticide?.pesticideId ?? 0;
+      const rates = allRates.filter(r => r?.pesticideId === pesticideId);
+
+      const blocks = rates.length
+        ? rates.map((rate, index) => renderRateBlock(row, rate, pesticideId, index, units, unitAreas)).join("")
+        : renderRateBlock(row, null, pesticideId, 0, units, unitAreas);
+
+      if (!isMixture) return blocks;
+
       return `
-        <div class="rate-editor-block"
-            data-treatment-rate-id="0"
-            style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
-
-          <div style="font-size:12px; color:#666; margin-bottom:6px;">
-            <strong>TreatmentRateId:</strong> 0
-          </div>
-
-          <div style="
-              display:grid;
-              grid-template-columns: 1.3fr 1fr 2fr;
-              gap:8px;
-              align-items:end;
-              margin-bottom:6px;">
-            <div>
-              <label style="display:block; font-size:12px;">Concentration</label>
-              <input type="text"
-                    data-field="concentration"
-                    value=""
-                    style="width:100%;">
-            </div>
-
-            <div>
-              <label style="display:block; font-size:12px;">UnitId</label>
-              <select data-field="unitId" style="width:100%;">
-                ${renderSelectOptions(units, null, "-")}
-              </select>
-            </div>
-
-            <div>
-              <label style="display:block; font-size:12px;">UnitAreaId</label>
-              <select data-field="unitAreaId" style="width:100%;">
-                ${renderSelectOptions(unitAreas, null, "-")}
-              </select>
-            </div>
-          </div>
-
-          <div style="margin-bottom:6px;">
-            <label style="display:block; font-size:12px;">Amount Note</label>
-            <input type="text"
-                  data-field="amountNote"
-                  value=""
-                  style="width:100%;">
-          </div>
+        <div style="${pIndex > 0 ? "margin-top:10px;" : ""}">
+          <div style="font-weight:600; font-size:13px; margin-bottom:4px;">${escapeHtml(getPesticideName(row, pesticide))}</div>
+          ${blocks}
         </div>
       `;
-    }
+    }).join("");
+  }
 
-  return rates.map((rate, index) => `
-    <div class="rate-editor-block"
-        data-rate-index="${index}"
-        data-treatment-rate-id="${escapeHtml(rate.treatmentRateId ?? 0)}"
-        style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
+  //rate is null for a new (blank) rate
+  function renderRateBlock(row, rate, pesticideId, index, units, unitAreas) {
+    return `
+      <div class="rate-editor-block"
+          data-rate-index="${index}"
+          data-pesticide-id="${escapeHtml(pesticideId)}"
+          data-treatment-rate-id="${escapeHtml(rate?.treatmentRateId ?? 0)}"
+          style="border:1px solid #ddd; padding:8px; margin-bottom:6px; background:#fafafa;">
 
-      <div style="font-size:12px; color:#666; margin-bottom:6px;">
-        <strong>TreatmentRateId:</strong> ${escapeHtml(rate.treatmentRateId ?? 0)}
-        ${row.treatmentChanged ? renderModifiedDate(row) : ""}
-      </div>
+        <div style="font-size:12px; color:#666; margin-bottom:6px;">
+          <strong>TreatmentRateId:</strong> ${escapeHtml(rate?.treatmentRateId ?? 0)}
+          ${rate && row.treatmentChanged ? renderModifiedDate(row) : ""}
+        </div>
 
-      <!--
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">RateKind</label>
-        <input type="text"
-              data-field="rateKind"
-              value="${escapeHtml(rate.rateKind || "")}"
-              style="width:100%;">
-      </div>
-      -->
+        <div style="
+            display:grid;
+            grid-template-columns: 1.3fr 1fr 2fr;
+            gap:8px;
+            align-items:end;
+            margin-bottom:6px;">
+          <div>
+            <label style="display:block; font-size:12px;">Concentration</label>
+            <input type="text"
+                  data-field="concentration"
+                  value="${escapeHtml(rate?.concentration || "")}"
+                  style="width:100%;">
+          </div>
 
-      
-      <div style="
-          display:grid;
-          grid-template-columns: 1.3fr 1fr 2fr;
-          gap:8px;
-          align-items:end;
-          margin-bottom:6px;">
-        <div>
-          <label style="display:block; font-size:12px;">Concentration</label>
+          <div>
+            <label style="display:block; font-size:12px;">UnitId</label>
+            <select data-field="unitId" style="width:100%;">
+              ${renderSelectOptions(units, rate?.unit?.unitId ?? null, "-")}
+            </select>
+          </div>
+
+          <div>
+            <label style="display:block; font-size:12px;">UnitAreaId</label>
+            <select data-field="unitAreaId" style="width:100%;">
+              ${renderSelectOptions(unitAreas, rate?.unitArea?.unitAreaId ?? null, "-")}
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom:6px;">
+          <label style="display:block; font-size:12px;">Amount Note</label>
           <input type="text"
-                data-field="concentration"
-                value="${escapeHtml(rate.concentration || "")}"
+                data-field="amountNote"
+                value="${escapeHtml(rate?.amountNote || "")}"
                 style="width:100%;">
         </div>
-
-        <div>
-          <label style="display:block; font-size:12px;">UnitId</label>
-          <select data-field="unitId" style="width:100%;">
-            ${renderSelectOptions(units, rate.unit?.unitId ?? null, "-")}
-          </select>
-        </div>
-
-        <div>
-          <label style="display:block; font-size:12px;">UnitAreaId</label>
-          <select data-field="unitAreaId" style="width:100%;">
-            ${renderSelectOptions(unitAreas, rate.unitArea?.unitAreaId ?? null, "-")}
-          </select>
-        </div>
       </div>
-
-      <div style="margin-bottom:6px;">
-        <label style="display:block; font-size:12px;">Amount Note</label>
-        <input type="text"
-              data-field="amountNote"
-              value="${escapeHtml(rate.amountNote || "")}"
-              style="width:100%;">
-      </div>
-
-    </div>
-  `).join("");
-}
+    `;
+  }
 
   //Fetches the Meta Data JSON File
   async function ensureEditMetadata(container) {
@@ -659,6 +683,17 @@
           border-top:1px solid #ddd;
           flex:0 0 auto;
         ">
+          <div class="treatment-edit-error" role="alert" style="
+            display:none;
+            margin-right:auto;
+            align-self:center;
+            background:#fcefea;
+            color:#d60032;
+            border-radius:5px;
+            padding:6px 10px;
+            font-size:13px;
+            font-weight:600;
+          "></div>
           <button type="button" class="cancel-edit-modal-btn">Cancel</button>
           <button type="button" class="save-edit-modal-btn">Save</button>
         </div>
@@ -785,6 +820,7 @@
     }
 
     const modal = ensureEditModal();
+    showEditModalError("");
     clearEditingRow(modal);
 
     modal.__row = row;
@@ -888,6 +924,88 @@
   }
 
   // =========================================================
+  // Save feedback (instead of alert boxes the user has to click OK on)
+  // =========================================================
+
+  //Error shown in the modal footer, next to Save. Empty message hides it.
+  function showEditModalError(message) {
+    const el = document.querySelector("#treatment-edit-modal .treatment-edit-error");
+    if (!el) return;
+
+    el.textContent = message || "";
+    el.style.display = message ? "block" : "none";
+  }
+
+  function getTreatmentIdFromResponse(responseText) {
+    try {
+      const json = JSON.parse(responseText);
+      return parseInt(json?.treatmentId ?? json?.TreatmentId, 10) || 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  //Short message above the table that goes away on its own
+  function showTableNotice(container, message, type = "success") {
+    const colors = type === "error"
+      ? "background:#fcefea; color:#d60032;"
+      : "background:#caef6f; color:#005614;";
+
+    const notice = container.ownerDocument.createElement("div");
+    notice.className = "ptb-table-notice";
+    notice.setAttribute("role", "status");
+    notice.style.cssText = `${colors} border-radius:5px; padding:6px 10px; margin:8px 0; font-size:13px; font-weight:700;`;
+    notice.textContent = message;
+
+    container.prepend(notice);
+    setTimeout(() => notice.remove(), type === "error" ? 8000 : 4000);
+  }
+
+  //Briefly highlights the saved treatment's rows in green with a "Saved" badge in the Edit column.
+  //A treatment with a mixture shows as several rows; all of them are highlighted.
+  //If the rows can't be found (e.g. a new treatment whose id the API didn't return), shows a notice above the table instead.
+  function flashSavedRows(container, treatmentId) {
+    const dataRows = treatmentId
+      ? Array.from(container.querySelectorAll(`tr.data-row[data-treatment-id="${treatmentId}"]`))
+      : [];
+
+    if (!dataRows.length) {
+      showTableNotice(container, "Treatment saved.");
+      return;
+    }
+
+    const groupRows = dataRows.flatMap(tr => {
+      const misc = tr.nextElementSibling?.classList.contains("misc-row") ? tr.nextElementSibling : null;
+      const comment = misc?.nextElementSibling?.classList.contains("comment-row") ? misc.nextElementSibling : null;
+      return [tr, misc, comment].filter(Boolean);
+    });
+
+    //Row flash and badge fade are CSS animations in assets/css/pesticide-table-editor.css
+    groupRows.forEach(el => el.classList.add("ptb-row-saved"));
+    dataRows.forEach(tr => {
+      tr.querySelector(".edit-cell")?.insertAdjacentHTML("beforeend", `
+        <div class="ptb-saved-badge" role="status" style="
+          margin-top:4px;
+          background:#caef6f;
+          color:#005614;
+          border-radius:5px;
+          padding:2px 4px;
+          font-size:11px;
+          font-weight:700;
+          text-align:center;
+        ">&#10003; Saved</div>
+      `);
+    });
+
+    dataRows[0].scrollIntoView?.({ block: "nearest", behavior: "smooth" });
+
+    setTimeout(() => {
+      groupRows.forEach(el => el.classList.remove("ptb-row-saved"));
+      dataRows.forEach(tr => tr.querySelectorAll(".ptb-saved-badge").forEach(b => b.remove()));
+    }, 4000);
+  }
+
+  // =========================================================
   // SAVE - added 3/30/2026
   // form is the edit modal; every field is looked up inside it
   // =========================================================
@@ -897,6 +1015,7 @@
       return;
     }
     form.dataset.isSaving = "true";
+    showEditModalError("");
 
     console.log("Saving row:", row);
 
@@ -925,11 +1044,18 @@
     const selectedSiteTimingIds = getCheckedValues("siteTimingIds");
 
     //Checks to see if it is a pesticide.
-    const hasPesticide = parseInt(row.pesticideId, 10) > 0;
+    const rowPesticides = getRowPesticides(row);
+    const hasPesticide = rowPesticides.some(p => parseInt(p?.pesticideId, 10) > 0);
 
-    //REI/PHI/Designation panels start read-only; "unlocked" means the user clicked Edit on that panel
+    //REI/PHI/Designation/Resistance panels start read-only; "unlocked" means the user clicked Edit on that panel.
+    //save-row has a single "pesticide", so only one pesticide's panels can be unlocked (see toggleLockedSection).
+    //That pesticide is the one sent; if nothing is unlocked, the first pesticide is sent with nulls (no changes).
     const isUnlocked = (key) =>
-      form.querySelector(`[data-locked-section="${key}"]`)?.dataset.unlocked === "true";
+      !!form.querySelector(`[data-locked-section="${key}"][data-unlocked="true"]`);
+    const unlockedPesticideId = parseInt(
+      form.querySelector('[data-locked-section][data-unlocked="true"]')?.dataset.pesticideId, 10) || 0;
+    const targetPesticide = rowPesticides.find(p => p?.pesticideId === unlockedPesticideId) || rowPesticides[0] || null;
+    const targetPesticideId = parseInt(targetPesticide?.pesticideId, 10) || 0;
     const reiUnlocked = isUnlocked("rei");
     const phiUnlocked = isUnlocked("phi");
     const designationUnlocked = isUnlocked("designation");
@@ -941,7 +1067,7 @@
     //  ""   -> the user cleared a code that had a value: remove it
     //  null -> empty before and still empty: leave it alone (don't create an empty record)
     const buildActiveIngredientsPayload = () =>
-      getActiveIngredients(row).map(ai => {
+      getActiveIngredients(targetPesticide).map(ai => {
         const block = form.querySelector(`.resistance-ai-block[data-active-ingredient-id="${ai.activeIngredientId}"]`);
         const code = (field) => {
           const typed = block?.querySelector(`[data-ai-field="${field}"]`)?.value?.trim() ?? "";
@@ -961,7 +1087,7 @@
           groupNumber: code("groupNumber")
         };
       });
-    const storedSitePesticide = getPrimarySitePesticide(row);
+    const storedSitePesticide = getSitePesticide(targetPesticide);
 
     //I don't understand what this does?
     const parseNullableInt = (value) => {
@@ -976,7 +1102,7 @@
         updatedRates.push({
           treatmentRateId: parseInt(block.dataset.treatmentRateId, 10) || 0,
           rateKind: "Test", //get("rateKind").trim()
-          pesticideId: parseInt(row.pesticideId, 10) || 0,
+          pesticideId: parseInt(block.dataset.pesticideId, 10) || 0, //Each rate block belongs to one pesticide (mixtures have several)
           concentration: get("concentration").trim(),
           amountNote: get("amountNote").trim(),
           unitId: parseNullableInt(get("unitId")),
@@ -1021,7 +1147,7 @@
 
       pesticide: hasPesticide
       ? {
-          pesticideId: parseInt(row.pesticideId, 10) || 0,
+          pesticideId: targetPesticideId,
           //IRAC/FRAC/Group Number live on the Active Ingredients, not the treatment. Only sent when the user
           //clicked Edit on Resistance Mgmt.; null means "leave the Active Ingredients alone".
           activeIngredients: resistanceUnlocked ? buildActiveIngredientsPayload() : null,
@@ -1038,7 +1164,7 @@
           sitePesticide: (reiUnlocked || phiUnlocked)
             ? {
                 siteId: parseInt(row.siteId, 10) || 0,
-                pesticideId: parseInt(row.pesticideId, 10) || 0,
+                pesticideId: targetPesticideId,
                 rei: reiUnlocked ? getRowField("rei").trim() : (storedSitePesticide?.rei ?? ""),
                 reiTime: reiUnlocked ? getRowField("reiTime").trim() : (storedSitePesticide?.reiTime ?? ""),
                 reiReferToLabel: reiUnlocked ? getRowChecked("reiReferToLabel") : !!storedSitePesticide?.reiReferToLabel,
@@ -1087,17 +1213,35 @@
       console.log("Save response:", responseText);
 
       if (!response.ok) {
-        alert("Save failed. Check console for details.");
-        return; //Modal stays open so nothing the user entered is lost
+        //Modal stays open so nothing the user entered is lost
+        showEditModalError(`Save failed (error ${response.status}). Your changes are still here. See the console for details.`);
+        return;
       }
 
-      closeEditModal();
-      await reloadTableData(container);
+      //New treatments have no id until saved, so try to get it from the response for the row highlight
+      const savedTreatmentId = parseInt(row.treatmentId, 10) > 0
+        ? parseInt(row.treatmentId, 10)
+        : getTreatmentIdFromResponse(responseText);
 
-      alert("Save succeeded.");
+      closeEditModal();
+
+      try {
+        await reloadTableData(container);
+      } catch (reloadErr) {
+        console.error("Saved, but reloading the table failed:", reloadErr);
+        showTableNotice(container, "Saved, but the table could not refresh. Reload the page to see the change.", "error");
+        return;
+      }
+
+      //The save already worked; a problem showing the highlight must not be reported as a failed save
+      try {
+        flashSavedRows(container, savedTreatmentId);
+      } catch (flashErr) {
+        console.error("Saved, but could not highlight the row:", flashErr);
+      }
     } catch (err) {
       console.error("Save request failed:", err);
-      alert("Save request failed. Check console.");
+      showEditModalError("Save failed: could not reach the server. Your changes are still here.");
     } finally {
       form.dataset.isSaving = "false";
     }
