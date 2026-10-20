@@ -718,14 +718,19 @@
       sort: next
     });
 
+    replaceTableHtml(container, html);
+
+    container.querySelector(`.sort-button[data-sort-key="${key}"]`)?.focus();
+  }
+
+  // Swaps only the table wrapper so anything rendered above it (the treatment table title) survives a redraw.
+  function replaceTableHtml(container, html) {
     const wrapper = container.querySelector(".pesticide-table-wrapper");
     if (wrapper) {
       wrapper.outerHTML = html;
     } else {
       container.innerHTML = html;
     }
-
-    container.querySelector(`.sort-button[data-sort-key="${key}"]`)?.focus();
   }
 
   function renderTable(data, options = {}) {
@@ -1147,12 +1152,12 @@
       changedSince: container.__changedSince || ""
     });
 
-    container.innerHTML = renderTable(json, {
+    replaceTableHtml(container, renderTable(json, {
       showDeleted: container.__showDeleted === true,
       changedSince: container.__changedSince || "",
       sort: container.__treatmentSort || null
-    });
-    
+    }));
+
     //container.__pesticideTableEventsBound = false;
     wireTableEvents(container);
   }
@@ -1554,11 +1559,11 @@
 
     //Added 5/27/2026
     function renderRowsFromStoredState(container) {
-      container.innerHTML = renderTable(container.__pesticideJson || [], {
+      replaceTableHtml(container, renderTable(container.__pesticideJson || [], {
         showDeleted: container.__showDeleted === true,
         changedSince: container.__changedSince || "",
         sort: container.__treatmentSort || null
-      });
+      }));
 
       container.__pesticideRows = buildRows(container.__pesticideJson || [], {
         changedSince: container.__changedSince || ""
@@ -1728,11 +1733,11 @@
 
     container.__pesticideJson = [tempTreatment, ...existingJson];
 
-    container.innerHTML = renderTable(container.__pesticideJson, {
+    replaceTableHtml(container, renderTable(container.__pesticideJson, {
       showDeleted: container.__showDeleted === true,
       changedSince: container.__changedSince || "",
       sort: container.__treatmentSort || null
-    });
+    }));
 
     container.__pesticideRows = buildRows(container.__pesticideJson, {
       changedSince: container.__changedSince || ""

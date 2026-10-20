@@ -5,23 +5,256 @@ The Mac Muncher (*Applemunchus voracious*) is a stout, apple-loving beetle famou
 
 While technically capable of eating other fruits, Mac Munchers stubbornly refuse to do so. Scientists have repeatedly offered them pears, peaches, and cherries, only to discover the insects sitting nearby in apparent protest.
 
-**Tree Fruit 6.4.1 Activity Spectrum of stone fruit fungicides.**
+```{=html}
+<!-- html-table-editor -->
+<div class="html-table-title" style="margin:0 0 0.75rem;font-size:1.35rem;line-height:1.25;font-weight:600;">Table 6.1.2. Relative toxicity of apple fungicides to beneficials.</div>
+<style data-html-table-style>.html-table-title { margin: 0 0 0.75rem; font-size: 1.35rem; line-height: 1.25; font-weight: 600; } .html-table-wrap { width: 100%; overflow-x: auto; margin: 0 0 1rem; } .html-table { width: 100%; margin: 0; border: 0; border-collapse: collapse; border-spacing: 0; } .html-table th, .html-table td { padding: 5px 6px; border: 0; border-bottom: 1px solid #d7d7d7; text-align: left; vertical-align: top; overflow-wrap: break-word; } .html-table th { font-weight: 700; vertical-align: bottom; } .html-table thead th[colspan] { text-align: center; } .html-table thead { border-bottom: 2px solid #6f6f6f; } .html-table tbody { border-bottom: 2px solid #6f6f6f; } .html-table tbody tr:nth-child(odd) td { background: #ffffff; } .html-table tbody tr:nth-child(even) td { background: #f1f1f1; } .html-table tfoot td { background: #ffffff; } .html-table .ht-left { text-align: left; } .html-table .ht-center { text-align: center; } .html-table .ht-right { text-align: right; } .html-table th button:hover { text-decoration: underline; } .html-table .html-table__footnote { border-bottom: 0; font-size: 0.875em; line-height: 1.35; color: #333; } .html-table .html-table__footnote p { margin: 0.2em 0; }</style>
+<div class="html-table-wrap"><table class="html-table html-table-sortable" data-col-align="left,center,center,center,center,center"><thead><tr><th rowspan="2">Active Ingredient (Trade Name)</th><th colspan="5">Beneficial Species</th></tr><tr><th class="ht-center" data-sort-col="1">Bees<sup>1</sup></th><th class="ht-center" data-sort-col="2">Amblyseius fallacis<sup>2</sup></th><th class="ht-center" data-sort-col="3">Typhlodromus pyri<sup>3</sup></th><th class="ht-center" data-sort-col="4">Stethorus punctum<sup>4</sup></th><th class="ht-center" data-sort-col="5">Aphidoletes aphidimyza<sup>5</sup></th></tr></thead><tbody><tr><td>Bacillus amyloliquefaciens strain D747 (§Double Nickel 55/LC)</td><td class="ht-center">L</td><td class="ht-center">__</td><td class="ht-center">__</td><td class="ht-center">__</td><td class="ht-center">__</td></tr><tr><td>Bacillus subtilis strain AFS032321 (Theia)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>benzovindiflupyr (*†Aprovia)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>captan</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">L</td></tr><tr><td>cyprodinil (Vangard)</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>dodine (Syllit)</td><td class="ht-center">L</td><td class="ht-center">L[a]</td><td class="ht-center">L[a]</td><td class="ht-center">—</td><td class="ht-center">L</td></tr><tr><td>difenoconazole (Inspire)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>fenarimol (Rubigan)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>fenbuconazole (Indar)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>flurtiafol</td><td class="ht-center">L</td><td class="ht-center">L[c]</td><td class="ht-center">L[c]</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>fluopyram + pyrimethanil (Luna Tranquility)</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>fluxapyroxad (*†Tesaris)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>fluxapyroxad + pyraclostrobin (*†Merivon)</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>ipflufenoquin – (Axios)</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center"></td></tr><tr><td>inpryfluxam (Excalia)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>isofetamid (Kenja 400C)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>kresoxim-methyl (*†Sovran)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>mancozeb (Dithane, Manzate, *Penncozeb)</td><td class="ht-center">L</td><td class="ht-center">M-H[b]</td><td class="ht-center">M-H[b]</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>maneb (Manex, Maneb)</td><td class="ht-center">L</td><td class="ht-center">M-H[b]</td><td class="ht-center">M-H[b]</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>mefentrifluconazole (*†Cevya)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>metiram (Polyram)</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>myclobutanil (Rally)</td><td class="ht-center">L</td><td class="ht-center">L[c]</td><td class="ht-center">L[c]</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>Pseudomonas chlororaphis strain AFS009 (Howler EVO)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>pydiflumetofen (*†Miravis)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>penthiopyrad (Fontelis)</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>pyraclostrobin + boscalid (Pristine)</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>§sulfur</td><td class="ht-center">L</td><td class="ht-center">L[a]</td><td class="ht-center">L[a]</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>thiophanate-methyl (Topsin M)</td><td class="ht-center">L</td><td class="ht-center">L[c]</td><td class="ht-center">L[c]</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>trifloxystrobin (Flint)</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>triflumizole (*Procure)</td><td class="ht-center">L</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td><td class="ht-center">—</td></tr><tr><td>ziram </td><td class="ht-center">L</td><td class="ht-center">M-H[b]</td><td class="ht-center">M-H[b]</td><td class="ht-center">—</td><td class="ht-center">—</td></tr></tbody><tfoot><tr data-table-footnote><td colspan="6" class="html-table__footnote"><p><sup>1</sup>Bees = honeybees</p><p><sup>2</sup>A predatory mite found throughout New York State</p><p><sup>3</sup>A predatory mite found mostly in Western New York</p><p><sup>4</sup>A ladybird beetle predator of mites</p><p><sup>5</sup>A cecidomyiid predator of aphids</p><p>Key to toxicity ratings:</p><p>L = (bees) not hazardous to honey bees at any time. 1 hr to 1 day residual toxicity (all others) low impact on population (less than 30% mortality after 48 hr).</p><p>M = moderate impact on population (between 30% and 70% mortality after 48 hr).</p><p>H = high impact on population (more than 70% mortality after 48 hr).</p><p>— = no data.</p><p>Notes:</p><p><strong>[a]</strong> Information derived from 24-hr slide dip tests conducted at the New York State Agricultural Experiment Station.</p><p><strong>[b]</strong> Low to moderate impact from several early season (through 1C) applications; moderate to high impact from summer applications.</p><p><strong>[c]</strong> This information is derived from application field tests conducted at the New York State Agricultural Experiment Station.</p><p><strong>§</strong> = potentially acceptable in certified organic programs.</p></td></tr></tfoot></table></div>
+<script data-html-table-sort>(function enhanceSortableTables(doc) {
+    doc.querySelectorAll("table.html-table-sortable:not([data-sort-ready])").forEach(function (table) {
+      table.setAttribute("data-sort-ready", "");
+      var body = table.tBodies[0];
+      if (!body) return;
+      var originalRows = Array.prototype.slice.call(body.rows);
+      var headers = Array.prototype.slice.call(table.querySelectorAll("th[data-sort-col]"));
+      var current = null;
+      function cellAt(tr, col) {
+        var c = 0;
+        for (var i = 0; i < tr.cells.length; i++) {
+          c += tr.cells[i].colSpan;
+          if (c > col) return tr.cells[i];
+        }
+        return null;
+      }
+      function sortValue(tr, col) {
+        var cell = cellAt(tr, col);
+        var copy = cell ? cell.cloneNode(true) : null;
+        var sups = copy ? copy.querySelectorAll("sup") : [];
+        for (var s = 0; s < sups.length; s++) sups[s].parentNode.removeChild(sups[s]);
+        var text = copy ? copy.textContent.trim() : "";
+        if (!text || /^[-–—\s]+$/.test(text)) return null;
+        var m = text.match(/^[<>~≤≥]?\s*(-?\d+(?:\.\d+)?)/);
+        return m ? parseFloat(m[1]) : text.toLowerCase();
+      }
+      function compare(a, b) {
+        if (typeof a !== typeof b) return typeof a === "number" ? -1 : 1;
+        return typeof a === "number" ? a - b : a.localeCompare(b, undefined, { numeric: true });
+      }
+      function apply() {
+        var rows = originalRows.slice();
+        if (current) {
+          var dir = current.direction === "desc" ? -1 : 1;
+          rows.sort(function (x, y) {
+            var a = sortValue(x, current.col);
+            var b = sortValue(y, current.col);
+            if (a === null || b === null) return (a === null) - (b === null);
+            return dir * compare(a, b);
+          });
+        }
+        rows.forEach(function (tr) { body.appendChild(tr); });
+        headers.forEach(function (th) {
+          var active = current && current.th === th;
+          var icon = th.querySelector("[data-sort-icon]");
+          th.setAttribute("aria-sort", active ? (current.direction === "desc" ? "descending" : "ascending") : "none");
+          icon.textContent = active ? (current.direction === "desc" ? " ▼" : " ▲") : " ↕";
+          icon.style.color = active ? "inherit" : "#999";
+        });
+      }
+      headers.forEach(function (th) {
+        var button = doc.createElement("button");
+        button.type = "button";
+        button.style.cssText = "border:0;background:none;padding:0;font:inherit;color:inherit;text-align:inherit;cursor:pointer;";
+        while (th.firstChild) button.appendChild(th.firstChild);
+        var icon = doc.createElement("span");
+        icon.setAttribute("data-sort-icon", "");
+        icon.setAttribute("aria-hidden", "true");
+        icon.style.fontSize = "0.8em";
+        button.appendChild(icon);
+        th.appendChild(button);
+        button.addEventListener("click", function () {
+          var col = parseInt(th.getAttribute("data-sort-col"), 10);
+          if (!current || current.th !== th) current = { th: th, col: col, direction: "asc" };
+          else if (current.direction === "asc") current.direction = "desc";
+          else current = null;
+          apply();
+        });
+      });
+      apply();
+    });
+  })(document);</script>
+```
 
 ```{=html}
 <!-- html-table-editor -->
-<table border="1" style="border-collapse:collapse;width:100%;"><thead><tr><th rowspan="2">Fungicide1</th><th rowspan="2">Fungicide Family</th><th rowspan="2">FRAC Code3</th><th colspan="4">registered for use on:</th><th>Header 8</th><th>Header 9</th><th>Header 10</th><th>Header 11</th><th>Header 12</th><th>Header 13</th><th>Header 14</th></tr></thead><tbody><tr><td>Apircot</td><td>Cherry</td><td>Peach</td><td>Plum</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Aprovia</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<div class="html-table-title" style="margin:0 0 0.75rem;font-size:1.35rem;line-height:1.25;font-weight:600;">Table 6.5.1. Approximate hours of continuous leaf wetness (LW) necessary to produce cherry leaf spot infection [a].</div>
+<style data-html-table-style>.html-table-title { margin: 0 0 0.75rem; font-size: 1.35rem; line-height: 1.25; font-weight: 600; } .html-table-wrap { width: 100%; overflow-x: auto; margin: 0 0 1rem; } .html-table { width: 100%; margin: 0; border: 0; border-collapse: collapse; border-spacing: 0; } .html-table th, .html-table td { padding: 5px 6px; border: 0; border-bottom: 1px solid #d7d7d7; text-align: left; vertical-align: top; overflow-wrap: break-word; } .html-table th { font-weight: 700; vertical-align: bottom; } .html-table thead th[colspan] { text-align: center; } .html-table thead { border-bottom: 2px solid #6f6f6f; } .html-table tbody { border-bottom: 2px solid #6f6f6f; } .html-table tbody tr:nth-child(odd) td { background: #ffffff; } .html-table tbody tr:nth-child(even) td { background: #f1f1f1; } .html-table tfoot td { background: #ffffff; } .html-table .ht-left { text-align: left; } .html-table .ht-center { text-align: center; } .html-table .ht-right { text-align: right; } .html-table th button:hover { text-decoration: underline; } .html-table .html-table__footnote { border-bottom: 0; font-size: 0.875em; line-height: 1.35; color: #333; } .html-table .html-table__footnote p { margin: 0.2em 0; }</style>
+<div class="html-table-wrap"><table class="html-table html-table-sortable" data-col-align="center,center,center,center"><thead><tr><th class="ht-center" rowspan="2">Average Temp (˚F)</th><th colspan="3">Degree of Infection [b]</th></tr><tr><th class="ht-center" data-sort-col="1">Light (hours LW)</th><th class="ht-center" data-sort-col="2">Moderate (hours LW)</th><th class="ht-center" data-sort-col="3">Heavy (hours LW) </th></tr></thead><tbody><tr><td class="ht-center">50</td><td class="ht-center">18</td><td class="ht-center">27</td><td class="ht-center">36</td></tr><tr><td class="ht-center">55</td><td class="ht-center">11</td><td class="ht-center">19</td><td class="ht-center">26</td></tr><tr><td class="ht-center">60</td><td class="ht-center">6</td><td class="ht-center">14</td><td class="ht-center">20</td></tr><tr><td class="ht-center">65</td><td class="ht-center">5</td><td class="ht-center">12</td><td class="ht-center">19</td></tr><tr><td class="ht-center">70</td><td class="ht-center">6</td><td class="ht-center">14</td><td class="ht-center">22</td></tr><tr><td class="ht-center">75</td><td class="ht-center">10</td><td class="ht-center">20</td><td class="ht-center">31</td></tr></tbody><tfoot><tr data-table-footnote><td colspan="4" class="html-table__footnote"><p>Determined by S. Eisensmith and A. Jones, Michigan State University.</p><p><strong>[a]</strong> Hours of leaf wetness (LW) from the beginning of a rain.</p><p><strong>[b]</strong> Assumes significant level of inoculum present.</p></td></tr></tfoot></table></div>
+<script data-html-table-sort>(function enhanceSortableTables(doc) {
+    doc.querySelectorAll("table.html-table-sortable:not([data-sort-ready])").forEach(function (table) {
+      table.setAttribute("data-sort-ready", "");
+      var body = table.tBodies[0];
+      if (!body) return;
+      var originalRows = Array.prototype.slice.call(body.rows);
+      var headers = Array.prototype.slice.call(table.querySelectorAll("th[data-sort-col]"));
+      var current = null;
+      function cellAt(tr, col) {
+        var c = 0;
+        for (var i = 0; i < tr.cells.length; i++) {
+          c += tr.cells[i].colSpan;
+          if (c > col) return tr.cells[i];
+        }
+        return null;
+      }
+      function sortValue(tr, col) {
+        var cell = cellAt(tr, col);
+        var copy = cell ? cell.cloneNode(true) : null;
+        var sups = copy ? copy.querySelectorAll("sup") : [];
+        for (var s = 0; s < sups.length; s++) sups[s].parentNode.removeChild(sups[s]);
+        var text = copy ? copy.textContent.trim() : "";
+        if (!text || /^[-–—\s]+$/.test(text)) return null;
+        var m = text.match(/^[<>~≤≥]?\s*(-?\d+(?:\.\d+)?)/);
+        return m ? parseFloat(m[1]) : text.toLowerCase();
+      }
+      function compare(a, b) {
+        if (typeof a !== typeof b) return typeof a === "number" ? -1 : 1;
+        return typeof a === "number" ? a - b : a.localeCompare(b, undefined, { numeric: true });
+      }
+      function apply() {
+        var rows = originalRows.slice();
+        if (current) {
+          var dir = current.direction === "desc" ? -1 : 1;
+          rows.sort(function (x, y) {
+            var a = sortValue(x, current.col);
+            var b = sortValue(y, current.col);
+            if (a === null || b === null) return (a === null) - (b === null);
+            return dir * compare(a, b);
+          });
+        }
+        rows.forEach(function (tr) { body.appendChild(tr); });
+        headers.forEach(function (th) {
+          var active = current && current.th === th;
+          var icon = th.querySelector("[data-sort-icon]");
+          th.setAttribute("aria-sort", active ? (current.direction === "desc" ? "descending" : "ascending") : "none");
+          icon.textContent = active ? (current.direction === "desc" ? " ▼" : " ▲") : " ↕";
+          icon.style.color = active ? "inherit" : "#999";
+        });
+      }
+      headers.forEach(function (th) {
+        var button = doc.createElement("button");
+        button.type = "button";
+        button.style.cssText = "border:0;background:none;padding:0;font:inherit;color:inherit;text-align:inherit;cursor:pointer;";
+        while (th.firstChild) button.appendChild(th.firstChild);
+        var icon = doc.createElement("span");
+        icon.setAttribute("data-sort-icon", "");
+        icon.setAttribute("aria-hidden", "true");
+        icon.style.fontSize = "0.8em";
+        button.appendChild(icon);
+        th.appendChild(button);
+        button.addEventListener("click", function () {
+          var col = parseInt(th.getAttribute("data-sort-col"), 10);
+          if (!current || current.th !== th) current = { th: th, col: col, direction: "asc" };
+          else if (current.direction === "asc") current.direction = "desc";
+          else current = null;
+          apply();
+        });
+      });
+      apply();
+    });
+  })(document);</script>
 ```
 
+```{=html}
+<!-- html-table-editor -->
+<div class="html-table-title" style="margin:0 0 0.75rem;font-size:1.35rem;line-height:1.25;font-weight:600;">Table 6.3.1. Approximate number of hours of leaf wetness required for cedar apple rust infections to occur on leaves of susceptible cultivars.</div>
+<style data-html-table-style>.html-table-title { margin: 0 0 0.75rem; font-size: 1.35rem; line-height: 1.25; font-weight: 600; } .html-table-wrap { width: 100%; overflow-x: auto; margin: 0 0 1rem; } .html-table { width: 100%; margin: 0; border: 0; border-collapse: collapse; border-spacing: 0; } .html-table th, .html-table td { padding: 5px 6px; border: 0; border-bottom: 1px solid #d7d7d7; text-align: left; vertical-align: top; overflow-wrap: break-word; } .html-table th { font-weight: 700; vertical-align: bottom; } .html-table thead th[colspan] { text-align: center; } .html-table thead { border-bottom: 2px solid #6f6f6f; } .html-table tbody { border-bottom: 2px solid #6f6f6f; } .html-table tbody tr:nth-child(odd) td { background: #ffffff; } .html-table tbody tr:nth-child(even) td { background: #f1f1f1; } .html-table tfoot td { background: #ffffff; } .html-table .ht-left { text-align: left; } .html-table .ht-center { text-align: center; } .html-table .ht-right { text-align: right; } .html-table th button:hover { text-decoration: underline; } .html-table .html-table__footnote { border-bottom: 0; font-size: 0.875em; line-height: 1.35; color: #333; } .html-table .html-table__footnote p { margin: 0.2em 0; }</style>
+<div class="html-table-wrap"><table class="html-table html-table-sortable" data-col-align="center,center,center"><thead><tr><th class="ht-center" rowspan="5" data-sort-col="0">Average Temp </th><th rowspan="4" colspan="2">Hours of Leaf Wetness Degree of Infection [1]</th></tr><tr></tr><tr></tr><tr></tr><tr><th class="ht-center" data-sort-col="1">Light</th><th class="ht-center" data-sort-col="2">Severe</th></tr></thead><tbody><tr><td class="ht-center">36</td><td class="ht-center">24</td><td class="ht-center">—</td></tr><tr><td class="ht-center">40</td><td class="ht-center">12</td><td class="ht-center">24</td></tr><tr><td class="ht-center">43</td><td class="ht-center">8</td><td class="ht-center">10</td></tr><tr><td class="ht-center">46</td><td class="ht-center">6</td><td class="ht-center">7</td></tr><tr><td class="ht-center">50</td><td class="ht-center">5</td><td class="ht-center">6</td></tr><tr><td class="ht-center">54</td><td class="ht-center">4</td><td class="ht-center">5</td></tr><tr><td class="ht-center">58</td><td class="ht-center">3</td><td class="ht-center">5</td></tr><tr><td class="ht-center">61</td><td class="ht-center">3</td><td class="ht-center">4</td></tr><tr><td class="ht-center">64</td><td class="ht-center">3</td><td class="ht-center">4</td></tr><tr><td class="ht-center">68-76</td><td class="ht-center">2</td><td class="ht-center">4</td></tr><tr><td class="ht-center">79+</td><td class="ht-center">–</td><td class="ht-center">–</td></tr></tbody><tfoot><tr data-table-footnote><td colspan="3" class="html-table__footnote"><p><strong>[1]</strong> Based on the data of Aldwinckle, Pearson, &amp; Seem, Cornell University assumes that cedar apple rust inoculum (orange, swollen galls) is available at the start of the rain. If inoculum is not already present (dry period prior to the rain), add 4 hr at temps above 50˚ F and 6 hr at temps of 46-50˚ F. Infection is unlikely at temps below 46˚ F if inoculum is not already present.</p></td></tr></tfoot></table></div>
+<script data-html-table-sort>(function enhanceSortableTables(doc) {
+    doc.querySelectorAll("table.html-table-sortable:not([data-sort-ready])").forEach(function (table) {
+      table.setAttribute("data-sort-ready", "");
+      var body = table.tBodies[0];
+      if (!body) return;
+      var originalRows = Array.prototype.slice.call(body.rows);
+      var headers = Array.prototype.slice.call(table.querySelectorAll("th[data-sort-col]"));
+      var current = null;
+      function cellAt(tr, col) {
+        var c = 0;
+        for (var i = 0; i < tr.cells.length; i++) {
+          c += tr.cells[i].colSpan;
+          if (c > col) return tr.cells[i];
+        }
+        return null;
+      }
+      function sortValue(tr, col) {
+        var cell = cellAt(tr, col);
+        var copy = cell ? cell.cloneNode(true) : null;
+        var sups = copy ? copy.querySelectorAll("sup") : [];
+        for (var s = 0; s < sups.length; s++) sups[s].parentNode.removeChild(sups[s]);
+        var text = copy ? copy.textContent.trim() : "";
+        if (!text || /^[-–—\s]+$/.test(text)) return null;
+        var m = text.match(/^[<>~≤≥]?\s*(-?\d+(?:\.\d+)?)/);
+        return m ? parseFloat(m[1]) : text.toLowerCase();
+      }
+      function compare(a, b) {
+        if (typeof a !== typeof b) return typeof a === "number" ? -1 : 1;
+        return typeof a === "number" ? a - b : a.localeCompare(b, undefined, { numeric: true });
+      }
+      function apply() {
+        var rows = originalRows.slice();
+        if (current) {
+          var dir = current.direction === "desc" ? -1 : 1;
+          rows.sort(function (x, y) {
+            var a = sortValue(x, current.col);
+            var b = sortValue(y, current.col);
+            if (a === null || b === null) return (a === null) - (b === null);
+            return dir * compare(a, b);
+          });
+        }
+        rows.forEach(function (tr) { body.appendChild(tr); });
+        headers.forEach(function (th) {
+          var active = current && current.th === th;
+          var icon = th.querySelector("[data-sort-icon]");
+          th.setAttribute("aria-sort", active ? (current.direction === "desc" ? "descending" : "ascending") : "none");
+          icon.textContent = active ? (current.direction === "desc" ? " ▼" : " ▲") : " ↕";
+          icon.style.color = active ? "inherit" : "#999";
+        });
+      }
+      headers.forEach(function (th) {
+        var button = doc.createElement("button");
+        button.type = "button";
+        button.style.cssText = "border:0;background:none;padding:0;font:inherit;color:inherit;text-align:inherit;cursor:pointer;";
+        while (th.firstChild) button.appendChild(th.firstChild);
+        var icon = doc.createElement("span");
+        icon.setAttribute("data-sort-icon", "");
+        icon.setAttribute("aria-hidden", "true");
+        icon.style.fontSize = "0.8em";
+        button.appendChild(icon);
+        th.appendChild(button);
+        button.addEventListener("click", function () {
+          var col = parseInt(th.getAttribute("data-sort-col"), 10);
+          if (!current || current.th !== th) current = { th: th, col: col, direction: "asc" };
+          else if (current.direction === "asc") current.direction = "desc";
+          else current = null;
+          apply();
+        });
+      });
+      apply();
+    });
+  })(document);</script>
+```
+
+::: {.latex-equation}
+[1\.0 Some Random Equation]{.latex-equation-title style="display:block;margin:0 0 0.5rem;font-size:1.35rem;line-height:1.25;font-weight:600;"}
 $$
 \frac{a+b}{c}
 $$
+:::
 
 {{< pesticide-summary title="1.1 Pesticide Summary Table Highbush Blueberries, Insecticides" siteId="29" type="Insecticide" >}}
 
 The species is most often found in orchards, backyard apple trees, and anywhere an unattended pie is cooling on a windowsill.
 
-{{< pesticide-table title="" guidelineId="1" pestId="900" siteId="6" changedSince="" >}}
+{{< pesticide-table title="1.2.1 Mac Muncher on Apples" guidelineId="1" pestId="900" siteId="6" changedSince="" >}}
 
-## 1.2.1 Codling Moth
+## 1.2.2 Codling Moth
 
 The Codling Moth (Cydia pomonella) is a primary pest of apples and pears, with larvae causing "wormy" fruit by burrowing into the core to feed on seeds. Cornell IPM materials indicate that this species completes multiple generations annually, with larvae creating destructive, unmarketable tunnels. For more details, visit Cornell IPM.

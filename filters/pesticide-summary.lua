@@ -1,5 +1,5 @@
 -- Public Quarto shortcode:
--- {{< pesticide-summary siteId="123" type="Insecticide" >}}
+-- {{< pesticide-summary title="..." siteId="123" type="Insecticide" >}}
 
 local function stringify(value)
   if value == nil then
@@ -20,10 +20,21 @@ end
 
 return {
   ["pesticide-summary"] = function(args, kwargs, meta)
+    local title = stringify(kwargs["title"])
     local site_id = stringify(kwargs["siteId"])
     local summary_type = stringify(kwargs["type"])
 
-    local html = string.format(
+    -- Outside the summary container: public-pesticide-summary.js replaces the
+    -- container's contents when it loads. Same markup as the admin preview.
+    local title_html = ""
+    if title ~= "" then
+      title_html = string.format(
+        '<div class="pesticide-summary-title">%s</div>\n',
+        escape_html(title)
+      )
+    end
+
+    local html = title_html .. string.format(
       [[
 <div
   class="pesticide-summary-public"

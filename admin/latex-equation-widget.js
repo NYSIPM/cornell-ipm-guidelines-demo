@@ -40,6 +40,49 @@
   }
 
   // =========================================================
+  // OPTIONAL TITLE
+  // =========================================================
+  //
+  // Without a title an equation is stored as plain display math:
+  //
+  //   $$
+  //   \frac{a+b}{c}
+  //   $$
+  //
+  // With a title it is wrapped in a Pandoc fenced div, title on its own line:
+  //
+  //   ::: {.latex-equation}
+  //   [My title]{.latex-equation-title style="..."}
+  //   $$
+  //   \frac{a+b}{c}
+  //   $$
+  //   :::
+  //
+  // No blank lines anywhere: Decap only matches an editor component against
+  // the text up to the first blank line. The style is inline because the
+  // publications don't share a site stylesheet; it matches the table titles.
+
+  const TITLE_STYLE = "display:block;margin:0 0 0.5rem;font-size:1.35rem;line-height:1.25;font-weight:600;";
+
+  function normalizeTitle(value) {
+    return String(value || "").replace(/\s+/g, " ").trim();
+  }
+
+  // Backslash-escapes Markdown punctuation so the title is literal text.
+  function escapeMarkdown(value) {
+    return value.replace(/[\\`*_{}\[\]()#+\-.!$<>|~^]/g, "\\$&");
+  }
+
+  function unescapeMarkdown(value) {
+    return String(value || "").replace(/\\(.)/g, "$1");
+  }
+
+  // Blank lines would end the block early (in Decap and in Pandoc's display math).
+  function removeBlankLines(value) {
+    return value.split("\n").filter((line) => line.trim()).join("\n");
+  }
+
+  // =========================================================
   // CUSTOM TEXTAREA WIDGET
   // =========================================================
 
@@ -173,6 +216,12 @@
 
     fields: [
       {
+        name: "title",
+        label: "Equation Title",
+        widget: "string",
+        required: false
+      },
+      {
         name: "latex",
         label: "LaTeX equation",
         widget: "latex_equation_input",
@@ -181,17 +230,13 @@
     ],
 
     /*
-     * Recognizes an existing display equation:
+     * Recognizes an existing display equation, with or without the
+     * titled wrapper described under OPTIONAL TITLE above.
      *
-     * $$
-     * \frac{a+b}{c}
-     * $$
-     *
-     * The parentheses capture the equation itself as match[1].
+     * match[1] = escaped title (undefined when untitled)
+     * match[2] = the equation itself
      */
-    //pattern: /^\$\$\s*\n([\s\S]*?)\n\$\$\s*$/m,
-    pattern: /^\$\$\s*\n([\s\S]*?)\n\$\$\s*$/,
-    //pattern: /\{\{<\s*latex-equation\s*>\}\}([\s\S]*?)\{\{<\s*\/latex-equation\s*>\}\}/,
+    pattern: /^(?::::\s*\{\.latex-equation\}\s*\n\[((?:\\.|[^\\\]\n])*)\]\{\.latex-equation-title[^\n]*\}\s*\n)?\$\$\s*\n([\s\S]*?)\n\$\$(?:\s*\n:::)?\s*$/,
 
     /*
      * Converts Markdown already in the file back into the data
@@ -199,7 +244,8 @@
      */
     fromBlock(match) {
       return {
-        latex: normalizeLatex(match?.[1])
+        title: unescapeMarkdown(match?.[1]),
+        latex: normalizeLatex(match?.[2])
       };
     },
 
@@ -207,13 +253,25 @@
      * Converts the dialog value into Quarto/Pandoc Markdown.
      */
     toBlock(data) {
-      const latex = removeOuterDelimiters(data?.latex);
+      const latex = removeBlankLines(removeOuterDelimiters(data?.latex));
+      const title = normalizeTitle(data?.title);
 
       if (!latex) {
         return "";
       }
 
-      return `$$\n${latex}\n$$`;
+      const math = `$$\n${latex}\n$$`;
+
+      if (!title) {
+        return math;
+      }
+
+      return (
+        "::: {.latex-equation}\n" +
+        `[${escapeMarkdown(title)}]{.latex-equation-title style="${TITLE_STYLE}"}\n` +
+        math +
+        "\n:::"
+      );
     },
 
     /*
@@ -222,8 +280,16 @@
      * during the site build.
      */
     toPreview(data) {
-        const latex = removeOuterDelimiters(data?.latex);
+        const title = normalizeTitle(data?.title);
+        const titleHtml = title
+          ? `<div class="latex-equation-title" style="${TITLE_STYLE}">${escapeHtml(title)}</div>`
+          : "";
 
+        return titleHtml + renderEquationPreview(removeOuterDelimiters(data?.latex));
+    }
+  });
+
+  function renderEquationPreview(latex) {
         if (!latex) {
             return `
             <div class="latex-equation-preview latex-equation-preview--empty">
@@ -280,8 +346,7 @@
             </div>
             `;
         }
-        }
-  });
+  }
 
   CMS.registerPreviewStyle("https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css");
   CMS.registerPreviewStyle("/assets/css/latex.css");

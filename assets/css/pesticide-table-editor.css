@@ -92,7 +92,8 @@
   line-height: 1.1;
 }
 
-/* Thin line under each treatment (lighter than the 2px header line). Not in the public table - admin only.
+/* Thin line under each treatment (lighter than the 2px header line). The public table has the same line
+   (.treatment-end in assets/css/public-treatment-builder.css).
    Edit/Id span all three rows of a treatment, so they get the line too and it runs the full width.
    The last treatment shows the table's 2px bottom line instead (the thicker border wins). */
 .pesticide-table-wrapper tr.comment-row > td,

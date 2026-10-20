@@ -1,3 +1,11 @@
+/* Same as the admin preview title (assets/css/pesticide-table-editor.css) and .pesticide-summary-title */
+.treatment-table-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    font-weight: 600;
+}
+
 .treatment-gray td {
     background: #f1f1f1;
 }
@@ -23,6 +31,12 @@
 .public-treatment-table td {
     padding: 5px 6px; /*10 12*/
     vertical-align: top;
+}
+
+/* Thin line under each treatment, same as the admin table (assets/css/pesticide-table-editor.css).
+   The last treatment keeps the 2px bottom line below (more specific, so it wins). */
+.public-treatment-table tr.treatment-end > td {
+    border-bottom: 1px solid #b5b5b5;
 }
 
 .public-treatment-table tbody tr:last-child td {

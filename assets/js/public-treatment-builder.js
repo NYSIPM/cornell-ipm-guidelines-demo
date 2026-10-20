@@ -552,6 +552,9 @@
             ? "treatment-gray"
             : "treatment-white";
         const treatmentType = getTreatmentType(treatment);
+        const comments = formatComments(treatment);
+        // The treatment's last row (comments if any, else details) draws the line between treatments.
+        const endClass = " treatment-end";
         return `
             <tr class="${rowClass}">
                 <td class="treatment-name">
@@ -577,7 +580,7 @@
                 }
                 <td>${escapeHtml(treatment.efficacy?.name)}</td>
             </tr>
-            <tr class="details-row ${rowClass}">
+            <tr class="details-row ${rowClass}${comments ? "" : endClass}">
                 <td colspan="6">
                     <button type="button" class="toggle-details-button">
                         See more details
@@ -615,11 +618,11 @@
                 </td>
             </tr>
             ${
-                formatComments(treatment)
+                comments
                 ? `
-                    <tr class="comment-row ${rowClass}">
+                    <tr class="comment-row ${rowClass}${endClass}">
                         <td colspan="6">
-                            ${formatComments(treatment)}
+                            ${comments}
                         </td>
                     </tr>
                 `

@@ -64,7 +64,7 @@ format:
              Relative to docs/publications/organic-vegetable-crops/ -> docs/assets (copied by the root render). -->
         <link rel="stylesheet" href="../../assets/css/pesticide-summary-public.css">
         <link rel="stylesheet" href="../../assets/css/public-treatment-builder.css">
-        <script src="../../assets/js/public-treatment-builder.js?v=1"></script>
+        <script src="../../assets/js/public-treatment-builder.js?v=2"></script>
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <!-- Load your existing auth file (as-is) -->
         <script src="../../js/auth.js" defer></script>
