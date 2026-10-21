@@ -1,0 +1,13 @@
+---
+title: About the Organic Production and IPM Guide for Vegetables
+order: 10
+---
+This chapter is part of a collection of organic vegetable resources created by Cornell IPM and collaborators. Access the rest of the chapters at "[Organic Production and IPM Guide for Vegetables](https://cals.cornell.edu/integrated-pest-management/research-initiatives/publications/cornell-ipm-organic-production-and-ipm-guide-for-vegetables)."
+
+![This QR code links to Organic Production and IPM Guide for Vegetables](/static/images/screenshot-2026-10-21-150301.png)
+
+This QR code links to:
+
+"[Organic Production and IPM Guide for Vegetables](https://cals.cornell.edu/integrated-pest-management/research-initiatives/publications/cornell-ipm-organic-production-and-ipm-guide-for-vegetables)"
+
+a web page where the other chapters can be found.

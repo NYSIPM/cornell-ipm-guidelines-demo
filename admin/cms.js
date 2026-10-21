@@ -65,13 +65,22 @@
         const params = new URLSearchParams(window.location.search);
 
         if (params.has("code") && params.has("state")) {
-          await this.client.handleRedirectCallback();
+          const { appState } = await this.client.handleRedirectCallback();
 
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname
-          );
+          // Auth0 drops the #/... hash on the way back, so restore the page
+          // the user was on (saved as appState.returnTo in login()). Only
+          // same-origin targets are honoured; otherwise just strip ?code&state.
+          let returnTo = window.location.pathname;
+          try {
+            const target = new URL(appState?.returnTo, window.location.href);
+            if (target.origin === window.location.origin) {
+              returnTo = target.pathname + target.search + target.hash;
+            }
+          } catch (_) {
+            // Missing or malformed returnTo; fall back to the bare path.
+          }
+
+          window.history.replaceState({}, document.title, returnTo);
         }
 
         if (await this.client.isAuthenticated()) {

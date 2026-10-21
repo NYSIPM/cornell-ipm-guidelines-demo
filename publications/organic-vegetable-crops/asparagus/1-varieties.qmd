@@ -1,0 +1,12 @@
+---
+title: 1 Varieties
+order: 1
+---
+Many newer varieties are all-male hybrids, whereas traditional varieties produce 50 percent male and 50 percent female plants. Male hybrids are higher yielding, more vigorous, and do not produce seeds. See Table 1.1 and consult with Extension specialists, seed company representatives, and buyers to determine the best varieties for your farm. Use only disease-free crowns from trusted sources.
+
+```{=html}
+<!-- html-table-editor -->
+<div class="html-table-title" style="margin:0 0 0.75rem;font-size:1.35rem;line-height:1.25;font-weight:600;">Table 1.1 Recommended asparagus varieties</div>
+<style data-html-table-style>.html-table-title { margin: 0 0 0.75rem; font-size: 1.35rem; line-height: 1.25; font-weight: 600; } .html-table-wrap { width: 100%; overflow-x: auto; margin: 0 0 1rem; } .html-table { width: 100%; margin: 0; border: 0; border-collapse: collapse; border-spacing: 0; } .html-table th, .html-table td { padding: 5px 6px; border: 0; border-bottom: 1px solid #d7d7d7; text-align: left; vertical-align: top; overflow-wrap: break-word; } .html-table th { font-weight: 700; vertical-align: bottom; } .html-table thead th[colspan] { text-align: center; } .html-table thead { border-bottom: 2px solid #6f6f6f; } .html-table tbody { border-bottom: 2px solid #6f6f6f; } .html-table tbody tr:nth-child(odd) td { background: #ffffff; } .html-table tbody tr:nth-child(even) td { background: #f1f1f1; } .html-table tfoot td { background: #ffffff; } .html-table .ht-left { text-align: left; } .html-table .ht-center { text-align: center; } .html-table .ht-right { text-align: right; } .html-table th button:hover { text-decoration: underline; } .html-table .html-table__footnote { border-bottom: 0; font-size: 0.875em; line-height: 1.35; color: #333; } .html-table .html-table__footnote p { margin: 0.2em 0; }</style>
+<div class="html-table-wrap"><table class="html-table"><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Atlas* (RR,FT)1</td><td>Millennium* (RR, FT)</td></tr><tr><td>Eclipse* (RR,FT)</td><td>Walker Deluxe* (RR,FT)</td></tr><tr><td>Grande* (RR,FT)</td><td>Purple Passion** (RR,FT)</td></tr><tr><td>Jersey Knight* (RR,FT)</td><td></td></tr></tbody><tfoot><tr data-table-footnote><td colspan="2" class="html-table__footnote"><p><strong>*</strong> All male hybrid</p><p><strong>**</strong> Mix of male and female plants</p><p>1 RR = Rust resistant; FT = Fusarium tolerant</p></td></tr></tfoot></table></div>
+```
