@@ -64,6 +64,8 @@ website:
 format:
   html:
     theme: cosmo
+    # Centres content next to a crop sidebar (only affects sidebar pages).
+    css: crop-layout.css
     toc: true
     toc-location: left
     toc-title: "On this page"
