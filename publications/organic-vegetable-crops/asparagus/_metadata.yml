@@ -1,0 +1,7 @@
+# Settings for every page in this folder only (Quarto merges this over the
+# guide's _quarto.yml).
+#
+# The crop sidebar already sits on the left, so "On this page" moves to the
+# right. With both on the left, Quarto leaves the right-hand column empty and
+# the page content hugs the sidebar instead of sitting in the middle.
+toc-location: right
