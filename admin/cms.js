@@ -65,13 +65,22 @@
         const params = new URLSearchParams(window.location.search);
 
         if (params.has("code") && params.has("state")) {
-          await this.client.handleRedirectCallback();
+          const { appState } = await this.client.handleRedirectCallback();
 
-          window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname
-          );
+          // Auth0 drops the #/... hash on the way back, so restore the page
+          // the user was on (saved as appState.returnTo in login()). Only
+          // same-origin targets are honoured; otherwise just strip ?code&state.
+          let returnTo = window.location.pathname;
+          try {
+            const target = new URL(appState?.returnTo, window.location.href);
+            if (target.origin === window.location.origin) {
+              returnTo = target.pathname + target.search + target.hash;
+            }
+          } catch (_) {
+            // Missing or malformed returnTo; fall back to the bare path.
+          }
+
+          window.history.replaceState({}, document.title, returnTo);
         }
 
         if (await this.client.isAuthenticated()) {
@@ -879,7 +888,19 @@
 
       const loadKey = `${guidelineId}|${pestId}|${siteId}|${changedSince}`;
 
-      if (node.getAttribute("data-load-key") === loadKey) continue;
+      // The title is not part of loadKey/the cache, so it is always rendered from the current value.
+      const titleHtml = tableTitle
+        ? `<div class="treatment-table-title">${escapeHtml(tableTitle)}</div>`
+        : "";
+
+      if (node.getAttribute("data-load-key") === loadKey) {
+        if (node.getAttribute("data-rendered-title") !== tableTitle) {
+          node.querySelector(":scope > .treatment-table-title")?.remove();
+          if (titleHtml) node.insertAdjacentHTML("afterbegin", titleHtml);
+          node.setAttribute("data-rendered-title", tableTitle);
+        }
+        continue;
+      }
 
       //I might End up removing the this block.
       // Do not refresh the table while the user is actively editing it.
@@ -897,7 +918,8 @@
         node.__pesticideRows = cached.rows;
         node.__changedSince = changedSince;
         node.__pesticideJson = cached.json;
-        node.innerHTML = cached.titleHtml + cached.html;
+        node.innerHTML = titleHtml + cached.html;
+        node.setAttribute("data-rendered-title", tableTitle);
         window.PesticideTableBuilder.wireTableEvents(node);
         continue;
       }
@@ -938,17 +960,13 @@
         const html = window.PesticideTableBuilder.renderTable(json, {
           changedSince: changedSince
         });
-        const titleHtml = tableTitle
-          ? `<div class="treatment-table-title">${escapeHtml(tableTitle)}</div>`
-          : "";
-
         node.innerHTML = titleHtml + html;
+        node.setAttribute("data-rendered-title", tableTitle);
 
         window.PesticideTableBuilder.wireTableEvents(node);
 
         pesticideTableRenderCache.set(loadKey, {
           html,
-          titleHtml,
           json,
           rows: node.__pesticideRows
         });

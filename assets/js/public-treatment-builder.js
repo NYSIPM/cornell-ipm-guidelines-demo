@@ -42,20 +42,27 @@
 
             if (!button) return;
 
-            const detailsRow =
-                button.closest(".details-row");
-
+            // The link sits in the Control Technique cell; its details row is the next row,
+            // hidden until opened (like the admin table's DETAILS_TOGGLE_IN_PRODUCT layout).
+            const mainRow = button.closest("tr");
+            const detailsRow = mainRow?.nextElementSibling;
             const details =
                 detailsRow?.querySelector(".treatment-details");
 
             if (!details) return;
 
             details.classList.toggle("is-hidden");
+            const hidden = details.classList.contains("is-hidden");
+            detailsRow.classList.toggle("is-hidden", hidden);
 
-            button.textContent =
-                details.classList.contains("is-hidden")
-                    ? "See more details"
-                    : "Hide details";
+            // Without a comments row, the line between treatments goes under whichever
+            // of the two rows is the treatment's last visible one.
+            if (!detailsRow.nextElementSibling?.classList.contains("comment-row")) {
+                mainRow.classList.toggle("treatment-end", hidden);
+                detailsRow.classList.toggle("treatment-end", !hidden);
+            }
+
+            button.textContent = hidden ? "See more details" : "Hide details";
         });
     }
 
@@ -76,10 +83,24 @@
 
         if (concentration) text += concentration;
         if (unit) text += (text ? " " : "") + unit;
-        if (unitArea) text += "/ " + unitArea;
+        if (unitArea) text += "/" + unitArea; // "gal/acre" (no space after the slash)
         if (amountNote) text += (text ? " " : "") + `(${amountNote})`;
 
         return clean(text);
+    }
+
+    // REI / PHI amount with its unit: "12" + "Hours" -> "12 Hours", "1" + "Days" -> "1 Day".
+    // defaultUnit is used when no unit was saved (REI has always meant hours, so it passes "hr").
+    function formatTimeValue(value, unit, defaultUnit = "") {
+        const amount = clean(value);
+        if (!amount) return "";
+
+        let label = clean(unit) || defaultUnit;
+        if (parseFloat(amount) === 1 && /s$/i.test(label)) {
+            label = label.slice(0, -1);
+        }
+
+        return label ? `${amount} ${label}` : amount;
     }
 
     function formatRei(sitePesticideList) {
@@ -88,10 +109,11 @@
 
         const parts = [];
 
-        const rei = clean(sp.rei);
+        // Uses the saved REI unit (Hours/Days). Before 10-16-2026 this always said "hr", even for Days.
+        const rei = formatTimeValue(sp.rei, sp.reiTime, "hr");
 
         if (rei) {
-            parts.push(escapeHtml(`${rei} hr`));
+            parts.push(escapeHtml(rei));
         }
 
         if (sp.reiReferToLabel) {
@@ -111,15 +133,10 @@
 
         const parts = [];
 
-        const phi = clean(sp.phi);
-        const phiTime = clean(sp.phiTime);
+        const phi = formatTimeValue(sp.phi, sp.phiTime);
 
         if (phi) {
-            const phiText = phiTime
-                ? `${phi} ${phiTime}`
-                : phi;
-
-            parts.push(escapeHtml(phiText));
+            parts.push(escapeHtml(phi));
         }
 
         if (sp.phiReferToLabel) {
@@ -378,6 +395,38 @@
         return unique(symbols).join("");
     }
 
+    // Key under the table for the RestrictedUse symbols it uses, same as the admin table
+    // (renderRestrictedUseKey in admin/pesticide-table-builder.js): each symbol + description
+    // once, in the order they first appear. "" when no product has a symbol.
+    function renderRestrictedUseKey(treatments) {
+        const seen = new Set();
+        const items = [];
+
+        treatments.forEach(treatment =>
+            (treatment?.controlTechnique?.pesticides || []).forEach(pesticide =>
+                (pesticide?.restrictedUse || []).forEach(item => {
+                    const symbol = clean(item?.symbol);
+                    const description = clean(item?.description);
+                    const key = `${symbol}|${description}`;
+
+                    if (!symbol || seen.has(key)) return;
+                    seen.add(key);
+                    items.push({ symbol, description });
+                })));
+
+        if (!items.length) return "";
+
+        return `
+            <tfoot>
+                <tr>
+                    <td colspan="6" class="restricted-use-key">
+                        ${items.map(item => `<span class="restricted-use-key-item"><span class="restricted-use-symbol">${escapeHtml(item.symbol)}</span> ${escapeHtml(item.description)}</span>`).join("")}
+                    </td>
+                </tr>
+            </tfoot>
+        `;
+    }
+
     //Sorting
     // Rows with no value for the active column always sort last, in either direction.
     function getSitePesticides(treatment) {
@@ -386,10 +435,16 @@
             .filter(Boolean);
     }
 
+    // Normalized to hours like PHI, so an REI of "2 Days" sorts after "24 Hours" (no unit = hours)
     function getReiSortValue(treatment) {
         for (const sp of getSitePesticides(treatment)) {
-            const hours = parseFloat(clean(sp.rei));
-            if (!Number.isNaN(hours)) return hours;
+            const amount = parseFloat(clean(sp.rei));
+            if (Number.isNaN(amount)) continue;
+
+            const unit = clean(sp.reiTime).toLowerCase();
+            if (unit.startsWith("week")) return amount * 168;
+            if (unit.startsWith("day")) return amount * 24;
+            return amount;
         }
         return null;
     }
@@ -536,14 +591,21 @@
             ? "treatment-gray"
             : "treatment-white";
         const treatmentType = getTreatmentType(treatment);
+        const comments = formatComments(treatment);
+        // The treatment's last visible row draws the line between treatments: the comments
+        // row if there is one, otherwise the main row (the details row starts hidden).
+        const endClass = " treatment-end";
         return `
-            <tr class="${rowClass}">
+            <tr class="${rowClass}${comments ? "" : endClass}">
                 <td class="treatment-name">
                     <span style="display:none;">
                         ${escapeHtml(treatment.treatmentId)}
                     </span>
                     ${renderRestrictedUseSymbols(treatment)}
                     ${escapeHtml(getControlTechniqueName(treatment))}
+                    <div class="product-details-toggle">
+                        <button type="button" class="toggle-details-button">See more details</button>
+                    </div>
                 </td>
                 ${
                     treatmentType === "pesticide"
@@ -561,12 +623,8 @@
                 }
                 <td>${escapeHtml(treatment.efficacy?.name)}</td>
             </tr>
-            <tr class="details-row ${rowClass}">
+            <tr class="details-row ${rowClass} is-hidden">
                 <td colspan="6">
-                    <button type="button" class="toggle-details-button">
-                        See more details
-                    </button>
-
                     <div class="treatment-details is-hidden">
                         <strong>Conventional:</strong>
                         ${getConventionalText(treatment)}
@@ -599,11 +657,11 @@
                 </td>
             </tr>
             ${
-                formatComments(treatment)
+                comments
                 ? `
-                    <tr class="comment-row ${rowClass}">
+                    <tr class="comment-row ${rowClass}${endClass}">
                         <td colspan="6">
-                            ${formatComments(treatment)}
+                            ${comments}
                         </td>
                     </tr>
                 `
@@ -612,9 +670,12 @@
         `;
         }).join("");
 
+        // Built from the unsorted list so the key's order doesn't change when sorting.
+        const restrictedUseKey = renderRestrictedUseKey(allTreatments);
+
         return `
         <div class="public-treatment-table-wrapper">
-            <table class="public-treatment-table">
+            <table class="public-treatment-table${restrictedUseKey ? " has-key" : ""}">
             <thead>
                 <tr>
                 ${SORT_COLUMNS.map(column => renderSortableHeader(column, sort)).join("")}
@@ -623,6 +684,7 @@
             <tbody>
                 ${rows}
             </tbody>
+            ${restrictedUseKey}
             </table>
         </div>
         <div class="treatment-table-footer">

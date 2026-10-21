@@ -1,0 +1,40 @@
+---
+title: 4 Planting Methods
+order: 4
+---
+## 4.1 Site Selection
+
+Asparagus beds are maintained for 8 to 15 years, so it is important to choose an appropriate location. Well-drained, loamy soils are best. To avoid problems with Fusarium, establish new beds in fields that have not been planted to asparagus previously. Avoid establishing an asparagus planting less than three years after onions or close to onion plantings, as the two crops are both susceptible to *Stemphylium vesicarium*.
+
+## 4.2 Advance Field Preparation
+
+See Section 2: Cover Crops In Asparagus Production. **It is critical to make sure that soil pH is correct, that nutrients are adequate, and that the weed population (especially for perennial weeds) is at a minimum** (see Section 9: Weed Management).
+
+## 4.3 Crowns
+
+One-year-old crowns are typically planted. Two-year-old crowns are generally less vigorous. Use disease-free crowns from a reputable supplier. Commercially, crowns are dug in the fall after one season’s growth, stored, and sold in the spring. If a grower establishes his/her own nursery, crowns may be left in the field over the winter, dug in the spring, and replanted immediately. Crowns are placed in the bottoms of furrows six to eight inches deep with buds up and covered with 1½ inches of soil. Furrows are gradually filled in over the first growing season, by moving soil toward the plants during cultivation until the field is again level.
+
+## 4.4 Transplants
+
+### 4.4.1 Transplant production
+
+Transplants can be purchased or grown on site from disease-free seed. They should be started in a greenhouse 10 to 12 weeks before they will be moved into the field.
+
+### 4.4.2 Transplanting
+
+Transplants are planted in furrows six to eight inches deep. The furrow should be wide and contain a three-inch flattened mound at the bottom in a modified W-shape. Placing the transplant on the mound protects the plant from being washed out or covered by soil during a heavy rain. Furrows are not completely filled in at planting. Instead, the root mass of the transplant is covered, and the soil is gradually moved into the furrows with cultivation over the first growing season. See Table 4.1 for row and plant spacing. Starter solution containing phosphorus may be beneficial. Many growers are using OMRI-listed fish emulsion.
+
+```{=html}
+<!-- html-table-editor -->
+<div class="html-table-title" style="margin:0 0 0.75rem;font-size:1.35rem;line-height:1.25;font-weight:600;">Table 4.1 Recommended spacing.</div>
+<style data-html-table-style>.html-table-title { margin: 0 0 0.75rem; font-size: 1.35rem; line-height: 1.25; font-weight: 600; } .html-table-wrap { width: 100%; overflow-x: auto; margin: 0 0 1rem; } .html-table { width: 100%; margin: 0; border: 0; border-collapse: collapse; border-spacing: 0; } .html-table th, .html-table td { padding: 5px 6px; border: 0; border-bottom: 1px solid #d7d7d7; text-align: left; vertical-align: top; overflow-wrap: break-word; } .html-table th { font-weight: 700; vertical-align: bottom; } .html-table thead th[colspan] { text-align: center; } .html-table thead { border-bottom: 2px solid #6f6f6f; } .html-table tbody { border-bottom: 2px solid #6f6f6f; } .html-table tbody tr:nth-child(odd) td { background: #ffffff; } .html-table tbody tr:nth-child(even) td { background: #f1f1f1; } .html-table tfoot td { background: #ffffff; } .html-table .ht-left { text-align: left; } .html-table .ht-center { text-align: center; } .html-table .ht-right { text-align: right; } .html-table th button:hover { text-decoration: underline; } .html-table .html-table__footnote { border-bottom: 0; font-size: 0.875em; line-height: 1.35; color: #333; } .html-table .html-table__footnote p { margin: 0.2em 0; }</style>
+<div class="html-table-wrap"><table class="html-table"><thead><tr><th>Row (in feet)</th><th>In-row (in inches)</th></tr></thead><tbody><tr><td>4.5-6<sup>1</sup></td><td>10-18<sup>2</sup></td></tr></tbody><tfoot><tr data-table-footnote><td colspan="2" class="html-table__footnote"><p><sup>1</sup> Use spacing that allows room for farm equipment. Mature ferns can become large and difficult to cover with sprays if planted too closely.</p><p><sup>2</sup> Early yields from closely spaced plants will be high, but as roots spread, the closely spaced plants become crowded and spear diameter decreases.</p></td></tr></tfoot></table></div>
+```
+
+## 4.5 Planting Dates
+
+Asparagus can be killed by frost. Plant after all danger of frost has passed.
+
+## 4.6 Postharvest maintenance
+
+Keeping ferns healthy will increase future yields and the life span of the planting. Once ferns have yellowed and died, they can be cut and removed to reduce overwintering asparagus beetles and disease inoculum. A winter-killed cover crop can help reduce erosion.

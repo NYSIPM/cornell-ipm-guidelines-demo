@@ -1,5 +1,5 @@
 # TEST GIT CHANGE
-#local_backend: true
+local_backend: true
 
 backend:
   name: github
@@ -149,6 +149,15 @@ collections:
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
+    # Chapters live in one folder per crop (asparagus/, beans/, ...). The
+    # sidebar shows each crop folder by its folder name, and clicking one lists
+    # the files directly inside it. subfolders: false turns off Decap's default
+    # "one index file per folder" mode, where a folder takes its title from its
+    # only file and clicking it lists nothing (files aren't named index.qmd here).
+    nested:
+      depth: 2
+      summary: "{{title}}"
+      subfolders: false
     sortable_fields: ["order", "title"]
     fields:
       - {label: "Title", name: "title", widget: "string"}

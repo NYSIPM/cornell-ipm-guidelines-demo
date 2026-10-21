@@ -415,15 +415,41 @@
                     </div>
                 </div>
 
-                <div style="margin-top:16px; border-radius:6px; border:1px solid #ddd; padding:10px; background:#fafafa;">
-                    <div style="font-weight:600; font-size:13px; margin-bottom:6px;">
-                        Restricted Use
+                <div style="display:grid; grid-template-columns:minmax(160px, 1fr) 3fr; gap:12px; margin-top:16px;">
+                    <!-- Designation (PesticideGuideline - this pesticide in this guideline) Moved here from Edit Treatment 10-14-2026 -->
+                    <div style="border-radius:6px; border:1px solid #ddd; padding:10px; background:#fafafa;">
+                        <div style="font-weight:600; font-size:13px; margin-bottom:6px;">
+                            Designation
+                        </div>
+                        ${renderDesignationCheckboxes(pesticide)}
                     </div>
-                    <div id="product-restricted-use-list">
-                        ${renderRestrictedUseCheckboxesForPesticide(pesticide, index)}
+
+                    <div style="border-radius:6px; border:1px solid #ddd; padding:10px; background:#fafafa;">
+                        <div style="font-weight:600; font-size:13px; margin-bottom:6px;">
+                            Restricted Use
+                        </div>
+                        <div id="product-restricted-use-list">
+                            ${renderRestrictedUseCheckboxesForPesticide(pesticide, index)}
+                        </div>
                     </div>
                 </div>
             </div>
+        `;
+    }
+
+    function renderDesignationCheckboxes(pesticide) {
+        const conventional = pesticide?.pesticideGuideline?.conventional ?? false;
+        const organic = pesticide?.pesticideGuideline?.organic ?? false;
+
+        return `
+            <label style="display:block; font-size:12px; margin-bottom:4px;">
+                <input type="checkbox" data-product-field="conventional" ${conventional ? "checked" : ""}>
+                Conventional
+            </label>
+            <label style="display:block; font-size:12px;">
+                <input type="checkbox" data-product-field="organic" ${organic ? "checked" : ""}>
+                Organic
+            </label>
         `;
     }
 
@@ -686,6 +712,11 @@
                 formulation: getValue("formulation"),
                 epaRegistrationNumber: getValue("epaRegistrationNumber"),
                 deleted: false,
+                //Designation is per pesticide per guideline (guideline comes from guidelineId on the payload)
+                pesticideGuideline: {
+                    conventional: !!block.querySelector('[data-product-field="conventional"]')?.checked,
+                    organic: !!block.querySelector('[data-product-field="organic"]')?.checked
+                },
                 restrictedUse: restrictedUseIds.map(id => ({ restrictedUseId: id })),
                 activeIngredients: (modal.__selectedActiveIngredientsByPesticide?.[pesticideIndex] || []).map(ai => ({
                     activeIngredientId: parseInt(ai.activeIngredientId, 10) || 0,
@@ -719,6 +750,7 @@
 
             const payload = {
             controlTechniqueId: parseInt(row.controlTechniqueId, 10) || 0,
+            guidelineId: parseInt(container.dataset.guidelineId, 10) || 0, //Needed to save each pesticide's Designation (PesticideGuideline)
             isMixture: row.treatment?.controlTechnique?.isMixture ?? false,
             pesticides: pesticidePayloads,
             biologicalControls: biologicalControlPayloads,

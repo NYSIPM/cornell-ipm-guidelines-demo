@@ -31,13 +31,13 @@
   background: #fff;
 }
 
-/* Pesticide summary table container */
+/* Pesticide summary table container - no outer box or padding, like the treatment tables */
 .pesticide-summary {
   box-sizing: border-box;
-  padding: 16px;
-  border: 1px solid #d6d6d6;
-  border-radius: 4px;
-  background: #fff;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .pesticide-summary-public {
@@ -68,6 +68,7 @@
   table-layout: fixed;
   border-collapse: collapse;
   border-spacing: 0;
+  border-bottom: 2px solid #6f6f6f; /* same dark line as the treatment tables */
 }
 
 .pesticide-summary__table th,
@@ -79,9 +80,12 @@
   overflow-wrap: break-word;
 }
 
+/* Header like the treatment tables: bold, with a 2px dark line under it */
 .pesticide-summary__table th {
-  font-weight: 600;
+  font-weight: 700;
   vertical-align: bottom;
+  padding: 5px 6px;
+  border-bottom: 2px solid #6f6f6f;
 }
 
 .pesticide-summary__sort-button {
@@ -120,7 +124,7 @@
 }
 
 .pesticide-summary__table tbody tr.is-odd {
-  background: #f3f3f3;
+  background: #f1f1f1; /* same gray as the treatment tables */
 }
 
 /* Per-column widths — adjust these percentages to resize individual columns.

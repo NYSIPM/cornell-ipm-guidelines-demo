@@ -9,7 +9,8 @@
     return;
   }
 
-  const stylesheetUrl = "/assets/css/pesticide-summary-public.css?v=3";
+  //Bump ?v= when the stylesheet changes so the CMS preview doesn't keep an old cached copy
+  const stylesheetUrl = "/assets/css/pesticide-summary-public.css?v=4";
 
   if (typeof CMS.registerPreviewStyle === "function") {
     CMS.registerPreviewStyle(stylesheetUrl);
@@ -29,6 +30,36 @@
   // cache we'd flash back to "Loading..." and re-fetch every time, which is
   // what was resetting the iframe's scroll position.
   const summaryRenderCache = new Map();
+
+  // Column sort chosen for each table, keyed the same way. Kept here (not on the node)
+  // because the preview rebuilds the node, which would otherwise reset the sort.
+  const summarySortByKey = new Map();
+
+  function renderSortedTable(node, loadKey) {
+    const cached = summaryRenderCache.get(loadKey);
+    if (!cached) return;
+
+    node.innerHTML = cached.titleHtml + summary.renderTable(cached.json, summarySortByKey.get(loadKey) || null);
+  }
+
+  // Header clicks: asc -> desc -> back to the API's order (same as the public summary)
+  function wireSortEvents(node) {
+    if (node.__pesticideSummarySortBound) return;
+    node.__pesticideSummarySortBound = true;
+
+    node.addEventListener("click", function (event) {
+      const button = event.target.closest?.(".pesticide-summary__sort-button");
+      if (!button) return;
+
+      const loadKey = node.getAttribute("data-load-key");
+      const key = button.dataset.sortKey;
+
+      summarySortByKey.set(loadKey, summary.getNextSort(summarySortByKey.get(loadKey), key));
+      renderSortedTable(node, loadKey);
+
+      node.querySelector(`.pesticide-summary__sort-button[data-sort-key="${key}"]`)?.focus();
+    });
+  }
 
   async function safelyReadResponseText(response) {
     try {
@@ -79,7 +110,8 @@
     if (cached) {
       node.setAttribute("data-load-key", loadKey);
       node.__pesticideSummaryJson = cached.json;
-      node.innerHTML = cached.titleHtml + cached.tableHtml;
+      renderSortedTable(node, loadKey);
+      wireSortEvents(node);
       return;
     }
 
@@ -117,11 +149,10 @@
       node.__pesticideSummaryJson = json;
 
       const titleHtml = renderTitle(tableTitle);
-      const tableHtml = summary.renderTable(json);
 
-      node.innerHTML = titleHtml + tableHtml;
-
-      summaryRenderCache.set(loadKey, { titleHtml, tableHtml, json });
+      summaryRenderCache.set(loadKey, { titleHtml, json });
+      renderSortedTable(node, loadKey);
+      wireSortEvents(node);
     } catch (error) {
       console.error("[PesticideSummary] Preview failed:", error);
       node.removeAttribute("data-load-key");

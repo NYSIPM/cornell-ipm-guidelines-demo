@@ -31,6 +31,10 @@
         "[auth0-cms-bridge] Local mode detected; skipping Auth0 bridge."
       );
 
+      // Local content comes from `local_backend: true` in config.yml (Decap
+      // only honours it on localhost/127.0.0.1, so it's safe to commit).
+      // Don't pass a config object here: when one is passed, Decap skips
+      // config.yml if the dev server doesn't serve it with a YAML content type.
       window.CMS.init();
       return;
     }

@@ -1,3 +1,11 @@
+/* Same as the admin preview title (assets/css/pesticide-table-editor.css) and .pesticide-summary-title */
+.treatment-table-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    font-weight: 600;
+}
+
 .treatment-gray td {
     background: #f1f1f1;
 }
@@ -25,8 +33,47 @@
     vertical-align: top;
 }
 
-.public-treatment-table tbody tr:last-child td {
+/* Thin line under each treatment, same as the admin table (assets/css/pesticide-table-editor.css).
+   .treatment-end is moved between rows by public-treatment-builder.js as details open/close. */
+.public-treatment-table tr.treatment-end > td {
+    border-bottom: 1px solid #b5b5b5;
+}
+
+/* Dark line closing the treatments. On the tbody rather than its last row, because that row
+   may be a hidden details row. The wider line wins over the last treatment's 1px line. */
+.public-treatment-table tbody {
     border-bottom: 2px solid #6f6f6f;
+}
+
+/* Details row takes no space until "See more details" (in the Control Technique cell) opens it */
+.public-treatment-table tr.details-row.is-hidden {
+    display: none;
+}
+
+/* "See more details" under the control technique name - not bold like the name, same as the admin table */
+.public-treatment-table .product-details-toggle .toggle-details-button {
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+/* RestrictedUse key in the table footer, same as the admin table: each symbol + description once.
+   The dark line above it is the tbody's bottom line, so there is no line under the key. */
+.public-treatment-table .restricted-use-key {
+    background: #ffffff;
+    padding: 6px;
+    font-size: 13px;
+    text-align: left;
+}
+
+.public-treatment-table .restricted-use-key-item {
+    display: inline-block;
+    margin-right: 18px;
+}
+
+.public-treatment-table .restricted-use-key .restricted-use-symbol {
+    margin-right: 0;
+    cursor: default;
 }
 
 .treatment-name {
