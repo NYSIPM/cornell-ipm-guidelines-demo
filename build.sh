@@ -4,7 +4,7 @@
 
 echo "=== Installing Quarto ==="
 
-QUARTO_VERSION="1.4.550"
+QUARTO_VERSION="1.9.35"
 QUARTO_DIR="/tmp/quarto-${QUARTO_VERSION}"
 QUARTO_ARCHIVE="/tmp/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
 wget -q \
