@@ -11,3 +11,81 @@ This QR code links to:
 "[Organic Production and IPM Guide for Vegetables](https://cals.cornell.edu/integrated-pest-management/research-initiatives/publications/cornell-ipm-organic-production-and-ipm-guide-for-vegetables)"
 
 a web page where the other chapters can be found.
+
+## Coordinating Editors:
+
+Abby Seaman (Cornell University, Cornell Integrated Pest Management)
+
+Jill Eccleston (Cornell University, Cornell Integrated Pest Management)
+
+Mary Kirkwyland (Cornell University, Cornell Integrated Pest Management)
+
+## Contributors:
+
+Gary Bergstrom (Cornell University, SIPS Plant Pathology and Plant-Microbe Biology Section)
+
+Thomas Bjorkman (Cornell University, SIPS Horticulture Section)
+
+Bryan Brown (Cornell University, Cornell Integrated Pest Management)
+
+Elizabeth Buck (Cornell Cooperative Extension, Cornell Vegetable Program)
+
+Juliet Carroll (Cornell University, Cornell Integrated Pest Management)
+
+Kaitlin Diggins (Cornell University, SIPS Plant Pathology and Plant-Microbe Biology Section)
+
+Ethan Grundberg (Cornell Cooperative Extension, Eastern New York Commercial Horticulture Program)
+
+Walter DeJong (Cornell University, SIPS Plant Breeding and Genetics Section)
+
+Frank Hay (Cornell University, SIPS Plant Pathology and Plant-Microbe Biology Section)
+
+Mike Helms (Cornell University, Pesticide Safety Education Program, Cornell Integrated Pest Management)
+
+Christy Hoepting (Cornell Cooperative Extension, Cornell Vegetable Program)
+
+Julie Kikkert (Cornell Cooperative Extension, Cornell Vegetable Program)
+
+Margie Lund (Cornell Cooperative Extension, Cornell Vegetable Program)
+
+Meg McGrath (Cornell University, SIPS Plant Pathology and Plant-Microbe Biology Section)
+
+Sandra Menasha (Cornell Cooperative Extension, Suffolk County)
+
+Brian Nault (Cornell University, Department of Entomology)
+
+Sarah Pethybridge (Cornell University, SIPS Plant Pathology and Plant-Microbe Biology Section)
+
+Stephen Reiners (Cornell University, SIPS Horticulture Section)
+
+Elsa Sánchez (Penn State College of Agricultural Sciences, Department of Plant Science)
+
+Chris Smart (Cornell University, SIPS Plant Pathology and Plant-Microbe Biology Section)
+
+Crystal Stewart-Courtens (Cornell Cooperative Extension, Eastern New York Commercial Horticulture Program)
+
+Marion Zuefle (Cornell University, Cornell Integrated Pest Management)
+
+Thank you to Conor Darcy, Ben Knowlton, and Marcus Lopez for technical support.
+
+Special appreciation for contributions to previous versions of this resource:
+
+George S. Abawi, Helene R. Dillard, Donald E. Halseth, Michael P. Hoffmann, Chuck Mohler, Curt Petzoldt, Anu Rangarajan, Anthony M. Shelton, Liz Thomas, and Thomas A. Zitter
+
+The content and format of this guide is adapted from the Cornell Integrated Crop and Pest Management Guidelines for Commercial Vegetable Production.
+
+The guidelines in this bulletin reflect the current (and past) authors’ best effort to interpret a complex body of scientific research, and to translate this into practical management options. Following the guidance provided in this bulletin does not assure compliance with any applicable law, rule, regulation or standard, or the achievement of particular discharge levels from agricultural land.
+
+Every effort has been made to provide correct, complete, and up-to-date pest management information for New York State at the time this publication was released (July 2026). Changes in pesticide registrations, regulations, and guidelines occurring after publication are available in county Cornell Cooperative Extension offices or from the Cornell IPM Pesticide Safety Education Program (PSEP) ([psep.cce.cornell.edu](https://psep.cce.cornell.edu/)).
+
+Trade names used herein are for convenience only. No endorsement of products is intended, nor is criticism of unnamed products implied.
+
+**This guide is not a substitute for pesticide labeling. Always read the product label before applying any pesticide.**
+
+This work was supported in part by the Smith-Lever Project # 2021-22-199 from the U.S. Department of Agriculture’s National Institute of Food and Agriculture. Any opinions, findings, conclusions, or recommendations expressed in this publication are those of the author(s) and should not be construed to represent any official USDA or U.S. Government determination or policy.
+
+Support was also provided by the Cornell Integrated Pest Management Program, which is funded through Cornell University, the New York State Department of Agriculture and Markets, the New York State Department of Environmental Conservation, and USDA-NIFA – Extension Implementation Program (EIP) Award #2024-70006-43573 – Accession #1033151.
+
+## A note on the pesticide efficacy estimates included in these guides
+
+Insecticide and fungicide efficacy estimates were calculated mainly from trial results published in Arthropod Management Tests (published by the Entomological Society of America) and Plant Disease Management Reports (published by the American Phytopathological Society). Some pesticides allowed for organic production have been tested in many trials; others very few. Our goal was to present objective estimates by averaging the percent improvement provided by a given active ingredient compared with an untreated control, and to indicate how many trials were included in the calculation. We also indicate how many of the results included in the calculation were different (as determined by a statistical analysis) from the untreated control. When compiling a collection of trial results there is often a wide range of levels of improvement for a given pesticide/pest combination because of different rates of application, pest pressure, weather conditions, and a variety of other factors. The estimates provided here should not be considered a guarantee that a given pest reduction can be expected.
