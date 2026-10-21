@@ -569,11 +569,18 @@
     return cloned;
   }
 
+  // Decap first tries this against the whole rest of the document, so the
+  // block body must not be able to run past its own closing fence: NOT_FENCE
+  // matches any character except the start of a "\n```" line. (With a plain
+  // [\s\S]*? and a trailing "$", a page that *ends* in another fenced block
+  // let the first table swallow everything up to that last fence - including
+  // any pesticide-table shortcodes in between, which then never rendered.)
+  const NOT_FENCE = "(?:(?!\\n```)[\\s\\S])";
   const PATTERN = new RegExp(
-    "^```\\{=html\\}\\s*\\n" +
-      "<!--\\s*" + MARKER + "\\s*-->\\s*\\n" +
-      "([\\s\\S]*?<table[\\s\\S]*?<\\/table>[\\s\\S]*?)\\n" +
-      "```\\s*$"
+    "^```\\{=html\\}[ \\t]*\\n" +
+      "<!--\\s*" + MARKER + "\\s*-->[ \\t]*\\n" +
+      "(" + NOT_FENCE + "*?<table" + NOT_FENCE + "*?<\\/table>" + NOT_FENCE + "*?)\\n" +
+      "```[ \\t]*(?=\\n|$)"
   );
 
   // Inline-styled for the same reason as serializeTable; matches the

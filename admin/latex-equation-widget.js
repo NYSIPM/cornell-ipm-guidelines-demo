@@ -236,7 +236,13 @@
      * match[1] = escaped title (undefined when untitled)
      * match[2] = the equation itself
      */
-    pattern: /^(?::::\s*\{\.latex-equation\}\s*\n\[((?:\\.|[^\\\]\n])*)\]\{\.latex-equation-title[^\n]*\}\s*\n)?\$\$\s*\n([\s\S]*?)\n\$\$(?:\s*\n:::)?\s*$/,
+    //
+    // Decap first tries this against the whole rest of the document, so the
+    // equation body can't run past its own closing $$ ((?!\n\$\$) below), and
+    // the match ends at the end of that line rather than the end of the
+    // document. Otherwise a page ending in an equation let an earlier equation
+    // swallow everything in between.
+    pattern: /^(?::::[ \t]*\{\.latex-equation\}[ \t]*\n\[((?:\\.|[^\\\]\n])*)\]\{\.latex-equation-title[^\n]*\}[ \t]*\n)?\$\$[ \t]*\n((?:(?!\n\$\$)[\s\S])*?)\n\$\$(?:[ \t]*\n:::)?[ \t]*(?=\n|$)/,
 
     /*
      * Converts Markdown already in the file back into the data
