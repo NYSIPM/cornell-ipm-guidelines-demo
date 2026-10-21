@@ -4,7 +4,7 @@ order: 0
 ---
 Explore detailed, crop-specific organic production and Integrated Pest Management (IPM) guidelines. 
 
-* [Asparagus](asparagus/1-1-asparagus.qmd)
+* [Asparagus](asparagus/index.qmd)
 * [Beans — Dry, Snap, and Lima](beans/1-2-beans-dry-snap-and-lima.qmd)
 * [Beets](beets/1-3-beets.qmd)
 * [Heading and Leafy Brassicas](brassicas/1-4-heading-and-leafy-brassicas.qmd)

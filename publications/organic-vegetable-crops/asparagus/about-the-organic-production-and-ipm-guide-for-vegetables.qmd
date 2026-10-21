@@ -72,6 +72,8 @@ Special appreciation for contributions to previous versions of this resource:
 
 George S. Abawi, Helene R. Dillard, Donald E. Halseth, Michael P. Hoffmann, Chuck Mohler, Curt Petzoldt, Anu Rangarajan, Anthony M. Shelton, Liz Thomas, and Thomas A. Zitter
 
+## Acknowledgements
+
 The content and format of this guide is adapted from the Cornell Integrated Crop and Pest Management Guidelines for Commercial Vegetable Production.
 
 The guidelines in this bulletin reflect the current (and past) authors’ best effort to interpret a complex body of scientific research, and to translate this into practical management options. Following the guidance provided in this bulletin does not assure compliance with any applicable law, rule, regulation or standard, or the achievement of particular discharge levels from agricultural land.

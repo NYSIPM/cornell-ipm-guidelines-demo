@@ -2,5 +2,4 @@
 title: Introduction
 order: 0
 ---
-## Introduction
 This chapter provides specific information about organic production of asparagus. Please be sure to also see general production information in the introductory chapters. This guide uses the principles of Integrated Pest Management (IPM), which like organic production emphasize cultural, biological, and mechanical practices to minimize pest outbreaks. With limited pest control products available for use in many organic production systems, an integrated approach to pest management is essential. IPM techniques such as identifying and assessing pest populations, keeping accurate pest history records, selecting the proper site, and preventing pest outbreaks through use of crop rotation, resistant varieties, and biological controls are important to producing a high-quality crop.

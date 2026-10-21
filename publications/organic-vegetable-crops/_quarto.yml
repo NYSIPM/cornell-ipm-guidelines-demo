@@ -4,6 +4,9 @@ project:
 
 website:
   title: "Cornell IPM | Organic Vegetable Crops Guidelines"
+  # "← previous / next →" links at the bottom of each page, following the
+  # page's sidebar order (so Asparagus pages step through Asparagus only).
+  page-navigation: true
   navbar:
     left:
       - text: "← Back to Guidelines Home"
@@ -16,7 +19,7 @@ website:
             href: index.qmd
           - text: "---"
           - text: "1.1 Asparagus"
-            href: asparagus/1-1-asparagus.qmd
+            href: asparagus/index.qmd
           - text: "1.2 Beans — Dry, Snap, and Lima"
             href: beans/1-2-beans-dry-snap-and-lima.qmd
           - text: "1.3 Beets"
@@ -47,6 +50,16 @@ website:
             href: tomato/1-15-field-tomato.qmd
           - text: "1.16 Turnip, Rutabaga, Radish, and Kohlrabi"
             href: turnip/1-16-turnip-rutabaga-radish-and-kohlrabi.qmd
+
+  # Each crop reads as its own publication: its pages get a left sidebar listing
+  # only that crop's sections. `contents: asparagus` builds the list
+  # automatically from the folder, sorted by each page's `order:` value
+  # (index.qmd, order -1, is the title page at the top).
+  sidebar:
+    - id: asparagus
+      title: "Asparagus"
+      style: docked
+      contents: asparagus
 
 format:
   html:
