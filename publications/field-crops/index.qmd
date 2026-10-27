@@ -1,8 +1,13 @@
 ---
-title: Index
+title: Cornell Guide for Integrated Field Crop Management
+order: 1
 ---
-test.
-
-$$
-a^2 + b^2 = c^2
-$$
+1. Pesticide Information
+2. General Information for Crop Production
+3. Corn Guidelines
+4. Forage Crops Guidelines
+5. Small Grain Crops Guidelines
+6. Soybean Guidelines
+7. Total Vegetation Control
+8. Appendix
+9. Tips for Laundering Pesticide-Contaminated Clothing

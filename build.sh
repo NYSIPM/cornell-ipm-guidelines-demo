@@ -42,8 +42,8 @@ cd publications/grapes
 quarto render
 cd ../..
 
-echo "=== Rendering Berries Guidelines ==="
-cd publications/berries
+echo "=== Rendering Berry Crops Guidelines ==="
+cd publications/berry-crops
 quarto render
 cd ../..
 

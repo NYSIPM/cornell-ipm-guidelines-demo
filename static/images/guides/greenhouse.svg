@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 36 360 240" role="img" aria-label="Greenhouse with tulips">
+  <!-- Guide image set (static/images/guides/): drawn on a 480x320 canvas, framed to its central 360x240 (viewBox) so the subject fills small thumbnails. Soft background, pale halo, ground curve, one flat subject. -->
+  <defs>
+    <!-- One tulip, base at (0,0) -->
+    <g id="tulip">
+      <path d="M0 0 L0 -72" stroke="#3f8a3a" stroke-width="6" stroke-linecap="round"/>
+      <path d="M0 -10 C -26 -20 -32 -44 -26 -58 C -12 -46 -4 -30 0 -10 Z" fill="#5a9e47"/>
+      <path d="M-20 -74 L -20 -104 L -10 -92 L 0 -108 L 10 -92 L 20 -104 L 20 -74 C 20 -60 -20 -60 -20 -74 Z"/>
+    </g>
+  </defs>
+
+  <rect width="480" height="320" fill="#e6f2f3"/>
+  <circle cx="240" cy="165" r="128" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="240" cy="338" rx="320" ry="72" fill="#cbe3d0"/>
+
+  <!-- Greenhouse -->
+  <g stroke="#6aa6b6" stroke-width="5" stroke-linejoin="round">
+    <path d="M150 272 L150 158 L240 90 L330 158 L330 272 Z" fill="#d9eff4"/>
+    <path d="M150 158 L330 158" fill="none"/>
+    <path d="M195 158 L195 272 M285 158 L285 272 M150 214 L330 214" fill="none"/>
+    <path d="M240 90 L195 158 M240 90 L285 158" fill="none"/>
+    <rect x="221" y="214" width="38" height="58" fill="#bfe1ea"/>
+  </g>
+  <g fill="#ffffff" opacity="0.45">
+    <path d="M160 168 L184 168 L160 196 Z"/>
+    <path d="M295 168 L319 168 L295 196 Z"/>
+  </g>
+
+  <!-- Tulips -->
+  <use href="#tulip" transform="translate(112 290)" fill="#e0457b"/>
+  <use href="#tulip" transform="translate(370 290) scale(-1 1)" fill="#f2a43a"/>
+  <use href="#tulip" transform="translate(392 296) scale(0.8)" fill="#e0457b"/>
+</svg>

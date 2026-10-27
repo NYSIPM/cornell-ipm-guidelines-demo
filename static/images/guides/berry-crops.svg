@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 36 360 240" role="img" aria-label="Strawberry and blueberries">
+  <!-- Guide image set (static/images/guides/): drawn on a 480x320 canvas, framed to its central 360x240 (viewBox) so the subject fills small thumbnails. Soft background, pale halo, ground curve, one flat subject. -->
+  <rect width="480" height="320" fill="#fbe8ec"/>
+  <circle cx="240" cy="165" r="128" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="240" cy="338" rx="320" ry="72" fill="#f2cfd7"/>
+
+  <!-- Strawberry -->
+  <rect x="200" y="92" width="9" height="26" rx="4" fill="#3f8a3a"/>
+  <path d="M205 126 C 254 124 272 166 252 206 C 239 232 221 252 205 266 C 189 252 171 232 158 206 C 138 166 156 124 205 126 Z" fill="#d8344c"/>
+  <path d="M205 112 L 216 128 L 239 122 L 224 139 L 236 154 L 205 143 L 174 154 L 186 139 L 171 122 L 194 128 Z" fill="#4f9a3f"/>
+  <g fill="#f7d779">
+    <ellipse cx="188" cy="166" rx="3.5" ry="5.5"/>
+    <ellipse cx="222" cy="166" rx="3.5" ry="5.5"/>
+    <ellipse cx="205" cy="186" rx="3.5" ry="5.5"/>
+    <ellipse cx="177" cy="196" rx="3.5" ry="5.5"/>
+    <ellipse cx="233" cy="196" rx="3.5" ry="5.5"/>
+    <ellipse cx="192" cy="216" rx="3.5" ry="5.5"/>
+    <ellipse cx="218" cy="216" rx="3.5" ry="5.5"/>
+    <ellipse cx="205" cy="240" rx="3.5" ry="5.5"/>
+  </g>
+
+  <!-- Blueberries -->
+  <g>
+    <circle cx="302" cy="212" r="33" fill="#4a5fa8"/>
+    <circle cx="354" cy="224" r="29" fill="#3f539a"/>
+    <circle cx="324" cy="250" r="26" fill="#5468b2"/>
+    <g fill="#2c3a72">
+      <circle cx="302" cy="194" r="7"/>
+      <circle cx="354" cy="208" r="6"/>
+      <circle cx="324" cy="235" r="6"/>
+    </g>
+    <g fill="#ffffff" opacity="0.35">
+      <ellipse cx="289" cy="214" rx="6" ry="11"/>
+      <ellipse cx="343" cy="228" rx="5" ry="9"/>
+      <ellipse cx="314" cy="253" rx="5" ry="9"/>
+    </g>
+  </g>
+</svg>

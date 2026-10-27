@@ -1,6 +1,22 @@
 ---
-title: Tree Fruit Guideline
-date: 2026-07-10T12:30:00.000-05:00
+title: Cornell Pest Management Guidelines for Commercial Tree Fruit Production
+order: 0
 ---
-- [1.1 Test](/publications/tree-fruit/1-1-test.html)
-- [1.2 Macmuncher applemunchus voracious](/publications/tree-fruit/1-2-mac-muncher-applemunchus-voracious.html)
+1. Integrated Crop and Pest Management
+2. Organic Tree Fruit Production in New York State
+3. Pesticide Information
+4. Sprayer Information
+5. Characteristics of Crop Protectants Used on Tree
+6. Disease Management 
+7. Insect and Mite Management
+8. Weed Management
+9. Wildlife Damage Management
+10. Nutrient Management of Apple Orchards
+11. Apples
+12. Pears
+13. Cherries
+14. Peaches and Nectarines
+15. Apricots
+16. Plums and Prunes
+17. Appendices
+18. Tips for Laundering Pesticide-Contaminated Clothing

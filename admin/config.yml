@@ -21,18 +21,26 @@ site_url: https://dancing-sundae-a531d3.netlify.app
 display_url: https://dancing-sundae-a531d3.netlify.app
 
 collections:
-  # Berry Guidelines
-  - name: "berries"
-    label: "Berry Guidelines"
-    # label_singular: "Chapter"
-    folder: "publications/berries"
+  # Naming convention for every guide: `name` and `folder` are the guide's
+  # title in lowercase with hyphens for spaces (a short form for very long
+  # titles, e.g. greenhouse). No capitals, spaces or numbers - Netlify's build
+  # is case-sensitive and `name` appears in admin URLs. `label` is the title
+  # as readers see it. Keep in sync with the home page cards (index.qmd), the
+  # Publications menus (_quarto.yml files) and the image names in
+  # static/images/guides/.
+
+  # Berry Crops
+  - name: "berry-crops"
+    label: "Berry Crops"
+    label_singular: "New Section"
+    folder: "publications/berry-crops"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
-    # nested:
-    #  depth: 2
-    #  summary: "{{title}}"
+    nested:
+      depth: 2
+      summary: "{{title}}"
     editor:
       preview: true
     fields:
@@ -58,29 +66,33 @@ collections:
           #- api-text
           - pesticide-table
 
-  #I don't like this.
-  - name: "decap-test"
-    label: "Decap Test"
-    folder: "publications/decap-test"
+
+  # Field Crops
+  - name: "field-crops"
+    label: "Field Crops"
+    label_singular: "New Section"
+    folder: "publications/field-crops"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
-    editor:
-      preview: true
+    nested:
+      depth: 2
+      summary: "{{title}}"
+      subfolders: false
+    sortable_fields: ["order", "title"]
     fields:
-      - { label: "Title", name: "title", widget: "string" }
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Order", name: "order", widget: "number", value_type: "int"}
       - label: "Body"
         name: "body"
         widget: "markdown"
-        modes: [rich_text, raw]
-        editor_components:
-          - pesticide-table
 
-  # Grape Guidelines
+
+  # Grapes
   - name: "grapes"
-    label: "Grape Guidelines"
-    label_singular: "Chapter"
+    label: "Grapes"
+    label_singular: "New Section"
     folder: "publications/grapes"
     create: true
     slug: "{{slug}}"
@@ -98,16 +110,67 @@ collections:
       - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
       - {label: "Last Updated", name: "date", widget: "datetime", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
+
+
+  # Greenhouse Floriculture and Herbaceous Ornamentals ("the greenhouse guide")
+  - name: "greenhouse"
+    label: "Greenhouse Floriculture and Herbaceous Ornamentals"
+    label_singular: "New Section"
+    folder: "publications/greenhouse"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    nested:
+      depth: 2
+      summary: "{{title}}"
+    editor:
+      preview: false
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
+      - {label: "Chapter Number", name: "chapter", widget: "number", required: false, hint: "Optional ordering"}
+      - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
+      - {label: "Last Updated", name: "date", widget: "datetime", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+
+  # Hops
+  - name: "hops"
+    label: "Hops"
+    label_singular: "New Section"
+    folder: "publications/hops"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    nested:
+      depth: 2
+      summary: "{{title}}"
+    editor:
+      preview: false
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Subtitle", name: "subtitle", widget: "string", required: false}
+      - {label: "Chapter Number", name: "chapter", widget: "number", required: false, hint: "Optional ordering"}
+      - {label: "Authors", name: "authors", widget: "list", required: false, hint: "List of chapter authors"}
+      - {label: "Last Updated", name: "date", widget: "datetime", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
   
-  # Tree Fruit Guidelines
+
+  # Tree Fruit
   - name: "tree-fruit"
-    label: "Tree Fruit Guidelines"
+    label: "Tree Fruit"
     label_singular: "New Section"
     folder: "publications/tree-fruit"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
+    nested:
+      depth: 2
+      summary: "{{title}}"
+      subfolders: false
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - label: "Body"
@@ -115,27 +178,35 @@ collections:
         widget: "markdown"
 
   # Trees and Shrubs
-  - name: "Trees and Shrubs"
-    label: "Trees and Shrubs Guidelines"
+  - name: "trees-and-shrubs"
+    label: "Trees and Shrubs"
     label_singular: "New Section"
     folder: "publications/trees-and-shrubs"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
+    nested:
+      depth: 2
+      summary: "{{title}}"
+      subfolders: false
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Body", name: "body", widget: "markdown"}
 
-    # Vegetable Crops
-  - name: "Vegetables"
-    label: "Vegetable Guidelines"
+  # Vegetable Crops
+  - name: "vegetable-crops"
+    label: "Vegetable Crops"
     label_singular: "New Section"
-    folder: "publications/vegetables"
+    folder: "publications/vegetable-crops"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
+    nested:
+      depth: 2
+      summary: "{{title}}"
+      subfolders: false
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Body", name: "body", widget: "markdown"}
@@ -149,11 +220,6 @@ collections:
     slug: "{{slug}}"
     extension: "qmd"
     format: "frontmatter"
-    # Chapters live in one folder per crop (asparagus/, beans/, ...). The
-    # sidebar shows each crop folder by its folder name, and clicking one lists
-    # the files directly inside it. subfolders: false turns off Decap's default
-    # "one index file per folder" mode, where a folder takes its title from its
-    # only file and clicking it lists nothing (files aren't named index.qmd here).
     nested:
       depth: 2
       summary: "{{title}}"
@@ -165,3 +231,29 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
+
+  #I don't like this.
+  - name: "decap-test"
+    label: "Decap Test"
+    folder: "publications/decap-test"
+    create: true
+    slug: "{{slug}}"
+    extension: "qmd"
+    format: "frontmatter"
+    # Browse subfolders, e.g. _grapes-demo/ (the old Grapes demo/test pages)
+    # and its chapter1/. Folders starting with "_" are never published by
+    # Quarto, so they're a safe place to keep old or experimental pages.
+    nested:
+      depth: 3
+      summary: "{{title}}"
+      subfolders: false
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        modes: [rich_text, raw]
+        editor_components:
+          - pesticide-table

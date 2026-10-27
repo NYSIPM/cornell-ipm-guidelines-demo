@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 36 360 240" role="img" aria-label="Asparagus spears with an organic leaf badge">
+  <!-- Guide image set (static/images/guides/): drawn on a 480x320 canvas, framed to its central 360x240 (viewBox) so the subject fills small thumbnails. Soft background, pale halo, ground curve, one flat subject. -->
+  <defs>
+    <!-- One asparagus spear, base at (0,0), pointing up -->
+    <g id="spear">
+      <path d="M-12 0 L -12 -138 Q 0 -178 12 -138 L 12 0 Z" fill="#6cad4c"/>
+      <path d="M-12 -126 Q 0 -178 12 -126 Q 0 -134 -12 -126 Z" fill="#7d5f9e"/>
+      <g fill="#4d8a3a">
+        <path d="M-12 -34 L -3 -48 L -12 -46 Z"/>
+        <path d="M12 -64 L 3 -78 L 12 -76 Z"/>
+        <path d="M-12 -94 L -3 -108 L -12 -106 Z"/>
+      </g>
+    </g>
+  </defs>
+
+  <rect width="480" height="320" fill="#e9f4e4"/>
+  <circle cx="240" cy="165" r="128" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="240" cy="338" rx="320" ry="72" fill="#d1e7c6"/>
+  <!-- Soil mound -->
+  <ellipse cx="240" cy="290" rx="120" ry="26" fill="#a9825a"/>
+
+  <use href="#spear" transform="translate(206 288) rotate(-8)"/>
+  <use href="#spear" transform="translate(240 286) scale(1.12)"/>
+  <use href="#spear" transform="translate(274 288) rotate(8) scale(0.94)"/>
+
+  <!-- Organic badge: leaf in a circle -->
+  <circle cx="368" cy="92" r="40" fill="#ffffff"/>
+  <circle cx="368" cy="92" r="40" fill="none" stroke="#4f9a3f" stroke-width="5"/>
+  <path d="M348 110 C 346 84 362 70 390 70 C 392 98 376 112 348 110 Z" fill="#4f9a3f"/>
+  <path d="M348 110 L 378 82" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

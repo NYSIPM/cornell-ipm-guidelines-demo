@@ -16,15 +16,34 @@ execute:
   enabled: false
 
 website:
-  title: "Cornell IPM Guidelines Demo"
+  title: "Cornell IPM Guidelines (Demo)"
+  # Site menu. Each publication is its own Quarto project with its own
+  # navbar (publications/*/_quarto.yml) - keep Home / Publications / About
+  # in those in sync with this one.
   navbar:
     left:
       - text: "Home"
         href: index.qmd
-      - text: "Grape Guidelines"
-        href: publications/grapes/index.html
-      - text: "Berry Guidelines"
-        href: publications/berries/index.html
+      - text: "Publications"
+        menu:
+          - text: "Berry Crops"
+            href: publications/berry-crops/index.html
+          - text: "Grapes"
+            href: publications/grapes/index.html
+          - text: "---"
+          - text: "Organic Vegetable Crops"
+            href: publications/organic-vegetable-crops/index.html
+      - text: "About"
+        href: about.qmd
+
+  # Site footer - also in each publication's _quarto.yml; keep in sync.
+  page-footer:
+    left: "Cornell IPM"
+    right:
+      - text: "About"
+        href: about.qmd
+      - text: "Contact"
+        href: about.qmd#contact
 
 format:
   html:

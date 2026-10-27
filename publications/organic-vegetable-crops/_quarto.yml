@@ -5,13 +5,26 @@ project:
 website:
   title: "Cornell IPM | Organic Vegetable Crops Guidelines"
   # "← previous / next →" links at the bottom of each page, following the
-  # page's sidebar order (so Asparagus pages step through Asparagus only).
+  # sidebar order (through the whole guide: Overview, Asparagus and its
+  # sections, Beans, Beets, ...).
   page-navigation: true
   navbar:
     left:
-      - text: "← Back to Guidelines Home"
-        # "/" = this guide's root (Quarto adds the right ../ per page), so /../../ = site root.
+      # Site menu - same as the root _quarto.yml; keep in sync.
+      # "/" = this guide's root (Quarto adds the right ../ per page), so /../../ = site root.
+      - text: "Home"
         href: /../../index.html
+      - text: "Publications"
+        menu:
+          - text: "Berry Crops"
+            href: /../../publications/berry-crops/index.html
+          - text: "Grapes"
+            href: /../../publications/grapes/index.html
+          - text: "---"
+          - text: "Organic Vegetable Crops"
+            href: /../../publications/organic-vegetable-crops/index.html
+      - text: "About"
+        href: /../../about.html
 
       - text: "Chapters"
         menu:
@@ -51,23 +64,64 @@ website:
           - text: "1.16 Turnip, Rutabaga, Radish, and Kohlrabi"
             href: turnip/1-16-turnip-rutabaga-radish-and-kohlrabi.qmd
 
-  # Each crop reads as its own publication: its pages get a left sidebar listing
-  # only that crop's sections. `contents: asparagus` builds the list
-  # automatically from the folder, sorted by each page's `order:` value
-  # (index.qmd, order -1, is the title page at the top).
+  # One sidebar for the whole guide, on every page: each crop is a chapter,
+  # and crops split into sections (like Asparagus) expand to list them. It's
+  # how readers move around inside this guide; the top menu's Publications
+  # is for moving between guides. On phones it folds behind a menu button.
   sidebar:
-    - id: asparagus
-      title: "Asparagus"
+    - id: organic-vegetable-crops
+      title: "Organic Vegetable Crops"
       style: docked
-      contents: asparagus
+      # Only the chapter you're in starts expanded; click a chapter to open it.
+      collapse-level: 1
+      contents:
+        - text: "Overview"
+          href: index.qmd
+        # A crop split into sections: a folder with an index.qmd title page
+        # (opened by clicking the chapter name). `contents: "<folder>/*.qmd"`
+        # lists its pages automatically, sorted by each page's `order:` value -
+        # nothing to update here when sections are added, renamed or
+        # reordered in Decap. (Use the "/*.qmd" pattern, not the bare folder
+        # name, which adds an extra nested level for the title page.)
+        - section: "1.1 Asparagus"
+          href: asparagus/index.qmd
+          contents: "asparagus/*.qmd"
+        # Crops that are still a single page. When one is split into
+        # sections, replace its line with a section like Asparagus above.
+        - beans/1-2-beans-dry-snap-and-lima.qmd
+        - beets/1-3-beets.qmd
+        - brassicas/1-4-heading-and-leafy-brassicas.qmd
+        - carrot/1-5-carrot.qmd
+        - cucurbits/1-6-cucurbits-cucumber-melon-pumpkin-squash-and-watermelon.qmd
+        - eggplant/1-7-eggplant.qmd
+        - lettuce/1-8-lettuce.qmd
+        - onion/1-9-onion-shallot-and-leek.qmd
+        - peas/1-10-peas.qmd
+        - pepper/1-11-pepper.qmd
+        - potato/1-12-potato.qmd
+        - spinach/1-13-spinach.qmd
+        - sweet-corn/1-14-sweet-corn.qmd
+        - tomato/1-15-field-tomato.qmd
+        - turnip/1-16-turnip-rutabaga-radish-and-kohlrabi.qmd
+
+  # Site footer - same as the root _quarto.yml; keep in sync. /../../ = site root (see navbar).
+  page-footer:
+    left: "© 2026 Cornell University · Cornell Integrated Pest Management (IPM)"
+    right:
+      - text: "About"
+        href: /../../about.html
+      - text: "Contact"
+        href: /../../about.html#contact
 
 format:
   html:
     theme: cosmo
-    # Centres content next to a crop sidebar (only affects sidebar pages).
+    # Centres content next to the guide sidebar.
     css: crop-layout.css
     toc: true
-    toc-location: left
+    # The guide sidebar is on the left, so "On this page" goes on the right
+    # (both on the left leaves the right-hand side of the page empty).
+    toc-location: right
     toc-title: "On this page"
     # This folder is its own Quarto project, so the root _quarto.yml shortcodes
     # don't apply here. Point at the shared Lua files instead of copying them.

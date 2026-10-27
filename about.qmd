@@ -1,0 +1,19 @@
+---
+title: "About"
+---
+
+## About the Guidelines
+
+The Cornell Crop and Pest Management Guidelines offer the latest information on topics such as pest management, crop production, and landscape plant maintenance. Each title is updated by Cornell University researchers and Extension specialists and is designed as a practical guide for agricultural and horticultural crop producers, landscape managers, crop consultants and industry advisers, Extension educators, Master Gardeners, and pesticide dealers.
+
+This site is a demonstration of a new web edition of the Guidelines.
+
+## Contact
+
+<!-- TODO: add contact details (e.g. Cornell IPM office email, phone, mailing address). -->
+Contact information coming soon.
+
+## Acknowledgements
+
+<!-- TODO: add acknowledgements (authors, contributors, funders). -->
+Acknowledgements coming soon.

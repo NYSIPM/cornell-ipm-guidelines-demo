@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 36 360 240" role="img" aria-label="Carrot and tomato">
+  <!-- Guide image set (static/images/guides/): drawn on a 480x320 canvas, framed to its central 360x240 (viewBox) so the subject fills small thumbnails. Soft background, pale halo, ground curve, one flat subject. -->
+  <rect width="480" height="320" fill="#fdefdf"/>
+  <circle cx="240" cy="165" r="128" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="240" cy="338" rx="320" ry="72" fill="#f1d9b8"/>
+
+  <!-- Carrot -->
+  <g transform="translate(188 116) rotate(-16)">
+    <g stroke="#4f9a3f" stroke-width="8" fill="none" stroke-linecap="round">
+      <path d="M0 0 Q -10 -30 -28 -46"/>
+      <path d="M0 0 Q 0 -34 4 -56"/>
+      <path d="M0 0 Q 12 -28 30 -40"/>
+    </g>
+    <path d="M-27 0 Q 0 -10 27 0 L 5 146 Q 0 154 -5 146 Z" fill="#ee8a2e"/>
+    <g stroke="#cf6d1a" stroke-width="4" stroke-linecap="round">
+      <path d="M-18 30 L -6 32"/>
+      <path d="M8 58 L 18 56"/>
+      <path d="M-14 82 L -4 84"/>
+      <path d="M4 108 L 12 106"/>
+    </g>
+  </g>
+
+  <!-- Tomato -->
+  <circle cx="302" cy="208" r="58" fill="#d9412f"/>
+  <ellipse cx="282" cy="190" rx="12" ry="20" transform="rotate(30 282 190)" fill="#ffffff" opacity="0.32"/>
+  <path d="M302 150 L 312 162 L 330 156 L 318 170 L 330 182 L 302 174 L 274 182 L 286 170 L 274 156 L 292 162 Z" fill="#4f9a3f"/>
+  <rect x="298" y="134" width="8" height="22" rx="4" fill="#3f8a3a"/>
+</svg>

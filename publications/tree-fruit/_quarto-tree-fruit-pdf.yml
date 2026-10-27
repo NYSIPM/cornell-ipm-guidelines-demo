@@ -6,11 +6,11 @@ book:
   title: "Tree Fruit Guidelines"
   output-file: "tree-fruit-guidelines"
 
+  # Add chapters here as they are written. The old test chapters
+  # (1-1-test, 1-2-mac-muncher-applemunchus-voracious, test) were moved to
+  # publications/decap-test/_tree-fruit-demo/ along with the PDF they made.
   chapters:
     - index.qmd
-    - 1-1-test.qmd
-    - 1-2-mac-muncher-applemunchus-voracious.qmd
-    - test.qmd
 
 format:
   pdf:
