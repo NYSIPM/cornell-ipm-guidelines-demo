@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-hidden="true">
+  <!-- Stand-in for guide photos on the home page (index.qmd) until real images are added. -->
+  <rect width="640" height="360" fill="#eef3ea"/>
+  <g transform="translate(320 180)" fill="none" stroke="#9db58e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M -46 46 C -46 -6 -6 -46 52 -50 C 50 8 10 48 -46 46 Z"/>
+    <path d="M -46 46 L 14 -14"/>
+    <path d="M -46 46 L -62 62"/>
+  </g>
+</svg>

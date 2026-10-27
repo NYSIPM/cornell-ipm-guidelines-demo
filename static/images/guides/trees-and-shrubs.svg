@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 36 360 240" role="img" aria-label="Tree, conifer and shrub">
+  <!-- Guide image set (static/images/guides/): drawn on a 480x320 canvas, framed to its central 360x240 (viewBox) so the subject fills small thumbnails. Soft background, pale halo, ground curve, one flat subject. -->
+  <rect width="480" height="320" fill="#e6f2e9"/>
+  <circle cx="240" cy="165" r="128" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="240" cy="338" rx="320" ry="72" fill="#c8e1cd"/>
+
+  <!-- Conifer (behind, right) -->
+  <rect x="304" y="236" width="14" height="40" rx="3" fill="#7a5a33"/>
+  <path d="M311 96 L 266 176 L 356 176 Z" fill="#2f7a4a"/>
+  <path d="M311 132 L 256 238 L 366 238 Z" fill="#2f7a4a"/>
+
+  <!-- Deciduous tree -->
+  <rect x="192" y="182" width="18" height="94" rx="4" fill="#8a6a3d"/>
+  <path d="M201 222 L 178 198 M201 214 L 222 194" stroke="#8a6a3d" stroke-width="7" stroke-linecap="round"/>
+  <g fill="#5b9d4d">
+    <circle cx="201" cy="146" r="56"/>
+    <circle cx="164" cy="176" r="38"/>
+    <circle cx="238" cy="178" r="40"/>
+  </g>
+  <circle cx="186" cy="128" r="16" fill="#ffffff" opacity="0.18"/>
+
+  <!-- Shrub (front, left) -->
+  <g fill="#7db86a">
+    <circle cx="112" cy="268" r="28"/>
+    <circle cx="142" cy="258" r="32"/>
+    <circle cx="170" cy="270" r="24"/>
+  </g>
+</svg>

@@ -79,68 +79,200 @@
   }
 
   // =========================================================
-  // SUPERSCRIPT MARKUP
+  // INLINE FORMATTING (cells and footnote)
   // =========================================================
   //
-  // Cell and footnote text is plain text, except that ^...^ marks a
-  // superscript (Pandoc's own syntax): "Bees^1^" -> Bees<sup>1</sup>. The
-  // marked text can't start or end with a space, so a lone "^" stays literal.
+  // Cell and footnote text is plain text plus a small, fixed set of
+  // Pandoc-style inline Markdown, turned into HTML when the table is saved:
+  //
+  //   **bold**   *italic*   [text](https://...)   ^superscript^   ~subscript~
+  //   a new line (Enter) inside a cell -> line break
+  //   \*  \^  \~  \[  \]  \\  -> that character, literally
+  //
+  // Marked text can't start or end with a space, so a lone "*" (e.g. a
+  // restricted-use symbol) or "a * b" stays literal. markupFromElement() is
+  // the exact inverse, so a saved table reopens with the same text.
+  //
+  // To add a format: a rule in formatSpans() (or a token like links), its
+  // reverse in markupFromElement(), and a FORMATS entry for the toolbar button.
 
-  const SUPERSCRIPT_PATTERN = /\^([^\s^](?:[^^\n]*?[^\s^])?)\^/g;
-
-  // Escaped HTML with ^...^ turned into <sup>.
-  function renderInlineMarkup(value) {
-    return escapeHtml(value).replace(SUPERSCRIPT_PATTERN, "<sup>$1</sup>");
+  // Bold before italic so ** isn't read as two italic markers.
+  function formatSpans(html) {
+    return html
+      .replace(/\*\*([^\s*](?:[^\n]*?[^\s*])?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*([^\s*](?:[^*\n]*?[^\s*])?)\*/g, "<em>$1</em>")
+      .replace(/\^([^\s^](?:[^^\n]*?[^\s^])?)\^/g, "<sup>$1</sup>")
+      .replace(/~([^\s~](?:[^~\n]*?[^\s~])?)~/g, "<sub>$1</sub>");
   }
 
-  // Inverse of renderInlineMarkup: an element's text with <sup> as ^...^.
+  // http(s), mailto, and site-relative links only - never javascript: etc.
+  function isSafeUrl(url) {
+    return /^(https?:\/\/|mailto:|\/|#|\.{1,2}\/)/i.test(url) || !/^[a-z][a-z0-9+.-]*:/i.test(url);
+  }
+
+  // Escaped HTML with the formatting above applied.
+  function renderInlineMarkup(value) {
+    // \x escapes and links become placeholders first, so their contents
+    // (e.g. a ~ in a URL) can't trigger other rules.
+    const escapes = [];
+    const links = [];
+    let text = String(value ?? "")
+      .replace(/\\([\\*^~[\]])/g, (m, ch) => "\u0000" + (escapes.push(ch) - 1) + "\u0001")
+      .replace(/\[([^\]\n]+)\]\(([^)\s]+)\)/g, (m, label, url) =>
+        isSafeUrl(url) ? "\u0002" + (links.push({ label, url }) - 1) + "\u0003" : m
+      );
+
+    text = formatSpans(escapeHtml(text))
+      .replace(/\u0002(\d+)\u0003/g, (m, i) =>
+        `<a href="${escapeHtml(links[i].url)}">${formatSpans(escapeHtml(links[i].label))}</a>`
+      )
+      .replace(/\u0000(\d+)\u0001/g, (m, i) => escapeHtml(escapes[i]));
+
+    return text.replace(/\n/g, "<br>");
+  }
+
+  // Plain text that would accidentally read as formatting gets its special
+  // characters backslash-escaped; anything else is returned untouched (so a
+  // cell like "Assail*" doesn't become "Assail\*").
+  function escapeLiteral(text) {
+    const plain = escapeHtml(text).replace(/\n/g, "<br>");
+    return renderInlineMarkup(text) === plain ? text : text.replace(/[\\*^~[\]]/g, "\\$&");
+  }
+
+  // Inverse of renderInlineMarkup: an element's contents as editable text.
   function markupFromElement(el) {
     let out = "";
     el.childNodes.forEach((node) => {
-      if (node.nodeType === 3) out += node.nodeValue;
-      else if (node.nodeName === "SUP") out += "^" + node.textContent + "^";
-      else if (node.nodeType === 1) out += markupFromElement(node);
+      if (node.nodeType === 3) {
+        out += escapeLiteral(node.nodeValue);
+        return;
+      }
+      if (node.nodeType !== 1) return;
+      const inner = markupFromElement(node);
+      switch (node.nodeName) {
+        case "BR": out += "\n"; break;
+        case "STRONG": case "B": out += "**" + inner + "**"; break;
+        case "EM": case "I": out += "*" + inner + "*"; break;
+        case "SUP": out += "^" + inner + "^"; break;
+        case "SUB": out += "~" + inner + "~"; break;
+        case "A": out += "[" + inner + "](" + (node.getAttribute("href") || "") + ")"; break;
+        default: out += inner;
+      }
     });
     return out;
   }
 
-  // Adds or removes ^...^ around the selected text of `value`. Returns the
+  // Adds or removes `marker` around the selected text of `value`. Returns the
   // new value and the selection to restore (covering the same text).
-  function toggleSuperscript(value, start, end) {
+  function toggleWrap(value, start, end, marker) {
+    const n = marker.length;
     const before = value.slice(0, start);
     const selected = value.slice(start, end);
     const after = value.slice(end);
 
-    // Already superscript: remove the carets.
-    if (selected && before.endsWith("^") && after.startsWith("^")) {
-      return { value: before.slice(0, -1) + selected + after.slice(1), start: start - 1, end: end - 1 };
+    // Already formatted: remove the markers. Bold and italic share "*", so
+    // count the stars on each side: italic needs an odd run (*x* or ***x***),
+    // bold at least two (**x** or ***x***).
+    const starsBefore = (before.match(/\*+$/) || [""])[0].length;
+    const starsAfter = (after.match(/^\*+/) || [""])[0].length;
+    const wrapped =
+      marker === "*" ? starsBefore % 2 === 1 && starsAfter % 2 === 1
+      : marker === "**" ? starsBefore >= 2 && starsAfter >= 2
+      : before.endsWith(marker) && after.startsWith(marker);
+    if (selected && wrapped) {
+      return { value: before.slice(0, -n) + selected + after.slice(n), start: start - n, end: end - n };
     }
-    if (selected.length > 2 && selected.startsWith("^") && selected.endsWith("^")) {
-      return { value: before + selected.slice(1, -1) + after, start, end: end - 2 };
+    if (selected.length > 2 * n && selected.startsWith(marker) && selected.endsWith(marker)) {
+      return { value: before + selected.slice(n, -n) + after, start, end: end - 2 * n };
     }
 
     // Nothing selected: drop in an empty pair with the cursor inside it.
     if (!selected.trim()) {
-      return { value: before + selected + "^^" + after, start: end + 1, end: end + 1 };
+      return { value: before + selected + marker + marker + after, start: end + n, end: end + n };
     }
 
-    // Wrap the selection, leaving any spaces at its edges outside the carets.
+    // Wrap the selection, leaving any spaces/line breaks at its edges outside.
     const lead = selected.match(/^\s*/)[0];
     const trail = selected.match(/\s*$/)[0];
     const core = selected.slice(lead.length, selected.length - trail.length);
-    const coreStart = start + lead.length + 1;
+    const coreStart = start + lead.length + n;
     return {
-      value: before + lead + "^" + core + "^" + trail + after,
+      value: before + lead + marker + core + marker + trail + after,
       start: coreStart,
       end: coreStart + core.length
     };
   }
 
-  // Applies toggleSuperscript to a focused <input>/<textarea>, hands the new
-  // value to `setValue`, then puts the selection back once React re-renders.
-  function applySuperscriptTo(el, setValue) {
+  // Turns the selection into [selection](url), asking for the address.
+  function insertLink(value, start, end) {
+    const url = window.prompt("Link address (e.g. https://www.example.com):", "https://");
+    if (!url || !url.trim() || url.trim() === "https://") return null;
+    if (!isSafeUrl(url.trim())) {
+      window.alert("Only web (http/https), email (mailto:) and site links are allowed.");
+      return null;
+    }
+    const selected = value.slice(start, end).trim() || "link text";
+    const label = "[" + selected + "](" + url.trim() + ")";
+    return {
+      value: value.slice(0, start) + label + value.slice(end),
+      start: start + 1,
+      end: start + 1 + selected.length
+    };
+  }
+
+  // Toolbar buttons / shortcuts. `label` is built at render time (React
+  // elements can't be shared between renders); `key` matches a keydown.
+  const FORMATS = [
+    {
+      id: "bold",
+      label: () => h("strong", null, "B"),
+      title: "Bold (Ctrl+B) - shows as **text** while editing",
+      key: (e, k) => !e.shiftKey && k === "b",
+      apply: (v, s, e) => toggleWrap(v, s, e, "**")
+    },
+    {
+      id: "italic",
+      label: () => h("em", null, "I"),
+      title: "Italic (Ctrl+I) - shows as *text* while editing",
+      key: (e, k) => !e.shiftKey && k === "i",
+      apply: (v, s, e) => toggleWrap(v, s, e, "*")
+    },
+    {
+      id: "superscript",
+      label: () => ["x", h("sup", { key: "s" }, "2")],
+      title: "Superscript (Ctrl+Shift+=), e.g. the 1 in Bees1 - shows as ^1^ while editing",
+      key: (e, k) => e.shiftKey && (k === "+" || k === "="),
+      apply: (v, s, e) => toggleWrap(v, s, e, "^")
+    },
+    {
+      id: "subscript",
+      label: () => ["x", h("sub", { key: "s" }, "2")],
+      title: "Subscript (Ctrl+=), e.g. the 2 in H2O - shows as ~2~ while editing",
+      key: (e, k) => !e.shiftKey && k === "=",
+      apply: (v, s, e) => toggleWrap(v, s, e, "~")
+    },
+    {
+      id: "link",
+      label: () => "Link",
+      title: "Link (Ctrl+K): select the text to link, then enter the address - shows as [text](address) while editing",
+      key: (e, k) => !e.shiftKey && k === "k",
+      apply: insertLink
+    }
+  ];
+
+  // The format a Ctrl/Cmd keydown asks for, if any.
+  function formatForKey(e) {
+    if (!(e.ctrlKey || e.metaKey) || e.altKey) return null;
+    const k = String(e.key || "").toLowerCase();
+    return FORMATS.find((f) => f.key(e, k)) || null;
+  }
+
+  // Applies `format` to a focused <input>/<textarea>, hands the new value to
+  // `setValue`, then puts the selection back once React re-renders.
+  function applyFormatTo(el, format, setValue) {
     if (!el || typeof el.selectionStart !== "number") return false;
-    const next = toggleSuperscript(el.value, el.selectionStart, el.selectionEnd);
+    const next = format.apply(el.value, el.selectionStart, el.selectionEnd);
+    if (!next) return false;
     setValue(next.value);
     setTimeout(() => {
       el.focus();
@@ -149,9 +281,32 @@
     return true;
   }
 
-  const SUPERSCRIPT_BUTTON_TITLE =
-    "Superscript: select text (e.g. the 1 in Bees1) and click to make it superscript, or click again to undo. " +
-    "Shows as ^1^ while editing. Shortcut: Ctrl+Shift+=";
+  // Sizes a cell's textarea to fit its text (wrapped lines and line breaks).
+  function autoGrow(el) {
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + "px";
+  }
+
+  // The B / I / x² / x₂ / Link buttons. mousedown is cancelled so clicking a
+  // button doesn't take focus (and the text selection) away from the field.
+  function renderFormatButtons(onFormat) {
+    return FORMATS.map((format) =>
+      h(
+        "button",
+        {
+          key: `fmt-${format.id}`,
+          type: "button",
+          style: { ...btnStyle, minWidth: "32px" },
+          title: format.title,
+          "aria-label": format.title,
+          onMouseDown: (e) => e.preventDefault(),
+          onClick: () => onFormat(format)
+        },
+        format.label()
+      )
+    );
+  }
 
   function makeCell(text) {
     return { text: text || "", rowSpan: 1, colSpan: 1 };
@@ -608,17 +763,28 @@
   // FOOTNOTE (full-width row at the bottom of the table)
   // =========================================================
   //
-  // Kept out of the grid (whose cells are single-line inputs) and stored as
-  // a marked last row of <tfoot>, so it sits inside the table border and
-  // never moves when the body is sorted. Each line of the field is its own
-  // note; a leading marker like "[1]" or "*" is bolded.
+  // Kept out of the grid and stored as a marked last row of <tfoot>, so it
+  // sits inside the table border and never moves when the body is sorted.
+  // Each line of the field is its own note, with the same inline formatting
+  // as cells; a leading marker like "[1]" or "*" is bolded automatically.
 
   const FOOTNOTE_ATTR = "data-table-footnote";
   const FOOTNOTE_ROW_PATTERN = new RegExp("<tr " + FOOTNOTE_ATTR + ">[\\s\\S]*?<\\/tr>");
+  // "[1]" but not a link "[text](url)"; "*"/"†"... only when followed by a
+  // space, so a line starting with *italic* isn't mistaken for a marker.
+  const FOOTNOTE_MARKER = /^(\[[^\]]+\](?!\()|[*†‡§]+(?=\s))\s*/;
+
   function renderFootnoteNote(line) {
-    const m = line.match(/^(\[[^\]]+\]|[*†‡§]+)\s*/);
+    const m = line.match(FOOTNOTE_MARKER);
     const body = m ? `<strong>${escapeHtml(m[1])}</strong> ${renderInlineMarkup(line.slice(m[0].length))}` : renderInlineMarkup(line);
     return `<p>${body}</p>`;
+  }
+
+  // On reload the auto-bolded marker reads back as **[1]**; show it as typed.
+  function unboldFootnoteMarker(line) {
+    return line.replace(/^\*\*(\[[^\]]+\]|[*†‡§]+)\*\*(?=\s)/, (m, marker) =>
+      FOOTNOTE_MARKER.test(marker + " ") ? marker : m
+    );
   }
 
   // Adds the footnote row to serialized table HTML (single line: Decap needs
@@ -646,7 +812,7 @@
 
     const doc = new DOMParser().parseFromString("<table>" + m[0] + "</table>", "text/html");
     const footnote = Array.from(doc.querySelectorAll("p"))
-      .map((p) => markupFromElement(p).replace(/\s+/g, " ").trim())
+      .map((p) => unboldFootnoteMarker(markupFromElement(p).replace(/\s+/g, " ").trim()))
       .join("\n");
 
     return { footnote, html: html.replace(m[0], "").replace("<tfoot></tfoot>", "") };
@@ -887,6 +1053,12 @@
       window.removeEventListener("mouseup", this.handleGlobalMouseUp);
     },
 
+    // Undo/redo, merges and column changes alter cell text or widths without
+    // typing, so re-fit every cell's textarea after each update.
+    componentDidUpdate() {
+      if (this.rootEl) this.rootEl.querySelectorAll("td > textarea, th > textarea").forEach(autoGrow);
+    },
+
     handleGlobalMouseUp() {
       if (this.state.isSelecting) this.setState({ isSelecting: false });
     },
@@ -958,11 +1130,12 @@
       this.restoreSnapshot(next, history, future);
     },
 
-    // Toggles ^...^ around the selected text of the cell being edited.
-    superscriptActiveCell() {
+    // Applies a FORMATS entry (bold, italic, link...) to the selected text of
+    // the cell being edited. Does nothing unless a cell has focus.
+    formatActiveCell(format) {
       const active = this.activeCell;
       if (!active || document.activeElement !== active.el) return;
-      applySuperscriptTo(active.el, (value) => this.updateCellText(active.r, active.c, value));
+      applyFormatTo(active.el, format, (value) => this.updateCellText(active.r, active.c, value));
     },
 
     handleKeyDown(e) {
@@ -970,9 +1143,10 @@
       const mod = e.ctrlKey || e.metaKey;
       if (!mod) return;
 
-      if (e.shiftKey && (key === "+" || key === "=")) {
+      const format = formatForKey(e);
+      if (format) {
         e.preventDefault();
-        this.superscriptActiveCell();
+        this.formatActiveCell(format);
       } else if (key === "z" && e.shiftKey) {
         e.preventDefault();
         this.redo();
@@ -1375,19 +1549,21 @@
             },
             sortTarget && sortTarget.cell.sort ? "Remove Sort Key" : "Make Sort Key"
           ),
-          h("span", { key: "sep-sup", style: { width: "1px", background: "#ddd", alignSelf: "stretch" } }),
+          h("span", { key: "sep-fmt", style: { width: "1px", background: "#ddd", alignSelf: "stretch" } }),
+          // Text formatting for the cell being edited (click into a cell and select text first).
           h(
-            "button",
+            "div",
             {
-              key: "sup-btn",
-              type: "button",
-              style: btnStyle,
-              // mousedown default would move focus off the cell and lose its text selection
-              onMouseDown: (e) => e.preventDefault(),
-              onClick: this.superscriptActiveCell,
-              title: SUPERSCRIPT_BUTTON_TITLE
+              key: "format-group",
+              role: "group",
+              "aria-label": "Text formatting",
+              title: "Formats the selected text in the cell you're editing",
+              style: groupStyle
             },
-            ["x", h("sup", { key: "sup" }, "2"), " Superscript"]
+            [
+              h("span", { key: "format-label", style: { fontSize: "13px", marginRight: "2px" } }, "Text:"),
+              ...renderFormatButtons(this.formatActiveCell)
+            ]
           ),
           h("span", { key: "sep5", style: { width: "1px", background: "#ddd", alignSelf: "stretch" } }),
           // Boxed and labelled so it's clear these set a whole column, not one cell.
@@ -1476,24 +1652,34 @@
                     boxShadow: sortKey ? "inset 0 -3px 0 #2a6fdb" : undefined
                   }
                 },
-                h("input", {
-                  type: "text",
+                // A textarea that grows with its content, so Enter adds a line
+                // break and long text wraps instead of scrolling sideways.
+                h("textarea", {
                   value: cell.text,
+                  rows: 1,
+                  ref: autoGrow,
                   onFocus: (e) => {
                     this.activeCell = { el: e.target, r, c };
                     this.beginEditSession();
                   },
-                  onChange: (e) => this.updateCellText(r, c, e.target.value),
+                  onChange: (e) => {
+                    autoGrow(e.target);
+                    this.updateCellText(r, c, e.target.value);
+                  },
                   style: {
+                    display: "block",
                     width: "100%",
                     boxSizing: "border-box",
                     border: "none",
                     padding: "6px",
                     fontFamily: "inherit",
                     fontSize: "14px",
+                    lineHeight: "1.35",
                     fontWeight: isHeaderCell ? "600" : "normal",
                     textAlign: cell.colSpan === 1 ? this.state.colAlign[c] : isHeaderCell ? "center" : "left",
-                    background: "transparent"
+                    background: "transparent",
+                    resize: "none",
+                    overflow: "hidden"
                   }
                 })
               );
@@ -1508,6 +1694,7 @@
         "div",
         {
           className: this.props.classNameWrapper,
+          ref: (el) => (this.rootEl = el),
           style: { border: "1px solid #ddd", borderRadius: "6px", padding: "10px" },
           onKeyDown: this.handleKeyDown
         },
@@ -1519,7 +1706,7 @@
             { key: "help", style: { fontSize: "12px", opacity: 0.7, marginBottom: "6px" } },
             "Header rows are shaded and sit above the dark line; use + Header Row / - Header Row to change how many there are. " +
               "Click and drag across cells to select a range, then Merge Cells (header and body cells can't be merged together). Click a merged cell and hit Split Cell to unmerge. " +
-              "To superscript, select text inside a cell and click Superscript (it shows as ^1^ here and as a real superscript in the preview). " +
+              "To format text, click into a cell, select the text and use the Text buttons: **bold**, *italic*, ^superscript^, ~subscript~ and [links](https://...) show with these marks here and as real formatting in the preview. Enter adds a line break. " +
               "Select a header cell over a single column and hit Make Sort Key to let readers sort by it (blue underline). Ctrl+Z / Ctrl+Shift+Z to undo/redo."
           ),
           this.renderSortWarning(),
@@ -1543,22 +1730,22 @@
   CMS.registerWidget(WIDGET_NAME, HtmlTableEditorControl, HtmlTableEditorPreview);
 
   // =========================================================
-  // FOOTNOTE FIELD (textarea with the same Superscript button)
+  // FOOTNOTE FIELD (textarea with the same Text formatting buttons)
   // =========================================================
 
   const FOOTNOTE_WIDGET_NAME = "html_table_footnote_input";
 
   const HtmlTableFootnoteControl = createClass({
-    superscript() {
+    format(format) {
       if (document.activeElement !== this.textarea) return;
-      applySuperscriptTo(this.textarea, (value) => this.props.onChange(value));
+      applyFormatTo(this.textarea, format, (value) => this.props.onChange(value));
     },
 
     handleKeyDown(e) {
-      const key = e.key.toLowerCase();
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (key === "+" || key === "=")) {
+      const format = formatForKey(e);
+      if (format) {
         e.preventDefault();
-        this.superscript();
+        this.format(format);
       }
     },
 
@@ -1566,18 +1753,11 @@
       return h("div", { className: this.props.classNameWrapper }, [
         h(
           "div",
-          { key: "toolbar", style: { marginBottom: "6px" } },
-          h(
-            "button",
-            {
-              type: "button",
-              style: btnStyle,
-              onMouseDown: (e) => e.preventDefault(),
-              onClick: this.superscript,
-              title: SUPERSCRIPT_BUTTON_TITLE
-            },
-            ["x", h("sup", { key: "sup" }, "2"), " Superscript"]
-          )
+          { key: "toolbar", style: { display: "flex", gap: "4px", alignItems: "center", marginBottom: "6px" } },
+          [
+            h("span", { key: "format-label", style: { fontSize: "13px", marginRight: "2px" } }, "Text:"),
+            ...renderFormatButtons(this.format)
+          ]
         ),
         h("textarea", {
           key: "textarea",
@@ -1587,7 +1767,7 @@
           onChange: (e) => this.props.onChange(e.target.value),
           onKeyDown: this.handleKeyDown,
           rows: 4,
-          placeholder: "[1] Based on the data of ...\n^1^ Bees = honeybees",
+          placeholder: "[1] Based on the data of ...\n^1^ Bees = honeybees\nSee the [NY DEC portal](https://www.dec.ny.gov) for current registrations.",
           style: {
             display: "block",
             boxSizing: "border-box",
@@ -1630,7 +1810,7 @@
         label: "Table Footnote",
         widget: FOOTNOTE_WIDGET_NAME,
         required: false,
-        hint: "Shown as a full-width row at the bottom of the table. One note per line; a leading marker like [1] is bolded. Use Superscript for keys like ^1^."
+        hint: "Shown as a full-width row at the bottom of the table. One note per line; a leading marker like [1] is bolded. Use the Text buttons for **bold**, *italic*, ^superscript^ (keys like ^1^), ~subscript~ and [links](https://...)."
       }
     ],
 

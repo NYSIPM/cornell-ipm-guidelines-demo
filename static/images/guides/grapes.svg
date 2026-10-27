@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 36 360 240" role="img" aria-label="Bunch of grapes">
+  <!-- Guide image set (static/images/guides/): drawn on a 480x320 canvas, framed to its central 360x240 (viewBox) so the subject fills small thumbnails. Soft background, pale halo, ground curve, one flat subject. -->
+  <rect width="480" height="320" fill="#efe8f6"/>
+  <circle cx="240" cy="165" r="128" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="240" cy="338" rx="320" ry="72" fill="#dfd2ee"/>
+
+  <!-- Vine stem and leaf -->
+  <path d="M236 122 C 232 98 246 80 268 74" stroke="#7a5a33" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M262 76 C 268 50 300 42 314 58 C 330 46 360 56 352 82 C 372 92 362 120 336 116 C 330 132 300 132 294 112 C 272 112 256 96 262 76 Z" fill="#5a9e47"/>
+  <path d="M266 78 L 336 100 M300 62 L 312 106 M346 76 L 318 104" stroke="#3f7d35" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Grape bunch -->
+  <g fill="#6b3f8f">
+    <circle cx="180" cy="142" r="22"/>
+    <circle cx="220" cy="140" r="22"/>
+    <circle cx="260" cy="142" r="22"/>
+    <circle cx="300" cy="146" r="21"/>
+    <circle cx="200" cy="178" r="22"/>
+    <circle cx="240" cy="178" r="22"/>
+    <circle cx="280" cy="180" r="22"/>
+    <circle cx="220" cy="214" r="22"/>
+    <circle cx="260" cy="214" r="22"/>
+    <circle cx="240" cy="250" r="21"/>
+  </g>
+  <g fill="#ffffff" opacity="0.3">
+    <circle cx="173" cy="135" r="6"/>
+    <circle cx="213" cy="133" r="6"/>
+    <circle cx="253" cy="135" r="6"/>
+    <circle cx="293" cy="139" r="6"/>
+    <circle cx="193" cy="171" r="6"/>
+    <circle cx="233" cy="171" r="6"/>
+    <circle cx="273" cy="173" r="6"/>
+    <circle cx="213" cy="207" r="6"/>
+    <circle cx="253" cy="207" r="6"/>
+    <circle cx="233" cy="243" r="6"/>
+  </g>
+</svg>

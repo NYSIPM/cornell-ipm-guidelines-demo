@@ -1,7 +1,7 @@
 /*
- * Centre the page content on crop pages that have a docked sidebar
- * (body.nav-sidebar.docked - currently only Asparagus; pages without a
- * sidebar are untouched).
+ * Centre the page content next to the guide's docked sidebar
+ * (body.nav-sidebar.docked - every page in this guide; pages without a
+ * sidebar would be untouched).
  *
  * Quarto's docked-sidebar grid caps the content column at ~1000px and gives
  * all leftover width to one column at the far right ("5fr"), so on wide

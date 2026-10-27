@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 36 360 240" role="img" aria-label="Apple with a leaf">
+  <!-- Guide image set (static/images/guides/): drawn on a 480x320 canvas, framed to its central 360x240 (viewBox) so the subject fills small thumbnails. Soft background, pale halo, ground curve, one flat subject. -->
+  <rect width="480" height="320" fill="#fdede4"/>
+  <circle cx="240" cy="165" r="128" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="240" cy="338" rx="320" ry="72" fill="#f3d3c2"/>
+
+  <!-- Apple -->
+  <path d="M240 128 C 204 100 150 118 156 184 C 162 240 204 272 240 256 C 276 272 318 240 324 184 C 330 118 276 100 240 128 Z" fill="#d6443c"/>
+  <ellipse cx="196" cy="172" rx="13" ry="28" transform="rotate(18 196 172)" fill="#ffffff" opacity="0.35"/>
+  <!-- Stem and leaf -->
+  <path d="M240 130 Q 236 106 248 86" stroke="#7a5230" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M252 102 C 270 72 312 70 324 84 C 306 108 272 114 252 102 Z" fill="#4f9a3f"/>
+  <path d="M256 101 Q 288 92 318 85" stroke="#3a7a32" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+</svg>

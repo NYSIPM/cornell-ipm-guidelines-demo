@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 36 360 240" role="img" aria-label="Hop cones on the vine">
+  <!-- Guide image set (static/images/guides/): drawn on a 480x320 canvas, framed to its central 360x240 (viewBox) so the subject fills small thumbnails. Soft background, pale halo, ground curve, one flat subject. -->
+  <defs>
+    <!-- One hop cone, centred at (0,0) -->
+    <g id="hop-cone">
+      <path d="M0 -48 C 30 -36 32 12 0 50 C -32 12 -30 -36 0 -48 Z" fill="#a3cf62"/>
+      <g stroke="#6b9f36" stroke-width="5" fill="none" stroke-linecap="round">
+        <path d="M-20 -20 Q 0 -8 20 -20"/>
+        <path d="M-24 2 Q 0 14 24 2"/>
+        <path d="M-18 24 Q 0 36 18 24"/>
+      </g>
+    </g>
+  </defs>
+
+  <rect width="480" height="320" fill="#ecf5e2"/>
+  <circle cx="240" cy="165" r="128" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="240" cy="338" rx="320" ry="72" fill="#d5e8c4"/>
+
+  <!-- Bine (vine) with a leaf -->
+  <path d="M110 40 C 170 70 230 70 300 92 C 340 104 360 120 380 150" stroke="#5f8a32" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M318 96 C 316 70 344 54 362 70 C 382 60 404 78 392 100 C 410 116 392 140 370 130 C 360 146 334 138 336 118 C 320 118 312 106 318 96 Z" fill="#5a9e47"/>
+  <path d="M322 98 L 384 112 M356 72 L 362 124" stroke="#3f7d35" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Cones hanging from the bine -->
+  <g stroke="#5f8a32" stroke-width="5" stroke-linecap="round">
+    <path d="M196 70 L 196 112"/>
+    <path d="M262 82 L 262 150"/>
+    <path d="M150 58 L 150 160"/>
+  </g>
+  <use href="#hop-cone" transform="translate(196 156) scale(0.95)"/>
+  <use href="#hop-cone" transform="translate(262 196) scale(1.05)"/>
+  <use href="#hop-cone" transform="translate(150 200) scale(0.85)"/>
+</svg>

@@ -1,5 +1,5 @@
 ---
-title: 1 Vegetable-specific chapters
+title: Organic Vegetable Specific Crop Chapters
 order: 0
 ---
 Explore detailed, crop-specific organic production and Integrated Pest Management (IPM) guidelines. 
