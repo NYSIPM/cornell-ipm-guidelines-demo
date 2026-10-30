@@ -1,0 +1,53 @@
+---
+title: "4.10 Selecting Nozzles from the Nozzle Catalogue – Boom Sprayers"
+---
+
+Step 1. Calculate the required nozzle output.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Consider forward speed e.g. 4 mph, if too high: boom bounce and boom yaw
+
+Consider pressure, too high: may lead to drift, too low: may lead to droplet bounce
+
+Example 1: Using a Spraying Systems catalogue #49A,
+page 10. Look at the columns headed GPA at 20” nozzle spacing. Select the 4 mph column; look down the column until you see a figure close to 20 gpa, then look to the left to find the operating pressure
+
+For example:
+select nozzle XR8003VS or XR11003VS at 30 psi to give 19.3 gpa
+select nozzle XR8004VS or XR11004VS at 20 psi to give 21 gpa
+
+Select the appropriate nozzle.
+
+Example 2: Using a Spraying Systems catalogue #49A, page 10. Look at column headed: Capacity of 1 nozzle in GPM.
+
+Read down column
+select nozzle XR8003VS or XR11003VS at 30 psi to give 0.26 GPM or
+select nozzle XR8004VS or XR11004VS at 20 psi to give 0.28 GPM
+
+Selecting a Nozzle to Give Desired Spray Quality
+
+Example using a Spraying Systems catalogue #49A, page 161
+In the previous exercise we considered selecting:
+nozzle XR8003VS or XR11003VS at 30 psi to give 0.26 GPM or
+nozzle XR8004VS or XR11004VS at
+20 psi to give 0.28 GPM
+Using the table below, you can see:
+an XR8003VS at 30 psi gives a medium spray quality
+an XR8004VS at 20 psi gives a coarse spray quality
+but note:
+an XR11003VS at 30 psi gives a fine spray quality
+
+<!-- TODO: Insert original image or diagram here. -->
+
+an XR11004VS at 20 psi gives a medium spray quality
+
+Spray classification and target
+
+Fine sprays can produce enhanced retention on the target and may be used for foliar acting weed control and cotyledon-stage weed control. Careful attention must be paid to weather conditions: do not use a fine spray for pesticides labeled toxic, or when drift may cause problems near susceptible or sensitive areas.
+Medium sprays when the leaf is the target.
+Coarse sprays have a low risk of drift but should be used only where recommended as a lot of spray is wasted as the larger droplets bounce off the leaves.

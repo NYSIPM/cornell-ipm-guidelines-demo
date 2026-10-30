@@ -1,0 +1,18 @@
+---
+title: 4 Sprayer Information
+---
+* [4.1 Solutions For Safer Spraying](4.1-solutions-for-safer-spraying.qmd)
+* [4.2 Minimizing Pesticide Drift in Orchards Part I](4.2-minimizing-pesticide-drift-in-orchards-part-i.qmd)
+* [4.3 Minimizing Pesticide Drift in Orchards Part II](4.3-minimizing-pesticide-drift-in-orchards-part-ii.qmd)
+* [4.4 Preparing the Air Blast Sprayer for Work](4.4-preparing-the-air-blast-sprayer-for-work.qmd)
+* [4.5 Rate of Output (GPM)](4.5-rate-of-output-gpm.qmd)
+* [4.6 Tree Row Volume](4.6-tree-row-volume.qmd)
+* [4.7 Nozzles on the Net](4.7-nozzles-on-the-net.qmd)
+* [4.8 Selecting Nozzles from the Nozzle Catalogue – Airblast sprayers](4.8-selecting-nozzles-from-the-nozzle-catalogue-airblast-sprayers.qmd)
+* [4.9 Calibrating Airblast Sprayers](4.9-calibrating-airblast-sprayers.qmd)
+* [4.10 Selecting Nozzles from the Nozzle Catalogue – Boom Sprayers](4.10-selecting-nozzles-from-the-nozzle-catalogue-boom-sprayers.qmd)
+* [4.11 Boom Sprayer Calibration (Use Clean Water)](4.11-boom-sprayer-calibration-use-clean-water.qmd)
+* [4.12 Going Spraying! Mixing Procedures](12-going-spraying-mixing-procedures.qmd)
+* [4.13 Equipment for Weed Control in Orchards](4.13-equipment-for-weed-control-in-orchards.qmd)
+* [4.14 Decontaminating and Storing Crop Sprayers](4.14-decontaminating-and-storing-crop-sprayers.qmd)
+* [4.15 Application Equipment Distance Learning](4.15-application-equipment-distance-learning.qmd)

@@ -1,0 +1,127 @@
+---
+title: "4.13 Equipment for Weed Control in Orchards"
+---
+
+Herbicides, although relatively inexpensive, require good application techniques if improved deposition and drift reduction is to occur. Some of the commonly used herbicides can damage young trees and so great care must be taken. Drift has been a major concern for some years; off-target movement wastes money, reduces deposition on the target plant, damages young trees, pollutes water,and may cause strain with other people.
+
+
+## 4.13.1 Boom Applicators
+
+A boom may be fitted either to the front of the tractor or mid-mounted for spraying one side of the adjacent row. 20-30 gallons per acre are typical spray volumes.
+
+The use of hoods and break-back devices are important. A hood will protect the branches from small droplets being emitted from a conventional flat fan nozzle. A break-back device will protect the sprayer boom and nozzle from damage caused by inadvertently striking a trunk or  post.
+
+Correct nozzle selection is one of the most important yet inexpensive aspects of pesticide application. A nozzle’s droplet size spectrum determines deposition and drift and is referred to as spray quality. Modern nozzle catalogues provide information on spray quality for each nozzle. When applying herbicides, a MEDIUM quality spray is typically used. Consult herbicide labels as well since they may list specific requirements. Conventional flat fan nozzles produce droplets in the range of 10-450 microns. There are 25,000 microns in one inch. Drift is a major problem with droplets less than 150 microns.
+
+Increasing the Volume Median Diameter (VMD) will certainly reduce drift, but too large a droplet (>300 microns) will bounce off the leaves to the ground, causing pollution, wasting money, and resulting in less product on the target.
+
+
+## 4.13.2 Conventional Flat Fan Nozzles
+
+Nozzles with an 80° angle produce coarser droplets than those with a 110° angle at the same flow rate. However,  80° nozzles require the boom to be set 17-19 inches above the target, where 110° nozzles can be set lower at 15-18 inches. (Keeping the boom closer to the target reduces the chance of drift). Spray quality for conventional flat fan nozzles is fine to medium at 15-60 psi.
+
+
+## 4.13.3 Pre-orifice Flat Fan Nozzles
+
+The internal design of this nozzle reduces the internal operating pressure compared to a conventional flat fan, resulting in coarser droplets. Available as 80° or 110° nozzles, spray quality ranges from medium to coarse at 30-60 psi.
+
+
+## 4.13.4 Turbo-Teejet
+
+The Turbo-Teejet nozzle has a turbulence chamber that produces a wide-angle flat spray pattern of 150°. Spray quality for this nozzle is medium to coarse at 15-90 psi. Nozzles can be set at 15-18 inches above the target.
+
+
+## 4.13.5 Air Induction Nozzles
+
+Air induction, air inclusion, or venturi nozzles are flat fan nozzles where an internal venturi creates negative pressure inside the nozzle body. Air is drawn into the nozzle through two holes in the nozzle side, mixing with the spray liquid. The emitted spray contains large droplets filled with air bubbles (similar to a candy malt ball) having virtually no fine, drift-prone droplets. The droplets explode on impact with leaves, producing similar coverage to conventional, finer sprays.
+
+Air induction nozzles reduce drift even when operating at higher pressures of 80-90 psi. They are available as 110° fan angles, so boom height may need to be adjusted to 15-18 inches. Air induction nozzles work very well for herbicide applications. Trials with paraquat in the Finger Lakes have shown good deposition with no drift.
+
+
+## 4.13.6 Sensor-Controlled Applicators
+
+Sensor-controlled pesticide applicators use optical sensors to determine where weeds are located. These sensors, coupled with a computer controller, regulate the spray nozzles and apply herbicides only when needed, thus considerably reducing herbicide use. A computer-controlled sensor detects chlorophyll in plants and then sends a signal to the appropriate spray nozzle, applying the herbicide directly to the weed. The operator calibrates the system to bare soil or pavement, allowing the computer to determine when a weed is present. Sensor-controlled applicators are often mounted on ATV or UTVs. Typically, this type of applicator can be used at speeds up to 10 mph. A complete sensor-controlled system consists of a chemical tank, pump, battery power, computer controller, optical sensors. and spray nozzles.
+
+Benefits of sensor-controlled applicators include:
+Reduced amount of herbicide applied.
+Reduced potential for groundwater contamination.
+Ability to apply herbicides in dark or light conditions.
+If equipped with wind-deflecting shields, can reduce herbicide drift.
+
+
+## 4.13.7 Controlled Droplet Applicators (CDA)
+
+A CDA herbicide applicator is an electrically-driven spinning disc under a large plastic hood or dome. The outer edge of the disc has small teeth which break up the liquid herbicide into droplets, 95% of whichare the same size. The speed of the spinning disc determines droplet size. As there are no large or small droplets in the CDA spectrum, all droplets stick to the plant, allowing forrates as low as 1-8 GPA to be applied.
+
+Various widths of hoods or domes can be selected and are fitted with break-back devices. Where the ground is rough,  a bristle skirt maybe used. Where applications are mde around young trees, an optional plastic cover can be fitted over the bristle skirt.
+
+CDA sprayers reduce the amount of water required, thus considerably improving spraying logistics. They are lightweight, relatively inexpensive, and very maneuverable.
+
+
+## 4.13.8 Flame Applicators
+
+Flame applicators simply use a flame to destroy weeds. Most flame applicators burn liquid propane gas to create a flame having a temperature near 2000°F. The flame is applied directly to the weeds using a hand-held wand or with boom-mounted torches attached to a tractor or ATV. The flame is applied to the weed for only a short period of time, usually about 1/10 of a second. The length of time the flame is applied depends on the age, size, and tenderness of the weed. When the weeds are exposed to the flame, the water inside the plant cells boil, causing them to burst. (The weeds are not burned up.) By destroying the plant cells, the plant is unable to transport water and continue photosynthesis, causing the weed to wilt and die.
+
+It is recommended that the flame be applied to weeds when they are 1 to 3 inches tall, and typically in the spring and early summer. Flame applicators should only be used when there is little or no potential for setting fire to dry plant material. Beware of setting fire to trellis posts and poison ivy.
+
+Benefits of flame applicators:
+Non-chemical weed control method.
+No harmful drift.
+No groundwater contamination.
+No chemical exposure to workers.
+
+
+## 4.13.9 Where to Look/Buy Equipment and Nozzles
+
+Albuz nozzles
+800-881-4832
+[www.greenleaftech.com](https://www.greenleaftech.com)
+
+BDi Machinery
+610-966-2444
+[www.bdimachinery.com](https://www.bdimachinery.com)
+
+Green Hoe LLC
+833-473-3608
+[www.greenhoecompany.com](https://www.greenhoecompany.com)
+
+GreenLeaf nozzles
+800-881-4832
+[www.greenleaftech.com](https://www.greenleaftech.com)
+Hardi nozzles
+563-386-1730
+[www.hardi-us.com](https://www.hardi-us.com)
+
+Lakeview Vinyeard Equipiment
+1-866-677-4717
+lakeviewvineyardequipment.com
+
+Lechler nozzles
+800-881-4832
+[www.greenleaftech.com](https://www.greenleaftech.com)
+
+Weedseeker
+ag.trimble.com/weedseeker2
+
+Phil Brown Welding Corp.
+616-784-3046
+[www.philbrownwelding.com](https://www.philbrownwelding.com)
+
+Northeastern Equipment
+631-765-3865
+[www.northeasterneq.com](https://www.northeasterneq.com)
+
+OESCO Inc., Conway, MA
+800-634-5557
+[www.oescoinc.com](https://www.oescoinc.com)
+
+Red Dragon Flame
+785-222-2873
+flameengineering.com
+
+Rittenhouse
+800-461-1041
+[www.mkrittenhouse.com/us/](https://www.mkrittenhouse.com/us/)
+
+Tee Jet nozzles
+[www.teejet.com](https://www.teejet.com)

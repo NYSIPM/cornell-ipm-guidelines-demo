@@ -1,0 +1,68 @@
+---
+title: "4.6 Tree Row Volume"
+---
+
+## 4.6.1 Dilute Applications
+
+A standard dilute application uses 400 gallons to account for the trees’ actual stature and density per acre on a planting basis of standard size trees. Modern orchards contain smaller trees and therefore require less volume of water for adequate coverage. Tree row volume, a measurement of tree canopy size designed to account for the planting system, is defined as canopy width times the tree height, times row length per acre. Row length per acre is 43,560 square feet per acre divided by the distance between rows, in feet.
+
+Tree row volume = canopy width x tree height x row length per acre
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+An example:
+Trees 10 feet wide and 8 feet tall in rows 18 feet apart
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Note:
+It takes 0.7-1.0 gallons to treat 1,000 cubic feet of tree canopy volume. Therefore, the minimum of 0.7 gallons/1,000 cu ft should be used in well pruned trees. The maximum of 1.0 gallon/1,000 cu ft should be used in an unpruned orchard with a thick canopy.
+
+Example: A well pruned orchard using minimum spray volume
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Example: A traditional, un-pruned, dense orchard using maximum spray volume
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+## 4.6.2 Concentrate Applications (Low Volume Application)
+
+Concentrate spraying is reducing the gallons of water per acre to reduce or eliminate leaf run-off, often referred to as low volume application. The acceptable concentrate level depends on several factors, including the pest being controlled, density of foliage, weather conditions and the material being applied.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+If we are using a pesticide that is recommended at 2 lbs/100 gallons on a dilute basis, then in the traditional orchard above we would use 4 lbs in 200 gallons of water (approx.).
+
+If our sprayer is applying at 60 gallons/acre, then our concentration is:
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+or
+
+If our sprayer is applying at 50 gallons/acre, then our concentration is:
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Remember the debate that exists between all concerned:
+
+It is the amount of water per acre that changes, not the amount of pesticide per acre.
+The amount of pesticide reduces in proportion to the water, to maintain a constant concentration.
+Is a standard dilute application uses 400 GPA on “standard” trees but some suggest that these big old traditional trees are no longer and a modern “standard “ tree should be regarded as 300 GPA.

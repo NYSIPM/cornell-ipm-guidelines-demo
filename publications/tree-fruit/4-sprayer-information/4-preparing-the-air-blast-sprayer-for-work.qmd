@@ -1,0 +1,138 @@
+---
+title: 4.4 Preparing the Air Blast Sprayer for Work
+---
+## 4.4.1 Checking the Sprayer
+
+Sprayers must be regularly checked over to ensure that proper maintenance has been carried out and that no outstanding repairs need to be done. Faulty sprayers contribute to increased drift levels and waste money through inefficiency and overuse of chemicals.
+
+Before attempting any work on a machine make sure that it is fully supported on stands and that all necessary protective clothing is on hand and used properly.
+
+Maintenance measures such as fitting a new set of nozzles at the beginning of each season also save money. Even when there is overdosing by as little as 5%, the cost of a new set of nozzles would be recovered in less than a day’s work. The cost of replacing a faulty pressure gauge which has been indicating at 15% below the actual pressure is recouped in around two hours’ operation.
+
+Caution
+Take great care when adjusting a sprayer while the tractor engine is running.
+Always ensure that the fan is stationary before approaching the rear of the sprayer.
+Engage the handbrake when leaving the tractor seat.
+
+## 4.4.2 Fitting the Sprayer to the Tractor
+
+The selected tractor must always be powerful enough to operate the sprayer efficiently and under the working conditions expected. All external services – hydraulic, electrical and pneumatic – must be clean and in working order. Tractors with cabs must have efficient air filtration systems. All protective guards must be in place. Trailed sprayers are often close-coupled to the tractor, so it is essential that the drawbar and the PTO shaft are correctly adjusted for turning. PTO shafts must be disengaged when making very tight turns.
+
+## 4.4.3 Checking the Operation of the Sprayer
+
+Partly fill the tank with clean water and move the sprayer to an open area. Remove the nozzles. Although not using any pesticide at this point, it’s a good habit to wear a coverall, gloves, and face visor when working with the sprayer. Engage the PTO, gently turn the shaft, and increase speed slowly to operating revs. Test the on/off and pressure relief valves, and check the agitation system. Flush through the spray lines, then switch off the tractor. Refit the nozzles and check the liquid system again for leaks.
+It is valuable to assess the spray deposits at various points in the canopy, includingthe upper and lower leaf surfaces of the trees to be sprayed. Dense foliage or treeplanting systems can also affect deposition. Water-sensitive papers, food coloring or fluorescent tracers are available for this purpose. An increase in spray volume or adjustment of the nozzles and their locations may be necessary in order to achieve the correct deposits.
+
+## 4.4.4 Pre-Season Maintenance
+
+Use the following checklists when preparing the sprayer for the season:
+Hoses
+check…
+for splits and cracks
+connections to ensure they are water-tight
+for hose chafe, particularly in routing clips
+
+Filters
+check…
+for missing filter elements and seals
+for leakage
+for blocked or damaged filters
+
+Tank
+check…
+for fractures and any other damage
+the tank sits firmly in its mount
+the securing straps are correctly adjusted
+the agitation is working
+the tank is clean
+
+Controls
+check…
+the control circuitry (electrical, hydraulic or air) for correct operation
+valves for both internal and external leaks
+
+Pump
+check…
+lubrication levels
+for leaks
+the air pressure in the pulsation chamber (if fitted) is at the recommended level
+the pump rotates freely without friction or noise. Do so by rotating manually or starting at low speed (corrosion may cause seizing up)
+
+Pressure Gauge
+The pressure gauge is vital for indicating whether the nozzles are delivering the correct amount of chemical per unit time while spraying. If you have any doubts about the pressure gauge, replace it or refer the problem to the manufacturer or supplier.
+
+Nozzles
+check…
+all nozzles are the same
+all nozzles are in good condition, with no leaks around the body
+all nozzles are clean and free from obstruction (note: clean with a soft brush or airline – don’t damage nozzles by using wires or pins)
+all nozzles deliver to within + or -5% of the manufacturer’s chart value
+
+Using water only, set up the sprayer to ‘spray’ at the specified pressure and collect the output from each nozzle in turn for a period of 60 seconds. Record each output and replace those outside the 5% tolerance stated in the manufacturer’s chart.
+
+Calibration
+Where your sprayer has automatic controllers to monitor the speed of the sprayer and the flow, pressure and area sprayed:
+check…
+they are in good condition and properly maintained
+they are frequently calibrated for accuracy, leaks, blockages, variations in pressure or any minor damage during spraying
+
+Routine Maintenance
+The following checks should be carried out routinely:
+All hoses are tightly connected and free from sharp bends; cracked or damaged hoses must be replaced.
+All controls move freely and are fully adjustable.
+Pressure gauge reads zero.
+Pump can be turned over by hand.
+Fan turns freely and is not obstructed; bearings are sound and lubricated.
+Air pressure in pump accumulator (if fitted) is correctly adjusted.
+Drain plugs and clean filters are in position.
+Tires on trailed machines are sound and correctly inflated; wheel nuts are tight.
+
+## 4.4.5 Sprayer Calibration
+
+Accurate calibration of orchard spray equipment is important for efficient use of pesticides. The selection of the right chemical and timing of its application are equally important. Tree spraying requires a sprayer with adequate capacity to distribute the spray evenly throughout the trees. Individual sprayers can be designed to operate most effectively over a range of gallonages per acre. The best spray coverage and deposit are obtained within the manufacturer’s recommended operating range. Sprayer performance will be limited by pump output, maximum pressure, fan capacity, and travel speed.
+
+## 4.4.6 Dilute Spraying
+
+The amount of dilute spray required to adequately cover trees varies with the size, density of canopy, and growth stage of the trees. Unless adjustments are made in the spray delivery, spray pattern, and fan output to account for differences in tree size, inadequate pest control or excessive application of material will result. Approximate dilute gallonages required in different orchard situations are indicated in Table 4.4.1.
+
+## 4.4.7 Concentrate Spraying
+
+Table 4.4.1 shows how the amount of dilute spray required to cover an acre of orchard will vary according to tree size. This table also can be used to adjust the per-acre rate of pesticides for orchards of different tree sizes when concentrate sprays are applied. For instance, in an orchard with rows 30 ft apart and trees 20 ft wide x 15 ft tall, the minimum dilute spray per acre is shown to be 300 gallons. Thus, if you are applying a pesticide recommended at a rate of 2 lb/100 gal dilute basis, the appropriate per acre rate in such an orchard would be 6 lb, which could be applied in 75 gal of water at a 4X concentration or in 50 gal of water at a 6X concentration.
+
+However, in a more compact orchard with 22 ft between rows and trees 14 ft wide x 10 ft tall, the minimum dilute spray per acre is shown to be 200 gal. Thus, the same pesticide would be applied at a rate of only 4 lb per acre in this orchard (2 lb/100 gal dilute basis x 200 gal dilute coverage). If concentrate spraying, the 4 lb of pesticide would be applied in 50 gal of water per acre at a 4X concentration or in 33 gal of water at a 6X concentration.
+
+Concentrate spraying must be considered in terms of reducing the gallons of water per acre for the row-spacing and tree-size combination being sprayed. As the gallonage of water is reduced, errors become more critical. Concentrate sprays reduce or eliminate run-off, depending upon the degree of concentration. From a practical viewpoint, the acceptable concentrate level depends on several factors including the pest being controlled, density of foliage, weather conditions, and material being applied. Dilute sprays are generally more effective and are preferred for applying growth regulators, nutrient sprays, acaricides, and insecticides for control of pests such as scales and woolly aphid. In most other instances, concentrate sprays in the range of 6X to 8X usually provide satisfactory results.
+
+Additional savings in cost of application above this level of concentration are minimal, and frequency of poor spray performance increases.
+
+```{=html}
+<!-- html-table-editor -->
+<div class="html-table-title" style="margin:0 0 0.75rem;font-size:1.35rem;line-height:1.25;font-weight:600;">Table 4.4.1. Gallonage of dilute spray per acre required to provide equivalent coverage for mature trees of different sizes and spacings.</div>
+<style data-html-table-style>.html-table-title { margin: 0 0 0.75rem; font-size: 1.35rem; line-height: 1.25; font-weight: 600; } .html-table-wrap { width: 100%; overflow-x: auto; margin: 0 0 1rem; } .html-table { width: 100%; margin: 0; border: 0; border-collapse: collapse; border-spacing: 0; } .html-table th, .html-table td { padding: 5px 6px; border: 0; border-bottom: 1px solid #d7d7d7; text-align: left; vertical-align: top; overflow-wrap: break-word; } .html-table th { font-weight: 700; vertical-align: bottom; } .html-table thead th[colspan] { text-align: center; } .html-table thead { border-bottom: 2px solid #6f6f6f; } .html-table tbody { border-bottom: 2px solid #6f6f6f; } .html-table tbody tr:nth-child(odd) td { background: #ffffff; } .html-table tbody tr:nth-child(even) td { background: #f1f1f1; } .html-table tfoot td { background: #ffffff; } .html-table .ht-left { text-align: left; } .html-table .ht-center { text-align: center; } .html-table .ht-right { text-align: right; } .html-table th button:hover { text-decoration: underline; } .html-table .html-table__footnote { border-bottom: 0; font-size: 0.875em; line-height: 1.35; color: #333; } .html-table .html-table__footnote p { margin: 0.2em 0; }</style>
+<div class="html-table-wrap"><table class="html-table" data-col-align="center,center,center,center"><thead><tr><th class="ht-center">Distance Between Rows (feet)</th><th class="ht-center">Tree Width (feet)</th><th class="ht-center">Tree Heigh (feet)</th><th class="ht-center">Dilute spray Per acre1 (gal/acre)</th></tr></thead><tbody><tr><td class="ht-center">40</td><td class="ht-center">28</td><td class="ht-center">20</td><td class="ht-center">427</td></tr><tr><td class="ht-center">40	</td><td class="ht-center">28	</td><td class="ht-center">16	</td><td class="ht-center">342</td></tr><tr><td class="ht-center">30	</td><td class="ht-center">20	</td><td class="ht-center">15	</td><td class="ht-center">305</td></tr><tr><td class="ht-center">25	</td><td class="ht-center">16	</td><td class="ht-center">14	</td><td class="ht-center">273</td></tr><tr><td class="ht-center">22	</td><td class="ht-center">14	</td><td class="ht-center">13	</td><td class="ht-center">252</td></tr><tr><td class="ht-center">20	</td><td class="ht-center">12	</td><td class="ht-center">12	</td><td class="ht-center">220</td></tr><tr><td class="ht-center">18	</td><td class="ht-center">10	</td><td class="ht-center">12	</td><td class="ht-center">203</td></tr><tr><td class="ht-center">16	</td><td class="ht-center">8	</td><td class="ht-center">10	</td><td class="ht-center">152</td></tr><tr><td class="ht-center">14	</td><td class="ht-center">6	</td><td class="ht-center">10	</td><td class="ht-center">131</td></tr><tr><td class="ht-center">12	</td><td class="ht-center">5	</td><td class="ht-center">10	</td><td class="ht-center">127</td></tr><tr><td class="ht-center">11	</td><td class="ht-center">4</td><td class="ht-center">10	</td><td class="ht-center">111</td></tr><tr><td class="ht-center">10	</td><td class="ht-center">3	</td><td class="ht-center">9	</td><td class="ht-center">82</td></tr></tbody><tfoot><tr data-table-footnote><td colspan="4" class="html-table__footnote"><p><sup>1</sup>Minimum dilute gallons per acre=tree width x tree height x linear feet of row per acre (43,560 divided by distance between rows) x approximately 0.7 gallon per 1,000 cu ft of tree volume.</p></td></tr></tfoot></table></div>
+```
+
+4.4.8 Travel Speed Calibration
+Travel speed is a critical factor in maintaining accurate application rates and will influence spray deposition depending on location within the canopy. The slower a sprayer travels, the greater the uniformity in spray deposition. Although there is inconsistency in research results that try to determine the effect of travel speed on average spray deposition, all studies to date have been in agreement that the higher the travel speed, the greater the variability in spray deposit. Variation in spray deposit is an important factor where uniformity of spray coverage throughout the canopy is required. Conclusions from research were drawn using travel speeds of 1-4 mph.
+
+Factors that will affect travel speed include:
+
+* weight of sprayer to be pulled
+* slope of terrain
+* ground conditions traveled over (wheel slippage!)
+
+The best way to measure travel speed is to pull a sprayer with tank half filled with water on the same type of terrain that the sprayer will be operated on.
+
+Set up test course at least 100 feet long, measure the course with a tape measure. Do not pace the distance. The longer the course the smaller the margin of error. Run the course in both directions.
+Use an accurate stop watch to check the time required to travel the course in each direction. Average the two runs and use the following formula to calculate the speed in MPH.
+
+Formula:        MPH =     ft traveled      X     60
+sec traveled             88
+Your figures:
+
+Tractor gear   **_**  Engine revs.**___**
+
+MPH     =     **__**        ft traveled       X     60    =   ___
+sec traveled              88
+
+A modern alternative to using the above method is to purchase a hand-held GPS receiver. A number of systems are available, costing $80-150 and are available from electronics stores, hunting equipment suppliers, and online. The small device is portable so can be used in all tractors to determine forward speed in specific tractor gears at known engine RPM. They may also be used to measure row length and determine block size.

@@ -1,0 +1,14 @@
+---
+title: 3 Pesticide Information
+---
+* [3.1 Pesticide Classification and Certification](1-pesticide-classification-and-certification.qmd)
+* [3.2 Use Pesticides Properly](2-use-pesticides-properly.qmd)
+* [3.3 Pollinator Protection](3-pollinator-protection.qmd)
+* [3.4 New York State Pesticide Use Restrictions](4-new-york-state-pesticide-use-restrictions.qmd)
+* [3.5 Verifying Pesticide Registration](5-verifying-pesticide-registration.qmd)
+* [3.6 Check Label for Site and Pest](6-check-label-for-site-and-pest.qmd)
+* [3.7 Pesticide Recordkeeping/Reporting](7-pesticide-recordkeeping-reporting.qmd)
+* [3.8 EPA Worker Protection Standard (WPS) for Agricultural Pesticides](8-epa-worker-protection-standard-wps-for-agricultural-pesticides.qmd)
+* [3.9 Reduced-risk Pesticides, Minimum-risk Pesticides, and Biopesticides](9-reduced-risk-pesticides-minimum-risk-pesticides-and-biopesticides.qmd)
+* [3.10 FIFRA 2(ee) Recommendations](10-fifra-2-ee-recommendations.qmd)
+* [3.11 Endangered Species Act and Pesticides](11-endangered-species-act-and-pesticides.qmd)

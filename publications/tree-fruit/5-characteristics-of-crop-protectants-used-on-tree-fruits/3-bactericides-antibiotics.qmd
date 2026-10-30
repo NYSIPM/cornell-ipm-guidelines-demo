@@ -1,0 +1,15 @@
+---
+title: "5.3 Bactericides (Antibiotics)"
+---
+
+Kasugamycin (Kasumin 2L) is a bactericide used for fire blight of apples and pears. It is formulated as kasugamycin hydrochloride in a 2.3% liquid solution. Kasugamycin is applied at bloom at the rate of 64 fl oz/100 gal for fire blight control, and it can be used in combination with wetting agents to enhance efficacy. It should be applied only in conjuction with disease forecasting models. It can be applied until 90 days prior to harvest, but Kasumin may not be applied after petal fall. Kasugamycin should not be applied in orchards that have been fertilized with animal waste/manure. Also, animal grazing in treated orchards is prohibited and posting of restriction sign around the application perimeter is required
+
+Resistance to kasugamycin has not been detected in the fire blight pathogen Erwinia amylovora. However, indiscriminate use of this material during summer covers or for shoot blight control may hasten the development of resistance.
+
+Oxytetracycline (Mycoshield , Fireline), another antibiotic, is registered for foliar use on peaches and nectarines to control bacterial spot. It is also registered on peach for microinjection to manage peach X-disease. It is also registered for control of fire blight on apples and pear, but is not as effective as streptomycin.
+
+Streptomycin (Firewall) is a bactericide used for control of fire blight of apples and pears. It is formulated as streptomycin sulfate in a 17% wettable powder form. Streptomycin is commonly used in bloom at the rate of 1/2 lb/100 gal for fire blight control, but can be used at 1/4 lb/100 gal in combination with 1 pt of Regulaid/100 gal dilute spray. It can be applied to pears until 30 days before harvest and to apples until 50 days before harvest. However, summer sprays of streptomycin are NOT recommended, except following a hailstorm.
+
+Tests of streptomycin applied during bloom at a constant amount in different volumes of water indicated that control of fire blight was reduced at concentrations in excess of 6X. Thus, concentration of streptomycin sprays greater than 6X is specifically not recommended.
+
+Resistance is widespread among populations of the fire blight bacterium in Pacific Coast and Midwest production districts, and has recently been detected in several NY counties. Indiscriminate use of this material during summer covers or for shoot blight control will hasten the further development of resistance.

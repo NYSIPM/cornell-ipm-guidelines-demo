@@ -1,0 +1,46 @@
+---
+title: "4.8 Selecting Nozzles from the Nozzle Catalogue – Airblast sprayers"
+---
+
+We need to select hollow cone discs with a core or whirl plate.
+
+Nozzle output is based upon gallons/acre required above.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+WHERE
+GPM = total sprayer output in gallons/minute
+mph = travel speed in miles per hour
+row width = width between rows of trees in feet
+495 = a mathematical constant to correct units of measurement
+
+Example
+Take the example of the dilute application in a well pruned orchard. We need to apply at 136 gallons/acre. We have an airblast sprayer with 7 nozzles each side and a comfortable forward speed for our ground conditions is 3mph. Rows are 18 feet apart.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+GPM = 7.42 per side
+
+GPM per nozzle = 7.42 divided by 7 nozzles = 1.06
+As an example, using the hollow cone nozzle table in the Spraying Systems catalogues:
+# 49A, pages 40-41, #49, pages 38-41 or # 201, pages 10-11
+
+Read along the pressure row at the top of the table.
+Read down the column for 80 psi until you read 1.07 gpm, look across to the left, you will see we need a D10 disc with a DC25 wirl plate or core.
+Alternatively you may read down the column for 60 psi until you read 1.04 gpm, look across to the left and you will see we need a D8 disc with a DC45 wirl plate or core.
+
+Please note: Where trade names appear, no discrimination is intended and no endorsement by the author or Cornell University is implied.
+
+A better alternative to consider would be to use a one-piece hollow cone nozzle tip. These one-piece tips are easier to fit into the cap and are much easier to remove for cleaning, changing tips etc.
+
+Example
+To continue with the worked example from above for a nozzle tip with a flowrate of 1.07 gpm. As an example,
+using the Conejet hollow cone nozzle table in the Spraying Systems TeeJet catalogues: # 49A, page 39, or # 202,
+page 15
+Read along the pressure row at the top of the table.
+Read down the column for 240 psi until you read 1.05 gpm, look across to the left, you will see we need a blue TXVK-26 one-piece nozzle.

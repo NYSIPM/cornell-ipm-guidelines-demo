@@ -7,6 +7,8 @@ project:
     - "js/**"
     - "static/**"
     - "assets/**"
+    # Each guide's images/ folder (Decap uploads), copied even before a page uses an image.
+    - "publications/*/images/**"
 
 filters:
   - filters/api-insert.lua
