@@ -1,5 +1,6 @@
 ---
 title: "5.6 Acaricides"
+order: 6
 ---
 
 Of the 5 species of mites found on fruit trees in New York State, only the European red mite and the twospotted spider mite are abundant and widely enough distributed to be major problems.

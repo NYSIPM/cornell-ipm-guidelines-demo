@@ -1,5 +1,6 @@
 ---
 title: 3 Pesticide Information
+order: 0
 ---
 * [3.1 Pesticide Classification and Certification](1-pesticide-classification-and-certification.qmd)
 * [3.2 Use Pesticides Properly](2-use-pesticides-properly.qmd)

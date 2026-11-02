@@ -1,5 +1,6 @@
 ---
 title: 2 Organic Tree Fruit Production in New York State
+order: 2
 ---
 
 ## 2.1 Introduction

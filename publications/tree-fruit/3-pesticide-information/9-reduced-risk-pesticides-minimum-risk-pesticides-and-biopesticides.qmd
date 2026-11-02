@@ -1,5 +1,6 @@
 ---
 title: 3.9 Reduced-risk Pesticides, Minimum-risk Pesticides, and Biopesticides
+order: 9
 ---
 ### 3.9.1 Reduced-risk Pesticides
 

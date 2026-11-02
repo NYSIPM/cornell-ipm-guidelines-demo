@@ -19,6 +19,9 @@ execute:
 
 website:
   title: "Cornell IPM Guidelines (Demo)"
+  # "<- previous / next ->" links at the bottom of each page, following the
+  # sidebar order. Only pages with a sidebar (Tree Fruit) get them.
+  page-navigation: true
   # Site menu. Each publication is its own Quarto project with its own
   # navbar (publications/*/_quarto.yml) - keep Home / Publications / About
   # in those in sync with this one.
@@ -32,11 +35,30 @@ website:
             href: publications/berry-crops/index.html
           - text: "Grapes"
             href: publications/grapes/index.html
+          - text: "Tree Fruit"
+            href: publications/tree-fruit/index.html
           - text: "---"
           - text: "Organic Vegetable Crops"
             href: publications/organic-vegetable-crops/index.html
       - text: "About"
         href: about.qmd
+
+  # Tree Fruit guide sidebar (Tree Fruit is built by this root project, so its
+  # sidebar lives here). Built automatically from the folders: each chapter
+  # folder becomes a section titled by its index.qmd, and pages are sorted
+  # by their `order:` value - nothing to update here when pages or chapters
+  # are added in Decap. Only pages inside publications/tree-fruit/ get it.
+  sidebar:
+    - id: tree-fruit
+      title: "Tree Fruit"
+      style: docked
+      collapse-level: 1
+      contents:
+        - text: "Overview"
+          href: publications/tree-fruit/index.qmd
+        # Keep the "/**" glob form: the bare folder name trips a Quarto bug on
+        # Windows (mixes \ and / in the path and fails to render).
+        - auto: "publications/tree-fruit/**"
 
   # Site footer - also in each publication's _quarto.yml; keep in sync.
   page-footer:
@@ -52,6 +74,8 @@ format:
     css:
       - assets/css/pesticide-summary-public.css
       - assets/css/public-treatment-builder.css
+      # Centres content next to the Tree Fruit sidebar (sidebar pages only).
+      - assets/css/guide-sidebar-layout.css
     theme: cosmo
     html-math-method: katex
     toc: true

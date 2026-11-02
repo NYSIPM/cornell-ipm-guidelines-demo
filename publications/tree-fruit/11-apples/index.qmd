@@ -1,5 +1,6 @@
 ---
 title: 11 Apples
+order: 11
 ---
 1. [Silver Tip](1-silver-tip.qmd)
 2. [Green Tip](2-green-tip.qmd)

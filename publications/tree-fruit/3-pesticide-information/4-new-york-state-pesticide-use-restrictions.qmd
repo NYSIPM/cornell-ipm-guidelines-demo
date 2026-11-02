@@ -1,5 +1,6 @@
 ---
 title: 3.4 New York State Pesticide Use Restrictions
+order: 4
 ---
 Pesticides that are highly toxic or are persistent and accumulative are classified as restricted use in New York State by the NYSDEC. The NYSDEC uses several criteria to classify pesticides as restricted use including products:
 

@@ -1,5 +1,6 @@
 ---
 title: "4.10 Selecting Nozzles from the Nozzle Catalogue – Boom Sprayers"
+order: 10
 ---
 
 Step 1. Calculate the required nozzle output.

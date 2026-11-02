@@ -1,5 +1,6 @@
 ---
 title: 4.4 Preparing the Air Blast Sprayer for Work
+order: 4
 ---
 ## 4.4.1 Checking the Sprayer
 

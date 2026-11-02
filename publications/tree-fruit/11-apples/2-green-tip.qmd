@@ -1,5 +1,6 @@
 ---
 title: 2 Green Tip
+order: 2
 ---
 {{< pesticide-table title="Green Tip - Apple scab" guidelineId="1" pestId="15" siteId="6" siteTimingId="8" changedSince="" >}}
 

@@ -1,5 +1,6 @@
 ---
 title: 4.5 Rate of Output (GPM)
+order: 5
 ---
 The gallons of spray desired per acre and the time required to spray an acre determine the rate of output for which the sprayer must be nozzled. Since volume of spray needed per acre varies with tree size, the most common row-spacing for the tree size to be sprayed should be used in calibrating the sprayer. The gallons of dilute spray required for various row-spacing and tree-size combinations are indicated in Table 4.4.1. Gallons of concentrate spray required is determined by dividing dilute gallonage by the concentration desired. The rate of output by the sprayer is calculated by dividing the gallons of concentrate spray by the time required to spray 1 acre, Table 4.5.1.
 

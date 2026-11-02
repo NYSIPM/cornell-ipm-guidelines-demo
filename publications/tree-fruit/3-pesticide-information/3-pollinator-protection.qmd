@@ -1,5 +1,6 @@
 ---
 title: 3.3 Pollinator Protection
+order: 3
 ---
 Honey bees, wild bees, and other insects are important for proper pollination of many crops. Many factors affect pollinator health including lack of seasonal forage, parasites, predators, pathogens, lack of genetic diversity, and pesticide exposure.
 

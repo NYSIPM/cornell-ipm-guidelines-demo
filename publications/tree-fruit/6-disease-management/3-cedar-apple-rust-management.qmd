@@ -1,5 +1,6 @@
 ---
 title: "6.3 Cedar Apple Rust Management"
+order: 3
 ---
 
 # 6.3 Cedar Apple Rust Management

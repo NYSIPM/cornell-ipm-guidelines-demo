@@ -1,5 +1,6 @@
 ---
 title: "6.5 Cherry Leaf Spot"
+order: 5
 ---
 
 # 6.5 Cherry Leaf Spot
