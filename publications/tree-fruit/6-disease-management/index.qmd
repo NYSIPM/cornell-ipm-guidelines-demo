@@ -1,0 +1,8 @@
+---
+title: 6 Disease Management
+---
+* [6.1 Apple Scab Fungicides](1-apple-scab-fungicides.qmd)
+* [6.2 Notes on Apple Scab Management](2-notes-on-apple-scab-management.qmd)
+* [6.3 Cedar Apple Rust Management](3-cedar-apple-rust-management.qmd)
+* [6.4 Stone Fruit Fungicides](4-stone-fruit-fungicides.qmd)
+* [6.5 Cherry Leaf Spot](5-cherry-leaf-spot.qmd)

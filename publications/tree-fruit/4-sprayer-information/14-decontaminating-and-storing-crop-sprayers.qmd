@@ -1,0 +1,116 @@
+---
+title: "4.14 Decontaminating and Storing Crop Sprayers"
+---
+
+Sprayers must be thoroughly cleaned inside and out after use. Ideally, a sprayer should be cleaned at the end of each day and especially before switching to a different pesticide. Pesticide residues left on the outside of the sprayer can cause operator contamination. Residues on the inside of the tank or left over pesticides trapped inside the sprayer plumbing system can contaminate the operator and possibly lead to crop damage. Growers should be concerned about this, especially if they are using one sprayer to apply different chemicals to different crops. In some cases, only a small amount of a pesticide remaining in the sprayer can cause significant crop damage or lead to unacceptable residues on a crop. Crop contamination can even occur several months after a sprayer has not been properly cleaned. Where asprayer is used to spray different fruit crops, residue left in the tank can cross contaminate another fruit crop, potentially causing illegal or unwanted  pesticide residues, making the crop unmarketable.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Sprayers can also retain tremendous amounts of pesticide solution. Depending on the size and design of the sprayer, there can be nearly 6 gallons of solution left in a sprayer’s plumbing. As illustrated in Table 4.14.1, research conducted on boom sprayers has shown that, depending on the spray tank size, the total chemical solution retained in the sprayer ranged from just under 3 gallons to over 12 gallons. The parts that retained the most chemical solution are the chemical induction bowl, the booms, the tank and the pump and its related piping.
+
+Tests have shown that triple rinsing the spray tank is better than using just one single rinse. For example, using 100 gallons of clean water in one single rinse to clean a 100-gallon sprayer tank reduced the concentration of the original spray solution from 100% to 5% both in the tank and at the nozzle. If triple rinsing was performed using 33 gallons of clean water per rinse, a concentration of 0.2% to 0.5% was gained. The aim is for maximum dilution with minimal use of water. Table 4.14.2 illustrates how triple rinsing reduces the pesticide concentration at the nozzle and the tank drain.
+
+Before rinsing a sprayer, read the sprayer manufacturer’s instructions for specific guidance on the best methods for cleaning your equipment. Also consult the pesticide label for any special cleaning instructions. When cleaning spray equipment, you should use the protective clothing listed on the pesticide label. Sprayer cleaning should be done so that rinse water does not enter any waterway, field drainage system, or well. Ideally, sprayer rinsate should be applied to a labeled crop rather than dumped at the cleaning location. If rinsing needs to be done at the mixing/loading site, it must be done on an impervious surface. All contaminated rinse water must be trapped and either used to mix another load of the same pesticide at the label recommended rates or disposed of at an approved pesticide waste handling facility.
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Source: Nilsson, E., Hagenwall H. og Jorgensen L.
+
+
+## 4.14.1 Reducing Cleaning Problems
+
+The need for cleaning can be reduced by good planning and equipment maintenance. The following are suggestions to help reduce cleaning needs:
+Carefully plan how much pesticide to mix so that all mixed pesticides are used up when you are finished with the field.
+Be sure that the sprayer is clean before you use it.
+Make sure all parts of the sprayer are in good condition. Corroded, cavitated or pitted surfaces are prime areas for pesticide residue to hide. Replace any worn parts.
+Mix the chemicals in the correct order. Some chemicals, when mixed in the wrong order, can actually become more difficult to remove from the equipment. Consult the pesticide label for the proper mixing order.
+Follow any label instructions for cleaning spray equipment.
+Be sure that cleaning solutions contact ALL equipment surfaces.
+Remove and clean filters, strainers and nozzle screens separately from the rest of the sprayer.
+
+
+## 4.14.2 Sprayer Cleansers
+
+Several sprayer cleansers are commercially available. These cleansers should be selected based on the pesticide formulation used. Specific recommendations can be found on the pesticide label, by contacting the pesticide manufacturer or through the label or manufacturer of the cleaning agent you wish to use. Some available cleansers are listed in Table 4.14.3. Household detergents, such as laundry soaps and household ammonia, can also be used, but they may not adequately deactivate and solubalize the pesticides for effective cleaning. Chlorine bleach solutions should not be used. Cleaning agents can be used to wash both the inside and outside of the sprayer. When using commercial cleansers, follow the product’s instructions for the best results.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+## 4.14.3 Tank Rinse Systems (Low-Volume Tank Rinsing)
+
+Tank rinse systems consist of a clean water supply tank mounted to the sprayer and one or more rotating discs or nozzles mounted inside the main sprayer tank. Water is pumped from the clean water tank to the rinse nozzles where the water is sprayed around the inside of the spray ank. These systems are designed for in-field rinsing of the sprayer so that the tank washings can be applied to the field and reduce the amount of time spent traveling to and from the farmyard.
+
+A tank rinse system can be purchased as an option on some sprayers or as an add-on kit. Rinse systems can also be made from readily available parts and installed on the sprayer. A sample rinse system layout is shown in Figure 4.14.1. A typical rinse system uses 360-degree tank wash nozzles mounted in the top of the tank. These nozzles are available in flow rates of 10 gallons of water per minute at 20 psi up to 20 GPM at 50 psi. If a spray tank has baffles, at least one rinse nozzle per compartment should be provided. In any case, a sufficient number of rinse nozzles should be installed to provide enough rinse water to contact the entire tank interior.
+
+A 50 to 100 gallon tank is plumbed into the sprayer plumbing system to provide the clean water. This tank should be permanently marked “Clean Water Only” so that only clean water is placed in the tank, reducing the chance for contamination of the rinse system. The tank should be mounted above the pump in order to aid in priming the pump. Ideally, the tank should be mounted on the sprayer.
+
+When using tank rinse systems, you may want to check the pesticide label or with the chemical manufacturer to be sure that low-volume rinsing is suitable for the products you’re using. Also, during the rinse process, be sure to open and close the pressure valve and other control valves on the sprayer to ensure that any chemical that may be trapped in the valve is rinsed out, further reducing the chance for contamination of future pesticide mixes. To obtain the best results, practice using the rinse system by placing spray marker dye or food coloring in the spray tank. Using the rinse system, run three rinse cycles, making sure the water discharged from the nozzles is completely clear by the end of the third rinse.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+## 4.14.4 Cleaning the Sprayer
+
+The pesticide applicator should try to keep the volume of tank wash water produced to a minimum. Ideally a tank rinse system should be used. There are two levels of sprayer cleaning:
+where the same or similar products are to be used on consecutive occasions or
+where the type of product is changed for another or at the end of the season.
+
+Cleaning where Similar Products are to be Used
+
+Reminder: Before cleaning application equipment, remember to wear the protective clothing listed on the pesticide label.
+
+Be sure that all mixed pesticides have been used up from the sprayer or removed and disposed of properly.
+Flush sprayer with clean water, making sure to wash all inside surfaces of the tank, including the underside of the lid. Use of a tank rinse system is preferred so that rinsing can be done in the field where the rinse water can be applied to the crop. If a tank rinse system is not available, fill the spray tank about half full with clean water and flush the system for at least 5 minutes using both agitation and spraying. Be sure to open and close any control valves during the rinse process. The rinsate should be applied to the crop at labeled rates. Repeat this procedure two more times.
+Hose down the outside of the sprayer making sure to reach all parts, scrubbing if necessary.
+Remove suction, main and in-line filter elements and wash them thoroughly in clean water using a soft bristle brush. Put the filters back on the sprayer when clean.
+Remove the nozzles, nozzle screens and nozzle bar end caps (if used) and wash them thoroughly in clean water with the appropriate cleanser and rinse. Remember to use a soft bristle brush, such as an old toothbrush, when cleaning nozzle parts.
+Partly fill the sprayer with clean water and run the sprayer to flush out all parts.
+Reinstall nozzles and nozzle screens.
+Hose down the outside of the sprayer once again.
+
+Cleaning where Product Type is Changed
+This procedure should also be followed at the end of a season or before sprayer maintenance. Remember to wear the protective clothing listed on the pesticide label.
+
+Follow steps 1-6 above.
+Refill the tank with clean water, adding any detergent recommended by the pesticide manufacturer. Remember, use commercial cleansers according to their directions. Agitate the solution and pump it through the sprayer plumbing system.
+Discharge the cleaning solution from the sprayer through the plumbing system, making sure to drain the system as thoroughly as possible.
+Rinse the sprayer and flush the plumbing system with clean water.
+Inspect the sprayer for deposits that may remain in the tank or plumbing system. If any remain, use some of the cleaning solution and scrub the problem spots. Rinse the sprayer out completely.
+Repeat steps 7 to 9.
+Hose down the outside of the tractor and sprayer, scrubbing if necessary.
+If changing from one type of pesticide to another, refit nozzles, filters and other parts that may have been removed in the cleaning process.
+When cleaning and preparing the sprayer at the end of the season, safely store nozzles and filters to keep them clean and damage-free. Leave valves open and the tank lid loosely closed.
+
+4.14.5 Mechanical Maintenance
+Lubrication must be carried out at the time intervals specified by the sprayer manufacturer. The following components must be checked daily when a sprayer is in use:
+Pump crankshaft oil level.
+Fan drive gearbox oil level.
+Fan drive shaft bearings.
+Agitator shaft bearings.
+PTO shaft bearings.
+PTO shaft safety cover.
+Wheels, wheel bearings and tire inflation.
+Rotary atomizers for damage and lubrication.
+
+Occasionally, for example, after a complete spray round, check the spray liquid system for leaks and signs of damage or wear; repair should be carried out at once.
+
+
+## 4.14.6 Storage of Sprayers
+
+Sprayers should be stored carefully after use.
+
+Manufacturers’ specific instructions should be followed but in their absence the following general guide should be of use:
+Thoroughly wash the sprayer inside and out with water, followed by a solution of detergent and water, followed by water. Drain thoroughly. Allow the access of air to all parts of the sprayer system. A more thorough decontamination routine is outlined above.
+Inspect filters, nozzles, hoses and all other components and order all necessary spares.
+Pay particular attention to the pump. Inspect rollers or diaphragms (if fitted) and valves and order necessary spares.
+Check the soundness of all mechanical components, particularly booms and boom hinges, and the wheels.
+Store sprayer under cover, taking care to prevent dirt and moisture affecting tank or working parts.
+
+Caution
+All mounted sprayers tend to be unstable when removed from their tractors. Make sure they are safely chocked before leaving them.

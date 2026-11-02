@@ -1,0 +1,24 @@
+---
+title: 1 Silver Tip
+---
+{{< pesticide-table title="Silver Tip - Apple scab" guidelineId="1" pestId="15" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - Bitter Rot" guidelineId="1" pestId="18" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - Blister Spot" guidelineId="1" pestId="48" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - Cedar Apple Rust" guidelineId="1" pestId="49" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - Crown rot" guidelineId="1" pestId="10" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - European fruit lecanium" guidelineId="1" pestId="14" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - European red mite" guidelineId="1" pestId="12" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - Fire blight" guidelineId="1" pestId="16" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - Phytophthora rots" guidelineId="1" pestId="56" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - Powdery Mildew" guidelineId="1" pestId="46" siteId="6" siteTimingId="7" changedSince="" >}}
+
+{{< pesticide-table title="Silver Tip - Woolly apple aphid" guidelineId="1" pestId="44" siteId="6" siteTimingId="7" changedSince="" >}}

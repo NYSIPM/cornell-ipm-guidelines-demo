@@ -1,0 +1,78 @@
+---
+title: 1 Integrated Crop and Pest Management
+---
+## 1.1Background
+
+Cornell University and Cornell Cooperative Extension actively promote the use of Integrated Crop and Pest Management (IPM) by New York growers in order to address agricultural concerns. In many areas of New York State, there are horticultural, economic, social, and political pressures to reduce the environmental impact and use of pesticides in crop production. Public concerns with nutrient and sediment movement into ground and surface water and pressure against pesticide applications is growing. In other regions, agricultural producers are being asked to submit nutrient and soil management plans to address the offsite impacts of their practices. In addition, the development of pesticide resistance in key pests; registration of fewer and more expensive new chemicals for pest control; loss of existing products; and increased competition from other regions continue to push New York agriculture to look for nonchemical alternatives.
+
+IPM requires a combination of long and short term production strategies to maximize net profit while minimizing risks of undesirable environmental impacts of practices. Some of these practices include site selection, crop-specific production strategies, nutrient management, and cover cropping. IPM is a pest control strategy that promotes the use of a variety of tactics including pest-resistant cultivars and biological, cultural, and physical controls. Pesticides are a control tactic employed in IPM, but they are used preferably only when needed. Pesticide use is thus minimized without jeopardizing crop quality or yield. Applying multiple control tactics minimizes the chance that pests will adapt to any one tactic and allows growers to choose the most environmentally sound, efficacious, and economically efficient pest management program for their situation. 
+
+This manual provides information and references that will allow New York fruit growers to practice IPM for many of their crops. While information for the proper use of pesticides is a main component of this manual, other information is contained that can help growers reduce their reliance on pesticides and take advantage of alternatives to pesticides that may be less expensive, less environmentally harmful, and more acceptable to the non-agricultural community.
+
+## 1.2Practicing IPM
+
+In an IPM program, it is important to accurately identifythe pests (vertebrates, diseases, insects, and weeds) and assess pestabundance. See the listing (at the end of this publication) of laboratories atCornell that do pest and disease diagnosis and soil and tissue analysis forassistance in maintaining crop health and nutrition. It is important to haveknowledge of the biology and ecology of the pest(s) attacking the crop and thefactors that can influence pest infestations. An understanding of the influenceof factors such as weather and natural enemies on pest abundance will aid thechoice of management tactics. IPM programs stress suppression of insect anddisease populations to levels that do not cause economic damage, rather thantotal eradication of a pest. In the case of insect pests, it may be importantto have at least some pests present to ensure that natural enemies will remainin the crop to suppress subsequent infestations.
+
+## 1.3 IPM Components
+
+### 1.3.1 Monitoring (Scouting)
+
+Scouting includesdetecting, identifying, and determining the level of pest populations on atimely basis. Insect traps can often be used to detect pests and identify timeswhen scouting should be intensified or control measures should be taken.Monitoring individual orchard blocks throughout the season is the mosteffective way of assessing the insect, disease, and weed situation and,therefore, the need for chemical treatment in that block. Scientifically based,accurate, and efficient monitoring methods are available for many pests onfruit crops in New York. Brief descriptions of the recommended techniques aregiven in this manual.
+
+### 1.3.2 Forecasting
+
+Weather data and other information helps predict whenspecific pests will most likely occur. Weather-based pest forecast models fordiseases and insects of many crops have been developed in New York. Thisinformation will be referred to for the pests that have such models available.Weather forecasts are available through the NYS IPM Program’s Network forEnvironment and Weather Awareness (NEWA) on a daily basis.
+
+Access to a computer network to obtain weather, regionalinsect, and disease forecasts is useful but not essential. NEWA providesautomated local weather information and the results of pest forecasts on adaily basis. Access NEWA online at [www.newa.cornell.edu](http://www.newa.cornell.edu).Simple weather recording equipment such as thermometers, hygrometers, and raingauges placed in orchards will assist the prediction of pest outbreaks.Information on the potential for pest outbreaks generally can also be obtainedfrom local Cooperative Extension offices, newsletters, and regional cropadvisors.
+
+### 1.3.3 Thresholds
+
+Use thresholds to determine when pest populations havereached a level that could cause economic damage. Thresholds have beenscientifically determined by Cornell researchers. Following the thresholdsindicated in this manual has reduced pesticide use by as much as 50%, savingsignificant money for growers. The term *suggested action threshold* is usedin this publication to denote situations in which the decision to spray or towithhold a spray can be made primarily on the basis of a properly timed visualinspection of the orchard. Where appropriate, this information has beenincluded to serve as a guideline for determining the importance of a givenpest’s occurrence. Good judgment should be exercised in applying the generaladvice to individual orchard situations, and potential problems should beanticipated to avoid pest outbreaks and pesticide waste. The suggestedthresholds are not always exact; nonetheless, they represent the bestguidelines available to the commercial grower concerned with effective andefficient management of tree fruit pests. For more detailed information on anyaspect of these recommendations, consult your local Cornell CooperativeExtension educator.
+
+### 1.3.4 Management Tactics
+
+Appropriate managementtactics to control pests include cultural, biological, and physical controls,as well as chemical controls when needed. Taking advantage of some of thesimple and relatively inexpensive pest management advice offered in this manualcan result in significant savings to growers both in terms of pesticide use andcrop loss. Often a thoughtful preventive measure taken before the pest is aproblem can result in significant savings of crop-rescue treatment dollarslater in the season. 
+
+### 1.3.5 Recordkeeping
+
+Records kept from year toyear on pest occurrence in orchards can be valuable tools for avoiding pests inthe future.
+
+## 1.4 IPM Tactics
+
+An important aim of an IPM strategy is to integrate theavailable pest management options. Some pests are endemic and usually requirepesticide treatment, applied either preventively or in response to thresholdnumbers during the season. However, the incidence of these pests and the needfor pesticides can often be reduced through a combination of control tacticsdescribed below. 
+
+### 1.4.1 Pest-Resistant Varieties
+
+If available, insect and disease resistant or tolerantvarieties or rootstocks can reduce losses to pests. Using these varieties canbe one of the simplest methods of reducing costly management procedures andnegative environmental impacts during the growing season.
+
+### 1.4.2 Cultural and Physical Controls
+
+Remove overwintering sites, such as cull piles, mummies,suckers and damaged trees, and alternate hosts, to minimize damage by insectsand diseases.
+
+Use techniques that expose pests to natural enemies orenvironmental stress, or that make the crop less susceptible to insects ordiseases.
+
+Ensure vigorous crop growth through proper nutrition andweed control to avoid stress that may predispose crops to attack by insects,diseases, or physiological disorders.
+
+If irrigating, manage irrigation schedules to avoid longperiods of high relative humidity, which encourage diseases to develop.
+
+Avoid planting trees into areas of known, high pestpressure.
+
+Orient orchards to provide maximum air drainage andcirculation.
+
+### 1.4.3 Biological Control
+
+Conserve natural enemies of insect and mite pests by only using biopesticides as define by the US EPA (<https://www.epa.gov/pesticides/biopesticides>).As much as possible, use pesticides that are most selective to specific pests and least disruptive to beneficial organisms. 
+
+Make use of “seeding” releases of predator mites if practical; refer to IPM Pub. 215, *[Achieving Biological Control of European Red Mite in Northeast Apples: An Implementation Guide for Growers](http://hdl.handle.net/1813/43090).* 
+
+### 1.4.4 Chemical Control
+
+Only use pesticides if pestpressure, monitoring, economic thresholds, or disease forecasts indicate aneed. 
+
+Choose pesticides according to efficacy, previous usepatterns, the incidence of resistance, and the impact on the environment andnatural enemies.
+
+Ensure full and uniform spray coverage by using recommendedspray rates and accurately calibrated equipment that targets key crop locationsthat need to be protected. 
+
+*(adapted from M.Hoffmann, C. Petzoldt, and A. Frodsham)*
+
+For more information, consult the Fruit IPM website at: [cals.cornell.edu/new-york-state-integrated-pest-management/outreach-education/ipm-areas/fruit-ipm](https://cals.cornell.edu/new-york-state-integrated-pest-management/outreach-education/ipm-areas/fruit-ipm)

@@ -1,0 +1,46 @@
+---
+title: 4.1 Solutions For Safer Spraying
+---
+## 4.1.1 Reducing Risk of Pesticide Exposure Through Use Of Engineering Controls
+
+Because handling and applying pesticides is risky business, keeping pesticide exposure to a minimum should be a chief concern of any pesticide applicator. To reduce the risks associated with handling and applying pesticides, devices known as engineering controls can be used that help to reduce or practically eliminate exposure to toxic chemicals.
+
+## 4.1.2 Areas of Potential Contamination
+
+### 4.1.2.1 Loading the Sprayer
+
+***Closed Transfer Systems*** – Closed transfer systems allow concentrated pesticide to be moved from the original shipping container to the sprayer mix tank with minimal or no applicator contact. Many systems provide a method to measure the concentrated pesticide. Some systems also include a container rinsing system. Currently available closed transfer systems use a probe inserted into the pesticide container, a connector on the container that mates to a similar connector on the application equipment, or a vacuum-type (venturi) system that uses flowing water to transfer the chemical from the container.
+
+***Induction Bowls*** – Induction bowls are metal, plastic or fiberglass hoppers attached to the side of the sprayer or nurse tank that allow pesticides to be added to the mix tank without the applicator climbing onto the spray rig. Pesticides are poured into the bowl and water is added to flush out the bowl and carry the pesticide to the spray tank. Often a rinse nozzle is mounted inside the bowl for rinsing out empty pesticide containers. Typically induction bowls are raised out of the way during spraying and lowered to about 3 feet above ground when loading the sprayer.
+
+***Direct Pesticide Injection System*** – Direct pesticide injection systems allow pesticides to be mixed directly with water in the sprayer plumbing system rather than in the main spray tank. The pesticide is pumped from its container and mixed with the water either in a manifold or at the main water pump. Only clean water is held in the main tank of the sprayer. An electronic controller and up to four pumps adjust the amount of concentrated pesticide that is injected into the water stream, allowing for variable application rates.
+
+***Container Rinse System*** – Container rinse systems consist of a rinse nozzle and a catch bowl that traps the container washings (rinsate). The empty container is placed over the rinse nozzle and a jet of water cleans the inside of the container. The rinsate caught in the bowl is pumped into the spray tank to be used along with the spray mixture. Often rinse nozzles are installed in chemical induction bowls. Most closed transfer systems also provide a way of rinsing containers and piping the rinse water into the spray tank.
+
+### 4.1.2.2 Reducing Contamination at the Boom
+
+***Boom Folding/Extending*** – Manually folding booms can be a source of operator contamination because the boom can be covered with pesticide from drift or dripping nozzles. Consider the use of hydraulic or mechanical folding methods.
+
+***Diaphragm Check Valves*** – Typically, when a sprayer is shut off and as the system pressure drops, any liquid remaining in the boom piping drips from the nozzles, possibly dripping onto the boom or even the operator. Diaphragm check valves installed at each nozzle prevent this by using a spring-loaded rubber diaphragm to close off the flow of liquid once the system pressure drops below about 10 pounds per square inch. When the sprayer is switched on and system pressure builds up, the valve opens and allows the liquid to flow through the nozzles.
+
+***Multiple Nozzle Bodies*** – Contamination can occur when operators change or unclog nozzles during an application. Multiple nozzle bodies (or turret nozzles) allow operators to switch between nozzles with a turn of the nozzle body rather than having to unscrew or undo a threaded or a bayonet fitting.
+
+***Hand Wash Water Supply*** – Providing adequate wash water is essential (and often required). A simple container with a hand-operated valve can be mounted on the side of the sprayer to provide clean water for hand washing and personal hygiene.
+
+### 4.1.2.3 Protecting from Drift and Contaminated Clothing in Cabs
+
+***Cab Filtration Using Carbon Filters*** – Carbon filtration systems are used to remove pesticide odor and pesticide-laden mist from fresh air used in a tractor or self-propelled sprayer cab. Carbon filtration systems are often a standard feature on self-propelled sprayers. Now many factory installed tractor cabs offer optional filtration systems.
+
+***Protective Clothing Lockers*** – To prevent contamination of the tractor or sprayer cab interior, protective clothing should be removed before entering the cab. A few sprayer companies offer a simple compartment (or locker) mounted to the side or front of the sprayer where protective clothing can be stored. Alternatively a locker can be fitted to the nurse tank.
+
+### 4.1.2.4 Controlling Drift
+
+**Low-Drift Nozzles** – Low-drift nozzles create larger-size droplets than conventional nozzles. The larger droplet sizes are less prone to drift, reducing environmental and operator contamination.
+
+![sprayer diagram](/publications/tree-fruit/images/image1.jpg "Sprayer Diagram")
+
+**Air Induction Nozzles** – These nozzles allow air to mix with the spray liquid, creating large, air-filled droplets that have virtually no fine, drift-prone droplets. The droplets explode when they contact their target and offer similar coverage to droplets from conventional, finer-spray nozzles.
+
+### 4.1.2.5 Cleaning the Sprayer
+
+**Tank Rinse Systems** – Tank rinse systems consist of a clean water supply tank mounted to the sprayer and one or more rotating discs or nozzles mounted inside the main sprayer tank. Water is pumped from the clean water tank to the rinse nozzles, which spray water around the inside of the spray tank. These systems are designed for in-field rinsing of the sprayer so that the tank washings can be applied to the field at label rates.

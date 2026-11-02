@@ -1,0 +1,48 @@
+---
+title: "4.11 Boom Sprayer Calibration (Use Clean Water)"
+---
+
+Step 1. Check your tractor/sprayer speed
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Your tractor sprayer speed:
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Step 2. Record the inputs
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Step 3. Calculate the required nozzle output.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Step 4. Operate the sprayer
+
+Set the correct pressure at the gauge using the pressure regulating valve.
+
+Collect and measure the output of each nozzle for one minute.
+
+The output of each nozzle should be the approximately the same as calculated in Step 3 above. Remember 128 fl. oz. in one gallon. If output has been calculated at 0.27 GPM then output is 128 multiplied by 0.27 = 34.5 fl. oz. in one minute.
+
+Replace all nozzle tips that are more than 10% inaccurate.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->

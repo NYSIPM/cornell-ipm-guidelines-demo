@@ -1,0 +1,554 @@
+---
+title: "5.1 Cross Reference of Chemical vs. Trade Names of Pesticides"
+---
+
+Key to pesticide type: (A) = Acaricide; (B) = Bactericide; (F) = Fungicide; (I)= Insecticide. 
+
+NOTE: See Chapter 8 for a discussion of herbicides used in tree fruit.
+
+## 5.1.1 By Common Name
+
+abamectin/avermectin – (\*†Agri-Flex, \*Agri-Mek) Syngenta; (\*Abba) Makhteshim; (\*Gladiator) FMC (A,I) 
+
+acequinocyl – (Kanemite) Arysta LifeScience (A)
+
+acetamiprid – (\*Assail) UPL NA (I)
+
+afidopyropen – (\*†Versys Inscalis) BASF (I)
+
+Aureobasidium pullulans strains DSM 14940 & 14941 (Blossom Protect) San Agrow (B)
+
+azadirachtin – (Aza-Direct) Gowan; (§Neemix 4.5) Certis (I)
+
+Bacillus subtilis – (Serenade ASO) Bayer (B, F)
+
+Bacillus amyloliquefaciens – (§DoubleNickel prodcucts) Certis (B, F)
+
+Bacillus mycoides isolate J– (§LifeGuard) Certis (B, F)
+
+benzovindiflupyr (\*Aprovia) Syngenta (F)
+
+bifenazate – (Acramite) Chemtura (A); (Banter) UPL NA (A)
+
+bifenthrin – (\*Brigade) FMC (I, A) 
+
+boscalid + pyraclostrobin – (Pristine) BASF (F)
+
+Bacillus thuringiensis (B.t.) – (§Agree) Certis; (§Dipel) Valent BioSciences; (Deliver) Certis; (Javelin) Certis (I)
+
+buprofezin – (\*†Centaur) Nichino (I)
+
+Burkholderia spp. Strain A396 – (§Venerate XC) Marrone Bio Innovations (I)
+
+captan – (Captan) Micro Flo, Drexel, Makhteshim Agan (F)
+
+carbaryl – (Carbaryl) Drexel; (Sevin) TKI (I)
+
+chlorantraniliprole – (\*†Altacor) DuPont; (\*†Voliam Flexi, \*†Beseige) Syngenta (I)
+
+chlorothalonil – (Bravo) Syngenta; (Echo) Sipcam Agro; (Equus) Makhteshim Agan (F)
+
+Chromobacterium subtsugae – (Grandevo WDG) Marrone Bio Innovations (I)
+
+clofentezine – (Apollo) Makhteshim Agan (A)
+
+copper hydroxide – (Kocide, Champ) DuPont, Nufarm Americas (B, F)
+
+copper oxychloride/copper sulfate – (C-O-C-S) Loveland (B, F)
+
+copper oxychloride/ copper hydroxide – (Badge SC, §Badge X2) Gowan (B, F)
+
+copper octanoate – (Cueva) Certis (B, F)
+
+copper sulfate – (Cuprofix Ultra 40 Disperss) UPL NA (B, F)
+
+cyantraniliprole – (\*†Exirel) FMC (I)
+
+cyantraniliprole/abamectin – (\*†Minecto Pro) Syngenta (I)
+
+cyclaniliprole – (\*†Verdepryn) Summit Agro; 
+
+(\*†Cyclaniliprole) ISK Biosciences (I)
+
+cyfluthrin – (\*Baythroid, \*Leverage) Bayer (I)
+
+cyprodinil – (Vangard) Syngenta (F)
+
+diazinon – (\*Diazinon) Makhteshim (I)
+
+difenoconazole + cyprodinil– (Inspire Super) Syngenta (F)
+
+difenoconazole + fludioxonil– (Academy) Syngenta (F)
+
+dimethoate – (\*Dimethoate) Loveland (\*Dimethoate) Drexel (I)
+
+dodine – (Syllit FL) UPL (F)
+
+emamectin benzoate – (\*Proclaim) Syngenta (I)
+
+esfenvalerate – (\*Asana) Valent (I)
+
+etoxazole – (Zeal) Valent (A)
+
+fenazaquin – (Magister) Gowan (A)
+
+fenbuconazole – (Indar) Corteva Agriscience (F)
+
+fenbutatin-oxide – (\*Vendex) UPL NA (A)
+
+fenhexamid – (Elevate) Arysta (F)
+
+fenpropathrin – (\*Danitol) Valent BioSciences (I)
+
+fenpyroximate – (Portal) Nichino America (A,I)
+
+flonicamid – (Beleaf) FMC (I)
+
+flupyradifurone – (\*†Sivanto Prime) Bayer (I)
+
+flutriafol – (†Rhyme) FMC (F)
+
+fluopyram + pyrimethanil (\*†Luna Tranquility) Bayer (F)
+
+fluopyram + trifloxystrobin (\*†Luna Sensation) Bayer (F)
+
+fluopyram + tebuconazole (\*†Luna Experience) Bayer (F)
+
+fluxapyroxad (\*†Tesaris) BASF (F)
+
+fluxapyroxad + pyraclostrobin) (\*†Merivon) BASF (F)
+
+fludioxonil – (Scholar) Syngenta (F)
+
+fosetyl-Al – (Aliette) Bayer (F)
+
+GS-omega/kappa-Hxtx-Hv1a – (Spear-Lep) Vestaron (I)
+
+hexakis – (\*Vendex) UPL NA (I)
+
+hexythiazox – (Savey, Onager) Gowan (A)
+
+imidacloprid – (\*Admire Pro, \*Leverage) Bayer (I)
+
+indoxacarb – (Avaunt) DuPont (I)
+
+insecticidal virus – (§Cyd-X, §Madex) Certis;(§Virosoft CP4) BioTEPP (I)
+
+ipflufenoquin – (Axios) UPL (F)
+
+inpyrfluxam– (Excalia) Valent BioSciences (F)
+
+iprodione – (Rovral) Bayer; (Iprodione) MicroFlo (F)
+
+isofetamid – (Kenja 400SC) Summit Agro USA, LLC (F)
+
+kaolin – (§Surround) TKI (A,F,I)
+
+kasugamycin – (Kasumin 2L) Arysta LifeScience (B) 
+
+kresoxim-methyl – (\*†Sovran) FMC (F)
+
+lambda-cyhalothrin – (\*Lambda-CY EC) UPL NA; (\*Warrior; \*†Endigo) Syngenta (I)
+
+malathion – (Clean Crop Malathion) Loveland; (Malathion) Drexel; (\*Prentox Malathion) Prentiss (I)
+
+mancozeb – (Dithane) Corteva Agriscience; (Manzate) DuPont; (\*Penncozeb) UPL NA (F)
+
+maneb – (Manex) Griffin (F)
+
+mefanoxam – (Ridomil Gold) Syngenta (F)
+
+mefentrifluconazole – (\*Cevya) BASF (F)
+
+metconazole – (Quash) Valent (F)
+
+methomyl – (\*Lannate) DuPont (I)
+
+methoxyfenozide – (\*†Intrepid) Corteva Agriscience (I)
+
+metiram – (Polyram) BASF (F)
+
+metrafenone – (Vivando) BASF (F)
+
+myclobutanil – (Rally) Corteva Agrescience (F)
+
+novaluron – (\*Rimon) Chemtura (I)
+
+oxamyl – (\*†Vydate) DuPont (I)
+
+oxytetracycline – (Mycoshield) Nufarm; (Fireline) Agrosource (B)
+
+penthiopyrad – (\*†Fontelis) DuPont, (F)
+
+permethrin – (\*Pounce) FMC (I)
+
+pheromones – (§Checkmate) Suterra; (§Cidetrak) Trécé; (§Isomate) CBC (I)
+
+phosmet – (\*Imidan) Gowan (I)
+
+phosphite – (Phostrol) NuFarm (F, B)
+
+phosphite – (ProPhyt) Helena (F)
+
+phosphorous acid – (Fosphite) JH Biotech (F) 
+
+phosphorous acid – (Fungi-Phite) Biagro Western Sales; (F, B)
+
+polyoxin D Zinc Salt – (OSO 5%SC) Certis (F)
+
+propiconazole – (Tilt) Syngenta; (PropiMax) Corteva Agriscience (F)
+
+Pseudomonas chlororaphis strain AFS009 – (Howler EVO) AgBiome Innovations, Inc. (F)
+
+pyraclostrobin+boscolid – (Pristine) BASF (F)
+
+pydiflumetofen (\*Miravis) Syngenta (F)
+
+pyrethrins/rotenone – (PyGanic) McLaughlin Gormley King (I)
+
+pyridaben – (†Nexter) Gowan (A,I)
+
+pyrimethanil – (Penbotec) Pace Int. (F)
+
+pyriproxyfen – (Esteem) Valent BioSciences (I)
+
+pyriproxyfen/spirotetramat – (Senstar) Valent BioSciences (I)
+
+quinoxyfen – (Quintec) Corteva Agriscience (F)
+
+soap, insecticidal – (M-Pede) Gowan ; (Des-X) Certis (I)
+
+spinetoram – (Delegate) Corteva Agriscience (I)
+
+spirodiclofen (\*†Envidor) Bayer (A)
+
+spinosad – (§Entrust) Corteva Agriscience; (§Seduce) Certis (I)
+
+spirotetramat – (Movento) Bayer CropScience (I)
+
+streptomycin – (\*Agri-mycin) Nufarm; (Agricultural Streptomycin) Farm Saver; (Firewall) Agrosource (B)
+
+thiabendazole – (Mertect) Syngenta; (Shield-Brite TBZ) Pace International (F)
+
+thiamethoxam – (\*†Actara, \*†Agri-Flex, \*†Endigo, \*†Voliam Flexi) Syngenta (I)
+
+thiophanate-methyl – (Topsin M) UPL NA; (T-Methyl) Arysta (F)
+
+trifloxystrobin – (Flint) Bayer; (Flint Extra) Bayer; (Gem) Bayer (F)
+
+triflumizole – (\*Procure) Chemtura (F)
+
+zeta-cypermethrin – (\*Gladiator; \*Mustang Maxx) FMC (A,I)
+
+ziram – (Ziram) UPL NA; (Ziram Granuflo) Taminco (F)
+
+## 5.1.2 By Trade Name
+
+\*Abba – (abamectin) Makhteshim (A, I)
+
+Academy– (difenoconazole + fludioxonil) Syngenta (F)
+
+Acramite – (bifenazate) Chemtura (A)
+
+\*†Actara – (thiamethoxam) Syngenta (I)
+
+\*Admire Pro – (imidacloprid) Bayer (I)
+
+§Agree – (Bacillus thuringiensis) Certis (I)
+
+\*†Agri-Flex – (abamectin/thiamethoxam) Syngenta (I)
+
+\*Agri-Mek – (abamectin) Syngenta (A,I)
+
+Agrimycin – (streptomycin) Nufarm (B)
+
+Aliette – (fosetyl-Al) Bayer (F)
+
+\*†Altacor – (chlorantraniliprole/rynaxypyr) DuPont (I)
+
+\*Aprovia – (benzovindiflupyr) Syngenta (F)
+
+Applause – (chlorothalonil) Loveland (F)
+
+Apollo – (clofentezine) Makhteshim (A)
+
+\*Asana – (esfenvalerate) Valent (I)
+
+\*Assail – (acetamiprid) UPL NA (I)
+
+Avaunt – (indoxacarb) DuPont (I)
+
+Axios – (ipflufenoquin) UPL (F)
+
+Aza-Direct – (azadirachtin) Gowan (I)
+
+Badge SC, §Badge X2 – (copper oxychloride/ copper hydroxide) Gowan (B, F)
+
+Banter – (bifenazate) UPL NA (A)
+
+\*Baythroid – (cyfluthrin) Bayer (I)
+
+Beleaf – (flonicamid) FMC (I)
+
+\*†Besiege – (chlorantraniliprole/lambda cyhalothrin) Syngenta (I)
+
+Blossom Protect (Aureobasidium pullulans strains DSM 14940 & 14941) San Agrow (B)
+
+Botran – (dicloran) Gowan (F)
+
+Bravo – (chlorothalonil) Syngenta (F)
+
+\*Brigade – (bifenthrin) FMC (I, A)
+
+C-O-C-S – (copper oxychloride/copper sulfate) Loveland (B, F)
+
+Captan – (captan) Micro Flo, Drexel, Makhteshim Agan (F)
+
+Carbaryl – (carbaryl) Drexel (I)
+
+\*†Centaur – (buprofezin) Nichino (I)
+
+\*Cevya – (mefentrifluconazole) BASF (F)
+
+Champ – (copper hydroxide) Nufarm Americas (B, F)
+
+§Checkmate – (pheromones) Suterra (I)
+
+§Cidetrak – (pheromones) Trécé (I)
+
+Clean Crop Malathion – (malathion) Loveland (I)
+
+Cuprofix Ultra 40 Disperss – (copper sulfate) UPL NA (B, F)
+
+Cueva – (copper octanoate) Certis (B, F)
+
+\*†Cyclaniliprole – (cyclaniliprole) ISK Biosciences (I)
+
+§Cyd-X – (codling moth granulosis virus) Certis (I)
+
+\*Danitol – (fenpropathrin) Valent BioSciences (I)
+
+Delegate – (spinetoram) Corteva Agriscience (I)
+
+Deliver – (Bacillus thuringiensis) Certis (I)
+
+Des-X – (insecticidal soap; potassium salts of fatty acids) Certis (I)
+
+Diazinon – (\*Diazinon) Makhteshim (I)
+
+\*Dimethoate – (dimethoate) Drexel, Loveland, Cheminova (I)
+
+§Dipel – (Bacillus thuringiensis) Valent BioSciences (F)
+
+Dithane – (mancozeb) Corteva Agriscience (F)
+
+Double Nickel 55/LC – (Bacillus amyloliquefaciens) Certis (B, F)
+
+Echo – (chlorothalonil) Sipcam Agro (F)
+
+Elevate – (fenhexamid) Arysta (F)
+
+\*†Endigo – (lambda-cyhalothrin/thiamethoxam) Syngenta (I)
+
+§Entrust – (spinosad) Corteva Agriscience (I)
+
+\*†Envidor – (spirodiclofen) Bayer (A)
+
+Equus – (chlorothalonil) Makhteshim Agan (F)
+
+Esteem – (pyriproxyfen) Valent BioSciences (I)
+
+Excalia – (inpyrfluxam) Valent BioSciences (F)
+
+\*†Exirel – (cyantraniliprole) FMC (I)
+
+Fireline – (oxytetracycline) Agrosource (B)
+
+Firewall – (streptomycin) Agrosource (B)
+
+Flint – (trifloxystrobin) Bayer (F)
+
+Flint Extra – (trifloxystrobin) Bayer (F)
+
+\*†Fontelis– (penthiopyrad) DuPont, (F)
+
+Fosphite – (phosphorous acid) JH Biotech (F)
+
+Fungi-Phite – (phosphorous acid) Biagro Western Sales;
+(F, B)
+
+Gem – (trifloxystrobin) Bayer (F)
+
+\*Gladiator – (avermectin B1/zeta-cypermethrin) FMC (A,I)
+
+Grandevo WDG – (Chromobacterium subtsugae) Marrone Bio Innovations (I)
+
+Howler EVO – (Pseudomonas chlororaphis strain AFS009) AgBiome Innovations, Inc. (F)
+
+\*Imidan – (phosmet) Gowan (I)
+
+Indar – (fenbuconazole) Corteva Agriscience (F)
+
+Inspire Super – (difenoconazole & cyprodinil) Syngenta (F)
+
+\*†Intrepid – (methoxyfenozide) Corteva Agriscience (I)
+
+Iprodione – (iprodione) MicroFlo (F)
+
+Isomate – (pheromones) CBC (I)
+
+Javelin – (Bacillus thuringiensis) Certis (I)
+
+Kanemite – (acequinocyl) Arysta LifeScience (A)
+
+Kasumin 2L – (kasugamycin) Arysta LifeScience (B) 
+
+Kocide – (copper hydroxide) DuPont (B, F)
+
+Kenja 400SC – (isofetamid) Summit Agro USA, LLC (F)
+
+\*Lambda-CY EC – (lambda-cyhalothrin) UPL NA (I)
+
+\*Lannate – (methomyl) DuPont (I)
+
+\*Leverage – (cyfluthrin/imidacloprid) Bayer (I)
+
+§LifeGuard – (Bacillus mycoides isolate J) Certis (B, F)
+
+\*†Luna Tranquility – (fluopyram + pyrimethanil) Bayer (F)
+
+\*†Luna Sensation – (fluopyram + trifloxystrobin) Bayer (F)
+
+\*†Luna Experience – (fluopyram + tebuconazole) Bayer (F)
+
+§Madex – (insecticidal virus) Certis (I)
+
+Magister – (fenazaquin) Gowan (A)
+
+Malathion – (malathion) Drexel (I)
+
+Manex – (maneb) DuPont (F)
+
+Manzate – (mancozeb) DuPont (F)
+
+\*†Merivon – (fluxapyroxad + pyraclostrobin) BASF (F)
+
+Mertect – (thiabendazole) Syngenta (F)
+
+Messenger – (harpin) Eden Bioscience (B)
+
+\*†Minecto Pro – (cyantraniliprole/abamectin) Syngenta (I)
+
+\*Miravis – (pydiflumetofen) Syngenta (F)
+
+Movento – (spirotetramat) Bayer CropScience (I)
+
+M-Pede – (insecticidal soap; potassium salts of fatty acids) Gowan (I)
+
+\*Mustang Maxx – (zeta-cypermethrin) FMC (I)
+
+Mycoshield – (oxytetracycline) Nufarm (B)
+
+Neemix 4.5 – (azadirachtin) Certis (I)
+
+†Nexter – (pyridaben) Gowan (A, I) 
+
+Onager – (hexythiazox) Gowan (A)
+
+OSO 5%SC – (Polyoxin D Zinc Salt) Certis (F)
+
+Penbotec– (pyrimethanil) Pace Int. (F)
+
+\*Penncozeb – (mancozeb) UPL NA (F)
+
+Phostrol – (sodium, potassium, and ammonium phosphates) NuFarm (F, B)
+
+Polyram – (metiram) BASF (F)
+
+Portal – (fenpyroximate) Nichino America (A,I)
+
+\*Pounce – (permethrin) FMC (I)
+
+\*Prentox Malathion – (malathion) Prentiss (I)
+
+Pristine – (pyraclostrobin + boscolid) BASF (F)
+
+\*Proclaim – (emamectin benzoate) Syngenta (I)
+
+ProPhyt – (potassium phosphite) Helena (F)
+
+\*Procure – (triflumizole) Chemtura (F)
+
+§PyGanic – (pyrethrins) McLaughlin Gormley King (I)
+
+Quash – (metconazole) Valent (F)
+
+Quintec – (quinoxyfen) Corteva Agriscience (F)
+
+Rally – ( myclobutanil) Corteva Agrescience (F)
+
+Ridomil Gold – (mefanoxam) Syngenta (F)
+
+\*Rimon – (novaluron) Chemtura (I)
+
+Rovral – (iprodione) Bayer (F)
+
+†Rhyme – (flutriafol) FMC (F)
+
+Savey – (hexythiazox) Gowan (A)
+
+Scholar – (fludioxonil) Syngenta (F)
+
+§Seduce – (spinosad) Certis (I)
+
+Senstar – (pyriproxyfen/spirotetramat) Valent BioSciences (I)
+
+\*†Tesaris – (fluxapyroxad) BASF (F)
+
+Serenade ASO – (Bacillus subtilis) Bayer (B, F)
+
+Sevin – (carbaryl) TKI (I)
+
+Shield-Brite TBZ – (thiabendazole) Pace International (F)
+
+\*†Sivanto Prime – (flupryadifurone) Bayer (I)
+
+\*†Sovran – (kresoxim-methyl) FMC (F)
+
+Spear-Lep – (GS-omega/kappa-Hxtx-Hv1a) Vestaron (I)
+
+Sulforix– (liquid lime-sulfur) Miller Chemical (A, F, I)
+
+§Surround – (kaolin) TKI (A,F,I)
+
+Syllit – (dodine) UPL (F)
+
+Tilt – (propiconazole) Syngenta (F)
+
+Topsin M – (thiophanate-methyl) UPL NA (F)
+
+Vangard – (cyprodinil) Syngenta (F)
+
+\*Vendex – (hexakis, fenbutatin-oxide) UPL NA (A)
+
+§Venerate XC – (Burkholderia spp. strain A396) Marrone Bio Innovations (I)
+
+\*†Verdepryn – (cyclaniliprole) Summit Agro (I)
+
+\*†Versys Inscalis – (afidopyropen) BASF (I)
+
+§Virosoft CP4 – (insecticidal virus) BioTEPP (I)
+
+\*†Voliam Flexi – (thiamethoxam/chlorantraniliprole) Syngenta (I)
+
+\*†Vydate – (oxamyl) DuPont (I)
+
+Vivando – (metrafenone) BASF (F)
+
+\*Warrior – (lambda-cyhalothrin) Syngenta (I)
+
+Zeal – (etoxazole) Valent (A)
+
+Ziram – (ziram) UPL NA (F)
+
+Ziram Granuflo – (ziram) Taminco (F)

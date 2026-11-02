@@ -1,0 +1,74 @@
+---
+title: 2 Organic Tree Fruit Production in New York State
+---
+
+## 2.1 Introduction
+
+A large number of both native and introduced pest species attack apples and other tree fruits grown in commercial orchards. Control of this pest complex is particularly challenging in N.Y., because unlike more arid production regions in the country, fruit orchards in N.Y. are commonly in close proximity to semi-wooded areas with an abundance of naturalized and wild host species that can harbor populations of certain tree fruit pests. Traditionally, conventional fruit orchards in N.Y. have been treated heavily with pesticides to control this extensive pest complex.
+
+In the past, very few growers in the northeast have attempted to produce apples and other tree fruits organically because of the practical difficulties involved in controlling pests in this region without using conventional, broad-spectrum pesticides. However, during the last 10-15 years, studies have been conducted to develop management programs that may be able to replace current strategies that rely primarily on these pesticide applications. For example, recent studies have shown that the predaceous mite, Typhlodromus pyri, which is native to apple production regions in western N.Y., can successfully control populations of the key mite pest, European red mite, in commercial apple orchards so that no applications of miticides are required for seasonal control. Recent research in N.Y. and elsewhere has also shown that pheromones can be deployed in orchards to disrupt mating of key lepidopteran species such as oriental fruit moth, and borer species, and substantially reduce fruit damage from this complex of pests. In addition to some of these newer types of organically compatible pest control technologies, traditional control methods such as selective fruit thinning, pruning, sanitation (frequent removal of dropped fruit and/or vegetative tissue infested or infected with pests), removal of wild hosts near commercial plantings, and exclusion of pests with biological or physical barriers near or around trees, have also been shown to reduce populations of many types of pests in fruit plantings in this region.
+
+Ideally, organic fruit production is the synthesis of an entire suite of practices intended to take advantage of natural ecosystem interactions and minimize synthetic inputs. Such a system might start with the selection of disease-resistant cultivars, to circumvent the need for the majority of normal disease sprays. This one tactic could eliminate or substantially reduce the need to manage apple scab, powdery mildew, cedar apple rust, and fire blight (Ellis et al., 1998). In lieu of resistance, a combined strategy of orchard sanitation and frequent applications of elemental sulfur and copper throughout most of the season would be the next practical alternative.
+
+## 2.2 Fungicide Options in Organic Tree Fruit Production
+
+Organic approved fungicides and bactericides are often not as effective and the conventional fungicides and antibiotics in temperate apple production regions such as NY and New England. In recent years, organic copper and sulfur products, and biopesticide products have greatly improved in terms of formulation and efficacy. In drier seasons and against lower disease pressure situations (e.g. low level of inoculum & among less susceptible cultivars), organic-approved products can provide a level of control comparable to conventional products. That being said, organic-approved products may need to be applied at higher rates and frequencies to match the activity of convention products. In field trials conducted at Cornell and other regional institutions, applied plant pathologists are achieving greater success in managing fire blight and summer diseases with biopesticides based on Bacillus subtilis, B. amyloliquefaciens, B. mycoides, and Reynoutria sachalinensis, and new low MCE copper products formulated to reduce risk of phytoxicity. In many instances, biopesticides and organic copper and sulfur products are being used in conventional production as means of resistance management or to avoid exceeding seasonal tolerances for key conventional fungicides. Biopesticides based on natural oils, such as white mineral oil or oil of thyme have similar potential for controlling fungal and bacterial diseases, but the use of oils complicates the use of other agrichemicals as oils act as intensifiers and could lead to problems with phytoxicity in tank mixes. Biopesticides based on potassium bicarbonate and peroxides have utility against fungal diseases, particularly, powdery mildew and sooty blotch fly speck. However, these would be need to be applied every 3-5 days or at each wetting event for maximum efficacy. Phosphorous acid fungicides are biopesticides and can be fairly effective against fire blight, powdery mildew, and flyspeck sooty blotch when applied at model recommendations and short intervals (e.g. 3-7 days). However, these products are not approved for organic agriculture. Additional biopesticides and organically approved copper and sulfur products are being developed and improved every year. While some of these products have been evaluated, many are either not commercially available or have yet to be thoroughly evaluated by multiple experts in the region. Products designated with the section symbol "§" indicate that they are suitable for organic production. A provisional program for managing the major diseases of apples covering might resemble:
+
+
+- Apple scab [silver tip through harvest] – copper [silver tip & green tip]; sulfur, Bacillus sp, potassium bicarbonate, and peroxides [tight cluster to midsummer]
+- Powdery mildew – sulfur, potassium bicarbonate, peroxides, and white mineral oil [tight cluster to midsummer]
+- Fire blight – copper [pink to terminal budset]; B. subtilis, B. amyloliquefaciens [pink to petal fall]; B. mycoides, Reynoutria sachalinensis [pink to terminal budset]
+- Flyspeck and Sooty Blotch – B. subtilis, B. amyloliquefaciens [petal fall to harvest]; coppers [petal fall to harvest]
+## 2.3 Arthropod Management Options in Organic Tree Fruit Production
+
+Although not as effective as their conventional counterparts, organically acceptable control options for insects and mites have improved in recent years and more products are being developed as the number of growers interested in organic production increases. Biopesticides may offer some useful new alternatives for arthropod management in organic apple production in future years, even in regions with high pest population pressure such as New York. Traditional efforts rely on the most well known representatives of this class of insecticides: Bacillus thuringiensis, azadirachtin, and pyrethrin. However, others have been registered and are being evaluated for efficacy in various crop systems, and some of them may ultimately prove effective against selected orchards pests typically found in this region. Along with more familiar active ingredients such as Beauveria bassiana and Metarhizium brunneum, there are several new products being tested that contain extracts of, e.g., Chromobacterium subtsugae and Burkholderia spp. More products are under development, but have yet to be thoroughly evaluated in apple systems. An inspection of the product options designated with the section symbol "§" for each arthropod pest listed in these Guidelines can provide an overview of some of the most effective products available as organic management options; a provisional program covering the major arthropod groups might take the following form:
+
+
+- Mites [tight cluster] – highly refined mineral oil
+- Obliquebanded leafroller [bloom, summer cover sprays] - Bacillus thuringiensis/B.t.
+- Internal-feeding Lepidoptera (codling moth, oriental fruit moth, lesser appleworm) [petal fall + summer cover sprays] – mating disruption; spinosad, B.t.; granulosis virus; Chromobacterium subtsugae
+- Plum curculio [petal fall, 1st cover] – kaolin clay; pyrethrin; entomopathogenic nematodes
+- Aphids, leafhoppers [midsummer] – azadirachtin; insecticidal soap
+- San Jose scale [midsummer] – pyrethrin; Burkholderia
+- Apple maggot [mid-July through August] – spinosad; pyrethrin
+## 2.4 Site Management Considerations
+
+Certain site management tactics can be incorporated that will add to the overall diversity of the orchard system, such as:
+
+Companion plantings – planting flowering plants in the orchard to provide food and shelter for beneficial insects and to serve as a potential alternate cash crop.
+
+Composting – using a composted organic mulch under the trees to provide habitat and food for insect predators, reduce fruit disease inoculum, aid in weed control, build soil structure, and provide nutrition to the trees.
+
+## 2.5 Weed Control
+
+Control of weeds along the herbicide strip is challenging in organic apple orchards. Strategies include:
+
+Mechanical – shallow tillage with specialized cultivators that only disturb soil below the trees have been successful but require 4-6 cultivations per year.
+
+Mulches – hardwood bark mulches have been the most successful and are better than other mulches but a depth of 4-5 inches is required to control annual weeds. Perennial weeds will likely push through the mulch.
+
+Flaming – flaming of weeds along the tree row has been successful but requires slow speed and multiple (4-6) treatments per year. Flaming is most effective on small annual broadleaf weeds.
+
+Organic herbicides – several caustic organically approved chemicals are available for use in organic apple orchards. These burn the above ground parts of weed and provide short term weed control. Four to six repeated applications are required to provide season long weed control. The most successful products have been caprylic acid sprays, organic soap sprays and limonene sprays. Less effective products have been vinegar based (acetic acid) sprays.
+
+## 2.6 Summary
+
+Although we have yet to establish a complete set of procedures and guidelines to recommend to those wishing to explore the possibilities of organic tree fruit production in New York, some preliminary studies have given us a better idea of the techniques and materials that might be used in such systems. Accordingly, we are including appropriate notations to pest management options that might be considered as alternatives for organic production. In particular, certain pest management materials or products that are identified as acceptable under USDA or other commonly used organic certification guidelines, and which we have some confidence in being able to recommend at a specified level of effectiveness, are designated in this publication by preceding their name with the symbol “§”. Because there is much variability in organic certification standards from one market to another, it will be up to the individual grower to verify that a given crop protectant or management practice is acceptable to their prospective buyer or consumer. Look for remarks or estimates of potential levels of efficacy in the footnoted comments associated with these materials, located in the “General Pest Management Considerations” sections preceding the Pesticide Spray Tables, and also in the respective tables giving the activity spectrums for the different pesticide classes (e.g., Tables 6.1.1, 7.1.1, and 7.1.3).
+
+It should be acknowledged that this “input substitution” approach is not equivalent to achieving a complete multiple-component organic system. Nevertheless, this information is being provided for those growers who may wish to explore some of the possibilities of this alternative production method, to judge their relative merits in specific orchards.
+
+## 2.7 References
+
+Agnello, A., Cox, K., Lordan, J., Francescatto, P., and Robinson, T. 2017. Comparative programs for arthropod, disease and weed management in New York organic apples. Insects 8(3): 96-116. [DOI: 10.3390/insects8030096](https://doi.org/10.3390/insects8030096)
+
+Cromwell, M. L., L. P. Berkett, and H. M. Darby. 2011. Alternative organic fungicides for apple scab management and their non-target effects. HortScience 46(9): 1254-1259 [https://journals.ashs.org/hortsci/view/journals/hortsci/46/9/article-p1254.xml](https://journals.ashs.org/hortsci/view/journals/hortsci/46/9/article-p1254.xml).
+
+Ellis, M. A., D. C. Ferree, R. C. Funt, and L. V. Madden. 1998. Effects of an apple scab-resistant cultivar on use patterns of inorganic and organic fungicides and economics of disease control. Plant Dis. 82: 428-433.
+
+Palmiter, D. H., and R. M. Smock. 1954. Effect of fungicides on McIntosh apple yield and quality: a five-year study under Hudson Valley conditions, 1949-1953. N.Y.S. Agric. Exp. Sta. Bull. 767. 40 p.
+
+Phillips, M. 2005. The Apple Grower, revised edition. Chelsea Green, White River Junction, VT. 242 pp.
+
+Phillips, M. 2011. The Holistic Orchard: Tree Fruits and Berries the Biological Way. Chelsea Green, White River Junction, VT. 414 pp.
+
+Peck, G. and I. Merwin. 2010. A Grower's Guide to Organic Apples. NYS IPM Pub. 223, Cornell University, Ithaca. 64 pp. Online at: [https://ecommons.cornell.edu/handle/1813/42886](https://ecommons.cornell.edu/handle/1813/42886).

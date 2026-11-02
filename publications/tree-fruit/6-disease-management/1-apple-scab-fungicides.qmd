@@ -1,0 +1,16 @@
+---
+title: 6.1 Apple Scab Fungicides
+---
+Apple scab fungicides can control disease through fourdifferent types of activity: protection, post-infection activity, presymptomactivity, and postsymptom activity. Understanding these activities and knowingwhich fungicides exhibit them can help a grower determine the materials thatare likely to give the best results under a certain set of conditions.
+
+**Protection.** Protectionrefers to the ability of fungicide residues to kill or inactivate scab spores(and thereby prevent infection) when the residue is already on or in the leafor fruit before the infection takes place. A good protective fungicide mustexhibit satisfactory retention, that is, the fungicide residue must stick tothe leaf surface or be retained within to resist excessive washing away of thedeposits by rain. On the other hand, a good protective fungicide should alsohave good redistribution properties, that is, fungicide residues should have atendency to be washed by rain and redeposited on previously unprotected tissue.Ideally, a fungicide should stick well enough not to be washed off the tree,but should be redistributed well enough during rains to protect new growth.
+
+**Post-infectionactivity.** Post-infection activity refers to the ability of a fungicide tokill or stop the growth of the fungus and thereby prevent the establishment ofscab lesions, if applied within a given period after the start of a wettingperiod. It is expressed as the period of time from the beginning of a wettingperiod within which the fungicide must be applied to stop infection. The datagiven in Table 6.1.3 are accurate at average temperatures of 50-60°F. At lowertemperatures, the periods of after-infection activity for contact fungicidesare longer than those listed.
+
+**Presymptom activity**. Presymptom activity can be thought of as an extension of post-infectionactivity. When applied following an infection period, but beyond the timelimits of its post-infection activity listed in Table 6.1.3, a fungicide withsignificant presymptom activity will allow small chlorotic lesions to develop;however, it will inhibit or greatly reduce the production of secondary sporesfrom those lesions. Thus, if applied too late to completely stop infection, itwill still greatly reduce the amount of inoculum available for secondaryspread.
+
+**Postsymptom activity**. Postsymptom activity refers to the ability of a fungicide, when applied to anactively sporulating scab lesion, to prevent or greatly inhibit the furtherproduction of secondary scab spores from that lesion. Because such applicationsdo not kill the fungus, but merely arrest its development, they must berepeated to maintain this suppression. As with presymptom activity, this hasthe obvious benefit of reducing the pressure for the spread of secondary scab.
+
+ 
+
+#

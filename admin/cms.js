@@ -233,7 +233,7 @@
   let guidelineOptionsCache = null;
   let guidelineOptionsPromise = null;
 
-  // Keyed by "guidelineId|pestId|siteId|changedSince". Decap's preview pane
+  // Keyed by "guidelineId|pestId|siteId|siteTimingId|changedSince". Decap's preview pane
   // fully re-renders the markdown -> HTML tree on every keystroke, which
   // recreates the .pesticide-table-preview node from scratch (no
   // data-load-key). Without this cache we'd flash back to "Loading..." and
@@ -379,6 +379,7 @@
         guidelineId: current.guidelineId || "",
         pestId: current.pestId || "",
         siteId: current.siteId || "",
+        siteTimingId: current.siteTimingId || "",
         ...changes
       };
 
@@ -403,7 +404,8 @@
       this.updateValue({
         guidelineId,
         pestId: "",
-        siteId: ""
+        siteId: "",
+        siteTimingId: ""
       });
     },
     handlePestChange(e) {
@@ -412,9 +414,18 @@
       });
     },
 
+    //Timings belong to a site, so changing the site clears the timing.
     handleSiteChange(e) {
       this.updateValue({
-        siteId: e.target.value
+        siteId: e.target.value,
+        siteTimingId: ""
+      });
+    },
+
+    //SiteTiming - Optional. Blank means "all timings".
+    handleSiteTimingChange(e) {
+      this.updateValue({
+        siteTimingId: e.target.value
       });
     },
 
@@ -428,10 +439,16 @@
       const guidelineId = value.guidelineId || "";
       const pestId = value.pestId || "";
       const siteId = value.siteId || "";
+      const siteTimingId = value.siteTimingId || "";
 
       const selectedGuideline = findGuideline(this.state.options, guidelineId);
       const pestOptions = selectedGuideline?.pests || [];
       const siteOptions = selectedGuideline?.sites || [];
+
+      const selectedSite = siteOptions.find(s => String(s.siteId) === String(siteId));
+      const siteTimingOptions = [...(selectedSite?.siteTimings || [])].sort(
+        (a, b) => Number(a?.timingOrder ?? 9999) - Number(b?.timingOrder ?? 9999)
+      );
 
       const fieldStyle = {
         marginBottom: "12px"
@@ -628,6 +645,50 @@
                 )
               )
             ]
+          ),
+
+          // =====================================================
+          // TIMING (optional)
+          // =====================================================
+          h("label", {
+            key: "siteTimingLabel",
+            style: {
+              flexShrink: "0",
+              fontWeight: "600",
+              marginLeft: "4px"
+            }
+          }, "Timing"),
+
+          h(
+            "select",
+            {
+              key: "siteTimingSelect",
+              value: siteTimingId,
+              onChange: this.handleSiteTimingChange,
+              disabled: !siteId || !siteTimingOptions.length,
+              style: {
+                width: "155px",
+                flexShrink: "0",
+                padding: "8px"
+              }
+            },
+            [
+              h("option", {
+                key: "",
+                value: ""
+              }, siteId && !siteTimingOptions.length ? "-- No Timings --" : "-- All Timings --"),
+
+              ...siteTimingOptions.map(t =>
+                h(
+                  "option",
+                  {
+                    key: t.siteTimingId,
+                    value: String(t.siteTimingId)
+                  },
+                  makeOptionLabel(t, "siteTimingId")
+                )
+              )
+            ]
           )
         ]),
 
@@ -743,11 +804,12 @@
     const guidelineId = value.guidelineId || "";
     const pestId = value.pestId || "";
     const siteId = value.siteId || "";
+    const siteTimingId = value.siteTimingId || "";
 
     return h(
       "div",
       null,
-      `Guideline: ${guidelineId || "-"}, Pest: ${pestId || "-"}, Site: ${siteId || "-"}`
+      `Guideline: ${guidelineId || "-"}, Pest: ${pestId || "-"}, Site: ${siteId || "-"}, Timing: ${siteTimingId || "-"}`
     );
   }
 });
@@ -813,7 +875,8 @@
           changedSince: getAttr("changedSince"),
           guidelineId: getAttr("guidelineId"),
           pestId: getAttr("pestId"),
-          siteId: getAttr("siteId")
+          siteId: getAttr("siteId"),
+          siteTimingId: getAttr("siteTimingId")
         }
       };
     },
@@ -825,9 +888,13 @@
       const g = String(selector.guidelineId || "").trim();
       const p = String(selector.pestId || "").trim();
       const s = String(selector.siteId || "").trim();
+      const st = String(selector.siteTimingId || "").trim();
       const d = String(selector.changedSince || "").trim();
 
-      return `{{< pesticide-table title="${escapeShortcodeAttribute(t)}" guidelineId="${g}" pestId="${p}" siteId="${s}" changedSince="${d}" >}}`;
+      //siteTimingId is optional, so it is only written when one is selected.
+      const timingAttr = st ? ` siteTimingId="${st}"` : "";
+
+      return `{{< pesticide-table title="${escapeShortcodeAttribute(t)}" guidelineId="${g}" pestId="${p}" siteId="${s}"${timingAttr} changedSince="${d}" >}}`;
     },
 
     toPreview: (data) => {
@@ -839,6 +906,7 @@
       const g = String(selector.guidelineId || "").trim();
       const p = String(selector.pestId || "").trim();
       const s = String(selector.siteId || "").trim();
+      const st = String(selector.siteTimingId || "").trim();
       const d = String(selector.changedSince || "").trim();
 
       return `
@@ -847,6 +915,7 @@
             data-guideline-id="${escapeHtml(g)}"
             data-pest-id="${escapeHtml(p)}"
             data-site-id="${escapeHtml(s)}"
+            data-site-timing-id="${escapeHtml(st)}"
             data-changed-since="${escapeHtml(d)}">
           Loading pesticide table...
         </div>
@@ -884,9 +953,10 @@
       const guidelineId = node.getAttribute("data-guideline-id") || "";
       const pestId = node.getAttribute("data-pest-id") || "";
       const siteId = node.getAttribute("data-site-id") || "";
+      const siteTimingId = node.getAttribute("data-site-timing-id") || "";
       const changedSince = node.getAttribute("data-changed-since") || "";
 
-      const loadKey = `${guidelineId}|${pestId}|${siteId}|${changedSince}`;
+      const loadKey = `${guidelineId}|${pestId}|${siteId}|${siteTimingId}|${changedSince}`;
 
       // The title is not part of loadKey/the cache, so it is always rendered from the current value.
       const titleHtml = tableTitle
@@ -931,6 +1001,11 @@
         url.searchParams.set("guidelineId", guidelineId);
         url.searchParams.set("pestId", pestId);
         url.searchParams.set("siteId", siteId);
+
+        //Optional - only sent when a timing is selected.
+        if (siteTimingId) {
+          url.searchParams.set("siteTimingId", siteTimingId);
+        }
 
         if (changedSince) {
           url.searchParams.set("changedSince", changedSince);

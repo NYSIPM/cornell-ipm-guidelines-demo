@@ -34,6 +34,10 @@ collections:
     label: "Berry Crops"
     label_singular: "New Section"
     folder: "publications/berry-crops"
+    # Images in this guide's own images/ folder. This guide is built as its own
+    # Quarto project, where "/" in a page means the guide's folder, hence "/images".
+    media_folder: "/publications/berry-crops/images"
+    public_folder: "/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
@@ -72,6 +76,9 @@ collections:
     label: "Field Crops"
     label_singular: "New Section"
     folder: "publications/field-crops"
+    # Images in this guide's own images/ folder (see tree-fruit for details).
+    media_folder: "/publications/field-crops/images"
+    public_folder: "/publications/field-crops/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
@@ -94,6 +101,10 @@ collections:
     label: "Grapes"
     label_singular: "New Section"
     folder: "publications/grapes"
+    # Images in this guide's own images/ folder. This guide is built as its own
+    # Quarto project, where "/" in a page means the guide's folder, hence "/images".
+    media_folder: "/publications/grapes/images"
+    public_folder: "/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
@@ -117,6 +128,9 @@ collections:
     label: "Greenhouse Floriculture and Herbaceous Ornamentals"
     label_singular: "New Section"
     folder: "publications/greenhouse"
+    # Images in this guide's own images/ folder (see tree-fruit for details).
+    media_folder: "/publications/greenhouse/images"
+    public_folder: "/publications/greenhouse/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
@@ -140,6 +154,9 @@ collections:
     label: "Hops"
     label_singular: "New Section"
     folder: "publications/hops"
+    # Images in this guide's own images/ folder (see tree-fruit for details).
+    media_folder: "/publications/hops/images"
+    public_folder: "/publications/hops/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
@@ -163,6 +180,12 @@ collections:
     label: "Tree Fruit"
     label_singular: "New Section"
     folder: "publications/tree-fruit"
+    # This guide's images live in its own images/ folder. media_folder is where
+    # uploads are saved (leading "/" = from the repo root); public_folder is the
+    # path written into pages. Tree Fruit is built by the root project, where
+    # "/" in a page is the site root, so both are the full path.
+    media_folder: "/publications/tree-fruit/images"
+    public_folder: "/publications/tree-fruit/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
@@ -182,6 +205,9 @@ collections:
     label: "Trees and Shrubs"
     label_singular: "New Section"
     folder: "publications/trees-and-shrubs"
+    # Images in this guide's own images/ folder (see tree-fruit for details).
+    media_folder: "/publications/trees-and-shrubs/images"
+    public_folder: "/publications/trees-and-shrubs/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
@@ -199,6 +225,9 @@ collections:
     label: "Vegetable Crops"
     label_singular: "New Section"
     folder: "publications/vegetable-crops"
+    # Images in this guide's own images/ folder (see tree-fruit for details).
+    media_folder: "/publications/vegetable-crops/images"
+    public_folder: "/publications/vegetable-crops/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"
@@ -216,6 +245,10 @@ collections:
     label: "Organic Vegetable Crops"
     label_singular: "New Section"
     folder: "publications/organic-vegetable-crops"
+    # Images in this guide's own images/ folder. This guide is built as its own
+    # Quarto project, where "/" in a page means the guide's folder, hence "/images".
+    media_folder: "/publications/organic-vegetable-crops/images"
+    public_folder: "/images"
     create: true
     slug: "{{slug}}"
     extension: "qmd"

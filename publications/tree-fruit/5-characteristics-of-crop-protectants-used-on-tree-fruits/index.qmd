@@ -1,0 +1,11 @@
+---
+title: "5 Characteristics of Crop Protectants Used on Tree Fruits"
+---
+
+- [5.1 Cross Reference of Chemical vs. Trade Names of Pesticides](5.1-cross-reference-of-chemical-vs-trade-names-of-pesticides.qmd)
+- [5.2 Fungicides](5.2-fungicides.qmd)
+- [5.3 Bactericides (Antibiotics)](5.3-bactericides-antibiotics.qmd)
+- [5.4 Other Materials (Defense Inducers, Plant Growth Regulators, and Biopesticides)](5.4-other-materials-defense-inducers-plant-growth-regulators-and-biopesticides.qmd)
+- [5.5 Insecticides](5.5-insecticides.qmd)
+- [5.6 Acaricides](5.6-acaricides.qmd)
+- [5.7 Fumigants and Nematicides for Tree Fruits](5.7-fumigants-and-nematicides-for-tree-fruits.qmd)

@@ -1,0 +1,69 @@
+---
+title: "4.9 Calibrating Airblast Sprayers"
+---
+
+Videos showing calibration and nozzle selection may be found on the internet at [www.youtube.com.](https://www.youtube.com.) Type in: "Calibration of airblast sprayers for orchards part 1 selecting and changing nozzles" or "Calibration of airblast sprayers for orchards part 2 measuring liquid flow".
+
+
+## 4.9.1 Air Blast Sprayer Calibration (Use Clean Water)
+
+Pressure check
+Place the pressure gauge on the nozzle fitting farthest away from the pump and turn the sprayer on. If pressure is lower at the nozzle than specified, increase pressure at the regulator.           _______________
+
+Pressure at nozzle               psi
+
+Pressure at sprayer gauge                psi
+Nozzle output
+Use a flow meter (obtainable from Gemplers, Spraying Systems, etc.) attached to individual nozzles OR
+Connect hoses to each of the nozzles and measure the flow from each nozzle into a calibrated jug for one minute.
+
+Remember 128 fl. oz. in one gallon. Example: If the output of one nozzle has been measured at 34.5 fl. oz. in one minute, then output per minute is divided by 128 = 0.27 GPM.
+
+Replace all nozzle tips that are more than 10% inaccurate.
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+GPM = gallons per minute = gal/min
+
+GPA = gallons per acre = gal/acre Calibrating A Kinkelder Sprayer (Use Clean Water)
+
+## 4.9.2 Calibrating a Kinkelder Sprayer
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+This figure should be set on both scales.
+
+Both taps should be set on the distribution conduit in such a way that the index is set on the sign 162 on the index plate of the distribution conduit. The emission indication on the index plate has been fixed at a working pressure of 21 lbs (1.5 bar).
+
+Check the output of the sprayer:
+Divide the gallons/hour figure obtained above by 60 to give output/minute e.g., 162 gpm divided by 60 = 2.7 gallons/minute total of left and right side then divide 2.7 gallons/minute by 2 = 1.35 gallons/minute/side
+Remove the plastic pipes from the nozzles on the left or right side, tie together and place in a measuring jug
+Run the sprayer for one minute at correct engine speed, collecting the output in a measuring jug.
+
+Remember 128 fl. ozs in one gallon. Example: If the output of one side has been measured at 173fl. ozs, then output is divided by 128 = 1.35 gallons per minute.
+Then check the output of the opposite side.
+
+
+## 4.9.3 Calibrating an Agtec Sprayer (Use Clean Water)
+
+Calculate the gallons/minute/side:
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+
+<!-- TODO: Recreate original table or equation here. -->
+
+Check AgTec tables for correct meter setting, select the gal/min as calculated above, and then find meter setting, e.g., meter #12 @30 psi gives 1.34 gallons/min.
+Remove the hoses from the nozzles on the left or right side, tie together and place in a measuring jug
+Run the sprayer for one minute at correct engine speed, collecting the output in a measuring jug
+Remember 128 fl. ozs in one gallon. Example: If the output of one side has been measured at 173 fl. ozs, then output is divided by 128 = 1.35 gallons per minute.
+Then check the output of the opposite side.

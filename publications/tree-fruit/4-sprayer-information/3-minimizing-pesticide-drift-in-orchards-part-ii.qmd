@@ -1,0 +1,47 @@
+---
+title: 4.3 Minimizing Pesticide Drift in Orchards Part II
+---
+## 4.3.1 Before Spraying:
+
+1. Train the operator to use the sprayer correctly on your farm under your conditions.
+2. Plan the spraying operation; consider the use of orchard field cards as a good management tool.
+3. Read and follow the pesticide label.
+4. Select the correct nozzle for the target. Adjust nozzle size and position to achieve correct distribution within the canopy, particularly as the growing season progresses.
+5. Consider usingsprayers that direct the spray to the target, such as towers and tunnels. Check that air deflectors are set properly to confine disturbance to the target.
+6. Consider spray additives to reduce drift.
+7. Improve spraying logistics to ensure adequate time to spray within “ideal” conditions.
+8. Only spray when weather conditions are ideal; avoid spraying when conditions are favorable for atmospheric inversion or wind drift.
+9. Calibrate the sprayer with water to ensure that everything is working correctly.
+10. Start planting windbreaks!
+
+## 4.3.2 During Spraying:
+
+1. Stay alert: ensure the spray is not allowed to drift on to non-target areas and watch for changes in wind speed and direction.
+2. Keep spray pressure as low as possible and ensure an accurate gauge is used.
+3. If an automatic regulator is fitted, maintain a constant speed and pressure. Remember, small increases in speed result in large increases in pressure. The delivered air and spray must be given time to penetrate the canopy.
+4. Avoid spraying near sensitive crops/areas or waterways; use a 50-100-ft buffer zone. Spray inwards, with one side of the sprayer, for at least 50 feet from the boundary to create a “headland”.
+
+## 4.3.3 A Case Study
+
+The orchard with spray drift issues has 20-foot row spacings, 17-foot tree spacing, 9-to 10-foot high trees, and a no-spray buffer zone with a 10-foot wide hedgerow acting as a windbreak. Farmer Brown would like to stop drift from reaching his neighbor’s property.
+
+**Method:**
+
+1. Monitoring equipment. Purchase and use good quality instruments for wind speed, temperature, and humidity.
+2. Nozzle orientation: To see where the spray is actually going, Farmer Brown needs to set up a system to check his sprayer plume. One method is to use a patternator. Another method is to use a 16-foot high pole (two 8’ 2”x4” boards end to end) with a paper tape stapled along the leading edge. Place the pole between two trees within the row and spray a mixture of clean water and food coloring. Travel between the rows, spraying out the mixture. The spray will stain the paper where it hits. By looking at the colored spray droplets on the paper, Farmer Brown can alter the orientation of the nozzles or deflectors until the spray is only hitting the portion of the vertical pole/trees that is desirable.
+3. Air Induction Nozzles (AI): These nozzles, when used properly, can reduce drift by at least 50 percent. The principle behind these nozzles is to create a larger droplet that won’t drift as far but still maintain good leaf and fruit coverage. Note, not all AI nozzles are the same. Remember, it is critical to set up the nozzles as in step 2 above. Wilger and Lechler manufacture air-assist units to enable AI and hollow cone nozzles to be switched on/off from the tractor.
+4. End Plates: In situations where only one side of the sprayer is required, a shroud can be used to block any air on the opposite side of the sprayer. On the last couple of rows in the orchard you can spray inwards. This way you can reduce drift by 50 percent.
+5. Foliage Sensors: These sensors tell whether or not the sprayer is next to a tree, automatically shutting the spray off if no tree is present. There are ultrasonic or infrared sensor types that, if used properly, reduce your overspray and drift by 50 percent.
+6. Hail Nets: The use of hail nets is a good way to reduce drift. Overhead hail nets can reduce drift up to 75 percent. Hail nets can also be used as a barrier to break up the wind.
+7. Tower sprayers are better at targeting the spray into the canopy than a conventional air blast. The conventional air blast sprayer sends droplets in an air blast from a central fan upwards into the canopy, whereas the tower sprayer uses a horizontal air curtain.
+8. Tunnel Sprayers: Tunnel sprayers are the best way to reduce drift. Very little spray gets out of the tunnel spraying system, allowing for a 90 percent reduction in drift. If AI nozzles are used with the tunnel sprayer, 99 percent of drift can be reduced.
+9. Axial fan size and speed: Using an axial fan producing 30,000m3/hr in conjunction with AI nozzles will result in a 75 percent reduction of drift.
+10. PTO speed: Regulating the PTO speed of the tractor is an inexpensive way to reduce drift. Lowering the PTO speed reduces fan speed, preventing excessive amounts of air from blowing pesticides through the target and allowing good deposition to occur. On an airshear type sprayer, reducing PTO speed by 25% reduced drift by 75%. The reduced speed also increased droplet size, further reducing the effects of drift.
+11. Hydraulic Drive: Using a hydraulic motor to drive the sprayer fan will allow you to regulate wind velocity.
+12. Cornell Doughnuts: These attachments restrict air intake to reduce air flow through the sprayer. For early season, the 1/2 air intake doughnut can be used to only allow enough air to penetrate just the target row. A 2/3rd air intake hole can be used for early/mid-season to allow more air. Finally, in full canopy, no doughnut is required.
+13. Drift-reducing additives. A number of manufacturers offer drift reducing agents; most work via increasing droplet size. Beware, not all of them can withstand the higher pressures associated with fruit sprayers, requiring independent verification.
+14. Calibrate and check that the sprayer is functioning correctly.
+
+## 4.3.4 Conclusion
+
+Drift is impossible to eliminate but can be minimized. Implementing just one of these methods will greatly reduce the effects of drift and improve spray application efficiency of, saving time, money, and future problems.

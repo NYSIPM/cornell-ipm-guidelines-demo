@@ -11,7 +11,9 @@ param(
     [ValidateNotNullOrEmpty()]
     [string]$SiteId,
 
-    [string]$ChangedSince = ""
+    [string]$ChangedSince = "",
+
+    [string]$SiteTimingId = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -188,6 +190,11 @@ try {
         "pestId=$([Uri]::EscapeDataString($PestId))"
         "siteId=$([Uri]::EscapeDataString($SiteId))"
     )
+
+    if (-not [string]::IsNullOrWhiteSpace($SiteTimingId)) {
+        $queryParameters +=
+            "siteTimingId=$([Uri]::EscapeDataString($SiteTimingId.Trim()))"
+    }
 
     if (-not [string]::IsNullOrWhiteSpace($ChangedSince)) {
         $queryParameters +=

@@ -700,6 +700,7 @@
         const guidelineId = el.dataset.guidelineId;
         const pestId = el.dataset.pestId;
         const siteId = el.dataset.siteId;
+        const siteTimingId = el.dataset.siteTimingId;
 
         if (!pestId || !siteId) {
             el.innerHTML =
@@ -720,6 +721,11 @@
             pestId,
             siteId
         });
+
+        //Optional - only sent when the shortcode has a timing.
+        if (siteTimingId) {
+            params.set("siteTimingId", siteTimingId);
+        }
 
         const url = `${API_BASE}?${params.toString()}`;
 

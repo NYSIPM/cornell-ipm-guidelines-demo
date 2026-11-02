@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: ../../docs/publications/organic-vegetable-crops
+  resources:
+    # This guide's images/ folder (Decap uploads), copied even before a page uses an image.
+    - "images/**"
 
 website:
   title: "Cornell IPM | Organic Vegetable Crops Guidelines"

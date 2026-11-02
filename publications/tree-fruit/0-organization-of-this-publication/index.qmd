@@ -1,0 +1,26 @@
+---
+title: Organization of this Publication
+---
+the first part of this manual contains introductory informationabout pesticides, sprayer calibration, and references pertaining to cropprotectant efficacy and use characteristics for each pest category (diseases,insects, etc.). This is followed by a section on nutrient management andfertilizer recommendations for apple orchards. Information on forecasting,sampling and monitoring is included for selected pests. 
+
+Weed control guidelines are listed next, separately for eachcrop. Next comes a section on nutrient management and fertilizerrecommendations for apple orchards. Then, for each crop, a Pesticide SprayTable, which lists specific products for the control of each disease, insectand mite pest of this crop, giving products (listed by IRAC/FRAC group and thenalphabetically within each group), rates, re-entry and pre-harvest intervals, productefficacy, and comments keyed to specific sections of the written notes listedin the General Pest Management Considerations section. Pests are addressedphenologically through the season. Following the Pesticide Spray Table are the GeneralPest Management Considerations. This section contains numbered comments keyedto the Pesticide Spray Table on the biology, cultural notes, monitoring, andpesticide use for each pest, in the following order:
+
+* Diseases
+
+  * Disease 1
+
+    * Biology & Cultural
+    * Monitoring & Forecasting
+    * Biological & Non-chemical Control
+    * Pesticide Application Notes
+    * Pesticide Resistance
+  * Disease 2, etc.
+* Insects and Mites
+
+  * Insect 1, Etc.
+
+Diseasesare addressed first, followed by insects and mites (as a group), each inalphabetical order. Reference may be made here to additional publicationsavailable for further information. 
+
+Lastlyis an appendix of tables listing common names, product names, EPA registrationnumbers, personal protective equipment guidelines, and spray mixturecompatibility suggestions for the materials included in this publication,followed by a list of other fruit reference materials, diagnostic services, andfaculty and Extension programs.
+
+Lastlyis an appendix of tables listing common names, product names, EPA registrationnumbers, personal protective equipment guidelines, and spray mixturecompatibility suggestions for the materials included in this publication,followed by a list of other fruit reference materials, diagnostic services, andfaculty and Extension programs.
