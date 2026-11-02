@@ -1,5 +1,6 @@
 ---
 title: "5.7 Fumigants and Nematicides for Tree Fruits"
+order: 7
 ---
 
 Whenever a new orchard is being planted in an old orchard site, preplant soil fumigation should be considered. Nematodes, particularly Pratylenchus penetrans (the lesion nematode), can seriously injure the roots of a newly planted tree, restricting its growth and future productivity. This type of injury is most common on cherries, but all fruit trees are susceptible to some extent. Nematodes are more likely to build up to damaging levels in sandy and loamy soils than in heavier soil types. The dagger nematode, Xiphenema americanum, can also cause serious losses at population levels too low to cause serious root injury by its transmission of the virus that causes stem pitting of stone fruits, the constriction disease on Stanley prune trees, and apple union necrosis on trees grown on MM.106 rootstock. 

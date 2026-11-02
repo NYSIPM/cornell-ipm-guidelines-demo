@@ -3,16 +3,16 @@ title: Cornell Pest Management Guidelines for Commercial Tree Fruit Production
 order: 0
 ---
 1. [Integrated Crop and Pest Management](1-integrated-crop-and-pest-management/index.qmd)
-2. Organic Tree Fruit Production in New York State
-3. Pesticide Information
-4. Sprayer Information
-5. Characteristics of Crop Protectants Used on Tree
-6. Disease Management 
+2. [Organic Tree Fruit Production in New York State](2-organic-tree-fruit-production-in-new-york-state/index.qmd)
+3. [Pesticide Information](3-pesticide-information/index.qmd)
+4. [Sprayer Information](4-sprayer-information/index.qmd)
+5. [Characteristics of Crop Protectants Used on Tree Fruits](5-characteristics-of-crop-protectants-used-on-tree-fruits/index.qmd)
+6. [Disease Management](6-disease-management/index.qmd)
 7. Insect and Mite Management
 8. Weed Management
 9. Wildlife Damage Management
 10. Nutrient Management of Apple Orchards
-11. Apples
+11. [Apples](11-apples/index.qmd)
 12. Pears
 13. Cherries
 14. Peaches and Nectarines

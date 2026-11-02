@@ -1,5 +1,6 @@
 ---
 title: "5.3 Bactericides (Antibiotics)"
+order: 3
 ---
 
 Kasugamycin (Kasumin 2L) is a bactericide used for fire blight of apples and pears. It is formulated as kasugamycin hydrochloride in a 2.3% liquid solution. Kasugamycin is applied at bloom at the rate of 64 fl oz/100 gal for fire blight control, and it can be used in combination with wetting agents to enhance efficacy. It should be applied only in conjuction with disease forecasting models. It can be applied until 90 days prior to harvest, but Kasumin may not be applied after petal fall. Kasugamycin should not be applied in orchards that have been fertilized with animal waste/manure. Also, animal grazing in treated orchards is prohibited and posting of restriction sign around the application perimeter is required

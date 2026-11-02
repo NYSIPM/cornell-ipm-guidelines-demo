@@ -1,5 +1,6 @@
 ---
 title: 3.10 FIFRA 2(ee) Recommendations
+order: 10
 ---
 FIFRA authorizes certain limited variations from the pesticide use directions on pesticide labels. Unless prohibited by the label, these “2(ee) recommendations” allow:
 

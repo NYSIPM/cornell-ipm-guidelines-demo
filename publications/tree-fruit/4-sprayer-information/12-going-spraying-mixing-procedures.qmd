@@ -1,4 +1,5 @@
 ---
 title: 4.12 Going Spraying! Mixing Procedures
+order: 12
 ---
 Temp Space

@@ -1,5 +1,6 @@
 ---
 title: 3.8 EPA Worker Protection Standard (WPS) for Agricultural Pesticides
+order: 8
 ---
 The WPS is designed to reduce the risks of pesticide illness or injury to pesticide handlers and agricultural workers who work in the production of agricultural plants on farms, or in nurseries, greenhouses, and forests. Generally, WPS requirements include:
 

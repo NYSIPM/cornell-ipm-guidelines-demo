@@ -1,5 +1,6 @@
 ---
 title: 4.1 Solutions For Safer Spraying
+order: 1
 ---
 ## 4.1.1 Reducing Risk of Pesticide Exposure Through Use Of Engineering Controls
 

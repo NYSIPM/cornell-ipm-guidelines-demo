@@ -1,5 +1,6 @@
 ---
 title: 4.2 Minimizing Pesticide Drift in Orchards Part I
+order: 2
 ---
 Disease and insect control is a critical factor in most commercial orchards. While such control may, in some seasons, be a small proportion of crop value, there is a demand from growers for increased efficiency of spraying. Attention to detail is necessary to improve efficiency of deposition, reduce drift and increase sprayer output.
 Spray drift of pesticides is an important and costly problem facing pesticide applicators. Drift results in damage to susceptible off-target crops, environmental contamination to waterways and a lower than intended rate to the target crop, thus reducing the effectiveness of the pesticide. It can also lead to strained relations with adjoining landowners.

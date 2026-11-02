@@ -1,5 +1,6 @@
 ---
 title: 1 Silver Tip
+order: 1
 ---
 {{< pesticide-table title="Silver Tip - Apple scab" guidelineId="1" pestId="15" siteId="6" siteTimingId="7" changedSince="" >}}
 

@@ -1,5 +1,6 @@
 ---
 title: Organization of this Publication
+order: 0
 ---
 the first part of this manual contains introductory informationabout pesticides, sprayer calibration, and references pertaining to cropprotectant efficacy and use characteristics for each pest category (diseases,insects, etc.). This is followed by a section on nutrient management andfertilizer recommendations for apple orchards. Information on forecasting,sampling and monitoring is included for selected pests. 
 

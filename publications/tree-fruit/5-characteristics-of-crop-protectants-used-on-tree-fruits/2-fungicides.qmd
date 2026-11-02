@@ -1,5 +1,6 @@
 ---
 title: "5.2 Fungicides"
+order: 2
 ---
 
 (For meaning of symbols preceding product names, see abbreviation list at the end of this publication)

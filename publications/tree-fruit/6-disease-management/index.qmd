@@ -1,5 +1,6 @@
 ---
 title: 6 Disease Management
+order: 0
 ---
 * [6.1 Apple Scab Fungicides](1-apple-scab-fungicides.qmd)
 * [6.2 Notes on Apple Scab Management](2-notes-on-apple-scab-management.qmd)

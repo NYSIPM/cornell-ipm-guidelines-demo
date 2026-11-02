@@ -1,5 +1,6 @@
 ---
 title: "4.14 Decontaminating and Storing Crop Sprayers"
+order: 14
 ---
 
 Sprayers must be thoroughly cleaned inside and out after use. Ideally, a sprayer should be cleaned at the end of each day and especially before switching to a different pesticide. Pesticide residues left on the outside of the sprayer can cause operator contamination. Residues on the inside of the tank or left over pesticides trapped inside the sprayer plumbing system can contaminate the operator and possibly lead to crop damage. Growers should be concerned about this, especially if they are using one sprayer to apply different chemicals to different crops. In some cases, only a small amount of a pesticide remaining in the sprayer can cause significant crop damage or lead to unacceptable residues on a crop. Crop contamination can even occur several months after a sprayer has not been properly cleaned. Where asprayer is used to spray different fruit crops, residue left in the tank can cross contaminate another fruit crop, potentially causing illegal or unwanted  pesticide residues, making the crop unmarketable.

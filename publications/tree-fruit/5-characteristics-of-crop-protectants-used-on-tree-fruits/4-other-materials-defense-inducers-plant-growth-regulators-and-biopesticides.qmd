@@ -1,5 +1,6 @@
 ---
 title: "5.4 Other Materials (Defense Inducers, Plant Growth Regulators, and Biopesticides)"
+order: 4
 ---
 
 Acibenzolar-S-methyl (Actigard) is a systemic acquired resistance inducer. The material acts by inducing natural plant defenses to protect against infection bacteria and fungi. Trees with young tissue will respond better to the product than older trees. It’s an attractive option for apple growers during establishment years when one doesn’t wish to use prohexadione calcium to manage fire blight (shoot blight) as it restricts host growth. Actigard may be used in a drench in 8-16 fl oz water per tree. Drench applications may be fairly effective in 1-2 year old trees timed at green tip, but labor availability may make the practice less feasible in large operations. Actigard, may also be used in a foliar application, beginning at 20% bloom to ensure that host response is high when shoot blight infections occur later in the season. A minimum of 5 days is needed for the best induced resistance response. 

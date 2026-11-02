@@ -1,5 +1,6 @@
 ---
 title: "6.2 Notes on Apple Scab Management"
+order: 2
 ---
 
 # 6.2 Notes on Apple Scab Management

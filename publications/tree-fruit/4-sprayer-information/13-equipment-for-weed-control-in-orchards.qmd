@@ -1,5 +1,6 @@
 ---
 title: "4.13 Equipment for Weed Control in Orchards"
+order: 13
 ---
 
 Herbicides, although relatively inexpensive, require good application techniques if improved deposition and drift reduction is to occur. Some of the commonly used herbicides can damage young trees and so great care must be taken. Drift has been a major concern for some years; off-target movement wastes money, reduces deposition on the target plant, damages young trees, pollutes water,and may cause strain with other people.

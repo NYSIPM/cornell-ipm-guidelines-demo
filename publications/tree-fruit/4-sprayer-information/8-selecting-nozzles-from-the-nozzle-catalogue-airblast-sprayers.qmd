@@ -1,5 +1,6 @@
 ---
 title: "4.8 Selecting Nozzles from the Nozzle Catalogue – Airblast sprayers"
+order: 8
 ---
 
 We need to select hollow cone discs with a core or whirl plate.

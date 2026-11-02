@@ -1,5 +1,6 @@
 ---
 title: 6.1 Apple Scab Fungicides
+order: 1
 ---
 Apple scab fungicides can control disease through fourdifferent types of activity: protection, post-infection activity, presymptomactivity, and postsymptom activity. Understanding these activities and knowingwhich fungicides exhibit them can help a grower determine the materials thatare likely to give the best results under a certain set of conditions.
 

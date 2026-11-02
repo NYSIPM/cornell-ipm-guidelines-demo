@@ -1,5 +1,6 @@
 ---
 title: "5.5 Insecticides"
+order: 5
 ---
 
 The insecticides and acaricides used to control fruit pests can be divided into several categories according to their chemical composition, mode of action, persistence, and other properties. To plan and carry out an effective spray program, it is important to understand these characteristics. A simplified classification of most of the insecticides and acaricides recommended in this bulletin is given, along with some of their general properties and uses.

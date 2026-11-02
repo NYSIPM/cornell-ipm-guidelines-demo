@@ -1,5 +1,6 @@
 ---
 title: 3.11 Endangered Species Act and Pesticides
+order: 11
 ---
 The Endangered Species Act (ESA) was passed in 1973 to protect fish, wildlife, and plant species that are listed as threatened or endangered as well as critical habitats that support these species. The ESA requires federal agencies, like the USEPA, to make sure any action they take, authorize, fund, or carry out won’t affect a listed species or their critical habitat. This determination is done in consultation with the US Fish and Wildlife Service and the National Marine Fisheries Service. The results of these consultations are used to identify mitigation measures required to protect these protected species or their habitats.
 
