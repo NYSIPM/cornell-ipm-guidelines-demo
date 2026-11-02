@@ -551,6 +551,9 @@ return {
     local site_id =
       get_string(kwargs, "siteId")
 
+    local site_timing_id =
+      get_string(kwargs, "siteTimingId")
+
     local changed_since =
       get_string(kwargs, "changedSince")
 
@@ -569,6 +572,12 @@ return {
       "-ChangedSince",
       changed_since
     }
+
+    -- Optional: only passed when the shortcode has a timing.
+    if site_timing_id ~= "" then
+      table.insert(command_arguments, "-SiteTimingId")
+      table.insert(command_arguments, site_timing_id)
+    end
 
     local request_succeeded, result = pcall(
       pandoc.pipe,

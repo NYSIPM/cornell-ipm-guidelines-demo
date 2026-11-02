@@ -1,5 +1,6 @@
 -- Public Quarto shortcode:
--- {{< pesticide-table title="..." guidelineId="1" pestId="2" siteId="3" >}}
+-- {{< pesticide-table title="..." guidelineId="1" pestId="2" siteId="3" siteTimingId="4" >}}
+-- siteTimingId is optional.
 
 local function stringify(value)
   if value == nil then
@@ -24,6 +25,7 @@ return {
     local guidelineId = stringify(kwargs["guidelineId"])
     local pestId = stringify(kwargs["pestId"])
     local siteId = stringify(kwargs["siteId"])
+    local siteTimingId = stringify(kwargs["siteTimingId"])
 
     -- Outside the table container: public-treatment-builder.js replaces the
     -- container's contents when it loads. Same markup as the admin preview.
@@ -41,10 +43,12 @@ return {
         [[<div class="pesticide-table-public"
      data-guideline-id="%s"
      data-pest-id="%s"
-     data-site-id="%s">
+     data-site-id="%s"
+     data-site-timing-id="%s">
   <div class="pesticide-table-loading">Loading pesticide table...</div>
 </div>]],
-        escape_html(guidelineId), escape_html(pestId), escape_html(siteId)
+        escape_html(guidelineId), escape_html(pestId), escape_html(siteId),
+        escape_html(siteTimingId)
       )
     )
   end

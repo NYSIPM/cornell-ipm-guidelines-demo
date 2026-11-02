@@ -1115,11 +1115,13 @@
     const pestId = container.dataset.pestId;
     const siteId = container.dataset.siteId;
     const guidelineId = container.dataset.guidelineId;
+    const siteTimingId = container.dataset.siteTimingId;
 
     const params = new URLSearchParams();
     if (guidelineId) params.append("guidelineId", guidelineId);
     if (pestId) params.append("pestId", pestId);
     if (siteId) params.append("siteId", siteId);
+    if (siteTimingId) params.append("siteTimingId", siteTimingId);
 
     if (container.__showDeleted) {
       params.append("deletedOnly", "true");

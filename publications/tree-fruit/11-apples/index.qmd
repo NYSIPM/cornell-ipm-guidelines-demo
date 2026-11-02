@@ -1,4 +1,6 @@
 ---
 title: 11 Apples
 ---
-{{< pesticide-table title="Apple scab" guidelineId="1" pestId="15" siteId="6" changedSince="" >}}
+Test
+
+{{< pesticide-table title="Apple scab - Silver Tip" guidelineId="1" pestId="15" siteId="6" siteTimingId="7" changedSince="" >}}
