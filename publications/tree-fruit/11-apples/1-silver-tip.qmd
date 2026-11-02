@@ -15,11 +15,7 @@ title: 1 Silver Tip
 
 {{< pesticide-table title="Silver Tip - European red mite" guidelineId="1" pestId="12" siteId="6" siteTimingId="7" changedSince="" >}}
 
-
-
 {{< pesticide-table title="Silver Tip - Fire blight" guidelineId="1" pestId="16" siteId="6" siteTimingId="7" changedSince="" >}}
-
-
 
 {{< pesticide-table title="Silver Tip - Phytophthora rots" guidelineId="1" pestId="56" siteId="6" siteTimingId="7" changedSince="" >}}
 
