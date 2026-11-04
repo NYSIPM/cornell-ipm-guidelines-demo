@@ -197,9 +197,9 @@ collections:
     sortable_fields: ["order", "title"]
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      # Position in the Tree Fruit sidebar (within its chapter folder; for a
-      # chapter's index page, the chapter's position in the guide).
-      - {label: "Order", name: "order", widget: "number", value_type: "int", required: false, hint: "Sidebar position, e.g. 3 for section 4.3"}
+      # Position of the page inside its chapter folder (sidebar and Decap list).
+      # Chapter order is set separately, in the root _quarto.yml sidebar.
+      - {label: "Order", name: "order", widget: "number", value_type: "int", required: false, hint: "Position in its chapter: 3 for section 4.3. A chapter's index page is 0."}
       - label: "Body"
         name: "body"
         widget: "markdown"

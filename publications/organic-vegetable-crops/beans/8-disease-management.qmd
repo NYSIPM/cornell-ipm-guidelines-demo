@@ -1,21 +1,50 @@
 ---
-title: 1.2 Beans — Dry, Snap, and Lima
-order: 2
+title: 8 Disease Management
+order: 8
 ---
 Beans — Dry, Snap, and Lima
 
+
 ### 8.1 Anthracnose (Colletotrichum lindemuthianum and other species)
+
 
 {{< pesticide-table title="Pesticides for Management of Anthracnose in Beans" guidelineId="11" pestId="759" siteId="68" changedSince="" >}}
 
+
 ### 8.2 Bacterial Diseases: Bacterial brown spot, Pseudomonas syringae pv. syringae; Common bacterial blight, Xanthomonas campestris pv. phaseoli; and Halo blight, Pseudomonas syringae pv. phaseolicola
+
 
 {{< pesticide-table title="Pesticides for Management of Bacterial Diseases in Beans" guidelineId="11" pestId="660" siteId="68" changedSince="" >}}
 
+
 ### 8.3 Botrytis Gray Mold, Botrytis cinerea
+
 
 {{< pesticide-table title="Pesticides for Management of Botrytis Gray Mold in Beans" guidelineId="11" pestId="620" siteId="68" changedSince="" >}}
 
+
 ### 8.4 Phytophthora Blight
 
+
 {{< pesticide-table title="Pesticides for Management of Phytophthora Blight in Bean" guidelineId="11" pestId="893" siteId="68" changedSince="" >}}
+
+
+## 8.5 Root Rot and Damping-off
+
+
+{{< pesticide-table title="Pesticides for Management of Root Rot and Damping-off in Beans" guidelineId="11" pestId="616" siteId="68" changedSince="" >}}
+
+
+## 8.6 Rust of Bean
+
+
+{{< pesticide-table title="Pesticides for Management of Rust of Bean" guidelineId="11" pestId="621" siteId="68" changedSince="" >}}
+
+
+## 8.7 Virus Diseases
+
+
+## 8.8 White Mold
+
+
+{{< pesticide-table title="Pesticides for Management of White Mold in Beans" guidelineId="11" pestId="608" siteId="68" changedSince="" >}}
