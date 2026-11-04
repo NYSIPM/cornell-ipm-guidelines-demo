@@ -261,6 +261,32 @@ collections:
       depth: 2
       summary: "{{title}}"
       subfolders: false
+    # Which chapter folder a page lives in. Decap fills this in from the folder
+    # open in the sidebar when "New Section" is clicked, saves the page there as
+    # <folder>/<title>.qmd, and moves the file if it is changed later. It is not
+    # written into the page. Add a line here when a new chapter folder is made.
+    meta:
+      path:
+        label: "Chapter"
+        widget: "select"
+        options:
+          - {label: "(Top level)", value: "/"}
+          - asparagus
+          - beans
+          - beets
+          - brassicas
+          - carrot
+          - cucurbits
+          - eggplant
+          - lettuce
+          - onion
+          - peas
+          - pepper
+          - potato
+          - spinach
+          - sweet-corn
+          - tomato
+          - turnip
     sortable_fields: ["order", "title"]
     fields:
       - {label: "Title", name: "title", widget: "string"}
