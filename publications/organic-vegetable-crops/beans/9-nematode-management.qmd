@@ -1,0 +1,7 @@
+---
+title: 9 Nematode Management
+order: 9
+---
+## 9.1 Root-Lesion Nematode
+
+{{< pesticide-table title="Pesticides for Management of Root-Lesion Nematode in Beans" guidelineId="11" pestId="728" siteId="68" changedSince="" >}}

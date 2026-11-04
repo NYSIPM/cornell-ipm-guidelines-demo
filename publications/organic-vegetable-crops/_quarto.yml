@@ -39,7 +39,7 @@ website:
           - text: "1.1 Asparagus"
             href: asparagus/index.qmd
           - text: "1.2 Beans — Dry, Snap, and Lima"
-            href: beans/1-2-beans-dry-snap-and-lima.qmd
+            href: beans/index.qmd
           - text: "1.3 Beets"
             href: beets/1-3-beets.qmd
           - text: "1.4 Heading and Leafy Brassicas"
@@ -91,9 +91,11 @@ website:
         - section: "1.1 Asparagus"
           href: asparagus/index.qmd
           contents: "asparagus/*.qmd"
+        - section: "1.2 Beans — Dry, Snap, and Lima"
+          href: beans/index.qmd
+          contents: "beans/*.qmd"
         # Crops that are still a single page. When one is split into
         # sections, replace its line with a section like Asparagus above.
-        - beans/1-2-beans-dry-snap-and-lima.qmd
         - beets/1-3-beets.qmd
         - brassicas/1-4-heading-and-leafy-brassicas.qmd
         - carrot/1-5-carrot.qmd

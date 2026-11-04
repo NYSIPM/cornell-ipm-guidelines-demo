@@ -1,0 +1,15 @@
+---
+title: 10 Insect Management
+order: 10
+---
+## 10.1 Beet Armyworm
+
+{{< pesticide-table title="Pesticides for Management of Beet Armyworm in Beet" guidelineId="11" pestId="732" siteId="76" changedSince="" >}}
+
+## 10.2 Cutworms, primarily Black Cutworm
+
+{{< pesticide-table title="Pesticides for Management of Cutworms, primarily Black Cutworm, in Beet" guidelineId="11" pestId="652" siteId="76" changedSince="" >}}
+
+## 10.3 Leafminers: Beet Leafminer, Spinach Leafminer
+
+{{< pesticide-table title="Pesticides for Management of Spinach Leafminer in Beet" guidelineId="11" pestId="726" siteId="76" changedSince="" >}}

@@ -1,0 +1,35 @@
+---
+title: 10 Insect and Mite Management
+order: 10
+---
+## 10.1 Aphids
+
+{{< pesticide-table title="Pesticides for Management of Aphids in Beans" guidelineId="11" pestId="761" siteId="68" changedSince="" >}}
+
+## 10.2 European Corn Borer (ECB)
+
+{{< pesticide-table title="Pesticides for Management of European Corn Borer in Beans" guidelineId="11" pestId="648" siteId="68" changedSince="" >}}
+
+## 10.3 Mexican Bean Beetle
+
+{{< pesticide-table title="Pesticides for Management of Mexican Bean Beetle in Beans" guidelineId="11" pestId="645" siteId="68" changedSince="" >}}
+
+## 10.4 Potato Leafhopper
+
+{{< pesticide-table title="Pesticides for Management of Potato Leafhopper in Beans" guidelineId="11" pestId="646" siteId="68" changedSince="" >}}
+
+## 10.5 Seedcorn Maggot
+
+{{< pesticide-table title="Pesticides for Management of Seedcorn Maggot in Beans" guidelineId="11" pestId="598" siteId="68" changedSince="" >}}
+
+## 10.6 Tarnished Plant Bug (TPB)
+
+{{< pesticide-table title="Pesticides for Management of Tarnished Plant Bug in Beans" guidelineId="11" pestId="649" siteId="68" changedSince="" >}}
+
+## 10.7 Twospotted Spider Mite
+
+{{< pesticide-table title="Pesticides for Management of Twospotted Spider Mite in Beans" guidelineId="11" pestId="650" siteId="68" changedSince="" >}}
+
+## 10.8 Western bean cutworm (WBC)
+
+{{< pesticide-table title="Pesticides for Management of Western Bean Cutworm in Beans" guidelineId="11" pestId="762" siteId="68" changedSince="" >}}

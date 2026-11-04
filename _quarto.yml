@@ -44,10 +44,14 @@ website:
         href: about.qmd
 
   # Tree Fruit guide sidebar (Tree Fruit is built by this root project, so its
-  # sidebar lives here). Built automatically from the folders: each chapter
-  # folder becomes a section titled by its index.qmd, and pages are sorted
-  # by their `order:` value - nothing to update here when pages or chapters
-  # are added in Decap. Only pages inside publications/tree-fruit/ get it.
+  # sidebar lives here). Only pages inside publications/tree-fruit/ get it.
+  #
+  # Chapter order = the order of the list below. Each chapter is its folder's
+  # index.qmd (which gives the chapter its title), and the pages inside are
+  # listed automatically by `contents: "<folder>/*.qmd"`, sorted by each
+  # page's `order:` value (its position in the chapter; index.qmd is 0).
+  # Nothing to update here when sections are added in Decap - only add a
+  # chapter here when its folder gets an index.qmd.
   sidebar:
     - id: tree-fruit
       title: "Tree Fruit"
@@ -56,9 +60,27 @@ website:
       contents:
         - text: "Overview"
           href: publications/tree-fruit/index.qmd
-        # Keep the "/**" glob form: the bare folder name trips a Quarto bug on
-        # Windows (mixes \ and / in the path and fails to render).
-        - auto: "publications/tree-fruit/**"
+        - section: publications/tree-fruit/00-organization-of-this-publication/index.qmd
+          contents: "publications/tree-fruit/00-organization-of-this-publication/*.qmd"
+        - section: publications/tree-fruit/01-integrated-crop-and-pest-management/index.qmd
+          contents: "publications/tree-fruit/01-integrated-crop-and-pest-management/*.qmd"
+        - section: publications/tree-fruit/02-organic-tree-fruit-production-in-new-york-state/index.qmd
+          contents: "publications/tree-fruit/02-organic-tree-fruit-production-in-new-york-state/*.qmd"
+        - section: publications/tree-fruit/03-pesticide-information/index.qmd
+          contents: "publications/tree-fruit/03-pesticide-information/*.qmd"
+        - section: publications/tree-fruit/04-sprayer-information/index.qmd
+          contents: "publications/tree-fruit/04-sprayer-information/*.qmd"
+        - section: publications/tree-fruit/05-characteristics-of-crop-protectants-used-on-tree-fruits/index.qmd
+          contents: "publications/tree-fruit/05-characteristics-of-crop-protectants-used-on-tree-fruits/*.qmd"
+        - section: publications/tree-fruit/06-disease-management/index.qmd
+          contents: "publications/tree-fruit/06-disease-management/*.qmd"
+        # 07-insect-and-mite-management, 08-weed-management,
+        # 09-wildlife-damage-management, 10-nutrient-management-of-apple-orchards:
+        # add here (same two lines) once each has an index.qmd. Keep chapter
+        # folders zero-padded (12-, not 1-2) so Decap's folder tree, which
+        # sorts names as text, lists them in order.
+        - section: publications/tree-fruit/11-apples/index.qmd
+          contents: "publications/tree-fruit/11-apples/*.qmd"
 
   # Site footer - also in each publication's _quarto.yml; keep in sync.
   page-footer:
