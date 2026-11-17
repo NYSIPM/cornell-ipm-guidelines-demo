@@ -1,0 +1,7 @@
+---
+title: 8 Nematode Management
+order: 8
+---
+## 8.1 Northern Root-knot Nematode, Meloidogyne hapla
+
+{{< pesticide-table title="Pesticides for Management of Northern Root-knot Nematode" guidelineId="11" pestId="654" siteId="69" changedSince="" >}}

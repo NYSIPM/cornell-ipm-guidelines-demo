@@ -1,7 +1,9 @@
 /* Same as the admin preview title (assets/css/pesticide-table-editor.css) and .pesticide-summary-title */
 .treatment-table-title {
-    margin: 0 0 0.75rem;
-    font-size: 1.35rem;
+    margin: 0;
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid #6f6f6f; /* same as the line under the header row */
+    font-size: 1.15rem;
     line-height: 1.25;
     font-weight: 600;
 }
@@ -23,7 +25,8 @@
 .public-treatment-table th {
     text-align: left;
     font-weight: 700;
-    padding: 5px 6px;
+    padding: 0 6px 5px; /* none on top so the gap under the title line ~ matches the gap above the header line */
+    line-height: 1.2;
     border-bottom: 2px solid #6f6f6f;
     vertical-align: bottom;
 }
@@ -92,10 +95,20 @@
 .public-treatment-table th:nth-child(6) { width: 12%; }
 
 
+/* Each table's placeholder (from the {{< pesticide-table >}} shortcode). The bottom margin
+   separates back-to-back tables so the next title doesn't sit on this table's footer. */
+.pesticide-table-public {
+    margin-bottom: 2.25rem;
+}
+
+/* "N treatments" count - tucked right under the table, right-aligned so it reads as
+   belonging to this table rather than as a label for the next title. */
 .treatment-table-footer {
-    margin-top: 10px;
+    margin-top: 3px;
     font-size: 12px;
+    font-style: italic;
     color: #666;
+    text-align: right;
 }
 
 .sort-button {

@@ -587,9 +587,9 @@
         const treatments = sortTreatments(allTreatments, sort);
 
         const rows = treatments.map((treatment, index) => {
-        const rowClass = index % 2 === 0
-            ? "treatment-gray"
-            : "treatment-white";
+        const rowClass = index % 2 === 0 //starts white, same as the admin table
+            ? "treatment-white"
+            : "treatment-gray";
         const treatmentType = getTreatmentType(treatment);
         const comments = formatComments(treatment);
         // The treatment's last visible row draws the line between treatments: the comments

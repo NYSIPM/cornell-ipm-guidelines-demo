@@ -1,0 +1,23 @@
+---
+title: 9 Insect Management
+order: 9
+---
+## 9.1 Aphids, primarily the Green Peach Aphid, Myzus persicae
+
+{{< pesticide-table title="Pesticides for Management of Aphids in Carrot" guidelineId="11" pestId="792" siteId="69" changedSince="" >}}
+
+## 9.2 Aster Leafhopper (ALH), Macrosteles quadrilineatus
+
+{{< pesticide-table title="" guidelineId="11" pestId="644" siteId="69" changedSince="" >}}
+
+## 9.3 Carrot Rust Fly, Psila rosae
+
+{{< pesticide-table title="Pesticides for Management of Carrot Rust Fly in Carrot" guidelineId="11" pestId="653" siteId="69" changedSince="" >}}
+
+## 9.4 Carrot Weevil, Listronotus oregonensis
+
+{{< pesticide-table title="Pesticides for Management of Carrot Weevil in Carrot" guidelineId="11" pestId="647" siteId="69" changedSince="" >}}
+
+## 9.5 Wireworms (such as those in the following Genera: Limonius, Ctenicera and Agriotes)
+
+{{< pesticide-table title="Pesticides for Management of Wireworms in Carrot" guidelineId="11" pestId="784" siteId="69" changedSince="" >}}
