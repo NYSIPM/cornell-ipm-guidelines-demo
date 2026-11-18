@@ -36,38 +36,38 @@ website:
           - text: "Overview"
             href: index.qmd
           - text: "---"
-          - text: "1.1 Asparagus"
+          - text: "Asparagus"
             href: asparagus/index.qmd
-          - text: "1.2 Beans — Dry, Snap, and Lima"
+          - text: "Beans — Dry, Snap, and Lima"
             href: beans/index.qmd
-          - text: "1.3 Beets"
-            href: beets/1-3-beets.qmd
-          - text: "1.4 Heading and Leafy Brassicas"
-            href: brassicas/1-4-heading-and-leafy-brassicas.qmd
-          - text: "1.5 Carrot"
-            href: carrot/1-5-carrot.qmd
-          - text: "1.6 Cucurbits"
-            href: cucurbits/1-6-cucurbits-cucumber-melon-pumpkin-squash-and-watermelon.qmd
-          - text: "1.7 Eggplant"
-            href: eggplant/1-7-eggplant.qmd
-          - text: "1.8 Lettuce"
-            href: lettuce/1-8-lettuce.qmd
-          - text: "1.9 Onion, Shallot, and Leek"
-            href: onion/1-9-onion-shallot-and-leek.qmd
-          - text: "1.10 Peas"
-            href: peas/1-10-peas.qmd
-          - text: "1.11 Pepper"
-            href: pepper/1-11-pepper.qmd
-          - text: "1.12 Potato"
-            href: potato/1-12-potato.qmd
-          - text: "1.13 Spinach"
-            href: spinach/1-13-spinach.qmd
-          - text: "1.14 Sweet Corn"
-            href: sweet-corn/1-14-sweet-corn.qmd
-          - text: "1.15 Field Tomato"
-            href: tomato/1-15-field-tomato.qmd
-          - text: "1.16 Turnip, Rutabaga, Radish, and Kohlrabi"
-            href: turnip/1-16-turnip-rutabaga-radish-and-kohlrabi.qmd
+          - text: "Beets"
+            href: beets/index.qmd
+          - text: "Heading and Leafy Brassicas"
+            href: brassicas/index.qmd
+          - text: "Carrot"
+            href: carrot/index.qmd
+          - text: "Cucurbits"
+            href: cucurbits/index.qmd
+          - text: "Eggplant"
+            href: eggplant/index.qmd
+          - text: "Lettuce"
+            href: lettuce/index.qmd
+          - text: "Onion, Shallot, and Leek"
+            href: onion/index.qmd
+          - text: "Peas"
+            href: peas/index.qmd
+          - text: "Pepper"
+            href: pepper/index.qmd
+          - text: "Potato"
+            href: potato/index.qmd
+          - text: "Spinach"
+            href: spinach/index.qmd
+          - text: "Sweet Corn"
+            href: sweet-corn/index.qmd
+          - text: "Field Tomato"
+            href: tomato/index.qmd
+          - text: "Turnip, Rutabaga, Radish, and Kohlrabi"
+            href: turnip/index.qmd
 
   # One sidebar for the whole guide, on every page: each crop is a chapter,
   # and crops split into sections (like Asparagus) expand to list them. It's
@@ -88,28 +88,54 @@ website:
         # nothing to update here when sections are added, renamed or
         # reordered in Decap. (Use the "/*.qmd" pattern, not the bare folder
         # name, which adds an extra nested level for the title page.)
-        - section: "1.1 Asparagus"
+        - section: "Asparagus"
           href: asparagus/index.qmd
           contents: "asparagus/*.qmd"
-        - section: "1.2 Beans — Dry, Snap, and Lima"
+        - section: "Beans — Dry, Snap, and Lima"
           href: beans/index.qmd
           contents: "beans/*.qmd"
-        # Crops that are still a single page. When one is split into
-        # sections, replace its line with a section like Asparagus above.
-        - beets/1-3-beets.qmd
-        - brassicas/1-4-heading-and-leafy-brassicas.qmd
-        - carrot/1-5-carrot.qmd
-        - cucurbits/1-6-cucurbits-cucumber-melon-pumpkin-squash-and-watermelon.qmd
-        - eggplant/1-7-eggplant.qmd
-        - lettuce/1-8-lettuce.qmd
-        - onion/1-9-onion-shallot-and-leek.qmd
-        - peas/1-10-peas.qmd
-        - pepper/1-11-pepper.qmd
-        - potato/1-12-potato.qmd
-        - spinach/1-13-spinach.qmd
-        - sweet-corn/1-14-sweet-corn.qmd
-        - tomato/1-15-field-tomato.qmd
-        - turnip/1-16-turnip-rutabaga-radish-and-kohlrabi.qmd
+        - section: "Beets"
+          href: beets/index.qmd
+          contents: "beets/*.qmd"
+        - section: "Heading and Leafy Brassicas"
+          href: brassicas/index.qmd
+          contents: "brassicas/*.qmd"
+        - section: "Carrot"
+          href: carrot/index.qmd
+          contents: "carrot/*.qmd"
+        - section: "Cucurbits"
+          href: cucurbits/index.qmd
+          contents: "cucurbits/*.qmd"
+        - section: "Eggplant"
+          href: eggplant/index.qmd
+          contents: "eggplant/*.qmd"
+        - section: "Lettuce"
+          href: lettuce/index.qmd
+          contents: "lettuce/*.qmd"
+        - section: "Onion, Shallot, and Leek"
+          href: onion/index.qmd
+          contents: "onion/*.qmd"
+        - section: "Peas"
+          href: peas/index.qmd
+          contents: "peas/*.qmd"
+        - section: "Pepper"
+          href: pepper/index.qmd
+          contents: "pepper/*.qmd"
+        - section: "Potato"
+          href: potato/index.qmd
+          contents: "potato/*.qmd"
+        - section: "Spinach"
+          href: spinach/index.qmd
+          contents: "spinach/*.qmd"
+        - section: "Sweet Corn"
+          href: sweet-corn/index.qmd
+          contents: "sweet-corn/*.qmd"
+        - section: "Field Tomato"
+          href: tomato/index.qmd
+          contents: "tomato/*.qmd"
+        - section: "Turnip, Rutabaga, Radish, and Kohlrabi"
+          href: turnip/index.qmd
+          contents: "turnip/*.qmd"
 
   # Site footer - same as the root _quarto.yml; keep in sync. /../../ = site root (see navbar).
   page-footer:

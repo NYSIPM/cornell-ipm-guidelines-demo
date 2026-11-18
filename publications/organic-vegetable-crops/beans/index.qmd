@@ -1,6 +1,9 @@
 ---
 title: Beans - Dry, Snap, and Lima
 order: 0
+# Used by the guide overview page (../index.qmd) to list and sort crops.
+crop: "Beans — Dry, Snap, and Lima"
+crop-number: 2
 listing:
   sort-ui: false
   filter-ui: false

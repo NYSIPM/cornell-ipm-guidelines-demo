@@ -1,0 +1,7 @@
+---
+title: 9 Nematode Management
+order: 9
+---
+## 9.1 Nematodes, primarily Root-lesion Nematode, Pratylenchus penetrans
+
+{{< pesticide-table title="Pesticides for Management of Nematodes affecting Cucurbits" guidelineId="11" pestId="684" siteId="73" changedSince="" >}}

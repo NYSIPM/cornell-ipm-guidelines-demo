@@ -1,0 +1,73 @@
+---
+title: 8 Disease Management
+order: 8
+---
+## 8.1.1 Angular leaf spot, Pseudomonas syringae pv. lachrymans, and Xanthomonas leaf spot (formerly Bacterial Leaf Spot), Xanthomonas campestris pv. cucurbitae
+
+{{< pesticide-table title="Pesticides for Management of Angular Leaf Spot and Xanthomonas Leaf Spot of Cucurbits" guidelineId="11" pestId="686" siteId="73" changedSince="" >}}
+
+## 8.1.2 Bacterial Wilt, Erwinia tracheiphila
+
+## 8.1.3 Downy Mildew, Pseudoperonospora cubensis
+
+{{< pesticide-table title="Pesticides for Management of Downy Mildew on Cucurbits" guidelineId="11" pestId="681" siteId="73" changedSince="" >}}
+
+## 8.1.4 Phytophthora Blight, Phytophthora capsici
+
+{{< pesticide-table title="Pesticides for Management of Phytophthora Blight in Cucurbits" guidelineId="11" pestId="682" siteId="73" changedSince="" >}}
+
+## 8.1.5 Powdery Mildew, Podosphaera xanthii
+
+{{< pesticide-table title="Pesticides for Management of Powdery Mildew in Cucurbits" guidelineId="11" pestId="683" siteId="73" changedSince="" >}}
+
+## 8.1.6 Storage and Fruit Rots
+
+## 8.2 Management of Diseases That Occur Less Frequently
+
+## 8.2.1 Alternaria Leaf Blight, Alternaria cucumerina
+
+{{< pesticide-table title="Pesticides for Management of Alternaria Leaf Blight Cucurbits" guidelineId="11" pestId="685" siteId="73" changedSince="" >}}
+
+## 8.2.2 Anthracnose, Colletotrichum orbiculare
+
+{{< pesticide-table title="Pesticides for Management of Anthracnose in Cucurbits" guidelineId="11" pestId="687" siteId="73" changedSince="" >}}
+
+## 8.2.3 Belly Rot, Rhizoctonia solani
+
+{{< pesticide-table title="Pesticides for Management of Belly Rot in Cucurbits" guidelineId="11" pestId="688" siteId="73" changedSince="" >}}
+
+## 8.2.4 Choanephora Blossom Blight and Fruit Rot
+
+## 8.2.5 Cottony Leak, Pythium spp.
+
+{{< pesticide-table title="Pesticides for Management of Cottony Leak in Cucurbits" guidelineId="11" pestId="689" siteId="73" changedSince="" >}}
+
+## 8.2.6 Cucurbit Yellow Vine Disease (CYVD), Serratia marcescens, vectored by squash bugs
+
+## 8.2.7 Gummy Stem Blight (foliar phase) and Black Rot (fruit rot phase), Stagonosporopsis spp.
+
+{{< pesticide-table title="Pesticides for Management of Gummy Stem Blight and Black Rot in Cucurbits" guidelineId="11" pestId="692" siteId="73" changedSince="" >}}
+
+## 8.2.8 Plectosporium Blight, Plectosporium tabacinum (syn. Microdochium)
+
+## 8.2.9 Root Disorders, including Pythium Root Rot, Pythium spp.; Fusarium Wilt, Fusarium oxysporum f. sp. melonis (Races 0, 1, and 2); Fusarium Crown and Foot Rot, Fusarium solani f. sp. cucurbitae (Race 1); and Verticillium Wilt, Verticillium dahliae
+
+{{< pesticide-table title="Pesticides for Management of Root Disorders in Cucurbits including Pythium Root Rot, Fusarium Wilt, and Verticillium Wilt" guidelineId="11" pestId="691" siteId="73" changedSince="" >}}
+
+## 8.2.10 Scab, Cladosporium cucumerinum
+
+{{< pesticide-table title="Pesticides for Management of Scab on Cucurbits" guidelineId="11" pestId="693" siteId="73" changedSince="" >}}
+
+## 8.2.11 Seed Decay, Seedling Diseases, and Damping-off, Pythium spp. and several other soil-dwelling pathogens
+
+{{< pesticide-table title="Pesticides for Management of Seed Decay, Seedling Diseases, and Damping-off in Cucurbits" guidelineId="11" pestId="690" siteId="73" changedSince="" >}}
+
+## 8.2.12 Septoria Leaf Spot, Septoria cucurbitacearum
+
+{{< pesticide-table title="Pesticides for Management of Septoria Leaf Spot in Cucurbits" guidelineId="11" pestId="695" siteId="73" changedSince="" >}}
+
+## 8.2.13 Virus Diseases of Cucurbits
+
+## 8.2.14 White Mold, Sclerotinia sclerotiorum
+
+{{< pesticide-table title="Pesticides for Management of White Mold in Cucurbits" guidelineId="11" pestId="608" siteId="73" changedSince="" >}}

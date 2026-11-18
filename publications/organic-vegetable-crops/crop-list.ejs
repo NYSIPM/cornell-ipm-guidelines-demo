@@ -1,0 +1,11 @@
+<!-- Overview page crop table (index.qmd): like the built-in table listing, but links each crop's short crop: name to its index page. -->
+<table class="quarto-listing-table table table-hover">
+<thead><tr><th>Crop</th></tr></thead>
+<tbody class="list">
+<% for (const item of items) { %>
+<tr onclick="window.location=this.querySelector('a').getAttribute('href'); return false;" style="cursor:pointer;">
+<td><a href="<%- item.path %>" class="listing-crop"><%= item.crop %></a></td>
+</tr>
+<% } %>
+</tbody>
+</table>

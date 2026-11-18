@@ -1,6 +1,0 @@
----
-title: Beets
-order: 0
----
-::: {#chapter-contents}
-:::
