@@ -1,6 +1,8 @@
 ---
 title: Organic Vegetable Specific Crop Chapters
 order: 0
+# No left-hand guide sidebar here; the crop table below is the way in.
+sidebar: false
 # Lists every crop folder's index.qmd automatically - a new crop folder shows
 # up here once its index.qmd has `crop:` (the name shown) and `crop-number:`
 # (its position in the list).

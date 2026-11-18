@@ -173,6 +173,8 @@ format:
         <link rel="stylesheet" href="/../../assets/css/pesticide-summary-public.css">
         <link rel="stylesheet" href="/../../assets/css/public-treatment-builder.css">
         <script src="/../../assets/js/public-treatment-builder.js?v=3"></script>
+        <!-- Crop fly-out under Publications > Organic Vegetable Crops in the top menu. -->
+        <script src="/../../assets/js/organic-crops-menu.js" defer></script>
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <!-- Load your existing auth file (as-is) -->
         <script src="/../../js/auth.js" defer></script>

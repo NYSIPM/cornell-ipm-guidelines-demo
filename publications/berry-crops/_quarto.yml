@@ -59,6 +59,9 @@ format:
         <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
         <!-- Load your existing auth file (as-is) -->
         <script src="../../js/auth.js" defer></script>
+        <!-- Crop fly-out under Publications > Organic Vegetable Crops in the top menu.
+             Leading "/" = this guide's output root (Quarto adds ../ per page), so /../../ = site root. -->
+        <script src="/../../assets/js/organic-crops-menu.js" defer></script>
 
         <!-- Bridge: expose functions globally no matter how auth.js is authored -->
         <script type="module">
