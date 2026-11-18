@@ -1,0 +1,25 @@
+---
+title: 7 Disease Management
+order: 7
+---
+## 7.2 Cavity Spot, Pythium violae, Pythium sulcatum, and possibly other species
+
+{{< pesticide-table title="Pesticides for Management of Cavity Spot in Carrot" guidelineId="11" pestId="639" siteId="69" changedSince="" >}}
+
+## 7.3 Leaf Blights, including: Alternaria leaf blight (a.k.a. late blight), Alternaria dauci; Cercospora leaf blight (a.k.a. early blight), Cercospora carotae; and Bacterial leaf blight, Xanthomonas campestris pv. carotae
+
+{{< pesticide-table title="Pesticides for Management of Leaf Blights in Carrot" guidelineId="11" pestId="659" siteId="69" changedSince="" >}}
+
+## 7.4 Rhizoctonia Crown Rot, Foliar Blight, and Crater Rot (Rhizoctonia solani, R. carotae)
+
+{{< pesticide-table title="Pesticides for Management of Rhizoctonia in Carrot" guidelineId="11" pestId="658" siteId="69" changedSince="" >}}
+
+## 7.5 Seed Decay, Damping-off, and Root rot, primarily caused by the pathogens Pythium spp. and Rhizoctonia spp.
+
+{{< pesticide-table title="Pesticides for Management of Seed Decay, Damping-off, and Root Rot in Carrots" guidelineId="11" pestId="626" siteId="69" changedSince="" >}}
+
+## 7.6 Storage Rots
+
+## 7.7 White Mold, Sclerotinia sclerotiorum and Sclerotinia minor
+
+{{< pesticide-table title="Pesticides for Management of White Mold in Carrot" guidelineId="11" pestId="608" siteId="69" changedSince="" >}}

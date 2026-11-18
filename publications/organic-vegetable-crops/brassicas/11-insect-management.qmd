@@ -1,0 +1,35 @@
+---
+title: 11 Insect Management
+order: 11
+---
+## 11.1 Aphids: primarily Cabbage Aphid, Brevicoryne brassicae, and Green Peach Aphid, Myzus persicae
+
+{{< pesticide-table title="Pesticides for Management of Aphids in Brassica Crops" guidelineId="11" pestId="587" siteId="72" changedSince="" >}}
+
+## 11.2 Cabbage Looper (CL), Trichoplusia ni
+
+{{< pesticide-table title="Pesticides for Management of Cabbage Looper in Brassica Crops" guidelineId="11" pestId="592" siteId="72" changedSince="" >}}
+
+## 11.3 Cabbage Maggot, Delia radicum
+
+{{< pesticide-table title="Pesticides for Management of Cabbage Maggot in Brassica Crops" guidelineId="11" pestId="594" siteId="72" changedSince="" >}}
+
+## 11.4 Diamondback Moth (DBM), Plutella xylostella
+
+{{< pesticide-table title="Pesticides for Management of Diamondback Moth in Brassica Crops" guidelineId="11" pestId="590" siteId="72" changedSince="" >}}
+
+## 11.5 Flea Beetles, Phyllotreta striolata and P. cruciferae
+
+{{< pesticide-table title="Pesticides for Management of Flea Beetles in Brassica Crops" guidelineId="11" pestId="593" siteId="72" changedSince="" >}}
+
+## 11.6 Imported Cabbageworm (ICW), Pieris rapae
+
+{{< pesticide-table title="Pesticides for Management of Imported Cabbageworm in Brassica Crops" guidelineId="11" pestId="591" siteId="72" changedSince="" >}}
+
+## 11.7 Onion Thrips, Thrips tabaci
+
+{{< pesticide-table title="Pesticides for Management of Onion Thrips in Brassica Crops" guidelineId="11" pestId="588" siteId="72" changedSince="" >}}
+
+## 11.8 Swede Midge, Contarinia nasturtii
+
+{{< pesticide-table title="Pesticides for Management of Swede Midge in Brassica Crops" guidelineId="11" pestId="589" siteId="72" changedSince="" >}}

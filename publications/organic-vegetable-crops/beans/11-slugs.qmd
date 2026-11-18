@@ -1,0 +1,5 @@
+---
+title: 11 Slugs
+order: 11
+---
+{{< pesticide-table title="Pesticides for Management of Slugs in Beans" guidelineId="11" pestId="595" siteId="68" changedSince="" >}}

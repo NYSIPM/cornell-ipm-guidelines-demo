@@ -1,0 +1,11 @@
+---
+title: 9 Nematode Management
+order: 9
+---
+## 9.1 Root-lesion Nematode, Pratylenchus penetrans
+
+{{< pesticide-table title="Pesticides for Management of Root-lesion nematode" guidelineId="11" pestId="655" siteId="72" changedSince="" >}}
+
+## 9.2 Sugar Beet Cyst Nematode, Heterodera schachtii
+
+{{< pesticide-table title="Pesticides for Management of Sugar Beet Cyst Nematode in Brassica Crops" guidelineId="11" pestId="607" siteId="72" changedSince="" >}}

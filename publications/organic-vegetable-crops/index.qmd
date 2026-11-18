@@ -1,22 +1,19 @@
 ---
 title: Organic Vegetable Specific Crop Chapters
 order: 0
+# Lists every crop folder's index.qmd automatically - a new crop folder shows
+# up here once its index.qmd has `crop:` (the name shown) and `crop-number:`
+# (its position in the list).
+listing:
+  contents: "*/index.qmd"
+  # Table layout in crop-list.ejs (links each short crop name).
+  template: crop-list.ejs
+  fields:
+    - crop
+  id: crop-chapters
+  sort: crop-number
 ---
-Explore detailed, crop-specific organic production and Integrated Pest Management (IPM) guidelines. 
+Explore detailed, crop-specific organic production and Integrated Pest Management (IPM) guidelines.
 
-* [Asparagus](asparagus/index.qmd)
-* [Beans — Dry, Snap, and Lima](beans/1-2-beans-dry-snap-and-lima.qmd)
-* [Beets](beets/1-3-beets.qmd)
-* [Heading and Leafy Brassicas](brassicas/1-4-heading-and-leafy-brassicas.qmd)
-* [Carrot](carrot/1-5-carrot.qmd)
-* [Cucurbits: Cucumber, Melon, Pumpkin, Squash, and Watermelon](cucurbits/1-6-cucurbits-cucumber-melon-pumpkin-squash-and-watermelon.qmd)
-* [Eggplant](eggplant/1-7-eggplant.qmd)
-* [Lettuce](lettuce/1-8-lettuce.qmd)
-* [Onion, Shallot, and Leek](onion/1-9-onion-shallot-and-leek.qmd)
-* [Peas](peas/1-10-peas.qmd)
-* [Pepper](pepper/1-11-pepper.qmd)
-* [Potato](potato/1-12-potato.qmd)
-* [Spinach](spinach/1-13-spinach.qmd)
-* [Sweet Corn](sweet-corn/1-14-sweet-corn.qmd)
-* [Field Tomato](tomato/1-15-field-tomato.qmd)
-* [Turnip, Rutabaga, Radish, and Kohlrabi](turnip/1-16-turnip-rutabaga-radish-and-kohlrabi.qmd)
+::: {#crop-chapters}
+:::

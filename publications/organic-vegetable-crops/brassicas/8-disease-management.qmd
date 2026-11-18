@@ -1,0 +1,37 @@
+---
+title: 8 Disease Management
+order: 8
+---
+## 8.1 Alternaria Leaf Spot and Head Blight
+
+{{< pesticide-table title="Pesticides for Management of Alternaria Leaf Spot in Brassica Crops" guidelineId="11" pestId="671" siteId="72" changedSince="" >}}
+
+## 8.2 Bacterial Head Rot of Broccoli, Pseudomonas spp., Erwinia carotovora and Soft Rot of Chinese Cabbage caused by E. carotovora
+
+{{< pesticide-table title="Pesticides for Management of Bacterial Head Rot of Broccoli" guidelineId="11" pestId="605" siteId="72" changedSince="" >}}
+
+## 8.3 Black Leg, Seed Decay, Phoma lingam
+
+## 8.4 Black Rot, Xanthomonas campestris pv. campestris
+
+{{< pesticide-table title="8.5 Clubroot, Plasmodiophora brassicae" guidelineId="11" pestId="672" siteId="72" changedSince="" >}}
+
+## 8.5 Clubroot, Plasmodiophora brassicae
+
+{{< pesticide-table title="Pesticides for Management of Clubroot in Brassica Crops" guidelineId="11" pestId="580" siteId="72" changedSince="" >}}
+
+## 8.6 Damping-off and Root Rot, caused primarily by Pythium ultimum and Rhizoctonia solani, and Wire Stem caused by Rhizoctonia solani
+
+{{< pesticide-table title="Pesticides for Management of Damping-off, Root Rot, and Wirestem in Brassica Crops" guidelineId="11" pestId="678" siteId="72" changedSince="" >}}
+
+## 8.7 Downy Mildew, Hyaloperonospora brassicae
+
+{{< pesticide-table title="Pesticides for Management of Downy Mildew on Brassica crops" guidelineId="11" pestId="674" siteId="72" changedSince="" >}}
+
+## 8.8 Fusarium Yellows, Fusarium oxysporum
+
+{{< pesticide-table title="Pesticides for Management of Fusarium Yellows in Brassica Crops" guidelineId="11" pestId="604" siteId="72" changedSince="" >}}
+
+## 8.9 White Mold, Sclerotinia sclerotiorum
+
+{{< pesticide-table title="Pesticides for Management of White Mold in Brassica Crops" guidelineId="11" pestId="608" siteId="72" changedSince="" >}}

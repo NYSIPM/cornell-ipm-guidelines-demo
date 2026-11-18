@@ -1,0 +1,22 @@
+---
+title: Organic Production and IPM Guide for Carrot
+order: -1
+crop: Carrot
+crop-number: 5
+listing:
+  sort-ui: false
+  filter-ui: false
+  field-display-names:
+    title: Contents
+  table-striped: false
+  fields:
+    - title
+  contents: "*.qmd"
+  type: table
+  id: chapter-contents
+  table-hover: true
+  sort: order
+---
+
+::: {#chapter-contents}
+:::

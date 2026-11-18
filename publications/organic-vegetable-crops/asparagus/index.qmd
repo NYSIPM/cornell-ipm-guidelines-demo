@@ -1,6 +1,8 @@
 ---
-title: 2026 Organic Production and IPM Guide for Asparagus
+title: Organic Production and IPM Guide for Asparagus
 order: -1
+crop: Asparagus
+crop-number: 1
 listing:
   sort-ui: false
   filter-ui: false

@@ -1,0 +1,7 @@
+---
+title: 9 Nematode Management
+order: 9
+---
+## 9.1 Sugar Beet Cyst Nematode
+
+{{< pesticide-table title="Pesticides for Management of Sugar Beet Cyst Nematode in Beet" guidelineId="11" pestId="607" siteId="76" changedSince="" >}}

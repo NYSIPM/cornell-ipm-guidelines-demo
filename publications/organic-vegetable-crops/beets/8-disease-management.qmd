@@ -1,0 +1,19 @@
+---
+title: 8 Disease Management
+order: 8
+---
+## 8.1 Common Scab
+
+{{< pesticide-table title="Pesticides for Management of Common Scab of Beet" guidelineId="11" pestId="891" siteId="76" changedSince="" >}}
+
+## 8.2 Foliar Diseases
+
+{{< pesticide-table title="Pesticides for Management of Foliar Diseases in Beet" guidelineId="11" pestId="785" siteId="76" changedSince="" >}}
+
+## 8.3 Seed Rot, Damping-Off, Wirestem, Pocket Rot and Root Rot
+
+{{< pesticide-table title="Pesticides for Management of Seed Rot, Damping-off, Wirestem, Pocket Rot, and Root Rot in Beet" guidelineId="11" pestId="740" siteId="76" changedSince="" >}}
+
+## 8.4 Verticillium Wilt
+
+{{< pesticide-table title="Pesticides for Management of Verticillium Wilt in Beet" guidelineId="11" pestId="641" siteId="76" changedSince="" >}}

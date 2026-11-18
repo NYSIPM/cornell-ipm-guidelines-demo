@@ -1,0 +1,27 @@
+---
+title: 11 Insect and Mite Management
+order: 11
+---
+## 11.1 Aphids, primarily the melon aphid, Aphis gossypii
+
+{{< pesticide-table title="Pesticides for Management of Aphids in Cucurbits" guidelineId="11" pestId="697" siteId="73" changedSince="" >}}
+
+## 11.2 Cucumber Beetles, including the Striped Cucumber Beetle, Acalymma vittatum, and the Spotted Cucumber Beetle, Diabrotica undecimpunctata howardi
+
+{{< pesticide-table title="Pesticides for Management of Striped and Spotted Cucumber Beetle in Cucurbits" guidelineId="11" pestId="698" siteId="73" changedSince="" >}}
+
+## 11.3 Seedcorn Maggot, Delia platura
+
+{{< pesticide-table title="Pesticides for Management of Seedcorn Maggot in Cucurbits" guidelineId="11" pestId="598" siteId="73" changedSince="" >}}
+
+## 11.4 Spider Mites, primarily the Twospotted Spider Mite, Tetranychus urticae
+
+{{< pesticide-table title="Pesticides for Management of Spider Mites in Cucurbits" guidelineId="11" pestId="701" siteId="73" changedSince="" >}}
+
+## 11.5 Squash Bug, Anasa tristis
+
+{{< pesticide-table title="11.5 Squash Bug, Anasa tristis" guidelineId="11" pestId="699" siteId="73" changedSince="" >}}
+
+## 11.6 Squash Vine Borer, Melittia cucurbitae
+
+{{< pesticide-table title="Pesticides for Management of Squash Vine Borer in Cucurbits" guidelineId="11" pestId="700" siteId="73" changedSince="" >}}

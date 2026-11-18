@@ -723,14 +723,29 @@
     container.querySelector(`.sort-button[data-sort-key="${key}"]`)?.focus();
   }
 
-  // Swaps only the table wrapper so anything rendered above it (the treatment table title) survives a redraw.
+  // renderTable() returns two siblings: the editor bar and the table wrapper. The treatment table
+  // title (added by cms.js) sits between them, so each piece is swapped in place and the title survives a redraw.
   function replaceTableHtml(container, html) {
-    const wrapper = container.querySelector(".pesticide-table-wrapper");
-    if (wrapper) {
-      wrapper.outerHTML = html;
-    } else {
+    const oldWrapper = container.querySelector(":scope > .pesticide-table-wrapper");
+    if (!oldWrapper) {
       container.innerHTML = html;
+      return;
     }
+
+    const template = container.ownerDocument.createElement("template");
+    template.innerHTML = html;
+    const newBar = template.content.querySelector(".treatment-edit-bar");
+    const newWrapper = template.content.querySelector(".pesticide-table-wrapper");
+    const oldBar = container.querySelector(":scope > .treatment-edit-bar");
+
+    if (newBar) {
+      if (oldBar) oldBar.replaceWith(newBar);
+      else container.prepend(newBar);
+    } else {
+      oldBar?.remove();
+    }
+
+    if (newWrapper) oldWrapper.replaceWith(newWrapper);
   }
 
   function renderTable(data, options = {}) {
@@ -739,58 +754,49 @@
     const restrictedUseKey = renderRestrictedUseKey(unsortedRows); //"" when no product has a symbol
     const currentUser =
         window.TreatmentAuth?.getDisplayName?.() ?? "";
-    const AddTreatmentButton = `
-      <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          margin-top:12px;
-          margin-bottom:8px;
-          gap:12px;
-          flex-wrap:wrap;
-      ">
-        <button type="button" class="insert-treatment-btn">
-          Add Treatment
-        </button>
-        
+    //Admin-only toolbar above the title (styled in assets/css/pesticide-table-editor.css, .treatment-edit-bar).
+    //Rendered as a sibling before .pesticide-table-wrapper; cms.js puts the title between the two.
+    //Holds everything editor-only: Add Treatment, Show Deleted, and the signed-in user / Sign out.
+    const editBar = `
+      <div class="treatment-edit-bar">
+        <div class="treatment-edit-bar__group">
+          <span class="treatment-edit-bar__label">Editor</span>
+          <button type="button" class="insert-treatment-btn">
+            Add Treatment
+          </button>
+        </div>
+
         ${options.showDeleted ? `
-          <div style="
-              border:1px solid #b36b00;
-              background:#fff4e5;
-              padding:3px 10px;
-              border-radius:4px;
-              font-size:12px;
-              font-weight:600;
-              color:#7a4b00;
-          ">
+          <div class="treatment-edit-bar__notice">
             Viewing Deleted Treatments - Use Restore to bring one back.
           </div>
-        ` : `<div></div>`}
+        ` : ""}
 
-        
-
-        <label style="
-            font-size:12px;
-            display:flex;
-            align-items:center;
-            gap:4px;
-            white-space:nowrap;
-        ">
-          <input type="checkbox"
-                class="show-deleted-toggle"
-                ${options.showDeleted ? "checked" : ""}>
-          Show Deleted
-        </label>
+        <div class="treatment-edit-bar__group treatment-edit-bar__right">
+          <label class="treatment-edit-bar__toggle">
+            <input type="checkbox"
+                  class="show-deleted-toggle"
+                  ${options.showDeleted ? "checked" : ""}>
+            Show Deleted
+          </label>
+          <span class="treatment-edit-bar__divider" aria-hidden="true"></span>
+          <span class="treatment-edit-bar__user">
+            Logged in as <strong>${escapeHtml(currentUser)}</strong>
+          </span>
+          <button type="button" class="treatment-logout-btn">
+            Sign out
+          </button>
+        </div>
       </div>
     `;
 
     if (!rows.length) {
-      return AddTreatmentButton + `<div>No pesticide rows found.</div>`;
+      return editBar + `<div class="pesticide-table-wrapper"><div>No pesticide rows found.</div></div>`;
     }
 
     //Alternating gray/white per treatment, like the public table (all three rows of a treatment share a color)
     const bodyRows = rows.map((row, index) => {
-      const stripeClass = index % 2 === 0 ? "treatment-gray" : "treatment-white";
+      const stripeClass = index % 2 === 0 ? "treatment-white" : "treatment-gray"; //starts white, same as the public table
       return `
       <tr
           class="data-row ${stripeClass}"
@@ -904,8 +910,8 @@
     }).join("");
 
     return `
+      ${editBar}
       <div class="pesticide-table-wrapper">
-        ${AddTreatmentButton}
         <table class="pesticide-admin-table${restrictedUseKey ? " has-key" : ""}" style="
             border-collapse:collapse;
             width:100%;
@@ -921,33 +927,6 @@
           </tbody>
           ${restrictedUseKey}
         </table>
-
-
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          margin-top:10px;
-          font-size:12px;
-          color:#666;
-        ">
-          <div>
-              DB Logged in as <strong>${escapeHtml(currentUser)}</strong>
-          </div>
-          <button
-              type="button"
-              class="treatment-logout-btn"
-              style="
-                  border:none;
-                  background:none;
-                  color:#666;
-                  cursor:pointer;
-                  font-size:12px;
-                  text-decoration:underline;
-              ">
-              Sign out
-          </button>
-        </div>
       </div>
     `;
   }

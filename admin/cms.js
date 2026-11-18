@@ -342,6 +342,288 @@
     return `${name} (${id})`;
   }
 
+  // =========================================================
+  // SEARCHABLE SELECT - a dropdown with a search box, used for the Pest list (can be hundreds long).
+  // Props: options [{ value, label }], value, onChange(value), disabled, placeholder, searchPlaceholder
+  // Search is "contains" on the label, and every typed word must match, so "looper",
+  // "cabbage looper" and "595" (the id inside the parentheses) all work.
+  // Keyboard: Up/Down to move, Enter to pick, Esc to close.
+  // =========================================================
+  const SearchableSelect = createClass({
+    getInitialState() {
+      return { open: false, query: "", activeIndex: 0 };
+    },
+
+    componentDidMount() {
+      //Close when clicking anywhere outside the dropdown.
+      this.handleDocumentMouseDown = e => {
+        if (this.state.open && this.rootEl && !this.rootEl.contains(e.target)) {
+          this.close(false);
+        }
+      };
+      document.addEventListener("mousedown", this.handleDocumentMouseDown);
+    },
+
+    componentWillUnmount() {
+      document.removeEventListener("mousedown", this.handleDocumentMouseDown);
+    },
+
+    getFiltered() {
+      const options = this.props.options || [];
+      const words = this.state.query.toLowerCase().split(/\s+/).filter(Boolean);
+      if (!words.length) return options;
+
+      return options.filter(o => {
+        const label = String(o.label).toLowerCase();
+        return words.every(w => label.includes(w));
+      });
+    },
+
+    open() {
+      if (this.props.disabled) return;
+      const options = this.props.options || [];
+      const selectedIndex = options.findIndex(o => String(o.value) === String(this.props.value));
+
+      //Start on the current selection so it's highlighted and scrolled into view.
+      this.setState({ open: true, query: "", activeIndex: Math.max(0, selectedIndex) }, () => {
+        this.searchEl?.focus();
+        this.scrollActiveIntoView();
+      });
+    },
+
+    close(refocusButton) {
+      this.setState({ open: false, query: "" });
+      if (refocusButton) this.buttonEl?.focus();
+    },
+
+    toggle() {
+      if (this.state.open) this.close(false);
+      else this.open();
+    },
+
+    choose(option) {
+      this.props.onChange(option ? String(option.value) : "");
+      this.close(true);
+    },
+
+    scrollActiveIntoView() {
+      this.listEl
+        ?.querySelector(`[data-index="${this.state.activeIndex}"]`)
+        ?.scrollIntoView({ block: "nearest" });
+    },
+
+    handleQueryChange(e) {
+      this.setState({ query: e.target.value, activeIndex: 0 }, () => {
+        if (this.listEl) this.listEl.scrollTop = 0;
+      });
+    },
+
+    handleSearchKeyDown(e) {
+      const filtered = this.getFiltered();
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        this.setState(
+          { activeIndex: Math.min(filtered.length - 1, this.state.activeIndex + 1) },
+          this.scrollActiveIntoView
+        );
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        this.setState(
+          { activeIndex: Math.max(0, this.state.activeIndex - 1) },
+          this.scrollActiveIntoView
+        );
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        const option = filtered[this.state.activeIndex];
+        if (option) this.choose(option);
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        this.close(true);
+      } else if (e.key === "Tab") {
+        this.close(false);
+      }
+    },
+
+    //Enter/Space already "click" the button; arrows open it too, like a native select.
+    handleButtonKeyDown(e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        this.open();
+      }
+    },
+
+    render() {
+      const h = window.h || window.React.createElement;
+      const options = this.props.options || [];
+      const value = this.props.value || "";
+      const disabled = !!this.props.disabled;
+      const { open, query, activeIndex } = this.state;
+
+      const selected = options.find(o => String(o.value) === String(value));
+      const filtered = open ? this.getFiltered() : [];
+
+      const buttonLabel = selected
+        ? selected.label
+        : (value ? `(${value})` : (this.props.placeholder || "-- Select --"));
+
+      const children = [
+        h("button", {
+          key: "button",
+          type: "button",
+          ref: el => { this.buttonEl = el; },
+          disabled,
+          onClick: this.toggle,
+          onKeyDown: this.handleButtonKeyDown,
+          "aria-haspopup": "listbox",
+          "aria-expanded": open ? "true" : "false",
+          style: {
+            width: "100%",
+            padding: "8px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: "8px",
+            textAlign: "left",
+            font: "inherit",
+            color: selected ? "inherit" : "#555",
+            background: disabled ? "#f3f3f3" : "#fff",
+            border: "1px solid #c5c5c5",
+            borderRadius: "4px",
+            cursor: disabled ? "not-allowed" : "pointer",
+            boxSizing: "border-box"
+          }
+        }, [
+          h("span", {
+            key: "label",
+            style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }
+          }, buttonLabel),
+          h("span", {
+            key: "arrow",
+            "aria-hidden": "true",
+            style: { fontSize: "10px", color: "#666", flexShrink: "0" }
+          }, open ? "▲" : "▼")
+        ])
+      ];
+
+      if (open) {
+        children.push(
+          h("div", {
+            key: "panel",
+            style: {
+              position: "absolute",
+              top: "calc(100% + 2px)",
+              left: "0",
+              right: "0",
+              zIndex: "1000",
+              background: "#fff",
+              border: "1px solid #b5b5b5",
+              borderRadius: "4px",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.15)"
+            }
+          }, [
+            h("input", {
+              key: "search",
+              type: "text",
+              ref: el => { this.searchEl = el; },
+              value: query,
+              onChange: this.handleQueryChange,
+              onKeyDown: this.handleSearchKeyDown,
+              placeholder: this.props.searchPlaceholder || "Type to search...",
+              "aria-label": "Search",
+              style: {
+                width: "100%",
+                padding: "8px",
+                border: "none",
+                borderBottom: "1px solid #ddd",
+                outline: "none",
+                font: "inherit",
+                boxSizing: "border-box"
+              }
+            }),
+
+            h("div", {
+              key: "count",
+              style: {
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "4px 8px",
+                fontSize: "12px",
+                color: "#666",
+                borderBottom: "1px solid #eee"
+              }
+            }, [
+              h("span", { key: "n" }, query
+                ? `${filtered.length} of ${options.length} match`
+                : `${options.length} total`),
+              value
+                ? h("button", {
+                    key: "clear",
+                    type: "button",
+                    //mousedown (not click) so the pick happens before the outside-click check.
+                    onMouseDown: e => { e.preventDefault(); this.choose(null); },
+                    style: {
+                      border: "none",
+                      background: "none",
+                      padding: "0",
+                      color: "#005ea8",
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                      fontSize: "12px"
+                    }
+                  }, "Clear selection")
+                : null
+            ]),
+
+            h("ul", {
+              key: "list",
+              role: "listbox",
+              ref: el => { this.listEl = el; },
+              style: {
+                listStyle: "none",
+                margin: "0",
+                padding: "0",
+                maxHeight: "280px",
+                overflowY: "auto"
+              }
+            }, filtered.length
+              ? filtered.map((o, i) => {
+                  const isSelected = String(o.value) === String(value);
+                  return h("li", {
+                    key: o.value,
+                    "data-index": i,
+                    role: "option",
+                    "aria-selected": isSelected ? "true" : "false",
+                    onMouseDown: e => { e.preventDefault(); this.choose(o); },
+                    onMouseEnter: () => {
+                      if (this.state.activeIndex !== i) this.setState({ activeIndex: i });
+                    },
+                    style: {
+                      padding: "6px 8px",
+                      cursor: "pointer",
+                      background: i === activeIndex ? "#e8f0fb" : "transparent",
+                      fontWeight: isSelected ? "600" : "400"
+                    }
+                  }, o.label);
+                })
+              : [h("li", {
+                  key: "none",
+                  style: { padding: "8px", color: "#666", fontStyle: "italic" }
+                }, "No matches")]
+            )
+          ])
+        );
+      }
+
+      return h("div", {
+        ref: el => { this.rootEl = el; },
+        style: { position: "relative", flex: "1", minWidth: "0" }
+      }, children);
+    }
+  });
+
   const PesticideTableSelectorControl = createClass({
     getInitialState() {
       return {
@@ -408,9 +690,10 @@
         siteTimingId: ""
       });
     },
-    handlePestChange(e) {
+    //Called by SearchableSelect with the picked pestId ("" when cleared).
+    handlePestChange(pestId) {
       this.updateValue({
-        pestId: e.target.value
+        pestId
       });
     },
 
@@ -712,36 +995,19 @@
             }
           }, "Pest"),
 
-          h(
-            "select",
-            {
-              value: pestId,
-              onChange: this.handlePestChange,
-              disabled: !guidelineId,
-              style: {
-                flex: "1",
-                minWidth: "0",
-                padding: "8px"
-              }
-            },
-            [
-              h("option", {
-                key: "",
-                value: ""
-              }, "-- Select Pest --"),
-
-              ...pestOptions.map(p =>
-                h(
-                  "option",
-                  {
-                    key: p.pestId,
-                    value: String(p.pestId)
-                  },
-                  makeOptionLabel(p, "pestId")
-                )
-              )
-            ]
-          )
+          //Searchable - a guideline can have hundreds of pests.
+          h(SearchableSelect, {
+            key: "pestSelect",
+            value: pestId,
+            onChange: this.handlePestChange,
+            disabled: !guidelineId,
+            placeholder: "-- Select Pest --",
+            searchPlaceholder: "Search by name or ID (e.g. looper, 595)",
+            options: pestOptions.map(p => ({
+              value: String(p.pestId),
+              label: makeOptionLabel(p, "pestId")
+            }))
+          })
         ])
       ]);
 
@@ -942,6 +1208,18 @@
     return iframe?.contentDocument || null;
   }
 
+  // Order inside a .pesticide-table-preview node: editor bar, title, table wrapper.
+  // The title goes right before the table so it sits under the editor bar, like the published page.
+  function placeTreatmentTableTitle(node, titleHtml) {
+    if (!titleHtml) return;
+    const wrapper = node.querySelector(":scope > .pesticide-table-wrapper");
+    if (wrapper) {
+      wrapper.insertAdjacentHTML("beforebegin", titleHtml);
+    } else {
+      node.insertAdjacentHTML("afterbegin", titleHtml);
+    }
+  }
+
   async function hydrateAllPesticideTables(previewDoc) {
 
     const nodes = previewDoc.querySelectorAll(".pesticide-table-preview");
@@ -966,7 +1244,7 @@
       if (node.getAttribute("data-load-key") === loadKey) {
         if (node.getAttribute("data-rendered-title") !== tableTitle) {
           node.querySelector(":scope > .treatment-table-title")?.remove();
-          if (titleHtml) node.insertAdjacentHTML("afterbegin", titleHtml);
+          placeTreatmentTableTitle(node, titleHtml);
           node.setAttribute("data-rendered-title", tableTitle);
         }
         continue;
@@ -988,7 +1266,8 @@
         node.__pesticideRows = cached.rows;
         node.__changedSince = changedSince;
         node.__pesticideJson = cached.json;
-        node.innerHTML = titleHtml + cached.html;
+        node.innerHTML = cached.html;
+        placeTreatmentTableTitle(node, titleHtml);
         node.setAttribute("data-rendered-title", tableTitle);
         window.PesticideTableBuilder.wireTableEvents(node);
         continue;
@@ -1035,7 +1314,8 @@
         const html = window.PesticideTableBuilder.renderTable(json, {
           changedSince: changedSince
         });
-        node.innerHTML = titleHtml + html;
+        node.innerHTML = html;
+        placeTreatmentTableTitle(node, titleHtml);
         node.setAttribute("data-rendered-title", tableTitle);
 
         window.PesticideTableBuilder.wireTableEvents(node);
