@@ -1,5 +1,5 @@
 ---
-title: "4.8 Selecting Nozzles from the Nozzle Catalogue – Airblast sprayers"
+title: 4.8 Selecting Nozzles from the Nozzle Catalogue – Airblast sprayers
 order: 8
 ---
 
@@ -17,7 +17,7 @@ row width = width between rows of trees in feet
 495 = a mathematical constant to correct units of measurement
 
 Example
-Take the example of the dilute application in a well pruned orchard. We need to apply at 136 gallons/acre. We have an airblast sprayer with 7 nozzles each side and a comfortable forward speed for our ground conditions is 3mph. Rows are 18 feet apart.
+Take the example of the dilute application in a well pruned orchard. We need to apply at 136 gallons/acre. We have an airblast sprayer with 7 nozzles each side and a comfortable forward speed for our ground conditions is 3 mph. Rows are 18 feet apart.
 
 
 <!-- TODO: Recreate original table or equation here. -->
@@ -32,8 +32,7 @@ As an example, using the hollow cone nozzle table in the Spraying Systems catalo
 # 49A, pages 40-41, #49, pages 38-41 or # 201, pages 10-11
 
 Read along the pressure row at the top of the table.
-Read down the column for 80 psi until you read 1.07 gpm, look across to the left, you will see we need a D10 disc with a DC25 wirl plate or core.
-Alternatively you may read down the column for 60 psi until you read 1.04 gpm, look across to the left and you will see we need a D8 disc with a DC45 wirl plate or core.
+Read down the column for 80 psi until you read 1.07 gpm, look across to the left, you will see we need a D10 disc with a DC25 whirl plate or core. Alternatively you may read down the column for 60 psi until you read 1.04 gpm, look across to the left and you will see we need a D8 disc with a DC45 whirl plate or core.
 
 Please note: Where trade names appear, no discrimination is intended and no endorsement by the author or Cornell University is implied.
 
