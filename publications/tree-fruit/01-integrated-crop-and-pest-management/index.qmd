@@ -10,7 +10,7 @@ IPM requires a combination of long and short term production strategies to maxim
 
 This manual provides information and references that will allow New York fruit growers to practice IPM for many of their crops. While information for the proper use of pesticides is a main component of this manual, other information is contained that can help growers reduce their reliance on pesticides and take advantage of alternatives to pesticides that may be less expensive, less environmentally harmful, and more acceptable to the non-agricultural community.
 
-## 1.2Practicing IPM
+## 1.2 Practicing IPM
 
 In an IPM program, it is important to accurately identifythe pests (vertebrates, diseases, insects, and weeds) and assess pestabundance. See the listing (at the end of this publication) of laboratories atCornell that do pest and disease diagnosis and soil and tissue analysis forassistance in maintaining crop health and nutrition. It is important to haveknowledge of the biology and ecology of the pest(s) attacking the crop and thefactors that can influence pest infestations. An understanding of the influenceof factors such as weather and natural enemies on pest abundance will aid thechoice of management tactics. IPM programs stress suppression of insect anddisease populations to levels that do not cause economic damage, rather thantotal eradication of a pest. In the case of insect pests, it may be importantto have at least some pests present to ensure that natural enemies will remainin the crop to suppress subsequent infestations.
 
