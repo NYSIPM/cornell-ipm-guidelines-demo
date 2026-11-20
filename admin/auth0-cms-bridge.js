@@ -137,6 +137,22 @@
     return body;
   }
 
+  // Decap's default local_backend address (config.yml uses `local_backend: true`).
+  const LOCAL_PROXY_URL = "http://localhost:8081/api/v1";
+
+  async function localProxyRunning() {
+    try {
+      const res = await fetch(LOCAL_PROXY_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "info" }),
+      });
+      return res.ok;
+    } catch (_) {
+      return false;
+    }
+  }
+
   async function boot() {
     if (!window.CMS) {
       console.error("[auth0-cms-bridge] Decap CMS not loaded");
@@ -154,9 +170,22 @@
 
       // Local content comes from `local_backend: true` in config.yml (Decap
       // only honours it on localhost/127.0.0.1, so it's safe to commit).
-      // Don't pass a config object here: when one is passed, Decap skips
-      // config.yml if the dev server doesn't serve it with a YAML content type.
-      window.CMS.init();
+      // That needs the Decap proxy (`npx decap-server`, port 8081). If it isn't
+      // running, Decap silently falls back to the GitHub backend and shows
+      // "Login with GitHub", so check first and explain instead.
+      if (!(await localProxyRunning())) {
+        showScreen({
+          title: "Local CMS proxy isn't running",
+          message:
+            "Editing on localhost needs the Decap proxy server. In a terminal at " +
+            "the project root, run <code>npx decap-server</code>, leave it " +
+            "running, then try again.",
+          detail: `Expected it at ${LOCAL_PROXY_URL}`,
+          actions: [retryAction],
+        });
+        return;
+      }
+      await initCms();
       return;
     }
     //Start of Orginal
@@ -262,7 +291,41 @@
 
     installLogoutHandler();
     watchForGithubLogin();
-    window.CMS.init();
+    await initCms();
+  }
+
+  // Point Decap's site link (top-right header, next to the avatar) and its
+  // "View Live" links at whatever host the CMS is running on: the production
+  // domain, a deploy preview, or localhost. config.yml's site_url/display_url
+  // are only a fallback.
+  //
+  // Decap merges a config passed to CMS.init() over config.yml, BUT if
+  // config.yml isn't served with a YAML Content-Type it silently drops the
+  // whole file when a manual config is present. So only pass the override when
+  // the server reports YAML (Netlify does; some local dev servers don't).
+  async function initCms() {
+    const origin = window.location.origin;
+    let configIsYaml = false;
+    try {
+      const res = await fetch("config.yml", {
+        method: "HEAD",
+        credentials: "same-origin",
+        cache: "no-store",
+      });
+      configIsYaml =
+        res.ok && (res.headers.get("Content-Type") || "").includes("yaml");
+    } catch (_) {
+      /* fall through: init without the override */
+    }
+
+    if (configIsYaml) {
+      window.CMS.init({ config: { site_url: origin, display_url: origin } });
+    } else {
+      console.info(
+        "[auth0-cms-bridge] config.yml not served as YAML; using its site_url as-is."
+      );
+      window.CMS.init();
+    }
   }
 
   const textOf = (el) => (el?.textContent || "").trim().toLowerCase();

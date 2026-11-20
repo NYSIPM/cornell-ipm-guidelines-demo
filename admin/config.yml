@@ -17,8 +17,10 @@ show_preview_links: true
 media_folder: "static/images"
 public_folder: "/static/images"
 
-site_url: https://dancing-sundae-a531d3.netlify.app
-display_url: https://dancing-sundae-a531d3.netlify.app
+# Fallback only: admin/auth0-cms-bridge.js overrides both with the address the
+# CMS is actually running on (production, deploy preview or localhost).
+site_url: https://guidelines-demo.cornell-ipm.org
+display_url: https://guidelines-demo.cornell-ipm.org
 
 collections:
   # Naming convention for every guide: `name` and `folder` are the guide's
