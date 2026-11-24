@@ -333,7 +333,7 @@
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px;">
                     <!-- Trade Name -->
                     <div>
-                        <label style="display:block; font-weight:600; font-size:13px;">Trade Name</label>
+                        <label style="display:block; font-weight:600; font-size:13px;">Trade Name <span style="color:#b00020;" title="Required">*</span></label>
                         <input type="text"
                         class="pesticide-input"
                         data-product-field="tradeName"
@@ -342,7 +342,7 @@
                     </div>
                     <!-- Common Name -->
                     <div>
-                        <label style="display:block; font-weight:600; font-size:13px;">Common Name</label>
+                        <label style="display:block; font-weight:600; font-size:13px;">Common Name <span style="color:#b00020;" title="Required">*</span></label>
                         <input type="text"
                         class="pesticide-input"
                         data-product-field="commonName"
@@ -362,7 +362,7 @@
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px;">
                     <!-- EPA -->
                     <div>
-                        <label style="display:block; font-weight:600; font-size:13px;">EPA Reg #</label>
+                        <label style="display:block; font-weight:600; font-size:13px;">EPA Reg # <span style="color:#b00020;" title="Required">*</span></label>
                         <input type="text"
                         class="pesticide-input"
                         data-product-field="epaRegistrationNumber"
@@ -371,7 +371,7 @@
                     </div>
                     <!-- Formulation -->
                     <div>
-                        <label style="display:block; font-weight:600; font-size:13px;">Formulation</label>
+                        <label style="display:block; font-weight:600; font-size:13px;">Formulation <span style="color:#b00020;" title="Required">*</span></label>
                         <input type="text"
                         class="pesticide-input"
                         data-product-field="formulation"
@@ -730,6 +730,9 @@
                 }))
                 };
             });
+
+            //Required pesticide fields (added 11-24-2026). Blocks saving blanks over a pesticide's real data.
+            if (!validateRequiredPesticideFields(modal, pesticidePayloads)) return;
 
             const biologicalControlPayloads = Array.from(modal.querySelectorAll(".biological-control-editor"))
             .map(block => ({
@@ -1300,6 +1303,57 @@
         commonNameInput.value = buildCommonNameFromSelectedAis(modal);
     }
   }*/
+
+    //Trade Name, Common Name, EPA Reg # and Formulation are required on every pesticide.
+    //Common Name is checked using the value that will be saved: the typed value when
+    //"Manually enter Common Name" is checked, otherwise the name built from the selected Active Ingredients.
+    //Returns true when everything is filled in; otherwise outlines the empty fields, shows what is missing, and returns false.
+    const REQUIRED_PESTICIDE_FIELDS = [
+        { field: "tradeName", label: "Trade Name" },
+        { field: "commonName", label: "Common Name" },
+        { field: "epaRegistrationNumber", label: "EPA Reg #" },
+        { field: "formulation", label: "Formulation" }
+    ];
+
+    function validateRequiredPesticideFields(modal, pesticidePayloads) {
+        const blocks = Array.from(modal.querySelectorAll(".pesticide-editor-block"));
+        const problems = [];
+        let firstEmptyInput = null;
+
+        blocks.forEach((block, i) => {
+            const payload = pesticidePayloads[i];
+            if (!payload) return;
+
+            const missing = [];
+
+            REQUIRED_PESTICIDE_FIELDS.forEach(({ field, label }) => {
+                const input = block.querySelector(`[data-product-field="${field}"]`);
+                const isEmpty = !String(payload[field] ?? "").trim();
+
+                if (input) input.style.outline = isEmpty ? "2px solid #b00020" : "";
+                if (!isEmpty) return;
+
+                if (field === "commonName" && !payload.commonNameUserDefined) {
+                    missing.push("Common Name (select at least one Active Ingredient, or check \"Manually enter Common Name\")");
+                } else {
+                    missing.push(label);
+                }
+
+                if (!firstEmptyInput && input) firstEmptyInput = input;
+            });
+
+            if (missing.length) {
+                const name = payload.tradeName || `Pesticide ${i + 1}`;
+                problems.push(`${blocks.length > 1 ? name + ": " : ""}${missing.join(", ")}`);
+            }
+        });
+
+        if (!problems.length) return true;
+
+        firstEmptyInput?.scrollIntoView({ block: "center" });
+        alert(`Please fill in the required fields before saving:\n\n${problems.join("\n")}`);
+        return false;
+    }
 
     //Added 5-5-2026
     function buildCommonNameFromSelectedAis(modal, pesticideIndex = 0) {
